@@ -2,13 +2,13 @@
   "name": "PowerUI",
   "id": "1292924330904373989",
   "api": "1.0.0",
-  "main": "./server/index.js",
+  "main": "./dist/index.js",
   "capabilities": [],
   "enableProposedApi": false,
   "editorType": [
     "figma"
   ],
-  "ui": "./client/index.html",
+  "ui": "./dist/index.html",
   "networkAccess": {
     "allowedDomains": [
       "none"
