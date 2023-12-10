@@ -2,7 +2,8 @@
   "name": "powerui",
   "version": "1.0.0",
   "description": "Your Figma Plugin",
-  "main": "code.js",
+  "main": "index.js",
+  "ui":"index.html",
   "scripts": {
     "watch": "npm run build -- --watch",
     "build": "webpack --mode=production",
