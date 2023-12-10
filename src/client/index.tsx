@@ -6,6 +6,5 @@ import App from './App';
 document.addEventListener('DOMContentLoaded', function () {
   const container = document.getElementById('powerui-app');
   const root = container && createRoot(container);
-  console.log(container);
   root?.render(<App />);
 });

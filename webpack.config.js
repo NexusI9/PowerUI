@@ -26,8 +26,17 @@ module.exports = (env, argv) => ({
     ],
   },
 
-  // Webpack tries these extensions for you if you omit the extension like "import './file'"
-  resolve: { extensions: ['.tsx', '.ts', '.jsx', '.js'] },
+
+  resolve: {
+    // Webpack tries these extensions for you if you omit the extension like "import './file'"
+    extensions: ['.tsx', '.ts', '.jsx', '.js','.svg'],
+    alias: {
+      "@components": path.resolve(__dirname, "src/client/components/"),
+      "@icons": path.resolve(__dirname,"src/client/assets/icons/"),
+      "@styles": path.resolve(__dirname, "src/client/styles/"),
+      "@lib": path.resolve(__dirname, "src/client/lib/"),
+    }
+  },
 
   output: {
     filename: '[name].js',
