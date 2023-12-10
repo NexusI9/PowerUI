@@ -8,6 +8,13 @@
     "typeRoots": [
       "./node_modules/@types",
       "./node_modules/@figma"
-    ]
+    ],
+    "baseUrl": "./",
+    "paths": {
+        "@components/*": ["src/client/components/*"],
+        "@icons/*": ["src/client/assets/icons/*"],
+        "@styles/*": ["src/client/styles/*"],
+        "@lib/*": ["src/client/lib/*"],
+    }
   }
 }

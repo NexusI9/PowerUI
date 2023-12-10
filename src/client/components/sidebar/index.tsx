@@ -1,8 +1,7 @@
 import "index.scss";
-import paint from "@icons/paint";
-import font from "@icons/font";
+import Paint from "@icons/paint.svg";
+import Font from "@icons/font.svg";
 
 export default () => (<nav className="sidebar">
-{paint}
-{font}
+<Paint/><Font/>
 </nav>);
