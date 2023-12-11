@@ -2,9 +2,9 @@ import { configureStore, createSlice } from "@reduxjs/toolkit";
 
 const pageSlice = createSlice({
     name:'page',
-    initialState:{page:'home'},
+    initialState:'home',
     reducers:{
-        change: (state, action) => state.page = action.payload || 'home'
+        change: (state, action) => state = action.payload || 'home'
     }
 });
 
