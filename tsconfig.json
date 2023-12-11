@@ -16,5 +16,6 @@
         "@styles/*": ["src/client/styles/*"],
         "@lib/*": ["src/client/lib/*"],
     }
-  }
+  },
+  "include": ["src","src/custom.d.ts"]
 }

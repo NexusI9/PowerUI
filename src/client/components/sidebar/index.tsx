@@ -1,7 +1,9 @@
-import "index.scss";
+import "./index.scss";
+import * as React from 'react';
 import Paint from "@icons/paint.svg";
 import Font from "@icons/font.svg";
 
 export default () => (<nav className="sidebar">
-<Paint/><Font/>
+    <h2>Test</h2>
+    <Paint /><Font />
 </nav>);
