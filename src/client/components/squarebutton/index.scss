@@ -1,0 +1,17 @@
+.squarebutton{
+    aspect-ratio: 1/1;
+    width: 100%;
+    background-color: var(--figma-color-bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+
+    &:hover{
+        background-color: var(--figma-color-bg-hover);
+    }
+
+    &.active{
+        background-color: var(--figma-color-bg-brand);
+    }
+}

@@ -4,7 +4,12 @@ const pageSlice = createSlice({
     name:'page',
     initialState:'home',
     reducers:{
-        change: (state, action) => state = action.payload || 'home'
+        setPage: (state, {type, payload}) => {
+            console.log({type, payload});
+            if(type === "SET_PAGE"){
+                state = payload || 'home';
+            }
+        }
     }
 });
 

@@ -1,10 +1,17 @@
+
+
+body{
+    font-family: "Inter", sans-serif;
+    color: var(--figma-color-text);
+}
+
+
 svg{
     fill:var(--figma-color-icon-tertiary);
 }
 
 
 #powerui-app{
-    display: flex;
-    flex: 50px 1;
-    flex-direction: row;
+    display: grid;
+    grid-template-columns: 50px auto;
 }
