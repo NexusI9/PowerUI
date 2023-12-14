@@ -1,0 +1,57 @@
+
+body{
+    font-family: "Inter", sans-serif;
+    color: var(--figma-color-text);
+    margin: 0;
+    min-height: 100vh;
+}
+
+
+svg{
+    fill:var(--figma-color-icon-tertiary);
+}
+
+
+#powerui-app{
+    display: grid;
+    grid-template-columns: 50px auto;
+    height: 100%;
+}
+
+
+
+.flex{
+    display: flex;
+
+    &.f-row{
+        flex-direction: horizontal;
+    }
+
+    &.f-col{
+        flex-direction: column;
+    }
+
+    &.gap{
+        &-xs{
+            gap: var(--space-xs);
+        }
+        &-s{
+            gap: var(--space-s);
+        }
+        &-m{
+            gap: var(--space-m);
+        }
+        &-l{
+            gap: var(--space-l);
+        }
+        &-xl{
+            gap: var(--space-xl);
+        }
+        &-xxl{
+            gap: var(--space-xxl);
+        }
+        &-xxxl{
+            gap: var(--space-xxxl);
+        }
+    }
+}

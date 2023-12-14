@@ -5,7 +5,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-
+    cursor: pointer;
 
     &:hover{
         background-color: var(--figma-color-bg-hover);
@@ -15,3 +15,5 @@
         background-color: var(--figma-color-bg-brand);
     }
 }
+
+

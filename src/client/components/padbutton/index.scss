@@ -1,0 +1,32 @@
+@use "@styles/var";
+
+.padbutton{
+
+    width: 200px;
+    height: auto;
+    aspect-ratio: 1/1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap:var(--space-m);
+    border: solid 1px var(--figma-color-border);
+    border-radius: var(--radius-l);
+    background-color: var(--figma-color-bg);
+    color: var(--figma-color-text);
+    transition: background 0.1s linear, border 0.1s linear;
+    cursor: pointer;
+
+    svg{
+        width: 80px;
+        height: auto;
+        aspect-ratio: 1/1;
+        fill: var(--figma-color-text);
+    }
+
+    &:hover{
+        background-color: var(--figma-color-bg-brand-hover);
+        border: solid 2px var(--figma-color-bg-brand);
+    }
+
+}

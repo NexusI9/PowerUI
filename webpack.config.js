@@ -24,17 +24,34 @@ module.exports = (env, argv) => ({
       // Allows you to use "<%= require('./file.svg') %>" in your HTML code to get a data URI
       { test: /\.(png|jpg|gif|webp)$/, loader: 'url-loader' },
 
-      { test: /\.svg$/,  use: ['@svgr/webpack'] },
+      {
+        test: /\.svg$/,
+        use: [{
+          loader: '@svgr/webpack',
+          options: {
+            svgoConfig: {
+              plugins: [{
+                name: 'preset-default',
+                params: {
+                  overrides: {
+                    removeViewBox: false,
+                  },
+                }
+              }]
+            }
+          }
+        }]
+      },
     ],
   },
 
 
   resolve: {
     // Webpack tries these extensions for you if you omit the extension like "import './file'"
-    extensions: ['.tsx', '.ts', '.jsx', '.js','.svg'],
+    extensions: ['.tsx', '.ts', '.jsx', '.js', '.svg'],
     alias: {
       "@components": path.resolve(__dirname, "src/client/components/"),
-      "@icons": path.resolve(__dirname,"src/client/assets/icons/"),
+      "@icons": path.resolve(__dirname, "src/client/assets/icons/"),
       "@styles": path.resolve(__dirname, "src/client/styles/"),
       "@lib": path.resolve(__dirname, "src/client/lib/"),
     }
@@ -52,7 +69,7 @@ module.exports = (env, argv) => ({
       template: 'src/client/index.html',
       filename: 'index.html',
       chunks: ['ui'],
-      inject:"body",
+      inject: "body",
     }),
     new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/ui/]),
   ],
