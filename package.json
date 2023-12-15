@@ -6,7 +6,7 @@
   "scripts": {
     "watch": "npm run build -- --watch",
     "build": "webpack --mode=production",
-    "build:watch": "webpack --mode=development --watch"
+    "build:watch": "webpack --mode=development --watch --progress"
   },
   "author": "",
   "license": "",

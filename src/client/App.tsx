@@ -18,7 +18,7 @@ const router = {
 export default () => {
 
     const page = useSelector( (state:{page:string} ) => state.page);
-    
+
     return(
         <>
             <Sidebar />

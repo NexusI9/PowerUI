@@ -60,7 +60,7 @@ module.exports = (env, argv) => ({
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'), // Compile into a folder called "dist"
-    clean: true
+    clean:true
   },
 
   // Tells Webpack to generate "ui.html" and to inline "ui.ts" into it
@@ -70,6 +70,7 @@ module.exports = (env, argv) => ({
       filename: 'index.html',
       chunks: ['ui'],
       inject: "body",
+      cache: false //refresh html on watch
     }),
     new InlineChunkHtmlPlugin(HtmlWebpackPlugin, [/ui/]),
   ],

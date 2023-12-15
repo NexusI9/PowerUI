@@ -4,7 +4,7 @@ import { SquareButton } from '@components/squarebutton';
 import Paint from "@icons/paint.svg";
 import Font from "@icons/font.svg";
 import type { Dispatch } from "@reduxjs/toolkit";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { setPage } from '@lib/page.slice';
 
 const pageMap = [
@@ -15,6 +15,7 @@ const pageMap = [
 export default () => {
 
     const dispatch:Dispatch = useDispatch();
+    const activePage:string = useSelector( (state:{page:string}) => state.page );
 
     return (
         <nav className="sidebar">
@@ -22,7 +23,9 @@ export default () => {
                 <SquareButton
                     key={`buttonsidebar${index}`}
                     icon={item.icon}
-                    onClick={() => dispatch(setPage(item.page))  }
+                    onClick={() => dispatch(setPage(item.page))}
+                    defaultActive={item.page === activePage}
+                    
                 />
             )}
         </nav>
