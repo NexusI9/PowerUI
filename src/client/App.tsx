@@ -5,14 +5,14 @@ import Container from '@components/container';
 
 import Color from './pages/color';
 import Home from './pages/home';
-import Typeface from './pages/typeface';
+import Font from './pages/font';
 
 import { useSelector } from 'react-redux';
 
 const router = {
     home: <Home/>, 
     color: <Color/>, 
-    typeface: <Typeface/> 
+    font: <Font/> 
 };
 
 export default () => {

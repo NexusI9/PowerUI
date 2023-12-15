@@ -9,7 +9,7 @@ import { setPage } from '@lib/page.slice';
 
 const pageMap = [
     { page: 'color', icon: Paint },
-    { page: 'typeface', icon: Font }
+    { page: 'font', icon: Font }
 ]
 
 export default () => {

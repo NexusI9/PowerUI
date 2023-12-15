@@ -8,7 +8,7 @@ import { setPage } from "@lib/page.slice";
 
 const padMap = [
     { page: 'color', icon: PaintPlus, text: 'Create Swatch' },
-    { page: 'typeface', icon: FontPlus, text: 'Create Font set' }
+    { page: 'font', icon: FontPlus, text: 'Create Font Set' }
 ];
 
 export default () => {
@@ -21,14 +21,15 @@ export default () => {
             <h1>Welcome to PowerUI</h1>
             <h3>Start building your styles below</h3>
         </header>
-        <div className="flex f-row gap-s">
+        <div className="flex f-row gap-m">
             {
-                padMap.map(btn => <ButtonPad
-                    key={btn.page}
-                    icon={btn.icon}
-                    text={btn.text}
-                    onClick={() => dispatch(setPage(btn.page)) }
-                />)
+                padMap.map(btn =>
+                    <ButtonPad
+                        key={btn.page}
+                        icon={btn.icon}
+                        text={btn.text}
+                        onClick={() => dispatch(setPage(btn.page))}
+                    />)
             }
         </div>
 
