@@ -14,6 +14,7 @@ export default () => (
             text: 'Create Fonts Set',
             onClick: () => 0
         }}
+        getStyleMethod="getTextStyles"
     >
         <></>
     </StyleTemplate>);

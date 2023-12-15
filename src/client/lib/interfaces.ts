@@ -11,3 +11,10 @@ export interface ButtonPad {
     text: string;
     onClick:any;
 }
+
+
+export interface Folder{
+    title:string;
+    options:Array<Option>;
+    children:React.JSX.Element; 
+}

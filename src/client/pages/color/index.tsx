@@ -14,6 +14,7 @@ export default() => (
             text:'Create Swatch',
             onClick: () => 0
         }}
+        getStyleMethod="getPaintStyles"
     >
     <></>
     </StyleTemplate>);

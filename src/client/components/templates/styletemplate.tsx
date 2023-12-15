@@ -1,5 +1,5 @@
 import * as React from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { SectionHeader } from "@components/sectionheader";
 import List from '@icons/list-bulleted.svg';
 import Plus from '@icons/add.svg';
@@ -13,10 +13,11 @@ interface StyleTemplate {
     onSwitchDisplay: any;
     onAddStyle: any;
     padStyle: ButtonPadInterface;
+    getStyleMethod?:string;
 };
 
 
-export default ({ children, title, onSwitchDisplay, onAddStyle, padStyle }: StyleTemplate) => {
+export default ({ children, title, onSwitchDisplay, onAddStyle, padStyle, getStyleMethod }: StyleTemplate) => {
 
     const optionMap = [
         { icon: List, onClick: onSwitchDisplay },
@@ -25,15 +26,24 @@ export default ({ children, title, onSwitchDisplay, onAddStyle, padStyle }: Styl
 
     const [styles, setStyles] = useState([]);
 
-    get({type:'getPaintStyles'}).then(r => console.log({r}));
+    useEffect(() => {
 
+        if(getStyleMethod){
+            get({ type: getStyleMethod }).then(r => setStyles(r)); 
+        }
+
+    }, []);
 
     return (<>
-        {console.log(styles)}
         <SectionHeader title={title} options={optionMap} />
-        <div className="full-height full-width flex f-center">
-            <ButtonPad icon={padStyle.icon} text={padStyle.text} onClick={padStyle.onClick} />
-        </div>
-        {children}
+        {!!styles && !!styles.length ?
+            //styles view
+            { children }
+            :
+            //default view
+            <div className="full-height full-width flex f-center">
+                <ButtonPad icon={padStyle.icon} text={padStyle.text} onClick={padStyle.onClick} />
+            </div>
+        }
     </>);
 };

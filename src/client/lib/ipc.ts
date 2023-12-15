@@ -1,6 +1,6 @@
 export function get(request:{}){
 
-    return new Promise((resolve, reject) => {
+    return new Promise<any>((resolve, reject) => {
         parent.postMessage( { pluginMessage: request }, "*" );
 
         const callback = ({data:{pluginMessage}}:{data:{pluginMessage:any}}) => {

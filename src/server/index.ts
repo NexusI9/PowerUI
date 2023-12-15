@@ -30,6 +30,10 @@ figma.ui.onmessage = msg => {
       figma.ui.postMessage( figma.getLocalPaintStyles() );
     break;
 
+    case 'getTextStyles':
+      figma.ui.postMessage( figma.getLocalTextStyles() );
+    break;
+
     default:
 
   }
