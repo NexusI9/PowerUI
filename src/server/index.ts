@@ -10,6 +10,7 @@ figma.ui.onmessage = msg => {
 
   switch (msg.type) {
 
+    //styles references: https://www.figma.com/plugin-docs/api/figma/#styles
     case "create-rectangles":
 
       const nodes: SceneNode[] = [];
@@ -25,11 +26,15 @@ figma.ui.onmessage = msg => {
 
       break; 
 
+    case 'getPaintStyles':
+      figma.ui.postMessage( figma.getLocalPaintStyles() );
+    break;
+
     default:
 
   }
 
 // Make sure to close the plugin when you're done. Otherwise the plugin will
 // keep running, which shows the cancel button at the bottom of the screen.
-figma.closePlugin();
+//figma.closePlugin();
 };
