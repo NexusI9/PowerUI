@@ -1,0 +1,14 @@
+@use '@styles/var';
+
+.button-icon{
+
+    border: none;
+    border-radius: var(--radius-s);
+    background-color: transparent;
+    aspect-ratio: 1/1;
+    height: auto;
+
+    &:hover{
+        background-color: var(--figma-color-bg-hover);
+    }
+}

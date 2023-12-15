@@ -1,9 +1,9 @@
 import './index.scss';
 import {Icon} from '@components/icon';
 
-export const PadButton = ({icon, text, onClick}:{icon:string, text:string, onClick?:any}) => (
+export const ButtonPad = ({icon, text, onClick}:{icon:string, text:string, onClick?:any}) => (
     <button 
-        className='padbutton'
+        className='button-pad'
         onClick={ () => { if(onClick) onClick(); }}
         >
         <Icon icon={icon}/>

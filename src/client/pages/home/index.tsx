@@ -1,6 +1,6 @@
 import "./index.scss";
 import * as React from "react";
-import { PadButton } from "@components/padbutton";
+import { ButtonPad } from "@components/button-pad";
 import PaintPlus from '@icons/paint-plus.svg';
 import FontPlus from '@icons/font-plus.svg';
 import { useDispatch } from "react-redux";
@@ -23,7 +23,7 @@ export default () => {
         </header>
         <div className="flex f-row gap-s">
             {
-                padMap.map(btn => <PadButton
+                padMap.map(btn => <ButtonPad
                     key={btn.page}
                     icon={btn.icon}
                     text={btn.text}

@@ -11,11 +11,16 @@ svg{
     fill:var(--figma-color-icon);
 }
 
+button{
+    cursor: pointer;
+}
+
 
 #powerui-app{
     display: grid;
     grid-template-columns: 50px auto;
     height: 100%;
+    overflow: hidden;
 }
 
 
@@ -24,11 +29,16 @@ svg{
     display: flex;
 
     &.f-row{
-        flex-direction: horizontal;
+        flex-direction: row;
     }
 
     &.f-col{
         flex-direction: column;
+    }
+
+    &.f-center{
+        align-items: center;
+        justify-content: center;
     }
 
     &.gap{
@@ -53,5 +63,17 @@ svg{
         &-xxxl{
             gap: var(--space-xxxl);
         }
+    }
+}
+
+
+.full{
+
+    &-width{
+        width: 100%;
+    }
+
+    &-height{
+        height: 100%;
     }
 }
