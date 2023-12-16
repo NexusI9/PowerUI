@@ -4,6 +4,7 @@ import { SectionHeader } from "@components/sectionheader";
 import List from '@icons/list-bulleted.svg';
 import Plus from '@icons/add.svg';
 import { ButtonPad } from "@components/button-pad";
+import { FolderContainer } from "@components/folder-container";
 import { ButtonPad as ButtonPadInterface } from "@lib/interfaces";
 import { get } from '@lib/ipc';
 
@@ -38,7 +39,7 @@ export default ({ children, title, onSwitchDisplay, onAddStyle, padStyle, getSty
         <SectionHeader title={title} options={optionMap} />
         {!!styles && !!styles.length ?
             //styles view
-            { children }
+            <FolderContainer styles={styles}/>
             :
             //default view
             <div className="full-height full-width flex f-center">

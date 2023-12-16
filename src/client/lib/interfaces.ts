@@ -15,6 +15,17 @@ export interface ButtonPad {
 
 export interface Folder{
     title:string;
-    options:Array<Option>;
-    children:React.JSX.Element; 
+    item:React.JSX.Element; 
+}
+
+
+export interface CleanStyle{
+    id:string; 
+    key:string; 
+    name:string;
+    paints: Array<Paint|Text>;
+}
+
+export interface Style{
+    [key: string]: Style | CleanStyle; 
 }
