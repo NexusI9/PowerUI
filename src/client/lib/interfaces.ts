@@ -17,12 +17,13 @@ export interface Folder{
     title:string;
     children:React.JSX.Element; 
     hideHeader?:boolean;
+    custom?:any;
 }
 
 
 export interface StyleItem{
     id:string; 
-    key:string; 
+    figmaKey:string; 
     name:string;
     title?:string;
     paints: Array<Paint|Text>;

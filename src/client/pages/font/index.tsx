@@ -15,6 +15,5 @@ export default () => (
         }}
         getStyleMethod="getTextStyles"
         styleItem={Font}
-    >
-        <></>
-    </StyleTemplate>);
+    />
+    );

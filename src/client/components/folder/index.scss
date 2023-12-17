@@ -2,10 +2,24 @@
 
     margin-left: var(--space-m);
 
-    &.hide{
-        display: none;
+    &.hide {
+
+        .folder-header-left {
+            .options-row {
+                button {
+                    &:last-of-type {
+                        transform: rotate3d(0, 0, 1, -90deg);
+                    }
+                }
+            }
+        }
+
+        .folder-body {
+            display: none;
+        }
+
     }
-    
+
     &-content {
         width: 100%;
     }
@@ -20,15 +34,18 @@
         }
 
         &-left {
-            .options-row{
+            .options-row {
                 gap: 0;
+
                 button {
                     padding: 0;
-                    &:first-of-type{
+
+                    &:first-of-type {
                         width: 12px;
                         cursor: grab;
-                        svg{
-                            fill:var(--figma-color-border);
+
+                        svg {
+                            fill: var(--figma-color-border);
                         }
                     }
                 }
@@ -39,7 +56,7 @@
 
     &-body {
         padding: 0.5rem;
-        margin-left:2rem;
+        margin-left: 2rem;
         padding-right: 0;
         margin-right: 0;
         border-left: solid 1px var(--figma-color-border);

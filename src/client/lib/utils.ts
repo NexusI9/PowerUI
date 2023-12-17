@@ -13,8 +13,6 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
     const createFolder: any = (structure: StyleFolder, path: string, style: StyleItem) => {
         const [folder, ...rest] = path.split('/');
 
-        console.log(structure);
-
         if(!rest.length){ //endpoint
             return structure.styles.push(style);
         }

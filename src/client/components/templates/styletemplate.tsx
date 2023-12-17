@@ -5,21 +5,29 @@ import List from '@icons/list-bulleted.svg';
 import Plus from '@icons/add.svg';
 import { ButtonPad } from "@components/button-pad";
 import { FolderContainer } from "@components/folder-container";
-import { ButtonPad as ButtonPadInterface } from "@lib/interfaces";
+import { ButtonPad as ButtonPadInterface, Option as OptionInterface } from "@lib/interfaces";
 import { get } from '@lib/ipc';
 
 interface StyleTemplate {
-    children: React.JSX.Element;
     title: string;
     onSwitchDisplay: any;
     onAddStyle: any;
     padStyle: ButtonPadInterface;
     getStyleMethod?: string;
     styleItem: React.FunctionComponent;
+    custom?: {};
 };
 
 
-export default ({ children, title, onSwitchDisplay, onAddStyle, padStyle, getStyleMethod, styleItem }: StyleTemplate) => {
+export default ({ 
+    title, 
+    onSwitchDisplay, 
+    onAddStyle, 
+    padStyle, 
+    getStyleMethod, 
+    styleItem,
+    custom={}
+}: StyleTemplate) => {
 
     const optionMap = [
         { icon: List, onClick: onSwitchDisplay },
@@ -40,7 +48,7 @@ export default ({ children, title, onSwitchDisplay, onAddStyle, padStyle, getSty
         <SectionHeader title={title} options={optionMap} />
         {!!styles && !!styles.length ?
             //styles view
-            <FolderContainer styles={styles} styleItem={styleItem} />
+            <FolderContainer styles={styles} styleItem={styleItem} custom={{...custom}} />
             :
             //default view
             <div className="full-height full-width flex f-center">
