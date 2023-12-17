@@ -2,8 +2,8 @@ import * as React from 'react';
 import { ButtonIcon } from '@components/button-icon';
 import { Option } from "@lib/interfaces";
 
-export const OptionsRow = ({ options }:{options:Array<Option>}) => (
-    <div className='options-row flex f-row gap-s'>{
+export const OptionsRow = ({ options, className }:{options:Array<Option>, className?:string}) => (
+    <div className={`options-row flex f-row gap-s ${className && className || ''}`}>{
         options.map( option =>  
             <ButtonIcon 
                 key={option.icon}
