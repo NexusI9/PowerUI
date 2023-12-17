@@ -1,0 +1,17 @@
+.options-row{
+
+
+    button.button-icon{
+        &.disabled{
+            pointer-events: none;
+            svg{
+                fill:var(--figma-color-icon-disabled);
+            }
+
+            &:hover{
+                background-color: transparent;
+            }
+        }
+
+    }
+}

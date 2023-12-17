@@ -2,8 +2,8 @@ import './index.scss';
 import { Icon } from '@components/icon';
 
 
-export const ButtonIcon = ({icon, onClick}:{icon:string, onClick:any}) => (
-    <button className="button-icon" onClick={ !!onClick && onClick } >
+export const ButtonIcon = ({icon, onClick, disabled}:{icon:string, onClick:any, disabled?:boolean}) => (
+    <button className={`button-icon ${disabled && 'disabled' || ''}`} onClick={ !!onClick && onClick } >
         <Icon icon={icon}/>
     </button>
 );

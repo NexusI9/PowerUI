@@ -3,6 +3,7 @@ export interface Option{
     icon: string;
     onClick?: any;
     toolTip?: string;
+    disabled?:boolean;
 }
 
 
@@ -18,6 +19,7 @@ export interface Folder{
     children:React.JSX.Element; 
     hideHeader?:boolean;
     custom?:any;
+    allowEdit?:boolean;
 }
 
 

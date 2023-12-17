@@ -10,7 +10,14 @@ import Pen from '@icons/pencil.svg';
 import Kebab from '@icons/kebab-vertical.svg';
 
 
-export const Folder = ({ title, children, hideHeader = false, custom}: FolderInterface) => {
+export const Folder = ({
+    title,
+    children,
+    hideHeader = false,
+    allowEdit = true,
+    custom
+}: FolderInterface
+) => {
 
     const [display, setDisplay] = useState(true);
 
@@ -20,7 +27,7 @@ export const Folder = ({ title, children, hideHeader = false, custom}: FolderInt
     ];
 
     const editIconMap: Array<OptionInterface> = [
-        { icon: Pen, onClick: () => 0 },
+        { icon: Pen, onClick: () => 0, disabled: !allowEdit },
         { icon: custom?.generateIcon || SwatchIcon, onClick: () => 0 },
         { icon: Kebab, onClick: () => 0 }
     ];

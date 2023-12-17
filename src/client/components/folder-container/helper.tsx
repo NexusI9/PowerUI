@@ -9,6 +9,7 @@ export function generateFolder(folder: Array<StyleFolder>, styleItem: React.Func
             key={item.title + i}
             title={item.title}
             custom={custom}
+            allowEdit={ !!item.styles.length }
         >
             <>
                 <div className="flex f-row gap-s">
