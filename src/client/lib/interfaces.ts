@@ -32,5 +32,6 @@ export interface StyleItem{
 export interface StyleFolder{
     title:string;
     type:"folder";
-    children:Array<StyleItem | StyleFolder>;
+    styles:Array<StyleItem>;
+    folders:Array<StyleFolder>;
 }
