@@ -1,4 +1,4 @@
-import { StyleFolder, StyleItem } from "@lib/interfaces";
+import { StyleFolder } from "@lib/interfaces";
 import { Folder } from "@components/folder";
 import * as React from 'react';
 

@@ -1,5 +1,4 @@
 import "./index.scss";
-import * as React from 'react';
 import { ButtonSquare } from '@components/button-square';
 import Paint from "@icons/paint.svg";
 import Font from "@icons/font.svg";

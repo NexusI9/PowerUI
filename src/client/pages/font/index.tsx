@@ -1,4 +1,3 @@
-import * as React from "react";
 import { Font } from "@components/style-item/font";
 import { StyleTemplate } from "@components/templates";
 import FontPlus from '@icons/font-plus.svg';

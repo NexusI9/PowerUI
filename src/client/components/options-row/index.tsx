@@ -1,4 +1,3 @@
-import * as React from 'react';
 import { ButtonIcon } from '@components/button-icon';
 import { Option } from "@lib/interfaces";
 

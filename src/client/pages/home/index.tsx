@@ -1,5 +1,4 @@
 import "./index.scss";
-import * as React from "react";
 import { ButtonPad } from "@components/button-pad";
 import PaintPlus from '@icons/paint-plus.svg';
 import FontPlus from '@icons/font-plus.svg';

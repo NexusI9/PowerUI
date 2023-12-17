@@ -1,4 +1,3 @@
-import * as React from 'react';
 import './index.scss';
 import { Folder as FolderInterface } from '@lib/interfaces';
 import { OptionsRow } from '@components/options-row';
@@ -8,10 +7,11 @@ import Add from '@icons/add.svg';
 import Pen from '@icons/pencil.svg';
 import Kebab from '@icons/kebab-vertical.svg';
 import { Option as OptionInterface } from '@lib/interfaces';
-
+import { useState } from 'react';
 
 
 export const Folder = ({ title, children, hideHeader = false }: FolderInterface) => {
+
 
     const folderIconMap: Array<OptionInterface> = [
         { icon: Move, onClick: () => 0 },
@@ -25,7 +25,6 @@ export const Folder = ({ title, children, hideHeader = false }: FolderInterface)
     ];
 
     return (
-
         <div className='folder flex f-col'>
             {!hideHeader && <div className='folder-header flex f-row'>
                 <div className="folder-header-left flex f-row gap-s">

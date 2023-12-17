@@ -1,4 +1,3 @@
-import * as React from 'react';
 import "@styles/index.scss";
 import Sidebar from '@components/sidebar';
 import Container from '@components/container';

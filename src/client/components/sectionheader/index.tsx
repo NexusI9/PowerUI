@@ -1,4 +1,3 @@
-import * as React from "react";
 import './index.scss';
 import { Option } from "@lib/interfaces";
 import { OptionsRow } from "@components/options-row";
