@@ -1,6 +1,6 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
-import { CleanStyle } from "@lib/interfaces";
+import { StyleItem } from "@lib/interfaces";
 import { classifyStyle } from "@lib/utils";
 
 figma.showUI(__html__, { themeColors: true });
@@ -30,7 +30,7 @@ figma.ui.onmessage = msg => {
 
     case 'getPaintStyles':
 
-      let styles:Array<CleanStyle> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, key, name, paints: paints as Paint[] })); //only keep necessary;
+      let styles:Array<StyleItem> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, key, name, paints: paints as Paint[], type:"style" })); //only keep necessary;
       console.log( classifyStyle(styles) );
 
       figma.ui.postMessage(styles);

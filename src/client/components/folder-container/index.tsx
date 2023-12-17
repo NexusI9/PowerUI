@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Folder } from "@components/folder";
 import './index.scss';
-import { CleanStyle } from "@lib/interfaces";
+import { StyleItem } from "@lib/interfaces";
 
-export const FolderContainer = ({styles}:{styles:Array<CleanStyle>}) => {
+export const FolderContainer = ({styles}:{styles:Array<StyleItem>}) => {
 
     return(<div className="folder-container">
         {styles.map( style => {

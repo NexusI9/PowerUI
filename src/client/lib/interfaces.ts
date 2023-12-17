@@ -19,13 +19,17 @@ export interface Folder{
 }
 
 
-export interface CleanStyle{
+export interface StyleItem{
     id:string; 
     key:string; 
     name:string;
+    title?:string;
     paints: Array<Paint|Text>;
+    type:"style";
 }
 
-export interface Style{
-    [key: string]: Style | CleanStyle; 
+export interface StyleFolder{
+    title:string;
+    type:"folder";
+    children:Array<StyleItem | StyleFolder>;
 }
