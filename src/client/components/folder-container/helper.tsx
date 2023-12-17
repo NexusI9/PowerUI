@@ -15,6 +15,7 @@ export function generateFolder(folder: Array<StyleFolder | StyleItem>, styleItem
                 return <Folder
                     key={item.title + i}
                     title={item.title}
+                    display="list"
                 >
                    {generateFolder(item.children, styleItem) }
                 </Folder>

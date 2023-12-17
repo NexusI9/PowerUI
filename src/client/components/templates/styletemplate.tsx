@@ -14,7 +14,7 @@ interface StyleTemplate {
     onSwitchDisplay: any;
     onAddStyle: any;
     padStyle: ButtonPadInterface;
-    getStyleMethod?:string;
+    getStyleMethod?: string;
     styleItem: React.FunctionComponent;
 };
 
@@ -30,8 +30,8 @@ export default ({ children, title, onSwitchDisplay, onAddStyle, padStyle, getSty
 
     useEffect(() => {
 
-        if(getStyleMethod){
-            get({ type: getStyleMethod }).then(r => setStyles(r)); 
+        if (getStyleMethod) {
+            get({ type: getStyleMethod }).then(r => setStyles(r));
         }
 
     }, []);
@@ -40,7 +40,7 @@ export default ({ children, title, onSwitchDisplay, onAddStyle, padStyle, getSty
         <SectionHeader title={title} options={optionMap} />
         {!!styles && !!styles.length ?
             //styles view
-            <FolderContainer styles={styles} styleItem={styleItem}/>
+            <FolderContainer styles={styles} styleItem={styleItem} />
             :
             //default view
             <div className="full-height full-width flex f-center">

@@ -15,22 +15,22 @@ const folderIconMap:Array<OptionInterface> = [
 ];
 
 const editIconMap:Array<OptionInterface> = [
-    {icon: Move, onClick: () => 0},
-    {icon: Carrot, onClick: () => 0},
+    {icon: Pen, onClick: () => 0},
+    {icon: Add, onClick: () => 0},
     {icon: Kebab, onClick: () => 0}
 ]
 
-export const Folder = ({ title, children }: FolderInterface) => (
+export const Folder = ({ title, children, display="list" }: FolderInterface) => (
     <div className='folder'>
         <div className='folder-header flex f-row'>
-            <div>
+            <div className='flex f-row gap-m'>
                 <OptionsRow options={folderIconMap}/>
                 {title}
             </div>
 
             <OptionsRow options={editIconMap}/>
         </div>
-        <div className='folder-body'>
+        <div className={`folder-body flex f-row gap-s`}>
             {children}
         </div>
         <div className='folder-footer'></div>
