@@ -4,7 +4,6 @@ import * as React from 'react';
 
 export function generateFolder(folder: Array<StyleFolder | StyleItem>, styleItem: React.FunctionComponent): any {
     return folder.map((item, i) => {
-        console.log(item);
         switch (item.type) {
 
             case 'style':
