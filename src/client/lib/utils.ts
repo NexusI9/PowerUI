@@ -12,61 +12,47 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
     {CleanStyle},
 ]
 */
-    const checkNestedFolder:any = (dir:Array<StyleFolder>) => {
-        dir.forEach( (item,index) => {
-            if(item.type === 'folder' && item.children.length){
 
-            }
-        });
-    };
+    let organisedFolder: Array<StyleFolder> = [];
 
-    const createFolder:any = (dir: Array<string>, newArray:StyleFolder) => {
+    const createFolder: any = (structure: Array<any>, path: string, style: StyleItem) => {
+        const [folder, ...rest] = path.split('/');
 
-        if(!newArray){
-            newArray = {
-                title:"root",
-                type:"folder",
-                children:[]
-            };
+        //console.log({ structure, path, folder });
+
+        if(!rest.length){ //endpoint
+            return structure.push(style);
         }
 
-        for (var p of dir) {
+        console.log(structure);
 
-            //convert item to folder
-            let folder = {
-                title: p,
+        let foundFolder = structure.find(item => item.title === folder);
+        if (!foundFolder) { //first iteration
+
+            foundFolder = {
                 type: 'folder',
+                title: folder,
                 children: []
-            } as StyleFolder;
-
-            //check if folder doesn't already exists
-            if(!newArray.children.length){
-                newArray.children.push(folder);
-            }else{
-                newArray.children.forEach( child => {
-                    if(child.type === 'folder' && child.title === ){}
-                });
-            }
-
-            dir.shift();
-            return createFolder(dir, newArray);
+            };
+            structure.push(foundFolder);
+            
         }
 
-        return newArray;
+        if (!!rest.length) {
+            createFolder(foundFolder.children, rest.join('/'), style);
+        } else {
+            foundFolder.children.push(style);
+        }
+
+
+
     };
 
-    return style.reduce((acc, item: StyleItem) => {
+    style.forEach((item: StyleItem) => {
+        item.title = item.name.split('/').slice(-1)[0] || item.name;
+        createFolder(organisedFolder, item.name, item);
+    });
 
-        const parts = item.name.split("/");
-        parts.pop(); //remove last index (style itself) to only keep folders
-
-        if (!!parts.length) {
-            //go through array
-            item.title = parts.slice(-1)[0] || item.name;
-            console.log( createFolder(parts) );
-        }
-
-        return acc;
-    }, style);
-
+    console.log(organisedFolder);
+    return style;
 }
