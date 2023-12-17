@@ -20,7 +20,7 @@ const editIconMap:Array<OptionInterface> = [
     {icon: Kebab, onClick: () => 0}
 ]
 
-export const Folder = ({ title, item }: FolderInterface) => (
+export const Folder = ({ title, children }: FolderInterface) => (
     <div className='folder'>
         <div className='folder-header flex f-row'>
             <div>
@@ -31,7 +31,7 @@ export const Folder = ({ title, item }: FolderInterface) => (
             <OptionsRow options={editIconMap}/>
         </div>
         <div className='folder-body'>
-            {item}
+            {children}
         </div>
         <div className='folder-footer'></div>
     </div>

@@ -1,13 +1,12 @@
 import * as React from "react";
 import { Folder } from "@components/folder";
 import './index.scss';
-import { StyleItem } from "@lib/interfaces";
+import { StyleItem, StyleFolder } from "@lib/interfaces";
+import { generateFolder } from "./helper";
 
-export const FolderContainer = ({styles}:{styles:Array<StyleItem>}) => {
+export const FolderContainer = ({ styles, styleItem }: { styles: Array<StyleItem|StyleFolder>, styleItem: React.FunctionComponent }) => {
 
-    return(<div className="folder-container">
-        {styles.map( style => {
-            return <Folder key={style.key }title={style.name} item={<p>{style.name}</p>}/>
-        })}
+    return (<div className="folder-container">
+        {generateFolder(styles, styleItem)}
     </div>);
 }

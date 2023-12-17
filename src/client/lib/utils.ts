@@ -2,29 +2,20 @@ import { StyleFolder, StyleItem } from "@lib/interfaces";
 
 export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleFolder> {
 
-    /*
-[
-    {
-        type:"folder",
-        name:"folder-name",
-        styles:[{CleanStyle}, {CleanStyle}, {Cleanstyle}]
-    }
-    {CleanStyle},
-]
-*/
 
-    let organisedFolder: Array<StyleFolder> = [];
+    let organisedFolder: Array<StyleFolder> = [{
+        type:'folder',
+        title:'root',
+        children:[]
+    }];
 
     const createFolder: any = (structure: Array<any>, path: string, style: StyleItem) => {
         const [folder, ...rest] = path.split('/');
 
-        //console.log({ structure, path, folder });
 
         if(!rest.length){ //endpoint
             return structure.push(style);
         }
-
-        console.log(structure);
 
         let foundFolder = structure.find(item => item.title === folder);
         if (!foundFolder) { //first iteration
@@ -50,9 +41,8 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
 
     style.forEach((item: StyleItem) => {
         item.title = item.name.split('/').slice(-1)[0] || item.name;
-        createFolder(organisedFolder, item.name, item);
+        createFolder(organisedFolder[0].children, item.name, item); //append to root
     });
 
-    console.log(organisedFolder);
-    return style;
+    return organisedFolder;
 }

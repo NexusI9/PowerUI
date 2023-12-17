@@ -15,7 +15,7 @@ export interface ButtonPad {
 
 export interface Folder{
     title:string;
-    item:React.JSX.Element; 
+    children:React.JSX.Element; 
 }
 
 

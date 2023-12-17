@@ -30,10 +30,8 @@ figma.ui.onmessage = msg => {
 
     case 'getPaintStyles':
 
-      let styles:Array<StyleItem> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, key, name, paints: paints as Paint[], type:"style" })); //only keep necessary;
-      console.log( classifyStyle(styles) );
-
-      figma.ui.postMessage(styles);
+      let styles:Array<StyleItem> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, key, name, paints: paints as Paint[], type:"style" })); //only keep necessary keys;
+      figma.ui.postMessage(classifyStyle(styles));
       break;
 
     case 'getTextStyles':

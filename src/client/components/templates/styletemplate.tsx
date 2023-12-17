@@ -15,10 +15,11 @@ interface StyleTemplate {
     onAddStyle: any;
     padStyle: ButtonPadInterface;
     getStyleMethod?:string;
+    styleItem: React.FunctionComponent;
 };
 
 
-export default ({ children, title, onSwitchDisplay, onAddStyle, padStyle, getStyleMethod }: StyleTemplate) => {
+export default ({ children, title, onSwitchDisplay, onAddStyle, padStyle, getStyleMethod, styleItem }: StyleTemplate) => {
 
     const optionMap = [
         { icon: List, onClick: onSwitchDisplay },
@@ -39,7 +40,7 @@ export default ({ children, title, onSwitchDisplay, onAddStyle, padStyle, getSty
         <SectionHeader title={title} options={optionMap} />
         {!!styles && !!styles.length ?
             //styles view
-            <FolderContainer styles={styles}/>
+            <FolderContainer styles={styles} styleItem={styleItem}/>
             :
             //default view
             <div className="full-height full-width flex f-center">

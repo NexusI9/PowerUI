@@ -1,5 +1,5 @@
 import * as React from "react";
-
+import { Swatch } from "@components/style-item/swatch";
 import { StyleTemplate } from "@components/templates";
 import PaintPlus from '@icons/paint-plus.svg';
 
@@ -15,6 +15,7 @@ export default() => (
             onClick: () => 0
         }}
         getStyleMethod="getPaintStyles"
+        styleItem={Swatch}
     >
     <></>
     </StyleTemplate>);
