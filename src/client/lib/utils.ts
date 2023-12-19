@@ -63,7 +63,6 @@ export function updateFolderName({ folder, level, name }: { folder: StyleFolder,
                 //update figma style name
                 figmaStyle.name = style.name;
             }
-            console.log(style);
         } catch (_) {
             console.warn(`Could not update style ${style.name}`)
         }

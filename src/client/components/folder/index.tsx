@@ -19,7 +19,7 @@ export const Folder = ({
     custom,
     attributes,
     level,
-    root=false
+    root = false
 }: FolderInterface
 ) => {
 
@@ -37,12 +37,17 @@ export const Folder = ({
     ];
 
 
-    const handleOnBlur = (e:any) => {
+    const handleOnBlur = (e: any) => {
 
         const newName = e.target.value;
         const oldName = attributes.title;
-        if(newName !== oldName){
-            send({type:'UPDATE_STYLE_FOLDER', level, newName, folder: attributes});   
+        if (newName !== oldName) {
+            send({
+                type: 'UPDATE_STYLE_FOLDER',
+                level,
+                newName,
+                folder: attributes
+            });
         }
     }
 
@@ -51,7 +56,7 @@ export const Folder = ({
             {!hideHeader && <div className='folder-header flex f-row'>
                 <div className="folder-header-left flex f-row gap-s">
                     <OptionsRow options={folderIconMap} className='folder-grab' />
-                    <Input value={title} type='discrete' onBlur={handleOnBlur}/>
+                    <Input value={title} type='discrete' onBlur={handleOnBlur} />
                 </div>
                 <OptionsRow options={editIconMap} />
             </div>

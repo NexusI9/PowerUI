@@ -1,5 +1,4 @@
-
-body{
+body {
     font-family: "Inter", sans-serif;
     color: var(--figma-color-text);
     margin: 0;
@@ -7,16 +6,16 @@ body{
 }
 
 
-svg{
-    fill:var(--figma-color-icon);
+svg {
+    fill: var(--figma-color-icon);
 }
 
-button{
+button {
     cursor: pointer;
 }
 
 
-#powerui-app{
+#powerui-app {
     display: grid;
     grid-template-columns: 50px auto;
     height: 100%;
@@ -25,55 +24,71 @@ button{
 
 
 
-.flex{
+.flex {
     display: flex;
 
-    &.f-row{
+    &.f-row {
         flex-direction: row;
     }
 
-    &.f-col{
+    &.f-col {
         flex-direction: column;
     }
 
-    &.f-center{
+
+
+    &.f-center {
         align-items: center;
         justify-content: center;
+
+        &-h {
+            align-items: center;
+        }
+
+        &-w {
+            justify-content: center;
+        }
     }
 
-    &.gap{
-        &-xs{
+    &.gap {
+        &-xs {
             gap: var(--space-xs);
         }
-        &-s{
+
+        &-s {
             gap: var(--space-s);
         }
-        &-m{
+
+        &-m {
             gap: var(--space-m);
         }
-        &-l{
+
+        &-l {
             gap: var(--space-l);
         }
-        &-xl{
+
+        &-xl {
             gap: var(--space-xl);
         }
-        &-xxl{
+
+        &-xxl {
             gap: var(--space-xxl);
         }
-        &-xxxl{
+
+        &-xxxl {
             gap: var(--space-xxxl);
         }
     }
 }
 
 
-.full{
+.full {
 
-    &-width{
+    &-width {
         width: 100%;
     }
 
-    &-height{
+    &-height {
         height: 100%;
     }
 }
