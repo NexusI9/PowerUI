@@ -22,6 +22,7 @@ export interface Folder{
     allowEdit?:boolean;
     attributes:StyleFolder;
     level?:number;
+    root?:boolean;
 }
 
 

@@ -18,7 +18,8 @@ export const Folder = ({
     allowEdit = true,
     custom,
     attributes,
-    level
+    level,
+    root=false
 }: FolderInterface
 ) => {
 
@@ -46,7 +47,7 @@ export const Folder = ({
     }
 
     return (
-        <div className={`folder flex f-col ${!display && 'hide' || ''}`}>
+        <div className={`folder flex f-col ${!display && 'hide' || ''} ${root && 'root' || ''}`}>
             {!hideHeader && <div className='folder-header flex f-row'>
                 <div className="folder-header-left flex f-row gap-s">
                     <OptionsRow options={folderIconMap} className='folder-grab' />

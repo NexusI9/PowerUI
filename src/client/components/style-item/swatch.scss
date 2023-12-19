@@ -1,7 +1,12 @@
-.style-item-swatch{
+.style-item-swatch {
     width: 20px;
     height: 20px;
     display: block;
     border: solid 1px var(--figma-color-border);
     border-radius: 100em;
+    cursor: pointer;
+
+    &:hover {
+        border-color: var(--figma-color-border-strong);
+    }
 }

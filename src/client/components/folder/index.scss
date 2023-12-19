@@ -2,6 +2,19 @@
 
     margin-left: var(--space-m);
 
+    &.root{
+        margin: 0;
+        
+        & > .folder-header{
+            display: none;
+        }
+        & > .folder-body{
+            margin: 0;
+            border-left: none;
+            padding: 0;
+        }
+    }
+
     &.hide {
 
         .folder-header-left {
