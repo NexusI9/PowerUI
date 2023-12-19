@@ -36,17 +36,13 @@ export const Folder = ({
     ];
 
 
-
     const handleOnBlur = (e:any) => {
 
-        const currentFolder = attributes.title;
-        const folder = e.target.value;
-        const styles = attributes.styles;
-
-        if(currentFolder !== folder){
-            send({type:'UPDATE_STYLE_FOLDER_NAME', level, folder, styles});
+        const newName = e.target.value;
+        const oldName = attributes.title;
+        if(newName !== oldName){
+            send({type:'UPDATE_STYLE_FOLDER', level, newName, folder: attributes});   
         }
-
     }
 
     return (

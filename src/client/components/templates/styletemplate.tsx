@@ -34,9 +34,9 @@ export default ({
         { icon: Plus, onClick: onAddStyle },
     ];
 
-
+    const [reload, setReload] = useState();
     const [styles, setStyles] = useState([]);
-    const handleOnMessage = (e:any) => console.log(e);
+    const handleOnMessage = (e:any) => setReload(e);
     listen(handleOnMessage);
 
     useEffect(() => {
@@ -45,7 +45,7 @@ export default ({
             get({ type: getStyleMethod }).then( ({styles}:{styles:Array<never>}) => setStyles(styles) );
         }
 
-    }, []);
+    }, [reload]);
 
 
 

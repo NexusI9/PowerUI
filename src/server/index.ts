@@ -1,7 +1,7 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
-import { StyleItem } from "@lib/interfaces";
-import { classifyStyle } from "@lib/utils";
+import { StyleFolder, StyleItem } from "@lib/interfaces";
+import { classifyStyle, updateFolderName } from "@lib/utils";
 
 figma.showUI(__html__, { themeColors: true });
 figma.ui.resize(750, 655);
@@ -38,21 +38,9 @@ figma.ui.onmessage = msg => {
       figma.ui.postMessage(figma.getLocalTextStyles());
       break;
 
-    case 'UPDATE_STYLE_FOLDER_NAME':
-      let { level, folder, styles } = msg;
-      try{
-        styles = styles.map((style: StyleItem) => { 
-            //split and replace folder name
-            //-1 because of root as fake first directory
-            const split:Array<string> = style.name.split('/');
-            split.splice(level-1, 1, folder);
-            style.name = split.join('/');
-            return style;
-         });
-         console.log(styles);
-      }catch(_){
-
-      }
+    case 'UPDATE_STYLE_FOLDER':
+      let { level, newName, folder } = msg;
+      updateFolderName({folder, level, name:newName});
       break;
 
 

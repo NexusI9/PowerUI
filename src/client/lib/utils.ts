@@ -4,16 +4,16 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
 
 
     let organisedFolder: StyleFolder = {
-        type:'folder',
-        title:'root',
-        styles:[],
-        folders:[]
+        type: 'folder',
+        title: 'root',
+        styles: [],
+        folders: []
     };
 
     const createFolder: any = (structure: StyleFolder, path: string, style: StyleItem) => {
         const [folder, ...rest] = path.split('/');
 
-        if(!rest.length){ //endpoint
+        if (!rest.length) { //endpoint
             return structure.styles.push(style);
         }
 
@@ -23,11 +23,11 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
             foundFolder = {
                 type: 'folder',
                 title: folder,
-                styles:[],
+                styles: [],
                 folders: []
             };
             structure.folders.push(foundFolder);
-            
+
         }
 
         if (!!rest.length) {
@@ -46,4 +46,31 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
     });
 
     return [organisedFolder];
+}
+
+
+export function updateFolderName({ folder, level, name }: { folder: StyleFolder, level: number, name: string }) {
+
+    const update = (style:StyleItem) => {
+        try {
+            //split and replace folder name
+            //-1 because of root as fake first directory
+            const split: Array<string> = style.name.split('/');
+            split.splice(level - 1, 1, name);
+            style.name = split.join('/');
+            const figmaStyle = figma.getStyleById(style.id);
+            if (figmaStyle) {
+                //update figma style name
+                figmaStyle.name = style.name;
+            }
+            console.log(style);
+        } catch (_) {
+            console.warn(`Could not update style ${style.name}`)
+        }
+    }
+
+    folder.styles.forEach((style: StyleItem) => update(style) );
+    folder.folders.forEach((child:StyleFolder) => updateFolderName({folder: child, level, name}));
+
+
 }
