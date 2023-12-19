@@ -20,6 +20,8 @@ export interface Folder{
     hideHeader?:boolean;
     custom?:any;
     allowEdit?:boolean;
+    attributes:StyleFolder;
+    level?:number;
 }
 
 

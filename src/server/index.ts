@@ -28,15 +28,34 @@ figma.ui.onmessage = msg => {
 
       break;
 
-    case 'getPaintStyles':
-
-      let styles:Array<StyleItem> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, figmaKey: key, name, paints: paints as Paint[], type:"style" })); //only keep necessary keys;
-      figma.ui.postMessage(classifyStyle(styles));
+    case 'GET_PAINT_STYLES':
+      let paintStyles: Array<StyleItem> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, figmaKey: key, name, paints: paints as Paint[], type: "style" })); //only keep necessary keys;
+      figma.ui.postMessage({ type: msg.type, styles: classifyStyle(paintStyles) });
       break;
 
-    case 'getTextStyles':
+
+    case 'GET_TEXT_STYLES':
       figma.ui.postMessage(figma.getLocalTextStyles());
       break;
+
+    case 'UPDATE_STYLE_FOLDER_NAME':
+      let { level, folder, styles } = msg;
+      try{
+        styles = styles.map((style: StyleItem) => { 
+            //split and replace folder name
+            //-1 because of root as fake first directory
+            const split:Array<string> = style.name.split('/');
+            split.splice(level-1, 1, folder);
+            style.name = split.join('/');
+            return style;
+         });
+         console.log(styles);
+      }catch(_){
+
+      }
+      break;
+
+
 
     default:
 
@@ -46,3 +65,18 @@ figma.ui.onmessage = msg => {
   // keep running, which shows the cancel button at the bottom of the screen.
   //figma.closePlugin();
 };
+
+figma.on("documentchange", ({ documentChanges }) => {
+
+  documentChanges.map(change => {
+
+    switch (change.type) {
+
+      case 'STYLE_PROPERTY_CHANGE':
+        figma.ui.postMessage({ type: 'RELOAD_PAGE' });
+        break;
+    }
+
+  });
+
+});

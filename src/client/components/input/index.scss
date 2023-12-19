@@ -1,0 +1,22 @@
+.input-field {
+
+    input {
+
+        background-color: transparent;
+        border: solid 1px var(--figma-color-border);
+        user-select: none;
+        padding: 0 var(--space-s);
+        border-radius: var(--radius-s);
+
+        &,
+        &::placeholder {
+            color: var(--figma-color-text);
+        }
+
+        &:focus {
+            outline-color: var(--figma-color-border-brand);
+        }
+
+    }
+
+}

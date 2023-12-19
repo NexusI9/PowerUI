@@ -6,6 +6,6 @@ import { generateFolder } from "./helper";
 export const FolderContainer = ({ styles, styleItem, custom }: { styles: Array<StyleFolder>, styleItem: React.FunctionComponent, custom?:{}}) => {
 
     return (<div className="folder-container">
-        {generateFolder(styles, styleItem, custom)}
+        {generateFolder(styles, styleItem, 0, custom)}
     </div>);
 }

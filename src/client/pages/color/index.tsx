@@ -18,7 +18,7 @@ export default () => {
             onAddStyle={() => 0}
             onSwitchDisplay={() => 0}
             padStyle={buttonPadStyle}
-            getStyleMethod="getPaintStyles"
+            getStyleMethod="GET_PAINT_STYLES"
             styleItem={Swatch}
         />);
 }

@@ -6,7 +6,7 @@ import Plus from '@icons/add.svg';
 import { ButtonPad } from "@components/button-pad";
 import { FolderContainer } from "@components/folder-container";
 import { ButtonPad as ButtonPadInterface, Option as OptionInterface } from "@lib/interfaces";
-import { get } from '@lib/ipc';
+import { get, listen } from '@lib/ipc';
 
 interface StyleTemplate {
     title: string;
@@ -34,15 +34,22 @@ export default ({
         { icon: Plus, onClick: onAddStyle },
     ];
 
+
     const [styles, setStyles] = useState([]);
+    const handleOnMessage = (e:any) => console.log(e);
+    listen(handleOnMessage);
 
     useEffect(() => {
 
         if (getStyleMethod) {
-            get({ type: getStyleMethod }).then(r => setStyles(r));
+            get({ type: getStyleMethod }).then( ({styles}:{styles:Array<never>}) => setStyles(styles) );
         }
 
     }, []);
+
+
+
+
 
     return (<>
         <SectionHeader title={title} options={optionMap} />

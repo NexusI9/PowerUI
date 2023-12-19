@@ -13,7 +13,7 @@ export default () => (
             text: 'Create Fonts Set',
             onClick: () => 0
         }}
-        getStyleMethod="getTextStyles"
+        getStyleMethod="GET_TEXT_STYLES"
         styleItem={Font}
     />
     );
