@@ -1,6 +1,6 @@
 .style-item-swatch {
 
-    label {
+    & > label {
         width: 20px;
         height: 20px;
         display: block;
@@ -18,8 +18,11 @@
     }
 
     &-detail{
-        & > p{
-            width: 80px;
+        .input-field{
+            input{
+                width: 80px;
+            }
+            font-size: small;
         }
     }
 

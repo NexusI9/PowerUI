@@ -1,3 +1,4 @@
+import { Input } from '@components/input';
 import { rgb, rgbToHex, hexToRgb, rgbToHsl } from './swatch.helper';
 import './swatch.scss';
 import { send } from '@lib/ipc';
@@ -32,7 +33,7 @@ export const Swatch = (props: any) => {
                             />
                         </label>
                         <div className='style-item-swatch-detail flex f-row gap-l'>
-                            <p><small>{nameFromPath(props.name)}</small></p>
+                            <Input value={nameFromPath(props.name)}/>
                             <div className='style-item-swatch-codes'>
                                 {
                                     colorValues.map( (value,i) => <p key={paint.id+i+value}><small>{value}</small></p>)
