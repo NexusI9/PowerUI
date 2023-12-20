@@ -6,18 +6,18 @@ function clone(val:any) {
 
 export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleFolder> {
 
-
+    //initial folder
     let organisedFolder: StyleFolder = {
         type: 'FOLDER',
         title: 'root',
-        fullpath:'root',
+        fullpath:'',
         styles: [],
         folders: []
     };
 
     const createFolder: any = (structure: StyleFolder, path: string, style: StyleItem) => {
         const [folder, ...rest] = path.split('/');
-
+        
         if (!rest.length) { //endpoint
             return structure.styles.push(style);
         }
@@ -28,7 +28,7 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
             foundFolder = {
                 type: 'FOLDER',
                 title: folder,
-                fullpath:path.split('/').slice(0,-1).join('/'),
+                fullpath: structure.fullpath.length && [structure.fullpath, folder].join('/') || folder,
                 styles: [],
                 folders: []
             };
@@ -36,7 +36,7 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
 
         }
 
-        console.log(foundFolder);
+        console.log(foundFolder.fullpath);
 
         if (!!rest.length) {
             createFolder(foundFolder, rest.join('/'), style);

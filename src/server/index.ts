@@ -47,11 +47,12 @@ figma.ui.onmessage = msg => {
     break;
 
     case 'ADD_STYLE_COLOR':
-      const newStyleColor = figma.createPaintStyle() ;
+      console.log(msg);
+      /*const newStyleColor = figma.createPaintStyle() ;
       newStyleColor.name = [msg.folder, msg.name].join('/');
       if(msg.style){
         newStyleColor.paints = msg.style;
-      }
+      }*/
     break;
 
     default:

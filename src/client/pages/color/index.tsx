@@ -2,7 +2,7 @@ import { Swatch } from "@components/style-item/swatch";
 import { StyleTemplate } from "@components/templates";
 import PaintPlus from '@icons/paint-plus.svg';
 import { ButtonPad } from "@lib/interfaces";
-import { createColor } from "@lib/color.slice";
+import { send } from "@lib/ipc";
 
 export default () => {
     
@@ -13,7 +13,7 @@ export default () => {
     };
 
     const handleAddItem = ({folder, name}:{folder:string, name:string}) => {
-        console.log({folder, name});
+        send({type:"ADD_STYLE_COLOR", folder, name});
     }
 
     

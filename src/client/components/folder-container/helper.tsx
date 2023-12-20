@@ -3,23 +3,23 @@ import { Folder } from "@components/folder";
 import * as React from 'react';
 import { ButtonIcon } from "@components/button-icon";
 import Add from '@icons/add.svg';
-import { get_folder_name_from_style } from '@lib/utils';
 
-export function generateFolder(folder: Array<StyleFolder>, styleItem: React.FunctionComponent, level = 0, onAddItem:any, custom?: {}): any {
-    return folder.map((item, i) => {
+export function generateFolder(folder: Array<StyleFolder>, styleItem: React.FunctionComponent, level = 0, onAddItem: any, custom?: {}): any {
+    return folder.map((item: StyleFolder, i: number) => {
+
         const isRoot = item.title === 'root';
-        const handleAddItem = () => {
-
-        }
-
+        const handleAddItem = () => onAddItem({ folder: item.fullpath, name: 'new-style' });
+        
+        //go deeper into tree level
         level += 1;
+
         return <Folder
             key={item.title + i}
             title={item.title}
             custom={custom}
             allowEdit={!!item.styles.length}
             attributes={item}
-            level={level-1}
+            level={level - 1}
             root={isRoot}
         >
             <>
