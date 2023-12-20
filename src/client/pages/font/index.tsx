@@ -6,7 +6,7 @@ import FontPlus from '@icons/font-plus.svg';
 export default () => (
     <StyleTemplate
         title="Fonts"
-        onAddStyle={() => 0}
+        onAddItem={() => 0}
         onSwitchDisplay={() => 0}
         padStyle={{
             icon: FontPlus,

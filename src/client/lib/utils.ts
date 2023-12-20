@@ -8,8 +8,9 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
 
 
     let organisedFolder: StyleFolder = {
-        type: 'folder',
+        type: 'FOLDER',
         title: 'root',
+        fullpath:'root',
         styles: [],
         folders: []
     };
@@ -25,14 +26,17 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
         if (!foundFolder) { //first iteration
 
             foundFolder = {
-                type: 'folder',
+                type: 'FOLDER',
                 title: folder,
+                fullpath:path.split('/').slice(0,-1).join('/'),
                 styles: [],
                 folders: []
             };
             structure.folders.push(foundFolder);
 
         }
+
+        console.log(foundFolder);
 
         if (!!rest.length) {
             createFolder(foundFolder, rest.join('/'), style);
@@ -85,4 +89,17 @@ export function updateColor({ style, color }: { style: StyleItem, color: Color }
     figmaStyle.paints = newPaint;
     return;
 
+}
+
+
+export function get_folder_name_from_style(item:StyleItem){
+    const name = item.name;
+    const parts = name.split('/');
+    const folderPath = parts.slice(0, -1).join('/');
+    const lastSegment = parts[parts.length - 1];
+
+    return{
+        folder:folderPath,
+        name:lastSegment
+    };   
 }

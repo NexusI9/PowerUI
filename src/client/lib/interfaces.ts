@@ -32,12 +32,13 @@ export interface StyleItem{
     name:string;
     title?:string;
     paints: Array<Paint|Text>;
-    type:"style";
+    type:"STYLE";
 }
 
 export interface StyleFolder{
     title:string;
-    type:"folder";
+    type:"FOLDER";
+    fullpath:string;
     styles:Array<StyleItem>;
     folders:Array<StyleFolder>;
 }
@@ -46,4 +47,10 @@ export interface Color{
     r:number;
     g:number;
     b:number;
+}
+
+export interface CreateColor{
+    folder:string;
+    name:string;
+    style?: PaintStyle;
 }

@@ -5,13 +5,13 @@ import List from '@icons/list-bulleted.svg';
 import Plus from '@icons/add.svg';
 import { ButtonPad } from "@components/button-pad";
 import { FolderContainer } from "@components/folder-container";
-import { ButtonPad as ButtonPadInterface, Option as OptionInterface } from "@lib/interfaces";
+import { ButtonPad as ButtonPadInterface } from "@lib/interfaces";
 import { get, listen } from '@lib/ipc';
 
 interface StyleTemplate {
     title: string;
     onSwitchDisplay: any;
-    onAddStyle: any;
+    onAddItem: any;
     padStyle: ButtonPadInterface;
     getStyleMethod?: string;
     styleItem: React.FunctionComponent;
@@ -22,7 +22,7 @@ interface StyleTemplate {
 export default ({ 
     title, 
     onSwitchDisplay, 
-    onAddStyle, 
+    onAddItem, 
     padStyle, 
     getStyleMethod, 
     styleItem,
@@ -31,7 +31,7 @@ export default ({
 
     const optionMap = [
         { icon: List, onClick: onSwitchDisplay },
-        { icon: Plus, onClick: onAddStyle },
+        { icon: Plus, onClick: onAddItem },
     ];
 
     const [reload, setReload] = useState(0);
@@ -42,6 +42,7 @@ export default ({
             setReload(date.getTime());
         }
     };
+    
     listen(handleOnMessage);
 
     useEffect(() => {
@@ -53,14 +54,11 @@ export default ({
     }, [reload]);
 
 
-
-
-
     return (<>
         <SectionHeader title={title} options={optionMap} />
         {!!styles && !!styles.length ?
             //styles view
-            <FolderContainer styles={styles} styleItem={styleItem} custom={{...custom}} />
+            <FolderContainer styles={styles} styleItem={styleItem} custom={{...custom}} onAddItem={onAddItem} />
             :
             //default view
             <div className="full-height full-width flex f-center">

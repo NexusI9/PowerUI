@@ -29,7 +29,7 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'GET_PAINT_STYLES':
-      let paintStyles: Array<StyleItem> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, figmaKey: key, name, paints: paints as Paint[], type: "style" })); //only keep necessary keys;
+      let paintStyles: Array<StyleItem> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, figmaKey: key, name, paints: paints as Paint[], type: "STYLE" })); //only keep necessary keys;
       figma.ui.postMessage({ type: msg.type, styles: classifyStyle(paintStyles) });
       break;
 
@@ -39,13 +39,19 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'UPDATE_STYLE_FOLDER':
-      const { level, newName, folder } = msg;
-      updateFolderName({folder, level, name:newName});
+      updateFolderName({folder: msg.folder, level:msg.level, name:msg.newName});
       break;
 
     case 'UPDATE_STYLE_COLOR':
-      const {style, color} = msg;
-      updateColor({style, color});
+      updateColor({style:msg.style, color:msg.color});
+    break;
+
+    case 'ADD_STYLE_COLOR':
+      const newStyleColor = figma.createPaintStyle() ;
+      newStyleColor.name = [msg.folder, msg.name].join('/');
+      if(msg.style){
+        newStyleColor.paints = msg.style;
+      }
     break;
 
     default:
@@ -64,6 +70,7 @@ figma.on("documentchange", ({ documentChanges }) => {
     switch (change.type) {
 
       case 'STYLE_PROPERTY_CHANGE':
+      case 'STYLE_CREATE':
         figma.ui.postMessage({ type: 'RELOAD_PAGE' });
         break;
     }
@@ -71,3 +78,5 @@ figma.on("documentchange", ({ documentChanges }) => {
   });
 
 });
+
+

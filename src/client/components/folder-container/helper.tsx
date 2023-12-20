@@ -1,12 +1,17 @@
-import { StyleFolder, Option as OptionInterface } from "@lib/interfaces";
+import { StyleFolder, Option as OptionInterface, StyleItem } from "@lib/interfaces";
 import { Folder } from "@components/folder";
 import * as React from 'react';
 import { ButtonIcon } from "@components/button-icon";
 import Add from '@icons/add.svg';
+import { get_folder_name_from_style } from '@lib/utils';
 
-export function generateFolder(folder: Array<StyleFolder>, styleItem: React.FunctionComponent, level = 0, custom?: {}): any {
+export function generateFolder(folder: Array<StyleFolder>, styleItem: React.FunctionComponent, level = 0, onAddItem:any, custom?: {}): any {
     return folder.map((item, i) => {
         const isRoot = item.title === 'root';
+        const handleAddItem = () => {
+
+        }
+
         level += 1;
         return <Folder
             key={item.title + i}
@@ -20,9 +25,9 @@ export function generateFolder(folder: Array<StyleFolder>, styleItem: React.Func
             <>
                 <div className="flex f-row gap-s f-center-h">
                     {item.styles.map(style => React.createElement(styleItem, { key: style.id, ...style }))}
-                    {!isRoot && <ButtonIcon icon={Add} onClick={() => 0} />}
+                    {!isRoot && <ButtonIcon icon={Add} onClick={handleAddItem} />}
                 </div>
-                {generateFolder(item.folders, styleItem, level, custom)}
+                {generateFolder(item.folders, styleItem, level, onAddItem, custom)}
             </>
         </Folder>
     });
