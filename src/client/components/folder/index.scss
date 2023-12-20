@@ -40,6 +40,10 @@
     &-header {
         width: 100%;
 
+        .input-field{
+            font-weight: bold;
+        }
+
         &,
         &>div {
             align-items: center;
