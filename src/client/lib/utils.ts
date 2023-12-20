@@ -1,4 +1,8 @@
-import { StyleFolder, StyleItem } from "@lib/interfaces";
+import { Color, StyleFolder, StyleItem } from "@lib/interfaces";
+
+function clone(val:any) {
+    return JSON.parse(JSON.stringify(val))
+  }
 
 export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleFolder> {
 
@@ -49,9 +53,9 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
 }
 
 
-export function updateFolderName({ folder, level, name }: { folder: StyleFolder, level: number, name: string }) {
+export function updateFolderName({ folder, level, name }: { folder: StyleFolder, level: number, name: string }): void {
 
-    const update = (style:StyleItem) => {
+    const update = (style: StyleItem) => {
         try {
             //split and replace folder name
             //-1 because of root as fake first directory
@@ -68,8 +72,17 @@ export function updateFolderName({ folder, level, name }: { folder: StyleFolder,
         }
     }
 
-    folder.styles.forEach((style: StyleItem) => update(style) );
-    folder.folders.forEach((child:StyleFolder) => updateFolderName({folder: child, level, name}));
+    folder.styles.forEach((style: StyleItem) => update(style));
+    folder.folders.forEach((child: StyleFolder) => updateFolderName({ folder: child, level, name }));
 
+}
+
+export function updateColor({ style, color }: { style: StyleItem, color: Color }): void {
+
+    const figmaStyle = figma.getStyleById(style.id) as PaintStyle;
+    const newPaint = clone(figmaStyle.paints);
+    newPaint.map((paint: any) => { paint.color = color; });
+    figmaStyle.paints = newPaint;
+    return;
 
 }

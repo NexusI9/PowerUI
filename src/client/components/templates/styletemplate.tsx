@@ -34,8 +34,6 @@ export default ({
         { icon: Plus, onClick: onAddStyle },
     ];
 
-    console.log('test');
-
     const [reload, setReload] = useState(0);
     const [styles, setStyles] = useState([]);
     const handleOnMessage = (e:any) =>{

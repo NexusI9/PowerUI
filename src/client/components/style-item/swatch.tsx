@@ -1,4 +1,4 @@
-import { rgb, rgbToHex } from './swatch.helper';
+import { rgb, rgbToHex, hexToRgb } from './swatch.helper';
 import './swatch.scss';
 import { send } from '@lib/ipc';
 
@@ -6,9 +6,9 @@ import { send } from '@lib/ipc';
 export const Swatch = (props: any) => {
 
     const handleOnChange = (e:any) => {
-        console.log(e);
+        send({type:'UPDATE_STYLE_COLOR', style:props, color: hexToRgb(e.target.value, true) });
     }
-    //console.log(props);
+
     return (<>
         {
             props.paints.map((paint: any) => (

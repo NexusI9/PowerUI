@@ -1,7 +1,7 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
 import { StyleFolder, StyleItem } from "@lib/interfaces";
-import { classifyStyle, updateFolderName } from "@lib/utils";
+import { classifyStyle, updateColor, updateFolderName } from "@lib/utils";
 
 figma.showUI(__html__, { themeColors: true });
 figma.ui.resize(750, 655);
@@ -39,11 +39,14 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'UPDATE_STYLE_FOLDER':
-      let { level, newName, folder } = msg;
+      const { level, newName, folder } = msg;
       updateFolderName({folder, level, name:newName});
       break;
 
-
+    case 'UPDATE_STYLE_COLOR':
+      const {style, color} = msg;
+      updateColor({style, color});
+    break;
 
     default:
 
