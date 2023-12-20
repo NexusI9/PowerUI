@@ -12,6 +12,6 @@ export const FolderContainer = ({ styles, styleItem, onAddItem, custom }:
     }) => {
 
     return (<div className="folder-container">
-        {generateFolder(styles, styleItem, 0, onAddItem, custom)}
+        {generateFolder(styles, styleItem, onAddItem, custom)}
     </div>);
 }

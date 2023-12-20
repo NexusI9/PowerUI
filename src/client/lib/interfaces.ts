@@ -40,6 +40,7 @@ export interface StyleFolder{
     type:"FOLDER";
     fullpath:string;
     styles:Array<StyleItem>;
+    level:number;
     folders:Array<StyleFolder>;
 }
 

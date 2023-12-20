@@ -4,14 +4,11 @@ import * as React from 'react';
 import { ButtonIcon } from "@components/button-icon";
 import Add from '@icons/add.svg';
 
-export function generateFolder(folder: Array<StyleFolder>, styleItem: React.FunctionComponent, level = 0, onAddItem: any, custom?: {}): any {
+export function generateFolder(folder: Array<StyleFolder>, styleItem: React.FunctionComponent, onAddItem: any, custom?: {}): any {
     return folder.map((item: StyleFolder, i: number) => {
 
         const isRoot = item.title === 'root';
         const handleAddItem = () => onAddItem({ folder: item.fullpath, name: 'new-style' });
-        
-        //go deeper into tree level
-        level += 1;
 
         return <Folder
             key={item.title + i}
@@ -19,7 +16,7 @@ export function generateFolder(folder: Array<StyleFolder>, styleItem: React.Func
             custom={custom}
             allowEdit={!!item.styles.length}
             attributes={item}
-            level={level - 1}
+            level={item.level}
             root={isRoot}
         >
             <>
@@ -27,7 +24,7 @@ export function generateFolder(folder: Array<StyleFolder>, styleItem: React.Func
                     {item.styles.map(style => React.createElement(styleItem, { key: style.id, ...style }))}
                     {!isRoot && <ButtonIcon icon={Add} onClick={handleAddItem} />}
                 </div>
-                {generateFolder(item.folders, styleItem, level, onAddItem, custom)}
+                {generateFolder(item.folders, styleItem, onAddItem, custom)}
             </>
         </Folder>
     });

@@ -7,20 +7,27 @@ function clone(val:any) {
 export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleFolder> {
 
     //initial folder
+    let level = -1;
     let organisedFolder: StyleFolder = {
         type: 'FOLDER',
         title: 'root',
         fullpath:'',
+        level:level,
         styles: [],
         folders: []
     };
 
+
     const createFolder: any = (structure: StyleFolder, path: string, style: StyleItem) => {
         const [folder, ...rest] = path.split('/');
-        
+
         if (!rest.length) { //endpoint
+            level = -1;
             return structure.styles.push(style);
         }
+
+        //update tree level
+        level++;
 
         let foundFolder = structure.folders.find(item => item.title === folder);
         if (!foundFolder) { //first iteration
@@ -29,6 +36,7 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
                 type: 'FOLDER',
                 title: folder,
                 fullpath: structure.fullpath.length && [structure.fullpath, folder].join('/') || folder,
+                level:level,
                 styles: [],
                 folders: []
             };
@@ -40,9 +48,10 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
             createFolder(foundFolder, rest.join('/'), style);
         } else {
             foundFolder.styles.push(style);
+            level = -1;
         }
 
-
+        console.log(foundFolder);
 
     };
 
@@ -59,10 +68,10 @@ export function updateFolderName({ folder, level, name }: { folder: StyleFolder,
 
     const update = (style: StyleItem) => {
         try {
-            //split and replace folder name
+            //split and replace folder name in styles
             //-1 because of root as fake first directory
             const split: Array<string> = style.name.split('/');
-            split.splice(level - 1, 1, name);
+            split.splice(level, 1, name);
             style.name = split.join('/');
             const figmaStyle = figma.getStyleById(style.id);
             if (figmaStyle) {
