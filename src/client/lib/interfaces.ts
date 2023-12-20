@@ -41,3 +41,9 @@ export interface StyleFolder{
     styles:Array<StyleItem>;
     folders:Array<StyleFolder>;
 }
+
+export interface Color{
+    r:number;
+    g:number;
+    b:number;
+}

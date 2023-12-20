@@ -34,9 +34,16 @@ export default ({
         { icon: Plus, onClick: onAddStyle },
     ];
 
-    const [reload, setReload] = useState();
+    console.log('test');
+
+    const [reload, setReload] = useState(0);
     const [styles, setStyles] = useState([]);
-    const handleOnMessage = (e:any) => setReload(e);
+    const handleOnMessage = (e:any) =>{
+        if(e.type === 'RELOAD_PAGE'){
+            const date = new Date();
+            setReload(date.getTime());
+        }
+    };
     listen(handleOnMessage);
 
     useEffect(() => {

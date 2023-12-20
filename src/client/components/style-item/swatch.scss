@@ -5,6 +5,9 @@
     border: solid 1px var(--figma-color-border);
     border-radius: 100em;
     cursor: pointer;
+    input{
+        visibility: hidden;
+    }
 
     &:hover {
         border-color: var(--figma-color-border-strong);
