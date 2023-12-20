@@ -31,7 +31,7 @@ export default ({
 
     const optionMap = [
         { icon: List, onClick: onSwitchDisplay },
-        { icon: Plus, onClick: () => onAddItem({folder:'root', name:'new-item'}) },
+        { icon: Plus, onClick: () => onAddItem({folder:'', name:'new-item'}) },
     ];
 
     const [reload, setReload] = useState(0);

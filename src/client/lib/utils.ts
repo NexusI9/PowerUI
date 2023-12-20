@@ -1,18 +1,18 @@
 import { Color, StyleFolder, StyleItem } from "@lib/interfaces";
 
-function clone(val:any) {
+function clone(val: any) {
     return JSON.parse(JSON.stringify(val))
-  }
+}
 
 export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleFolder> {
 
     //initial folder
-    let level = -1;
+    let level = -1; // -1 cause Root (declared below) acts as a fake (hidden directory)
     let organisedFolder: StyleFolder = {
         type: 'FOLDER',
         title: 'root',
-        fullpath:'',
-        level:level,
+        fullpath: '',
+        level: level,
         styles: [],
         folders: []
     };
@@ -36,7 +36,7 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
                 type: 'FOLDER',
                 title: folder,
                 fullpath: structure.fullpath.length && [structure.fullpath, folder].join('/') || folder,
-                level:level,
+                level: level,
                 styles: [],
                 folders: []
             };
@@ -69,13 +69,13 @@ export function updateFolderName({ folder, level, name }: { folder: StyleFolder,
     const update = (style: StyleItem) => {
         try {
             //split and replace folder name in styles
-            //-1 because of root as fake first directory
             const split: Array<string> = style.name.split('/');
             split.splice(level, 1, name);
             style.name = split.join('/');
+
+            //update figma style name
             const figmaStyle = figma.getStyleById(style.id);
             if (figmaStyle) {
-                //update figma style name
                 figmaStyle.name = style.name;
             }
         } catch (_) {
@@ -99,14 +99,14 @@ export function updateColor({ style, color }: { style: StyleItem, color: Color }
 }
 
 
-export function get_folder_name_from_style(item:StyleItem){
+export function get_folder_name_from_style(item: StyleItem) {
     const name = item.name;
     const parts = name.split('/');
     const folderPath = parts.slice(0, -1).join('/');
     const lastSegment = parts[parts.length - 1];
 
-    return{
-        folder:folderPath,
-        name:lastSegment
-    };   
+    return {
+        folder: folderPath,
+        name: lastSegment
+    };
 }

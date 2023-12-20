@@ -50,7 +50,7 @@ figma.ui.onmessage = msg => {
 
     case 'ADD_STYLE_COLOR':
       const newStyleColor = figma.createPaintStyle() ;
-      newStyleColor.name = [msg.folder, msg.name].join('/');
+      newStyleColor.name = msg.folder.length && [msg.folder, msg.name].join('/') || msg.name;
       newStyleColor.paints = msg?.style || DEFAULT_STYLE_COLOR;
 
     break;
