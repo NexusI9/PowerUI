@@ -1,15 +1,38 @@
 .style-item-swatch {
-    width: 20px;
-    height: 20px;
-    display: block;
-    border: solid 1px var(--figma-color-border);
-    border-radius: 100em;
-    cursor: pointer;
-    input{
-        visibility: hidden;
+
+    label {
+        width: 20px;
+        height: 20px;
+        display: block;
+        border: solid 1px var(--figma-color-border);
+        border-radius: 100em;
+        cursor: pointer;
+
+        input {
+            visibility: hidden;
+        }
+
+        &:hover {
+            border-color: var(--figma-color-border-strong);
+        }
     }
 
-    &:hover {
-        border-color: var(--figma-color-border-strong);
+    &-detail{
+        & > p{
+            width: 80px;
+        }
     }
+
+    &-codes {
+        display: grid;
+        grid-template-columns: 80px 140px 140px;
+        color: var(--figma-color-text-onbrand-secondary);
+        p{
+            cursor: pointer;
+            &:hover{
+                color: var(--figma-color-text-onbrand);
+            }
+        }
+    }
+
 }

@@ -55,3 +55,6 @@ export interface CreateColor{
     name:string;
     style?: PaintStyle;
 }
+
+
+export type DisplayMode = "grid"|"list";

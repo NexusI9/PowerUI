@@ -108,3 +108,9 @@ export function get_folder_name_from_style(item: StyleItem) {
         name: lastSegment
     };
 }
+
+export function nameFromPath(path: string) {
+    const parts = path.split('/');
+    const lastSegment = parts[parts.length - 1];
+    return lastSegment;
+}

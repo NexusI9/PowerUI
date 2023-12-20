@@ -1,6 +1,6 @@
 import * as React from "react";
 import './index.scss';
-import {StyleFolder } from "@lib/interfaces";
+import {DisplayMode, StyleFolder } from "@lib/interfaces";
 import { generateFolder } from "./helper";
 
 export const FolderContainer = ({ styles, styleItem, onAddItem, displayMode='grid', custom }: 
@@ -8,11 +8,11 @@ export const FolderContainer = ({ styles, styleItem, onAddItem, displayMode='gri
         styles: Array<StyleFolder>, 
         styleItem: React.FunctionComponent, 
         onAddItem: any,
-        displayMode:'grid'|'list',
+        displayMode:DisplayMode,
         custom?:{}
     }) => {
 
-    return (<div className="folder-container">
+    return (<div className="folder-container" data-display-mode={displayMode}>
         {generateFolder(styles, styleItem, onAddItem, custom)}
     </div>);
 }
