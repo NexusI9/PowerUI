@@ -51,8 +51,6 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
             level = -1;
         }
 
-        console.log(foundFolder);
-
     };
 
     style.forEach((item: StyleItem) => {

@@ -70,6 +70,7 @@ figma.on("documentchange", ({ documentChanges }) => {
 
       case 'STYLE_PROPERTY_CHANGE':
       case 'STYLE_CREATE':
+      case 'STYLE_DELETE':
         figma.ui.postMessage({ type: 'RELOAD_PAGE' });
         break;
     }
