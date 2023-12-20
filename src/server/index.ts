@@ -44,7 +44,6 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'UPDATE_STYLE_COLOR':
-     
       updateColor({style:msg.style, color:msg.color});
     break;
 
@@ -52,7 +51,6 @@ figma.ui.onmessage = msg => {
       const newStyleColor = figma.createPaintStyle() ;
       newStyleColor.name = msg.folder.length && [msg.folder, msg.name].join('/') || msg.name;
       newStyleColor.paints = msg?.style || DEFAULT_STYLE_COLOR;
-
     break;
 
     default:
