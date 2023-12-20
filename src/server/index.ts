@@ -1,5 +1,6 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
+import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { StyleFolder, StyleItem } from "@lib/interfaces";
 import { classifyStyle, updateColor, updateFolderName } from "@lib/utils";
 
@@ -43,16 +44,15 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'UPDATE_STYLE_COLOR':
+     
       updateColor({style:msg.style, color:msg.color});
     break;
 
     case 'ADD_STYLE_COLOR':
-      console.log(msg);
-      /*const newStyleColor = figma.createPaintStyle() ;
+      const newStyleColor = figma.createPaintStyle() ;
       newStyleColor.name = [msg.folder, msg.name].join('/');
-      if(msg.style){
-        newStyleColor.paints = msg.style;
-      }*/
+      newStyleColor.paints = msg?.style || DEFAULT_STYLE_COLOR;
+
     break;
 
     default:

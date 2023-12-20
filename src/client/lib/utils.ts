@@ -36,8 +36,6 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
 
         }
 
-        console.log(foundFolder.fullpath);
-
         if (!!rest.length) {
             createFolder(foundFolder, rest.join('/'), style);
         } else {
