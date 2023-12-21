@@ -58,3 +58,8 @@ export interface CreateColor{
 
 
 export type DisplayMode = "grid"|"list";
+
+export interface PanelCommand{
+    text:string;
+    onClick:any;
+}

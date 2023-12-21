@@ -1,0 +1,28 @@
+.panel-command {
+
+    position: absolute;
+    min-width: 160;
+    display: block;
+    background: var(--powerui-color-bg-brand-tertiary);
+    border-radius: var(--radius-s);
+
+    &.hide{
+        display: none;
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+        padding: var(--space-m) 0;
+    }
+
+    li {
+        font-size: 14px;
+        padding: 0 var(--space-m);
+
+        &:hover {
+            background-color: var(--figma-color-bg-brand-hover);
+        }
+    }
+
+}

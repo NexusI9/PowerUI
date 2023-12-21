@@ -4,7 +4,7 @@ import Paint from "@icons/paint.svg";
 import Font from "@icons/font.svg";
 import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from 'react-redux';
-import { setPage } from '@lib/page.slice';
+import { setPage } from '@lib/slices/page.slice';
 
 const pageMap = [
     { page: 'color', icon: Paint },
