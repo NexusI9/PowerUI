@@ -1,6 +1,6 @@
 import * as React from "react";
 import { useState, useEffect } from "react";
-import { SectionHeader } from "@components/sectionheader";
+import { SectionHeader } from "@components/section-header";
 import List from '@icons/list-bulleted.svg';
 import Plus from '@icons/add.svg';
 import Grid from '@icons/table.svg';

@@ -74,3 +74,10 @@ export interface ContextMenu{
     commands: Array<ContextMenuCommand>;
     position: MousePosition;
 }
+
+export interface ToolTipItem{
+    input?:{value:string, action:string, payload:{}};
+    text?:string;
+}
+
+export type ToolTip = Array<ToolTipItem>; 
