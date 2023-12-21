@@ -67,7 +67,7 @@ export interface MousePosition{
 export interface ContextMenuCommand{
     text:string; 
     action:string;
-    value:any;
+    payload:any;
 }
 
 export interface ContextMenu{

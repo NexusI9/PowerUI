@@ -1,7 +1,7 @@
 import { Input } from '@components/input';
 import { rgb, rgbToHex, hexToRgb, rgbToHsl } from './swatch.helper';
 import './swatch.scss';
-import { send } from '@lib/ipc';
+import { send, listen } from '@lib/ipc';
 import { folderNameFromPath } from '@lib/utils';
 import { display as displayContextMenu } from '@lib/slices/contextmenu.slice';
 import { useDispatch } from 'react-redux';
@@ -12,9 +12,8 @@ export const Swatch = (props: any) => {
 
     const dispatch = useDispatch();
     const swatchContextMenu: Array<ContextMenuCommand> = [
-        { text: 'Edit', action: 'EDIT_STYLE', value: props },
-        { text: 'Duplicate', action: 'DUPLICATE_STYLE', value: props },
-        { text: 'Delete', action: 'DELETC_STYLE', value: props },
+        { text: 'Duplicate', action: 'ADD_STYLE_COLOR', payload: {style: props.paints, name:props.name} },
+        { text: 'Delete', action: 'DELETE_STYLE', payload: {style:props} },
     ];
 
     const handleOnChange = (e: any) => send({ type: 'UPDATE_STYLE_COLOR', style: props, color: hexToRgb(e.target.value, true) });
@@ -22,12 +21,13 @@ export const Swatch = (props: any) => {
     const handleOnBlur = (e: any) => send({ type: "UPDATE_STYLE_NAME", style: props, name: e.target.value });
 
     const handleContextMenu = (e: any) => {
-        console.log(e);
         dispatch(displayContextMenu({
             commands: swatchContextMenu,
             position: { x: e.clientX, y: e.clientY }
         }));
     }
+
+    listen( (request:any) => console.log(request) );
 
     return (<>
         {

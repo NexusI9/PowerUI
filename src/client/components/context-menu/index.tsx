@@ -16,12 +16,7 @@ export const ContextMenu = () => {
     },[]);
 
     useEffect(() => {
-        
-    
-        if(!!commands.length){
-            setDisplay(true);
-        }
-
+        setDisplay(!!commands.length);
     },[commands]);
 
     return(
@@ -29,7 +24,7 @@ export const ContextMenu = () => {
             className={`panel-command ${!display && 'hide' || ''}`} 
             style={{top:`${position.y}px`, left:`${position.x}px`}}
         >
-        { commands?.map( (command,i) => <li key={JSON.stringify(command)+i} onClick={ () => send({type:command.action, payload:command.value}) }>{command.text}</li>) }
+        { commands?.map( (command,i) => <li key={JSON.stringify(command)+i} onClick={ () => send({type:command.action, ...command.payload}) }>{command.text}</li>) }
         </ul>
     );
 

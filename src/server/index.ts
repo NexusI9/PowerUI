@@ -59,9 +59,14 @@ figma.ui.onmessage = msg => {
 
     case 'ADD_STYLE_COLOR':
       const newStyleColor = figma.createPaintStyle();
-      newStyleColor.name = concatFolderName(msg.folder, msg.name);
+      newStyleColor.name = msg.folder ? concatFolderName(msg.folder, msg.name) : msg.name;
       newStyleColor.paints = msg?.style || DEFAULT_STYLE_COLOR;
       break;
+
+
+    case 'DELETE_STYLE':
+      figma.getStyleById(msg.style.id)?.remove();
+    break;
 
     default:
 
