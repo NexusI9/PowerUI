@@ -1,23 +1,24 @@
 .panel-command {
 
+    list-style: none;
+    padding: 0;
+    padding: var(--space-m) 0;
+
     position: absolute;
     min-width: 160;
     display: block;
     background: var(--powerui-color-bg-brand-tertiary);
     border-radius: var(--radius-s);
+    border: solid 1px var(--figma-color-border);
 
-    &.hide{
+    &.hide {
         display: none;
     }
 
-    ul {
-        list-style: none;
-        padding: 0;
-        padding: var(--space-m) 0;
-    }
-
     li {
-        font-size: 14px;
+        cursor: pointer;
+        font-size: small;
+        margin: var(--space-s) 0;
         padding: 0 var(--space-m);
 
         &:hover {

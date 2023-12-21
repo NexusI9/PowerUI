@@ -59,7 +59,18 @@ export interface CreateColor{
 
 export type DisplayMode = "grid"|"list";
 
-export interface PanelCommand{
-    text:string;
-    onClick:any;
+export interface MousePosition{
+    x:number;
+    y:number;
+}
+
+export interface ContextMenuCommand{
+    text:string; 
+    action:string;
+    value:any;
+}
+
+export interface ContextMenu{
+    commands: Array<ContextMenuCommand>;
+    position: MousePosition;
 }
