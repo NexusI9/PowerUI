@@ -15,6 +15,7 @@ export const Swatch = (props: any) => {
         { text: 'Duplicate', action: 'ADD_STYLE_COLOR', payload: {style: props.paints, name:props.name} },
         { text: 'Delete', action: 'DELETE_STYLE', payload: {style:props} },
     ];
+    
 
     const handleOnChange = (e: any) => send({ type: 'UPDATE_STYLE_COLOR', style: props, color: hexToRgb(e.target.value, true) });
 
@@ -26,8 +27,6 @@ export const Swatch = (props: any) => {
             position: { x: e.clientX, y: e.clientY }
         }));
     }
-
-    listen( (request:any) => console.log(request) );
 
     return (<>
         {

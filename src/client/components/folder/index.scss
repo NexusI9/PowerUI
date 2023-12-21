@@ -1,6 +1,6 @@
 .folder {
 
-    margin-left: var(--space-m);
+    margin-left: var(--space-xs);
 
     &.root{
         margin: 0;
@@ -73,7 +73,7 @@
 
     &-body {
         padding: 0.5rem;
-        margin-left: 1.9rem;
+        margin-left: 1.3rem;
         padding-right: 0;
         margin-right: 0;
         border-left: solid 1px var(--figma-color-border);
