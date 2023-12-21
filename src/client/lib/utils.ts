@@ -96,21 +96,35 @@ export function updateColor({ style, color }: { style: StyleItem, color: Color }
 
 }
 
+export function concatFolderName(folder:string,name:string):string{
 
-export function get_folder_name_from_style(item: StyleItem) {
-    const name = item.name;
+    return folder.length ? [folder, name].join('/') : name;
+}
+
+export function updateStyleName({ style, name }:{style:PaintStyle, name:string}) {
+
+    try {
+        const newStyleName = figma.getStyleById(style.id);
+        //get style folder name and add msg.name 
+
+        const folder = folderNameFromPath(style.name).folder;
+    if (newStyleName) newStyleName.name = concatFolderName(folder, name);
+
+    } catch (_) {
+        console.warn('Could not update style name');
+    }
+}
+
+
+export function folderNameFromPath(path: string) {
+    const name = path;
     const parts = name.split('/');
     const folderPath = parts.slice(0, -1).join('/');
     const lastSegment = parts[parts.length - 1];
-
     return {
         folder: folderPath,
         name: lastSegment
     };
 }
 
-export function nameFromPath(path: string) {
-    const parts = path.split('/');
-    const lastSegment = parts[parts.length - 1];
-    return lastSegment;
-}
+

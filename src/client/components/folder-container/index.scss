@@ -17,6 +17,7 @@
                 }
 
                 .style-item-swatch {
+                    padding-left: var(--space-s);
                     display: flex;
                     flex-direction: row;
                     gap:var(--space-s);

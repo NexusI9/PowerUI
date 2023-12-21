@@ -2,7 +2,13 @@
 
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { StyleFolder, StyleItem } from "@lib/interfaces";
-import { classifyStyle, updateColor, updateFolderName } from "@lib/utils";
+import {
+  classifyStyle,
+  updateColor,
+  updateFolderName,
+  updateStyleName,
+  concatFolderName
+} from "@lib/utils";
 
 figma.showUI(__html__, { themeColors: true });
 figma.ui.resize(750, 655);
@@ -40,18 +46,22 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'UPDATE_STYLE_FOLDER':
-      updateFolderName({folder: msg.folder, level:msg.level, name:msg.newName});
+      updateFolderName({ folder: msg.folder, level: msg.level, name: msg.newName });
+      break;
+
+    case 'UPDATE_STYLE_NAME':
+      updateStyleName({style:msg.style, name:msg.name});
       break;
 
     case 'UPDATE_STYLE_COLOR':
-      updateColor({style:msg.style, color:msg.color});
-    break;
+      updateColor({ style: msg.style, color: msg.color });
+      break;
 
     case 'ADD_STYLE_COLOR':
-      const newStyleColor = figma.createPaintStyle() ;
-      newStyleColor.name = msg.folder.length && [msg.folder, msg.name].join('/') || msg.name;
+      const newStyleColor = figma.createPaintStyle();
+      newStyleColor.name = concatFolderName(msg.folder, msg.name);
       newStyleColor.paints = msg?.style || DEFAULT_STYLE_COLOR;
-    break;
+      break;
 
     default:
 

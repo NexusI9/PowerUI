@@ -2,13 +2,17 @@ import { Input } from '@components/input';
 import { rgb, rgbToHex, hexToRgb, rgbToHsl } from './swatch.helper';
 import './swatch.scss';
 import { send } from '@lib/ipc';
-import { nameFromPath } from '@lib/utils';
+import { folderNameFromPath } from '@lib/utils';
 
 
 export const Swatch = (props: any) => {
 
     const handleOnChange = (e: any) => {
         send({ type: 'UPDATE_STYLE_COLOR', style: props, color: hexToRgb(e.target.value, true) });
+    }
+
+    const handleOnBlur = (e:any) => {
+        send({type:"UPDATE_STYLE_NAME", style:props, name:e.target.value});
     }
 
     return (<>
@@ -33,7 +37,7 @@ export const Swatch = (props: any) => {
                             />
                         </label>
                         <div className='style-item-swatch-detail flex f-row gap-l'>
-                            <Input value={nameFromPath(props.name)}/>
+                            <Input value={folderNameFromPath(props.name).name} onBlur={ handleOnBlur }/>
                             <div className='style-item-swatch-codes'>
                                 {
                                     colorValues.map( (value,i) => <p key={paint.id+i+value}><small>{value}</small></p>)
