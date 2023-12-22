@@ -75,9 +75,6 @@ export interface ContextMenu{
     position: MousePosition;
 }
 
-export interface ToolTipItem{
-    input?:{value:string, action:string, payload:{}};
-    text?:string;
-}
 
+export type ToolTipItem  = {type:'INPUT'; value:string; action:string; payload:{}} | {type:'TEXT'; value:string;}
 export type ToolTip = Array<ToolTipItem>; 
