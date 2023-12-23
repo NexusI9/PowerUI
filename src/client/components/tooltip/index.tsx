@@ -4,7 +4,7 @@ import { ToolTipItem } from '@lib/interfaces';
 import { convertPayload } from './helper';
 import { Input } from '@components/input';
 import { send } from '@lib/ipc';
-import { Fragment, useEffect, useState } from 'react';
+import { Fragment, useEffect, useRef, useState } from 'react';
 import { DEFAULT_TOOLTIP } from '@lib/constants';
 
 
@@ -13,15 +13,15 @@ export const Tooltip = () => {
     const storeData = useSelector((state: any) => state.tooltip);
     const [persistentData, setPersistentData] = useState(DEFAULT_TOOLTIP);
     const [hover, setHover] = useState(false);
+    const checkTimeout:any = useRef();
 
     const MAX_WIDTH = 100; //tooltip max width
     const OVERLAP_MARGIN = 2; //margin to maintain hover state when mouse goes out of target to got to tooltip
 
-    useEffect(() => {
-        setPersistentData(storeData);
-    },[storeData]);
 
     useEffect(() => {
+
+        clearTimeout(checkTimeout.current);
 
         //if is not hovered (yet) and has store content => display
         if (!hover && !!storeData.content.length) {
@@ -30,12 +30,18 @@ export const Tooltip = () => {
 
         //if left tooltip & no more store content => then hide
         if (!hover && !storeData.content.length) {
-            setPersistentData(DEFAULT_TOOLTIP);
+            checkTimeout.current = setTimeout( () => {
+                if(!hover){
+                    setPersistentData(DEFAULT_TOOLTIP);
+                }
+                clearTimeout(checkTimeout.current);
+            }, 100);
         }
+
 
         console.log({ hover, storeData });
 
-    }, [hover]);
+    }, [storeData, hover]);
 
 
     return (<div
