@@ -20,6 +20,18 @@ hr{
 }
 
 
+.pop{
+
+    transform: scale3d(0,0,0);
+    transform-origin: top center;
+    animation: pop 0.1s linear;
+    animation-fill-mode: forwards;
+
+    @keyframes pop{
+        to{ transform: scale3d(1,1,1); }
+    }
+}
+
 #powerui-app {
     display: grid;
     grid-template-columns: 50px auto;

@@ -23,7 +23,7 @@
         &::after {
             $tipSize: 15;
             content: '';
-            top: 4px;
+            top: calc(-1 * #{$tipSize}px / 2);
             left: calc(50% - calc(#{$tipSize}px/2));
             position: absolute;
             display: block;

@@ -49,7 +49,7 @@ export const Tooltip = () => {
         onMouseLeave={() => setHover(false)}
         onMouseEnter={() => setHover(true)}
     >
-        <div className='tooltip-content panel flex f-col gap-s'>{
+        <div className='tooltip-content panel flex f-col gap-s pop'>{
             persistentData.content?.map((content: ToolTipItem, i: number) => {
 
                 const handleAction = (e: any) => {
