@@ -16,6 +16,7 @@ import { Tooltip } from "@components/tooltip";
 import Color from './pages/color';
 import Home from './pages/home';
 import Font from './pages/font';
+import { Snackbar } from "@components/snackbar";
 
 
 const router = {
@@ -36,6 +37,7 @@ export default () => {
             </Container>
             <ContextMenu/>
             <Tooltip/>
+            <Snackbar/>
         </>
     );
 }
