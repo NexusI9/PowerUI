@@ -19,7 +19,8 @@
         }
 
         &:focus {
-            outline-color: var(--figma-color-border-brand);
+            outline: none;
+            box-shadow: 0px 0px 0px 2px var(--figma-color-border-brand);
         }
 
     }
