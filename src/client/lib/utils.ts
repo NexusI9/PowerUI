@@ -1,4 +1,5 @@
 import { Color, StyleFolder, StyleItem } from "@lib/interfaces";
+import { hexToRgb } from "./color.utils";
 
 function clone(val: any) {
     return JSON.parse(JSON.stringify(val))
@@ -86,29 +87,43 @@ export function updateFolderName({ folder, level, name }: { folder: StyleFolder,
 
 }
 
-export function updateColor({ style, color }: { style: StyleItem, color: Color }): void {
+export function updateColor({ style, color }: { style: StyleItem, color: Color | string }): void {
 
     const figmaStyle = figma.getStyleById(style.id) as PaintStyle;
     const newPaint = clone(figmaStyle.paints);
-    newPaint.map((paint: any) => { paint.color = color; });
-    figmaStyle.paints = newPaint;
+
+    try {
+        //check color type (can take Hex or {r,g,b})
+        switch (typeof color) {
+
+            case 'string':
+                color = hexToRgb(color, true);
+                break;
+        }
+
+        newPaint.map((paint: any) => { paint.color = color; });
+        figmaStyle.paints = newPaint;
+    }catch(_){
+        console.warn(_);
+    }
+
     return;
 
 }
 
-export function concatFolderName(folder:string,name:string):string{
+export function concatFolderName(folder: string, name: string): string {
 
     return folder.length ? [folder, name].join('/') : name;
 }
 
-export function updateStyleName({ style, name }:{style:PaintStyle, name:string}) {
+export function updateStyleName({ style, name }: { style: PaintStyle, name: string }) {
 
     try {
         const newStyleName = figma.getStyleById(style.id);
         //get style folder name and add msg.name 
 
         const folder = folderNameFromPath(style.name).folder;
-    if (newStyleName) newStyleName.name = concatFolderName(folder, name);
+        if (newStyleName) newStyleName.name = concatFolderName(folder, name);
 
     } catch (_) {
         console.warn('Could not update style name');

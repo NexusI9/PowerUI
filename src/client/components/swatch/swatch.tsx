@@ -1,5 +1,5 @@
 import { Input } from '@components/input';
-import { rgb, rgbToHex, hexToRgb, rgbToHsl } from './swatch.helper';
+import { rgb, rgbToHex, hexToRgb, rgbToHsl } from '@lib/color.utils';
 import './swatch.scss';
 import { send } from '@lib/ipc';
 import { folderNameFromPath } from '@lib/utils';
@@ -53,7 +53,7 @@ export const Swatch = (props: any) => {
                         key={props.id}
                         className="style-item-swatch"
                         onMouseEnter={(e) => handleToolTip(e.target, hexValue)}
-                        onMouseLeave={(e) => dispatch(destroyTooltip())}
+                        onMouseLeave={() => dispatch(destroyTooltip())}
                     >
                         <label
                             style={{ backgroundColor: rgbValue }}
@@ -63,6 +63,7 @@ export const Swatch = (props: any) => {
                                 type="color"
                                 defaultValue={hexValue}
                                 onChange={handleOnChange}
+                                onClick={ () => dispatch(destroyTooltip())}
                             />
                         </label>
                         <div className='style-item-swatch-detail flex f-row gap-l'>

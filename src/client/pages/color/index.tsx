@@ -1,4 +1,4 @@
-import { Swatch } from "@components/style-item/swatch";
+import { Swatch } from "@components/swatch/swatch";
 import { StyleTemplate } from "@components/templates";
 import PaintPlus from '@icons/paint-plus.svg';
 import { ButtonPad } from "@lib/interfaces";

@@ -1,4 +1,4 @@
-import { Color as ColorInterface } from '@lib/interfaces';
+import { Color, Color as ColorInterface } from '@lib/interfaces';
 
 function to255(color: ColorInterface) {
     const newColor: ColorInterface = { r: 0, g: 0, b: 0 };

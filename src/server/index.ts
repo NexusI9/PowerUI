@@ -1,7 +1,7 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
-import { StyleFolder, StyleItem } from "@lib/interfaces";
+import { StyleItem } from "@lib/interfaces";
 import {
   classifyStyle,
   updateColor,

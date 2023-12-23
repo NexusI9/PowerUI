@@ -1,10 +1,9 @@
 export function convertPayload(payload:any, value:any): Object{
-
-    Object.keys(payload).map(key => {
-        if(payload[key as keyof typeof payload] === null){
-            payload[key as keyof typeof payload] = value;
+    const clone = {...payload};
+    Object.keys(clone).map(key => {
+        if(clone[key as keyof typeof clone] === null){
+            clone[key as keyof typeof clone] = value;
         }
     });
-
-    return payload;
+    return clone;
 }

@@ -33,13 +33,11 @@ export const Tooltip = () => {
             checkTimeout.current = setTimeout( () => {
                 if(!hover){
                     setPersistentData(DEFAULT_TOOLTIP);
+                    
                 }
                 clearTimeout(checkTimeout.current);
-            }, 100);
+            }, 50);
         }
-
-
-        console.log({ hover, storeData });
 
     }, [storeData, hover]);
 
