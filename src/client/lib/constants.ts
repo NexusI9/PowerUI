@@ -12,3 +12,8 @@ export const DEFAULT_STYLE_COLOR:Array<Paint> = [
         "boundVariables": {}
     }
 ];
+
+export const DEFAULT_TOOLTIP = {
+    content:[],
+    boundingBox:{x:0, y:0, width:0, height:0}
+}

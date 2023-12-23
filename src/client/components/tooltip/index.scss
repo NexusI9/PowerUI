@@ -1,6 +1,40 @@
-.tooltip{
+.tooltip {
 
-    &[data-display="false"]{
-        display: none;
+    &-wrapper {
+        position: absolute;
+        top: 0;
+        left: 0;
+
+        &[data-display="false"] {
+            display: none;
+        }
     }
+
+    &-content {
+        max-width: 100px;
+        margin-top: 10px;
+        padding: var(--space-m);
+
+        input {
+            font-size: small;
+            width: 100%;
+        }
+
+        &::after {
+            $tipSize: 15;
+            content: '';
+            top: 4px;
+            left: calc(50% - calc(#{$tipSize}px/2));
+            position: absolute;
+            display: block;
+            width: $tipSize+0px;
+            height: $tipSize+0px;
+            border: solid 1px var(--figma-color-border);
+            transform: rotate(315deg);
+            border-radius: var(--radius-s);
+            clip-path: polygon(0 0, 0 0, 100% 0, 100% 100%);
+            background: var(--powerui-color-bg-brand-tertiary);
+        }
+    }
+
 }

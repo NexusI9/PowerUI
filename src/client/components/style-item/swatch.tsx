@@ -1,21 +1,21 @@
 import { Input } from '@components/input';
 import { rgb, rgbToHex, hexToRgb, rgbToHsl } from './swatch.helper';
 import './swatch.scss';
-import { send, listen } from '@lib/ipc';
+import { send } from '@lib/ipc';
 import { folderNameFromPath } from '@lib/utils';
 import { display as displayContextMenu } from '@lib/slices/contextmenu.slice';
 import { useDispatch } from 'react-redux';
 import { ContextMenuCommand } from '@lib/interfaces';
-
+import { display as displayTooltip, destroy as destroyTooltip } from '@lib/slices/tooltip.slice';
 
 export const Swatch = (props: any) => {
 
-    const dispatch = useDispatch();
     const swatchContextMenu: Array<ContextMenuCommand> = [
-        { text: 'Duplicate', action: 'ADD_STYLE_COLOR', payload: {style: props.paints, name:props.name} },
-        { text: 'Delete', action: 'DELETE_STYLE', payload: {style:props} },
+        { text: 'Duplicate', action: 'ADD_STYLE_COLOR', payload: { style: props.paints, name: props.name } },
+        { text: 'Delete', action: 'DELETE_STYLE', payload: { style: props } },
     ];
-    
+
+    const dispatch = useDispatch();
 
     const handleOnChange = (e: any) => send({ type: 'UPDATE_STYLE_COLOR', style: props, color: hexToRgb(e.target.value, true) });
 
@@ -28,11 +28,22 @@ export const Swatch = (props: any) => {
         }));
     }
 
+    const handleToolTip = (ref: any, hexValue: string) => {
+        const { x, y, width, height } = ref.getBoundingClientRect();
+        dispatch(displayTooltip({
+            content: [
+                { type: 'INPUT', value: hexValue, action: 'UPDATE_STYLE_COLOR', payload: { style: props, color: null } },
+                { type: 'INPUT', value: folderNameFromPath(props.name).name, action: 'UPDATE_STYLE_NAME', payload: { style: props, name: null } }
+            ],
+            boundingBox: { x, y, width, height }
+        }));
+    }
+
     return (<>
         {
             props.paints.map((paint: any) => {
 
-                const rgbValue = rgb(paint.color)
+                const rgbValue = rgb(paint.color);
                 const hexValue = rgbToHex(paint.color);
                 const hslValue = rgbToHsl(paint.color);
                 const colorValues = [hexValue, rgbValue, hslValue];
@@ -41,6 +52,8 @@ export const Swatch = (props: any) => {
                     <div
                         key={props.id}
                         className="style-item-swatch"
+                        onMouseEnter={(e) => handleToolTip(e.target, hexValue)}
+                        onMouseLeave={(e) => dispatch(destroyTooltip())}
                     >
                         <label
                             style={{ backgroundColor: rgbValue }}

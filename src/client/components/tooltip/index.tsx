@@ -1,36 +1,76 @@
-import { useState } from 'react';
 import './index.scss';
 import { useSelector } from 'react-redux';
 import { ToolTipItem } from '@lib/interfaces';
+import { convertPayload } from './helper';
 import { Input } from '@components/input';
 import { send } from '@lib/ipc';
+import { Fragment, useEffect, useState } from 'react';
+import { DEFAULT_TOOLTIP } from '@lib/constants';
 
 
 export const Tooltip = () => {
 
-    const { content, boundingBox } = useSelector((state: any) => state.tooltip);
+    const storeData = useSelector((state: any) => state.tooltip);
+    const [persistentData, setPersistentData] = useState(DEFAULT_TOOLTIP);
+    const [hover, setHover] = useState(false);
 
-    console.log({ content, boundingBox });
+    const MAX_WIDTH = 100; //tooltip max width
+    const OVERLAP_MARGIN = 2; //margin to maintain hover state when mouse goes out of target to got to tooltip
 
-    return (<div className='tooltip' data-display={!!content.length}>
-        {content?.map((content: ToolTipItem, i: number) => {
-            switch (content.type) {
+    useEffect(() => {
+        setPersistentData(storeData);
+    },[storeData]);
 
-                case 'INPUT':
-                    return <Input
-                        key={JSON.stringify(content) + i}
-                        onBlur={() => send({ type: content.action, ...content.payload })}
-                        value={content.value}
-                        placeholder=''
-                    />
+    useEffect(() => {
 
-                case 'TEXT':
-                    return <p key={JSON.stringify(content) + i} ><small>{content.value}</small></p>
+        //if is not hovered (yet) and has store content => display
+        if (!hover && !!storeData.content.length) {
+            setPersistentData(storeData);
+        }
 
-                default:
-                    return null;
-            }
-        })}
+        //if left tooltip & no more store content => then hide
+        if (!hover && !storeData.content.length) {
+            setPersistentData(DEFAULT_TOOLTIP);
+        }
+
+        console.log({ hover, storeData });
+
+    }, [hover]);
+
+
+    return (<div
+        className='tooltip-wrapper'
+        style={{ transform: `translate3d(${persistentData.boundingBox.x - (MAX_WIDTH / 2) + (persistentData.boundingBox.width / 2)}px,${persistentData.boundingBox.y + persistentData.boundingBox.height - OVERLAP_MARGIN}px,0px)` }}
+        data-display={!!persistentData.content.length}
+        onMouseLeave={() => setHover(false)}
+        onMouseEnter={() => setHover(true)}
+    >
+        <div className='tooltip-content panel flex f-col gap-s'>{
+            persistentData.content?.map((content: ToolTipItem, i: number) => {
+                let dynamicElement;
+                switch (content.type) {
+
+                    case 'INPUT':
+                        dynamicElement = <Input
+                                onBlur={(e: any) => send({ type: content.action, ...convertPayload(content.payload, e.target.value) })}
+                                value={content.value}
+                                placeholder=''
+                            />;
+                        break;
+                    case 'TEXT':
+                        dynamicElement = <p key={JSON.stringify(content) + i} ><small>{content.value}</small></p>;
+                        break;
+                    default:
+                        dynamicElement = <span/>;
+                        break;
+                }
+
+                return  <Fragment key={JSON.stringify(content) + i}>
+                     {dynamicElement}
+                    {i < persistentData.content.length-1 && <hr/> }
+                </Fragment>
+            })}
+        </div>
     </div>);
 
 }

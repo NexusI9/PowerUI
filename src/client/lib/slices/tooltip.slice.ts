@@ -9,7 +9,7 @@ const tooltipSlice = createSlice({
     },
     reducers:{
         display: (state, {payload}) => ({...state, ...payload}),
-        destroy: (state, _) => ({...state, ...{content:[], boundingBox:{x:0, y:0, width:0, height:0}}})
+        destroy: (state) => ({...state, ...{content:[], boundingBox:{x:0, y:0, width:0, height:0}}})
     }
 });
 
