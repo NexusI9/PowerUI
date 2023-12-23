@@ -52,12 +52,12 @@ export const Swatch = (props: any) => {
                     <div
                         key={props.id}
                         className="style-item-swatch"
-                        onMouseEnter={(e) => handleToolTip(e.target, hexValue)}
-                        onMouseLeave={() => dispatch(destroyTooltip())}
                     >
                         <label
                             style={{ backgroundColor: rgbValue }}
                             onContextMenu={handleContextMenu}
+                            onMouseEnter={(e) => handleToolTip(e.target, hexValue)}
+                            onMouseLeave={() => dispatch(destroyTooltip())}
                         >
                             <input
                                 type="color"
