@@ -39,15 +39,26 @@
 
     &-header {
         width: 100%;
+        position: relative;
 
         .input-field{
             font-weight: bold;
+        }
+
+        & > .options-row{
+            visibility: hidden;
         }
 
         &,
         &>div {
             align-items: center;
             justify-content: space-between;
+        }
+
+        &:hover{
+            & > .options-row{
+                visibility: visible;
+            }
         }
 
         &-left {

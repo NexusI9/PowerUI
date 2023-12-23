@@ -12,8 +12,16 @@ export const ContextMenu = () => {
     const { commands, position } = useSelector( (state:{contextmenu:ContextMenuInterface}) => state.contextmenu );
     const [display, setDisplay] = useState(false);
     
+    console.log({commands, position});
     useEffect( () => {
-        const onClick = () => setDisplay(false);
+        const onClick = () => {
+            if(display){
+                setDisplay(false);
+            }
+        };
+
+        console.log(display);
+
         window.addEventListener('click', onClick);
         return () => window.removeEventListener('click', onClick);
     },[]);

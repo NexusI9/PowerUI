@@ -12,6 +12,7 @@ import { display as displaySnackBar } from '@lib/slices/snackbar';
 export const Swatch = (props: any) => {
 
     const swatchContextMenu: Array<ContextMenuCommand> = [
+        { text: 'Edit', action: 'MODALE_EDIT_STYLE_COLOR', payload: { style: props } },
         { text: 'Duplicate', action: 'ADD_STYLE_COLOR', payload: { style: props.paints, name: props.name } },
         { text: 'Delete', action: 'DELETE_STYLE', payload: { style: props } },
     ];

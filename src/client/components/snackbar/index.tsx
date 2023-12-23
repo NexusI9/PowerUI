@@ -4,7 +4,6 @@ import './index.scss';
 export const Snackbar = () => {
 
     const { type, message } = useSelector((state: any) => state.snackbar);
-    console.log({type, message});
     
     return (<>
         {message.length ?
