@@ -13,7 +13,7 @@ export const Tooltip = () => {
     const storeData = useSelector((state: any) => state.tooltip);
     const [persistentData, setPersistentData] = useState(DEFAULT_TOOLTIP);
     const [hover, setHover] = useState(false);
-    const checkTimeout:any = useRef();
+    const checkTimeout: any = useRef();
 
     const MAX_WIDTH = 100; //tooltip max width
     const OVERLAP_MARGIN = 2; //margin to maintain hover state when mouse goes out of target to got to tooltip
@@ -30,10 +30,10 @@ export const Tooltip = () => {
 
         //if left tooltip & no more store content => then hide
         if (!hover && !storeData.content.length) {
-            checkTimeout.current = setTimeout( () => {
-                if(!hover){
+            checkTimeout.current = setTimeout(() => {
+                if (!hover) {
                     setPersistentData(DEFAULT_TOOLTIP);
-                    
+
                 }
                 clearTimeout(checkTimeout.current);
             }, 50);
@@ -51,27 +51,34 @@ export const Tooltip = () => {
     >
         <div className='tooltip-content panel flex f-col gap-s'>{
             persistentData.content?.map((content: ToolTipItem, i: number) => {
+
+                const handleAction = (e: any) => {
+                    if (content.type == 'INPUT') {
+                        send({ type: content.action, ...convertPayload(content.payload, e.target.value) })
+                    }
+                };
                 let dynamicElement;
                 switch (content.type) {
 
                     case 'INPUT':
                         dynamicElement = <Input
-                                onBlur={(e: any) => send({ type: content.action, ...convertPayload(content.payload, e.target.value) })}
-                                value={content.value}
-                                placeholder=''
-                            />;
+                            onBlur={handleAction}
+                            onEnter={handleAction}
+                            value={content.value}
+                            placeholder=''
+                        />;
                         break;
                     case 'TEXT':
                         dynamicElement = <p key={JSON.stringify(content) + i} ><small>{content.value}</small></p>;
                         break;
                     default:
-                        dynamicElement = <span/>;
+                        dynamicElement = <span />;
                         break;
                 }
 
-                return  <Fragment key={JSON.stringify(content) + i}>
-                     {dynamicElement}
-                    {i < persistentData.content.length-1 && <hr/> }
+                return <Fragment key={JSON.stringify(content) + i}>
+                    {dynamicElement}
+                    {i < persistentData.content.length - 1 && <hr />}
                 </Fragment>
             })}
         </div>

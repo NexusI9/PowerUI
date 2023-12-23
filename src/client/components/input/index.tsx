@@ -2,12 +2,12 @@ import './index.scss';
 
 interface InputInterface {
     type?: 'default' | 'discrete';
-    value?:string;
+    value?: string;
     placeholder?: string;
     onChange?: any;
     onBlur?: any;
     onFocus?: any;
-    onEnter?:any;
+    onEnter?: any;
 }
 
 export const Input = ({ type = 'default', value, placeholder = 'Enter a value', onChange, onBlur, onFocus, onEnter }: InputInterface) => {
@@ -21,7 +21,12 @@ export const Input = ({ type = 'default', value, placeholder = 'Enter a value', 
                 onChange={onChange}
                 onBlur={onBlur}
                 onFocus={onFocus}
-                onKeyDown={ e => e.key === 'Enter' && onEnter}
+                onKeyDown={ (e:any) => {
+                    if (e.code === 'Enter') {
+                        onEnter(e);
+                        e.target.blur();
+                    }
+                }}
             />
         </label>
     );
