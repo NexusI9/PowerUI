@@ -21,6 +21,7 @@ export const ContextMenu = () => {
     useEffect(() => {
 
         const onClick = () => {
+            //if new id has same as before means user clicked outside (since no new id invoked)
             if (lastId.current === id) {
                 dispatch(destroyContextMenu());
             }else{
