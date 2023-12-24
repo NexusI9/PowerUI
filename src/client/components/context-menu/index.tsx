@@ -1,47 +1,48 @@
 import './index.scss';
-import { ContextMenu as ContextMenuInterface } from "@lib/interfaces";
-import { useEffect, useState } from "react";
+import { ContextMenuCommand, ContextMenu as ContextMenuInterface } from "@lib/interfaces";
+import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { send } from "@lib/ipc";
 import { destroy as destroyTooltip } from '@lib/slices/tooltip.slice';
+import { destroy as destroyContextMenu } from '@lib/slices/contextmenu.slice';
 import { useDispatch } from 'react-redux';
 import { clamp } from '@lib/utils';
 
 export const ContextMenu = () => {
 
     const dispatch = useDispatch();
-    const { commands, position } = useSelector((state: { contextmenu: ContextMenuInterface }) => state.contextmenu);
+    const { commands, position, id } = useSelector((state: { contextmenu: ContextMenuInterface }) => state.contextmenu);
     const [display, setDisplay] = useState(false);
     const MENU_WIDTH = 160;
+    const lastId = useRef(id);
+
+    useEffect(() => { lastId.current = id; }, [display]);
 
     useEffect(() => {
 
         const onClick = () => {
-            console.log("click");
-            setDisplay(false);
+            if (lastId.current === id) {
+                dispatch(destroyContextMenu());
+            }else{
+                lastId.current = id;   
+            }
         };
-
-        if (display) {
-            window.addEventListener('click', onClick);
-        }
-
-
-        return () => window.removeEventListener('click', onClick);
-
-    }, [display]);
-
-    useEffect(() => {
-
+        window.addEventListener('click', onClick);
         dispatch(destroyTooltip());
         setDisplay(!!commands.length);
 
-    }, [commands]);
+        return () => {
+            lastId.current = id;
+            window.removeEventListener('click', onClick);
+        }
+
+    }, [id]);
 
 
     return (
         <ul
             className={`context-menu panel ${!display && 'hide' || ''} pop`}
-            style={{ top: `${position.y}px`, left: `${ clamp(0, position.x, window.innerWidth - 1.1 * MENU_WIDTH) || position.x }px` }}
+            style={{ top: `${position.y}px`, left: `${clamp(0, position.x, window.innerWidth - 1.1 * MENU_WIDTH) || position.x}px` }}
         >
             {commands?.map((command, i) => <li key={JSON.stringify(command) + i} onClick={() => send({ type: command.action, ...command.payload })}>{command.text}</li>)}
         </ul>

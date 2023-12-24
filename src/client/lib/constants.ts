@@ -17,3 +17,9 @@ export const DEFAULT_TOOLTIP = {
     content:[],
     boundingBox:{x:0, y:0, width:0, height:0}
 }
+
+export const DEFAULT_CONTEXT_MENU = {
+    id:0,
+    commands:[],
+    position:{x:0, y:0}
+};

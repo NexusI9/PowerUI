@@ -45,9 +45,6 @@
             font-weight: bold;
         }
 
-        & > .options-row{
-            visibility: hidden;
-        }
 
         &,
         &>div {
@@ -55,11 +52,6 @@
             justify-content: space-between;
         }
 
-        &:hover{
-            & > .options-row{
-                visibility: visible;
-            }
-        }
 
         &-left {
             .options-row {
