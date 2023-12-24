@@ -65,9 +65,3 @@ export function rgbToHsl({r, g, b}:{r:number, g:number, b:number}){
 
     
   }
-
-  export function sort_by_name(styles:Array<StyleItem>){
-
-    
-    
-  }

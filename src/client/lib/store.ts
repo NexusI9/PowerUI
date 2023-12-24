@@ -1,8 +1,8 @@
 import { configureStore } from "@reduxjs/toolkit";
-import pageSlice from "./slices/page.slice";
-import snackbarSlice from "./slices/snackbar";
-import contextMenuSlice from "./slices/contextmenu.slice";
-import tooltipSlice from "./slices/tooltip.slice";
+import pageSlice from "./slices/slice.page";
+import snackbarSlice from "./slices/slice.snackbar";
+import contextMenuSlice from "./slices/slice.contextmenu";
+import tooltipSlice from "./slices/slice.tooltip";
 
 export default configureStore({
     reducer:{

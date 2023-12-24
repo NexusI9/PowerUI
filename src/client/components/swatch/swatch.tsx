@@ -1,13 +1,13 @@
 import { Input } from '@components/input';
-import { rgb, rgbToHex, hexToRgb, rgbToHsl } from '@lib/color.utils';
+import { rgb, rgbToHex, hexToRgb, rgbToHsl } from '@lib/utils.color';
 import './swatch.scss';
 import { send } from '@lib/ipc';
-import { folderNameFromPath } from '@lib/utils';
-import { display as displayContextMenu } from '@lib/slices/contextmenu.slice';
+import { folderNameFromPath } from '@lib/utils.style';
+import { display as displayContextMenu } from '@lib/slices/slice.contextmenu';
 import { useDispatch } from 'react-redux';
 import { ContextMenuCommand } from '@lib/interfaces';
-import { display as displayTooltip, destroy as destroyTooltip } from '@lib/slices/tooltip.slice';
-import { display as displaySnackBar } from '@lib/slices/snackbar';
+import { display as displayTooltip, destroy as destroyTooltip } from '@lib/slices/slice.tooltip';
+import { display as displaySnackBar } from '@lib/slices/slice.snackbar';
 
 export const Swatch = (props: any) => {
 

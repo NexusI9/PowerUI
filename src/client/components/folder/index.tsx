@@ -11,7 +11,7 @@ import Kebab from '@icons/kebab-vertical.svg';
 import { Input } from '@components/input';
 import { send } from '@lib/ipc';
 import { useDispatch } from 'react-redux';
-import { display as displayContextMenu } from '@lib/slices/contextmenu.slice';
+import { display as displayContextMenu } from '@lib/slices/slice.contextmenu';
 
 export const Folder = ({
     title,
@@ -38,7 +38,7 @@ export const Folder = ({
         { text: 'Delete folder', action: 'DELETE_FOLDER', payload: {} },
         { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {} }
     ]
-        .concat(custom?.options?.kebab || [])
+        .concat(custom?.options?.kebab || []) //concat eventuals custom options
         .map((item: ContextMenuCommand) => {  //replace all payload attributes by folder attributes
             const newItem = {...item};
             newItem.payload = {folder: attributes};

@@ -28,11 +28,11 @@ export default () => {
             getStyleMethod="GET_PAINT_STYLES"
             styleItem={Swatch}
             custom={{
-                options:{
-                    add:{icon:SwatchIcon},
-                    kebab:[
-                        {text:'Sort by brightness', action:'SORT_STYLE_COLOR_BRIGHTNESS', payload:{}},
-                        {text:'Sort by saturation', action:'SORT_STYLE_COLOR_SATURATION', payload:{}}                    ]
+                options: {
+                    add: { icon: SwatchIcon },
+                    kebab: [
+                        { text: 'Sort by brightness', action: 'SORT_STYLE_COLOR_BRIGHTNESS', payload: {} },
+                        { text: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', payload: {} }]
                 }
             }}
         />);

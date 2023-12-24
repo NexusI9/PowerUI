@@ -1,15 +1,16 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
+import { sort_by_brightness, sort_by_saturation } from "@lib/utils.color";
 import { StyleItem } from "@lib/interfaces";
 import {
   classifyStyle,
   updateColor,
   updateFolderName,
   updateStyleName,
-  folderNameFromPath,
   addStyle,
-  get_styles_of_folder
-} from "@lib/utils";
+  get_styles_of_folder,
+  sort_by_name
+} from "@lib/utils.style";
 
 figma.showUI(__html__, { themeColors: true });
 figma.ui.resize(750, 655);
@@ -75,6 +76,20 @@ figma.ui.onmessage = msg => {
 
     case 'DELETE_STYLE':
       figma.getStyleById(msg.style.id)?.remove();
+      break;
+
+    case 'SORT_STYLE_NAME':
+      sort_by_name(msg.folder.styles);
+      break;
+
+      
+    case 'SORT_STYLE_COLOR_BRIGHTNESS':
+      sort_by_brightness(msg.folder.styles);
+      break;
+
+
+    case 'SORT_STYLE_COLOR_SATURATTION':
+      sort_by_saturation(msg.folder.styles);
       break;
 
     default:

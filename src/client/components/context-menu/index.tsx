@@ -3,8 +3,8 @@ import { ContextMenuCommand, ContextMenu as ContextMenuInterface } from "@lib/in
 import { useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { send } from "@lib/ipc";
-import { destroy as destroyTooltip } from '@lib/slices/tooltip.slice';
-import { destroy as destroyContextMenu } from '@lib/slices/contextmenu.slice';
+import { destroy as destroyTooltip } from '@lib/slices/slice.tooltip';
+import { destroy as destroyContextMenu } from '@lib/slices/slice.contextmenu';
 import { useDispatch } from 'react-redux';
 import { clamp } from '@lib/utils';
 
