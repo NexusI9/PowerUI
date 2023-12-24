@@ -151,14 +151,26 @@ export function clamp(min: number, value: number, max: number): number {
 }
 
 
-export function addStyleColor({ folder, name, style }: { folder: string, name: string, style: any }) {
-    const newStyleColor = figma.createPaintStyle();
-    newStyleColor.name = folder ? concatFolderName(folder, name) : name;
-    newStyleColor.paints = style || DEFAULT_STYLE_COLOR;
+export function addStyle({ folder, name, style, type }: { folder?: string, name: string, style: any, type: 'COLOR' | 'TEXT' }) {
+    switch (type) {
+
+        case 'COLOR':
+            const newStyleColor = figma.createPaintStyle();
+            newStyleColor.name = folder ? concatFolderName(folder, name) : name;
+            newStyleColor.paints = style || DEFAULT_STYLE_COLOR;
+            break;
+
+        case 'TEXT':
+            const newStyleText = figma.createTextStyle();
+            newStyleText.name = folder ? concatFolderName(folder, name) : name;
+            newStyleText.textCase = style || DEFAULT_STYLE_COLOR;
+            break;
+    }
+
 }
 
-export function get_styles_of_folder(folder: StyleFolder, array:Array<StyleItem>=[]): Array<StyleItem> {
+export function get_styles_of_folder(folder: StyleFolder, array: Array<StyleItem> = []): Array<StyleItem> {
     array.push(...folder.styles);
-    folder.folders.forEach( subfolder => get_styles_of_folder(subfolder, array) );
+    folder.folders.forEach(subfolder => get_styles_of_folder(subfolder, array));
     return array;
 }

@@ -6,9 +6,8 @@ import {
   updateColor,
   updateFolderName,
   updateStyleName,
-  concatFolderName,
   folderNameFromPath,
-  addStyleColor,
+  addStyle,
   get_styles_of_folder
 } from "@lib/utils";
 
@@ -38,10 +37,9 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'GET_PAINT_STYLES':
-      let paintStyles: Array<StyleItem> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, figmaKey: key, name, paints: paints as Paint[], type: "STYLE" })); //only keep necessary keys;
+      let paintStyles: Array<StyleItem> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, figmaKey: key, name, paints: paints as Paint[], type: "COLOR" })); //only keep necessary keys;
       figma.ui.postMessage({ type: msg.type, styles: classifyStyle(paintStyles) });
       break;
-
 
     case 'GET_TEXT_STYLES':
       figma.ui.postMessage(figma.getLocalTextStyles());
@@ -60,20 +58,19 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'ADD_STYLE_COLOR':
-      addStyleColor(msg);
+      addStyle(msg);
       break;
 
     case 'DUPLICATE_FOLDER':
-      //1. get all styles of folder
-      //2. filter them if they contain msg.folder as a folder (not name)
-      //3. clones the styles
-
+      get_styles_of_folder(msg.folder).forEach( item => {
+        const {folder, name} = folderNameFromPath(item.name);
+        const newName = [folder+' (copy)', name].join('/');
+        if(item.paints)
+        addStyle({name:newName, style:item.paints, type:item.type });
+      });
       break;
 
     case 'DELETE_FOLDER':
-      //1. get all styles
-      //2. filter them if they contain msg.folder as a folder (not name)
-      //3. delete the styles
       get_styles_of_folder(msg.folder).forEach( item => figma.getStyleById(item.id)?.remove() );
       break;
 

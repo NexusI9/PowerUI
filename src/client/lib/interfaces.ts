@@ -32,7 +32,7 @@ export interface StyleItem{
     name:string;
     title?:string;
     paints: Array<Paint|Text>;
-    type:"STYLE";
+    type:"COLOR"|"TEXT";
 }
 
 export interface StyleFolder{
