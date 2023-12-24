@@ -51,7 +51,7 @@ export default ({
 
 
     const handleOnMessage = (e: any) => {
-        if (e.type === 'RELOAD_PAGE') {
+        if (e.action === 'RELOAD_PAGE') {
             const date = new Date();
             setReload(date.getTime());
         }
@@ -62,7 +62,7 @@ export default ({
     useEffect(() => {
 
         if (getStyleMethod) {
-            get({ type: getStyleMethod }).then(({ styles }: { styles: Array<never> }) => setStyles(styles));
+            get({ action: getStyleMethod }).then(({ styles }: { styles: Array<never> }) => setStyles(styles));
         }
 
     }, [reload]);

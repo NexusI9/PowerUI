@@ -18,7 +18,7 @@ figma.ui.resize(750, 655);
 // posted message.
 figma.ui.onmessage = msg => {
 
-  switch (msg.type) {
+  switch (msg.action) {
 
     //styles references: https://www.figma.com/plugin-docs/api/figma/#styles
     case "create-rectangles":
@@ -38,7 +38,7 @@ figma.ui.onmessage = msg => {
 
     case 'GET_PAINT_STYLES':
       let paintStyles: Array<StyleItem> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, figmaKey: key, name, paints: paints as Paint[], type: "COLOR" })); //only keep necessary keys;
-      figma.ui.postMessage({ type: msg.type, styles: classifyStyle(paintStyles) });
+      figma.ui.postMessage({ action: msg.action, styles: classifyStyle(paintStyles) });
       break;
 
     case 'GET_TEXT_STYLES':
@@ -95,7 +95,7 @@ figma.on("documentchange", ({ documentChanges }) => {
       case 'STYLE_PROPERTY_CHANGE':
       case 'STYLE_CREATE':
       case 'STYLE_DELETE':
-        figma.ui.postMessage({ type: 'RELOAD_PAGE' });
+        figma.ui.postMessage({ action: 'RELOAD_PAGE' });
         break;
     }
 

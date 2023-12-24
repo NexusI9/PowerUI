@@ -5,18 +5,18 @@ import { ButtonPad } from "@lib/interfaces";
 import { send } from "@lib/ipc";
 
 export default () => {
-    
+
     const buttonPadStyle: ButtonPad = {
         icon: PaintPlus,
         text: 'Create Swatch',
         onClick: () => 0
     };
 
-    const handleAddItem = ({folder, name}:{folder:string, name:string}) => {
-        send({type:"ADD_STYLE_COLOR", folder, name});
+    const handleAddItem = ({ folder, name }: { folder: string, name: string }) => {
+        send({ action: "ADD_STYLE_COLOR", folder, name });
     }
 
-    
+
     return (
         <StyleTemplate
             title="Colors"

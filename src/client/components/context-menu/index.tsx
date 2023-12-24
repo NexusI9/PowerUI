@@ -45,7 +45,7 @@ export const ContextMenu = () => {
             className={`context-menu panel ${!display && 'hide' || ''} pop`}
             style={{ top: `${position.y}px`, left: `${clamp(0, position.x, window.innerWidth - 1.1 * MENU_WIDTH) || position.x}px` }}
         >
-            {commands?.map((command, i) => <li key={JSON.stringify(command) + i} onClick={() => send({ type: command.action, ...command.payload })}>{command.text}</li>)}
+            {commands?.map((command, i) => <li key={JSON.stringify(command) + i} onClick={() => send({ action: command.action, ...command.payload })}>{command.text}</li>)}
         </ul>
     );
 

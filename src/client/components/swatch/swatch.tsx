@@ -13,14 +13,14 @@ export const Swatch = (props: any) => {
 
     const swatchContextMenu: Array<ContextMenuCommand> = [
         { text: 'Edit', action: 'MODALE_EDIT_STYLE_COLOR', payload: { style: props } },
-        { text: 'Duplicate', action: 'ADD_STYLE_COLOR', payload: { style: props.paints, name: props.name } },
+        { text: 'Duplicate', action: 'ADD_STYLE_COLOR', payload: { style: props.paints, name: props.name, type:'COLOR'} },
         { text: 'Delete', action: 'DELETE_STYLE', payload: { style: props } },
     ];
 
     const dispatch = useDispatch();
 
-    const handleOnChange = (e: any) => send({ type: 'UPDATE_STYLE_COLOR', style: props, color: hexToRgb(e.target.value, true) });
-    const handleOnBlur = (e: any) => send({ type: "UPDATE_STYLE_NAME", style: props, name: e.target.value });
+    const handleOnChange = (e: any) => send({ action: 'UPDATE_STYLE_COLOR', style: props, color: hexToRgb(e.target.value, true) });
+    const handleOnBlur = (e: any) => send({ action: "UPDATE_STYLE_NAME", style: props, name: e.target.value });
 
     const handleContextMenu = (e: any) => {
         dispatch(displayContextMenu({

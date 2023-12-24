@@ -9,13 +9,13 @@ export function get(request:any){
     return new Promise<any>((resolve, reject) => {
         send(request);
 
-        const callback = ({data:{pluginMessage}}:{data:{type:string,pluginMessage:any}}):any => {
+        const callback = ({data:{pluginMessage}}:{data:{action:string,pluginMessage:any}}):any => {
 
-            if(!pluginMessage.type){
+            if(!pluginMessage.action){
                 return reject('No type has been set in API, make sure to return a type that is equal to the emitted message');
             }
             
-            if(pluginMessage.type === request.type){
+            if(pluginMessage.action === request.action){
                 resolve(pluginMessage);
                 return window.removeEventListener("message", callback);
             }

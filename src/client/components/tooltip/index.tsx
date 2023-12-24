@@ -54,7 +54,7 @@ export const Tooltip = () => {
 
                 const handleAction = (e: any) => {
                     if (content.type == 'INPUT') {
-                        send({ type: content.action, ...convertPayload(content.payload, e.target.value) })
+                        send({ action: content.action, ...convertPayload(content.payload, e.target.value) })
                     }
                 };
                 let dynamicElement;
