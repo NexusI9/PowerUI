@@ -1,13 +1,15 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
-import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { StyleItem } from "@lib/interfaces";
 import {
   classifyStyle,
   updateColor,
   updateFolderName,
   updateStyleName,
-  concatFolderName
+  concatFolderName,
+  folderNameFromPath,
+  addStyleColor,
+  get_styles_of_folder
 } from "@lib/utils";
 
 figma.showUI(__html__, { themeColors: true });
@@ -50,23 +52,34 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'UPDATE_STYLE_NAME':
-      updateStyleName({style:msg.style, name:msg.name});
+      updateStyleName(msg);
       break;
 
     case 'UPDATE_STYLE_COLOR':
-      updateColor({ style: msg.style, color: msg.color });
+      updateColor(msg);
       break;
 
     case 'ADD_STYLE_COLOR':
-      const newStyleColor = figma.createPaintStyle();
-      newStyleColor.name = msg.folder ? concatFolderName(msg.folder, msg.name) : msg.name;
-      newStyleColor.paints = msg?.style || DEFAULT_STYLE_COLOR;
+      addStyleColor(msg);
       break;
 
+    case 'DUPLICATE_FOLDER':
+      //1. get all styles of folder
+      //2. filter them if they contain msg.folder as a folder (not name)
+      //3. clones the styles
+
+      break;
+
+    case 'DELETE_FOLDER':
+      //1. get all styles
+      //2. filter them if they contain msg.folder as a folder (not name)
+      //3. delete the styles
+      get_styles_of_folder(msg.folder).forEach( item => figma.getStyleById(item.id)?.remove() );
+      break;
 
     case 'DELETE_STYLE':
       figma.getStyleById(msg.style.id)?.remove();
-    break;
+      break;
 
     default:
 

@@ -34,8 +34,8 @@ export const Folder = ({
     ];
 
     const contextMenuItems:Array<ContextMenuCommand> = [
-        {text: 'Duplicate', action:'DUPLICATE_FOLDER', payload: attributes},
-        {text: 'Delete', action:'DELETE_FOLDER', payload: attributes}
+        {text: 'Duplicate folder', action:'DUPLICATE_FOLDER', payload:{folder:attributes}},
+        {text: 'Delete folder', action:'DELETE_FOLDER', payload:{folder:attributes}}
     ]
 
     const editIconMap: Array<OptionInterface> = [

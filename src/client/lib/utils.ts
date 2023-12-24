@@ -1,5 +1,6 @@
-import { Color, StyleFolder, StyleItem } from "@lib/interfaces";
+import { Color, Folder, StyleFolder, StyleItem } from "@lib/interfaces";
 import { hexToRgb } from "./color.utils";
+import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 
 function clone(val: any) {
     return JSON.parse(JSON.stringify(val))
@@ -103,7 +104,7 @@ export function updateColor({ style, color }: { style: StyleItem, color: Color |
 
         newPaint.map((paint: any) => { paint.color = color; });
         figmaStyle.paints = newPaint;
-    }catch(_){
+    } catch (_) {
         console.warn(_);
     }
 
@@ -143,9 +144,21 @@ export function folderNameFromPath(path: string) {
 }
 
 
-export function clamp(min:number, value:number, max:number):number{
-    if(value <= min){ return min; }
-    if(value >= max){ return max; }
+export function clamp(min: number, value: number, max: number): number {
+    if (value <= min) { return min; }
+    if (value >= max) { return max; }
     return value;
 }
 
+
+export function addStyleColor({ folder, name, style }: { folder: string, name: string, style: any }) {
+    const newStyleColor = figma.createPaintStyle();
+    newStyleColor.name = folder ? concatFolderName(folder, name) : name;
+    newStyleColor.paints = style || DEFAULT_STYLE_COLOR;
+}
+
+export function get_styles_of_folder(folder: StyleFolder, array:Array<StyleItem>=[]): Array<StyleItem> {
+    array.push(...folder.styles);
+    folder.folders.forEach( subfolder => get_styles_of_folder(subfolder, array) );
+    return array;
+}
