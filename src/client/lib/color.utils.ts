@@ -1,4 +1,4 @@
-import { Color, Color as ColorInterface } from '@lib/interfaces';
+import { Color, Color as ColorInterface, StyleItem } from '@lib/interfaces';
 
 function to255(color: ColorInterface) {
     const newColor: ColorInterface = { r: 0, g: 0, b: 0 };
@@ -54,3 +54,20 @@ export function rgbToHsl({r, g, b}:{r:number, g:number, b:number}){
         ${Math.floor( (100 * (2 * l - s)) / 2)}%)`;
 
   }; 
+
+
+  export function sort_by_saturation(styles:Array<StyleItem>){
+
+    
+  }
+
+  export function sort_by_brightness(styles:Array<StyleItem>){
+
+    
+  }
+
+  export function sort_by_name(styles:Array<StyleItem>){
+
+    
+    
+  }

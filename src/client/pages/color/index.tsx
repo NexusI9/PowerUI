@@ -3,6 +3,8 @@ import { StyleTemplate } from "@components/templates";
 import PaintPlus from '@icons/paint-plus.svg';
 import { ButtonPad } from "@lib/interfaces";
 import { send } from "@lib/ipc";
+import SwatchIcon from '@icons/swatch.svg';
+
 
 export default () => {
 
@@ -25,5 +27,13 @@ export default () => {
             padStyle={buttonPadStyle}
             getStyleMethod="GET_PAINT_STYLES"
             styleItem={Swatch}
+            custom={{
+                options:{
+                    add:{icon:SwatchIcon},
+                    kebab:[
+                        {text:'Sort by brightness', action:'SORT_STYLE_COLOR_BRIGHTNESS', payload:{folder:null}},
+                        {text:'Sort by saturation', action:'SORT_STYLE_COLOR_SATURATION', payload:{folder:null}}                    ]
+                }
+            }}
         />);
 }

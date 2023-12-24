@@ -6,7 +6,7 @@ import Plus from '@icons/add.svg';
 import Grid from '@icons/table.svg';
 import { ButtonPad } from "@components/button-pad";
 import { FolderContainer } from "@components/folder-container";
-import { ButtonPad as ButtonPadInterface } from "@lib/interfaces";
+import { ButtonPad as ButtonPadInterface, FolderCustom } from "@lib/interfaces";
 import { get, listen } from '@lib/ipc';
 
 interface StyleTemplate {
@@ -16,7 +16,7 @@ interface StyleTemplate {
     padStyle: ButtonPadInterface;
     getStyleMethod?: string;
     styleItem: React.FunctionComponent;
-    custom?: {};
+    custom?: FolderCustom;
 };
 
 
@@ -27,7 +27,7 @@ export default ({
     padStyle,
     getStyleMethod,
     styleItem,
-    custom = {}
+    custom
 }: StyleTemplate) => {
 
     const [displayMode, setDisplayMode] = useState<'grid' | 'list'>('grid');

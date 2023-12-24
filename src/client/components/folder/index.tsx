@@ -5,7 +5,7 @@ import Move from '@icons/move.svg';
 import Carrot from '@icons/carrot.svg';
 import { Option as OptionInterface } from '@lib/interfaces';
 import { useState } from 'react';
-import SwatchIcon from '@icons/swatch.svg';
+import Add from '@icons/add.svg';
 import Pen from '@icons/pencil.svg';
 import Kebab from '@icons/kebab-vertical.svg';
 import { Input } from '@components/input';
@@ -33,15 +33,23 @@ export const Folder = ({
         { icon: Carrot, onClick: () => setDisplay(!display) }
     ];
 
-    const contextMenuItems:Array<ContextMenuCommand> = [
-        {text: 'Duplicate folder', action:'DUPLICATE_FOLDER', payload:{folder:attributes}},
-        {text: 'Delete folder', action:'DELETE_FOLDER', payload:{folder:attributes}}
+    const contextMenuItems: Array<ContextMenuCommand> = [
+        { text: 'Duplicate folder', action: 'DUPLICATE_FOLDER', payload: { folder: null } },
+        { text: 'Delete folder', action: 'DELETE_FOLDER', payload: { folder: null } },
+        { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: { folder: null } }
     ]
+        .concat(custom?.options?.kebab || [])
+        .map( (item:ContextMenuCommand) =>{ 
+            if(!item.payload){
+                item.payload.folder = attributes; 
+            }
+            return item;
+        });
 
     const editIconMap: Array<OptionInterface> = [
         { icon: Pen, onClick: () => 0, disabled: !allowEdit },
-        { icon: custom?.generateIcon || SwatchIcon, onClick: () => 0 },
-        { icon: Kebab, onClick: (e:any) => dispatch(displayContextMenu({commands:contextMenuItems, position:{x:e.clientX, y:e.clientY}})) }
+        { icon: custom?.options?.add?.icon || Add, onClick: () => 0 },
+        { icon: Kebab, onClick: (e: any) => dispatch(displayContextMenu({ commands: contextMenuItems, position: { x: e.clientX, y: e.clientY } })) }
     ];
 
 
