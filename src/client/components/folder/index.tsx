@@ -34,17 +34,18 @@ export const Folder = ({
     ];
 
     const contextMenuItems: Array<ContextMenuCommand> = [
-        { text: 'Duplicate folder', action: 'DUPLICATE_FOLDER', payload: { folder: null } },
-        { text: 'Delete folder', action: 'DELETE_FOLDER', payload: { folder: null } },
-        { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: { folder: null } }
+        { text: 'Duplicate folder', action: 'DUPLICATE_FOLDER', payload: {} },
+        { text: 'Delete folder', action: 'DELETE_FOLDER', payload: {} },
+        { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {} }
     ]
         .concat(custom?.options?.kebab || [])
-        .map( (item:ContextMenuCommand) =>{ 
-            if(!item.payload){
-                item.payload.folder = attributes; 
-            }
-            return item;
+        .map((item: ContextMenuCommand) => {  //replace all payload attributes by folder attributes
+            const newItem = {...item};
+            newItem.payload = {folder: attributes};
+            return newItem;
         });
+
+
 
     const editIconMap: Array<OptionInterface> = [
         { icon: Pen, onClick: () => 0, disabled: !allowEdit },
