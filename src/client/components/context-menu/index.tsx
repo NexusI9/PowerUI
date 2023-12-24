@@ -5,26 +5,30 @@ import { useSelector } from "react-redux";
 import { send } from "@lib/ipc";
 import { destroy as destroyTooltip } from '@lib/slices/tooltip.slice';
 import { useDispatch } from 'react-redux';
+import { clamp } from '@lib/utils';
 
 export const ContextMenu = () => {
 
     const dispatch = useDispatch();
     const { commands, position } = useSelector((state: { contextmenu: ContextMenuInterface }) => state.contextmenu);
     const [display, setDisplay] = useState(false);
+    const MENU_WIDTH = 160;
 
     useEffect(() => {
 
         const onClick = () => {
-            if(commands.length){
-                setDisplay(false);
-            }
+            console.log("click");
+            setDisplay(false);
         };
 
-        console.log(commands.length);
+        if (display) {
+            window.addEventListener('click', onClick);
+        }
 
-        window.addEventListener('click', onClick);
+
         return () => window.removeEventListener('click', onClick);
-    }, []);
+
+    }, [display]);
 
     useEffect(() => {
 
@@ -33,10 +37,11 @@ export const ContextMenu = () => {
 
     }, [commands]);
 
+
     return (
         <ul
             className={`context-menu panel ${!display && 'hide' || ''} pop`}
-            style={{ top: `${position.y}px`, left: `${position.x}px` }}
+            style={{ top: `${position.y}px`, left: `${ clamp(0, position.x, window.innerWidth - 1.1 * MENU_WIDTH) || position.x }px` }}
         >
             {commands?.map((command, i) => <li key={JSON.stringify(command) + i} onClick={() => send({ type: command.action, ...command.payload })}>{command.text}</li>)}
         </ul>
