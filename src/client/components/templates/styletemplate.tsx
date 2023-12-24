@@ -52,8 +52,7 @@ export default ({
 
     const handleOnMessage = (e: any) => {
         if (e.action === 'RELOAD_PAGE') {
-            const date = new Date();
-            setReload(date.getTime());
+            setReload(Date.now());
         }
     };
 
