@@ -6,7 +6,7 @@ import { send } from "@lib/ipc";
 import { destroy as destroyTooltip } from '@lib/slices/slice.tooltip';
 import { destroy as destroyContextMenu } from '@lib/slices/slice.contextmenu';
 import { useDispatch } from 'react-redux';
-import { clamp } from '@lib/utils';
+import { clamp } from '@lib/utils/utils';
 
 export const ContextMenu = () => {
 

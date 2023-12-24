@@ -1,7 +1,7 @@
 import { Color, Folder, StyleFolder, StyleItem } from "@lib/interfaces";
 import { hexToRgb } from "./utils.color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
-import { clone } from '@lib/utils';
+import { clone } from '@lib/utils/utils';
 
 export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleFolder> {
 
@@ -164,7 +164,19 @@ export function get_styles_of_folder(folder: StyleFolder, array: Array<StyleItem
     return array;
 }
 
-export function sort_by_name(styles:Array<StyleItem>){
-    
-    
+export function sort_by_name(styles: Array<StyleItem>) {
+    styles.sort((a, b) => a.name > b.name ? 1 : -1);
+    replaceStyle(styles);
+}
+
+function replaceStyle(list: Array<StyleItem>) {
+
+    //2. remove items
+    list.forEach( item => figma.getStyleById(item.id)?.remove() ); 
+
+    //3.instantiate new items
+    list.forEach( (item) => {
+        item = item as StyleItem;
+        addStyle({name:item.name, style: item.paints, type:item.type});
+    });
 }

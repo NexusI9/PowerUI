@@ -1,6 +1,6 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
-import { sort_by_brightness, sort_by_saturation } from "@lib/utils.color";
+import { sort_by_brightness, sort_by_saturation } from "@lib/utils/utils.color";
 import { StyleItem } from "@lib/interfaces";
 import {
   classifyStyle,
@@ -10,7 +10,7 @@ import {
   addStyle,
   get_styles_of_folder,
   sort_by_name
-} from "@lib/utils.style";
+} from "@lib/utils/utils.style";
 
 figma.showUI(__html__, { themeColors: true });
 figma.ui.resize(750, 655);
