@@ -62,16 +62,15 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'DUPLICATE_FOLDER':
-      get_styles_of_folder(msg.folder).forEach( item => {
-        const {folder, name} = folderNameFromPath(item.name);
-        const newName = [folder+' (copy)', name].join('/');
-        if(item.paints)
-        addStyle({name:newName, style:item.paints, type:item.type });
+      get_styles_of_folder(msg.folder).forEach(item => {
+        const parts = item.name.split('/');
+        parts[msg.folder.level] += ' (copy)';
+        addStyle({ name: parts.join('/'), style: item.paints, type: item.type });
       });
       break;
 
     case 'DELETE_FOLDER':
-      get_styles_of_folder(msg.folder).forEach( item => figma.getStyleById(item.id)?.remove() );
+      get_styles_of_folder(msg.folder).forEach(item => figma.getStyleById(item.id)?.remove());
       break;
 
     case 'DELETE_STYLE':

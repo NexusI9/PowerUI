@@ -41,8 +41,8 @@ export const Swatch = (props: any) => {
         const { x, y, width, height } = ref.getBoundingClientRect();
         dispatch(displayTooltip({
             content: [
-                { type: 'INPUT', value: hexValue, action: 'UPDATE_STYLE_COLOR', payload: { style: props, color: null } },
-                { type: 'INPUT', value: folderNameFromPath(props.name).name, action: 'UPDATE_STYLE_NAME', payload: { style: props, name: null } }
+                { type: 'INPUT', value: folderNameFromPath(props.name).name, action: 'UPDATE_STYLE_NAME', payload: { style: props, name: null } },
+                { type: 'INPUT', value: hexValue, action: 'UPDATE_STYLE_COLOR', payload: { style: props, color: null } }
             ],
             boundingBox: { x, y, width, height }
         }));
