@@ -7,6 +7,7 @@ export interface Option{
 }
 
 
+
 export interface ButtonPad {
     icon: string;
     text: string;
@@ -51,11 +52,20 @@ export interface StyleFolder{
     folders:Array<StyleFolder>;
 }
 
-export interface Color{
+export interface ColorRGB{
     r:number;
     g:number;
     b:number;
 }
+
+export interface ColorHSL{
+    h:number;
+    s:number;
+    l:number;
+}
+
+export type ColorOutput = 'STRING' | 'OBJECT';
+
 
 export interface CreateColor{
     folder:string;

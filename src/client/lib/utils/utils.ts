@@ -1,7 +1,3 @@
-import { Color, Folder, StyleFolder, StyleItem } from "@lib/interfaces";
-import { hexToRgb } from "./utils.color";
-import { DEFAULT_STYLE_COLOR } from "@lib/constants";
-
 export function clone(val: any) {
     return JSON.parse(JSON.stringify(val))
 }

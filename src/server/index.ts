@@ -1,6 +1,6 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
-import { sort_by_brightness, sort_by_saturation } from "@lib/utils/utils.color";
+import { sort_by_hsl } from "@lib/utils/utils.color";
 import { StyleItem } from "@lib/interfaces";
 import {
   classifyStyle,
@@ -84,12 +84,12 @@ figma.ui.onmessage = msg => {
 
       
     case 'SORT_STYLE_COLOR_BRIGHTNESS':
-      sort_by_brightness(msg.folder.styles);
+      sort_by_hsl(msg.folder.styles,'BRIGHTNESS');
       break;
 
 
-    case 'SORT_STYLE_COLOR_SATURATTION':
-      sort_by_saturation(msg.folder.styles);
+    case 'SORT_STYLE_COLOR_SATURATION':
+      sort_by_hsl(msg.folder.styles, 'SATURATION');
       break;
 
     default:

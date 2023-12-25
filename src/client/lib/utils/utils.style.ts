@@ -1,4 +1,4 @@
-import { Color, Folder, StyleFolder, StyleItem } from "@lib/interfaces";
+import { ColorRGB, Folder, StyleFolder, StyleItem } from "@lib/interfaces";
 import { hexToRgb } from "./utils.color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { clone } from '@lib/utils/utils';
@@ -85,7 +85,7 @@ export function updateFolderName({ folder, level, name }: { folder: StyleFolder,
 
 }
 
-export function updateColor({ style, color }: { style: StyleItem, color: Color | string }): void {
+export function updateColor({ style, color }: { style: StyleItem, color: ColorRGB | string }): void {
 
     const figmaStyle = figma.getStyleById(style.id) as PaintStyle;
     const newPaint = clone(figmaStyle.paints);
@@ -169,7 +169,7 @@ export function sort_by_name(styles: Array<StyleItem>) {
     replaceStyle(styles);
 }
 
-function replaceStyle(list: Array<StyleItem>) {
+export function replaceStyle(list: Array<StyleItem>) {
 
     //2. remove items
     list.forEach( item => figma.getStyleById(item.id)?.remove() ); 
