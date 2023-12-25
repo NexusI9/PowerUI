@@ -32,7 +32,8 @@ export default () => {
                     add: { icon: SwatchIcon },
                     kebab: [
                         { text: 'Sort by brightness', action: 'SORT_STYLE_COLOR_BRIGHTNESS', payload: {} },
-                        { text: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', payload: {} }]
+                        { text: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', payload: {} }
+                    ]
                 }
             }}
         />);

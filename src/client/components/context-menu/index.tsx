@@ -1,6 +1,6 @@
 import './index.scss';
 import { ContextMenuCommand, ContextMenu as ContextMenuInterface } from "@lib/interfaces";
-import { useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { send } from "@lib/ipc";
 import { destroy as destroyTooltip } from '@lib/slices/slice.tooltip';
@@ -45,7 +45,13 @@ export const ContextMenu = () => {
             className={`context-menu panel ${!display && 'hide' || ''} pop`}
             style={{ top: `${position.y}px`, left: `${clamp(0, position.x, window.innerWidth - 1.1 * MENU_WIDTH) || position.x}px` }}
         >
-            {commands?.map((command, i) => <li key={JSON.stringify(command) + i} onClick={() => send({ action: command.action, ...command.payload })}>{command.text}</li>)}
+            {commands?.map((command, i) => {
+                if(Array.isArray(command) ){
+                    return <Fragment key={JSON.stringify(command) + i}>{command.map( cm => <li key={JSON.stringify(cm) + i} onClick={() => send({ action: cm.action, ...cm.payload })}>{cm.text}</li>)}{i < command.length-1 ? <hr/> : <></>}</Fragment>
+                }else{
+                    return(<li key={JSON.stringify(command) + i} onClick={() => send({ action: command.action, ...command.payload })}>{command.text}</li>)
+                }
+            })}
         </ul>
     );
 

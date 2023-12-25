@@ -88,7 +88,7 @@ export interface ContextMenuCommand{
 }
 
 export interface ContextMenu{
-    commands: Array<ContextMenuCommand>;
+    commands: Array<ContextMenuCommand> | Array<Array<ContextMenuCommand>>;
     position: MousePosition;
     id:number | string;
 }

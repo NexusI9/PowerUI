@@ -12,6 +12,7 @@ import { Input } from '@components/input';
 import { send } from '@lib/ipc';
 import { useDispatch } from 'react-redux';
 import { display as displayContextMenu } from '@lib/slices/slice.contextmenu';
+import { assignPayload } from './helper';
 
 export const Folder = ({
     title,
@@ -33,19 +34,19 @@ export const Folder = ({
         { icon: Carrot, onClick: () => setDisplay(!display) }
     ];
 
-    const contextMenuItems: Array<ContextMenuCommand> = [
+    let contextMenuItems: Array<ContextMenuCommand> | Array<Array<ContextMenuCommand>> = [];
+    contextMenuItems = [
         { text: 'Duplicate folder', action: 'DUPLICATE_FOLDER', payload: {} },
         { text: 'Delete folder', action: 'DELETE_FOLDER', payload: {} },
         { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {} }
     ]
-        .concat(custom?.options?.kebab || []) //concat eventuals custom options
-        .map((item: ContextMenuCommand) => {  //replace all payload attributes by folder attributes
-            const newItem = {...item};
-            newItem.payload = {folder: attributes};
-            return newItem;
-        });
 
+    if(custom?.options?.kebab){
+        contextMenuItems = [contextMenuItems]
+        .concat([custom?.options?.kebab] || []) //concat eventuals custom options
+    }
 
+    assignPayload(contextMenuItems, attributes);
 
     const editIconMap: Array<OptionInterface> = [
         { icon: Pen, onClick: () => 0, disabled: !allowEdit },
