@@ -31,8 +31,7 @@ export const Folder = ({
     const [display, setDisplay] = useState(true);
     const DEFAULT_COMMANDS: Array<ContextMenuCommand> = [
         { text: 'Duplicate folder', action: 'DUPLICATE_FOLDER', payload: {} },
-        { text: 'Delete folder', action: 'DELETE_FOLDER', payload: {} },
-        { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {} }
+        { text: 'Delete folder', action: 'DELETE_FOLDER', payload: {} }
     ];
 
     const contextMenuItems = useMemo(() => {
@@ -43,14 +42,11 @@ export const Folder = ({
             menu = menu.concat([custom.options.kebab]) //concat eventuals custom options
         }
 
-
         return menu.map((item) =>
             Array.isArray(item) ?
                 item.map(it => ({ ...it, payload: { folder: attributes } })) :
                 ({ ...item, payload: { folder: attributes } }));;
     }, [attributes]);
-
-    console.log(contextMenuItems)
 
     const folderIconMap: Array<OptionInterface> = [
         { icon: Move, onClick: () => 0 },

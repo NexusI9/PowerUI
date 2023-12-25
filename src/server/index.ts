@@ -19,7 +19,6 @@ figma.ui.resize(750, 655);
 // posted message.
 figma.ui.onmessage = msg => {
 
-  console.log(msg);
   switch (msg.action) {
 
     //styles references: https://www.figma.com/plugin-docs/api/figma/#styles

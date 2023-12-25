@@ -31,6 +31,7 @@ export default () => {
                 options: {
                     add: { icon: SwatchIcon },
                     kebab: [
+                        { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {} },
                         { text: 'Sort by brightness', action: 'SORT_STYLE_COLOR_BRIGHTNESS', payload: {} },
                         { text: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', payload: {} }
                     ]
