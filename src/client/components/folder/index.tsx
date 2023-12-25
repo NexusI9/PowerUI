@@ -4,7 +4,7 @@ import { OptionsRow } from '@components/options-row';
 import Move from '@icons/move.svg';
 import Carrot from '@icons/carrot.svg';
 import { Option as OptionInterface } from '@lib/interfaces';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import Add from '@icons/add.svg';
 import Pen from '@icons/pencil.svg';
 import Kebab from '@icons/kebab-vertical.svg';
@@ -12,7 +12,6 @@ import { Input } from '@components/input';
 import { send } from '@lib/ipc';
 import { useDispatch } from 'react-redux';
 import { display as displayContextMenu } from '@lib/slices/slice.contextmenu';
-import { assignPayload } from './helper';
 
 export const Folder = ({
     title,
@@ -26,27 +25,40 @@ export const Folder = ({
 }: FolderInterface
 ) => {
 
+
+
     const dispatch = useDispatch();
     const [display, setDisplay] = useState(true);
+    const DEFAULT_COMMANDS: Array<ContextMenuCommand> = [
+        { text: 'Duplicate folder', action: 'DUPLICATE_FOLDER', payload: {} },
+        { text: 'Delete folder', action: 'DELETE_FOLDER', payload: {} },
+        { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {} }
+    ];
+
+    const contextMenuItems = useMemo(() => {
+        let menu: Array<ContextMenuCommand> | Array<Array<ContextMenuCommand>> = DEFAULT_COMMANDS;
+
+        if (custom?.options?.kebab) {
+            menu = [menu];
+            menu = menu.concat([custom.options.kebab]) //concat eventuals custom options
+        }
+
+
+        return menu.map((item) =>
+            Array.isArray(item) ?
+                item.map(it => ({ ...it, payload: { folder: attributes } })) :
+                ({ ...item, payload: { folder: attributes } }));;
+    }, [attributes]);
+
+    console.log(contextMenuItems)
 
     const folderIconMap: Array<OptionInterface> = [
         { icon: Move, onClick: () => 0 },
         { icon: Carrot, onClick: () => setDisplay(!display) }
     ];
 
-    let contextMenuItems: Array<ContextMenuCommand> | Array<Array<ContextMenuCommand>> = [];
-    contextMenuItems = [
-        { text: 'Duplicate folder', action: 'DUPLICATE_FOLDER', payload: {} },
-        { text: 'Delete folder', action: 'DELETE_FOLDER', payload: {} },
-        { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {} }
-    ]
 
-    if(custom?.options?.kebab){
-        contextMenuItems = [contextMenuItems]
-        .concat([custom?.options?.kebab] || []) //concat eventuals custom options
-    }
 
-     assignPayload(contextMenuItems, attributes);
 
     const editIconMap: Array<OptionInterface> = [
         { icon: Pen, onClick: () => 0, disabled: !allowEdit },

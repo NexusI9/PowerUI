@@ -15,7 +15,7 @@ export default () => {
     };
 
     const handleAddItem = ({ folder, name }: { folder: string, name: string }) => {
-        send({ action: "ADD_STYLE_COLOR", folder, name });
+        send({ action: "ADD_STYLE_COLOR", folder, name, type:'COLOR' });
     }
 
 

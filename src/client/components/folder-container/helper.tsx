@@ -8,7 +8,7 @@ export function generateFolder(folder: Array<StyleFolder>, styleItem: React.Func
     return folder.map((item: StyleFolder, i: number) => {
 
         const isRoot = item.title === 'root';
-        const handleAddItem = () => onAddItem({ folder: item.fullpath, name: 'new-style' });
+        const handleAddItem = () => onAddItem({ folder: item.fullpath, name: 'new-style'});
 
         return <Folder
             key={item.title + i}
