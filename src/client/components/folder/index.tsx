@@ -46,7 +46,7 @@ export const Folder = ({
         .concat([custom?.options?.kebab] || []) //concat eventuals custom options
     }
 
-    assignPayload(contextMenuItems, attributes);
+     assignPayload(contextMenuItems, attributes);
 
     const editIconMap: Array<OptionInterface> = [
         { icon: Pen, onClick: () => 0, disabled: !allowEdit },

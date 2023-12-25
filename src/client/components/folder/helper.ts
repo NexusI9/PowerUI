@@ -3,12 +3,14 @@ import { ContextMenuCommand, StyleFolder } from "@lib/interfaces";
 export function assignPayload(items:Array<ContextMenuCommand> | Array<Array<ContextMenuCommand>>, folder:StyleFolder){
 
     items.forEach((item) => {  //replace all payload attributes by folder attributes
+        item = {...item};
         if(Array.isArray(item)){
-            assignPayload(item, folder);
+            return assignPayload(item, folder);
         }else{
-            const newItem = {...item};
-            newItem.payload = {folder: folder};
+            item.payload = {folder: folder};
+            console.log(item);
         }
     });
+
 
 }
