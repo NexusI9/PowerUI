@@ -191,7 +191,6 @@ export function setCopyNumber(folder: StyleFolder): string {
     const { level } = folder;
     let styles: Array<PaintStyle | TextStyle> = [];
     let uniqueFolders: Array<string> = [];
-    let count = 0;
 
     switch (folder.styles[0].type) {
         case 'COLOR':
@@ -219,10 +218,8 @@ export function setCopyNumber(folder: StyleFolder): string {
 
         for(var f = 0; f< folders.length; f++){
             const lastPart = lastIndexOfArray(folders[f].split(' '));
-            console.log({lastPart, count});
             if (isNumber(lastPart) && Number(lastPart) >= count) {
                 count = Number(lastIndexOfArray(folders[f].split(' '))) + 1;
-                console.log(`Found ${lastPart} (${folders[f]})`)
                 folders.splice(f,1);
                 //check once again
                 return setNumber(folders, count);
@@ -231,10 +228,9 @@ export function setCopyNumber(folder: StyleFolder): string {
         return count === 0 ? 1 : count;
     }
 
-    count = setNumber(uniqueFolders, count);
-    console.log(count);
 
     //Defines Output
+    const count = setNumber(uniqueFolders, 0);
     const currentFolderLastPart = lastIndexOfArray(folderName.split(' '), '');
 
     if (currentFolderLastPart === 'copy') { //Case 1 (end with copy) 

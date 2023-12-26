@@ -1,1 +1,1 @@
-export { default as StyleTemplate } from './styletemplate';
+export { default as StyleTemplate } from './template.style';
