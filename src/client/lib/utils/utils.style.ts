@@ -1,7 +1,7 @@
 import { ColorRGB, Folder, StyleColor, StyleFolder, Styles } from "@lib/interfaces";
 import { hexToRgb } from "./utils.color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
-import { clone } from '@lib/utils/utils';
+import { clone, isNumber, lastIndexOfArray } from '@lib/utils/utils';
 
 export function classifyStyle(style: Array<Styles>): Array<Styles | StyleFolder> {
 
@@ -187,7 +187,53 @@ export function replaceStyle(list: Array<Styles>) {
 
 export function setCopyNumber(folder: StyleFolder): string {
 
+    let folderName = folder.fullpath.split('/')[folder.level];
+    const {level} = folder;
+    let styles: Array<PaintStyle | TextStyle> = []; 
+    let checkedFolders:Array<string> = [];
+    let count = 0;
 
+    switch(folder.styles[0].type){
+        case 'COLOR':
+            styles = figma.getLocalPaintStyles();
+            break;
+        case 'TEXT':
+            styles = figma.getLocalTextStyles();
+            break;
+    }
+    
+    //get folder unique names
+    styles.forEach(style => {
+        const folderPath = folderNameFromPath(style.name).folder; 
+        const parts = folderPath.split('/');
+        const indexedFolder = parts[level];
+        
+        if(indexedFolder && checkedFolders.indexOf(indexedFolder) < 0){
+            checkedFolders.push(indexedFolder);
+            if(indexedFolder === folderName){
+                
+                count++;
+            }
+        }
+        
+    });
 
-    return '';
+    //replace and increment last part if last part is a number (so "copy 1 1" => "copy 2")
+    const currentFolderLastPart = lastIndexOfArray(folderName.split(' '), '');
+    
+    if( currentFolderLastPart === 'copy'){ //folder name copy
+        if(count > 0){
+            folderName += ` ${String(count)}`;
+        }
+    }else if( isNumber(currentFolderLastPart) ){ //folder name copy 3
+        const newIndex = String(Number(currentFolderLastPart) + count);
+        let newName = folderName.split(' ');
+        newName.pop();
+        folderName = `${newName.join(' ')} ${newIndex}`;
+    }else{ 
+        folderName += ' copy';
+    }
+
+    return folderName;
+
 }

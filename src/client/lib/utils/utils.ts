@@ -9,3 +9,10 @@ export function clamp(min: number, value: number, max: number): number {
 }
 
 
+export function isNumber(value:string){
+    return !Number.isNaN(Number(value))
+}
+
+export function lastIndexOfArray(array:Array<any>, fallback?:any){
+    return array.slice(-1)[0] || fallback ;
+}

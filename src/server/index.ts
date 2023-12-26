@@ -9,7 +9,10 @@ import {
   updateStyleName,
   addStyle,
   get_styles_of_folder,
-  sort_by_name
+  sort_by_name,
+  setCopyNumber,
+  concatFolderName,
+  folderNameFromPath
 } from "@lib/utils/utils.style";
 
 figma.showUI(__html__, { themeColors: true });
@@ -63,15 +66,18 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'DUPLICATE_FOLDER':
+
+      const newFolderName = setCopyNumber(msg.folder);
+
       get_styles_of_folder(msg.folder).forEach(item => {
-        const parts = item.name.split('/');
-        parts[msg.folder.level] += ` (copy)`;
-        addStyle({ 
-          name: parts.join('/'), 
-          style: (item.type === 'COLOR' && item.paints) || (item.type === 'TEXT' && item.texts), 
-          type: item.type 
+        const itemName = folderNameFromPath(item.name).name;
+        addStyle({
+          name: concatFolderName(newFolderName, itemName),
+          style: (item.type === 'COLOR' && item.paints) || (item.type === 'TEXT' && item.texts),
+          type: item.type
         });
       });
+
       break;
 
     case 'DELETE_FOLDER':
@@ -86,9 +92,9 @@ figma.ui.onmessage = msg => {
       sort_by_name(msg.folder.styles);
       break;
 
-      
+
     case 'SORT_STYLE_COLOR_BRIGHTNESS':
-      sort_by_hsl(msg.folder.styles,'BRIGHTNESS');
+      sort_by_hsl(msg.folder.styles, 'BRIGHTNESS');
       break;
 
 
