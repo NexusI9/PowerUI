@@ -1,6 +1,7 @@
 import * as React from "react";
 import './index.scss';
-import {DisplayMode, FolderCustom, StyleFolder } from "@ctypes/contextmenu";
+import {FolderCustom } from "@ctypes/folder";
+import {DisplayMode, StyleFolder } from "@ctypes/style";
 import { generateFolder } from "./helper";
 
 export const FolderContainer = ({ styles, styleItem, onAddItem, displayMode='grid', custom }: 

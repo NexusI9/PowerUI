@@ -1,4 +1,5 @@
-import { ColorRGB, Folder, StyleColor, StyleFolder, Styles } from "@ctypes/contextmenu";
+import { ColorRGB  } from "@ctypes/color";
+import { StyleColor, StyleFolder, Styles } from "@ctypes/style";
 import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { clone, isNumber, lastIndexOfArray } from '@lib/utils/utils';

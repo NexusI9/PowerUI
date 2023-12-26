@@ -1,7 +1,7 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
 import { sort_by_hsl } from "@lib/utils/color";
-import { StyleColor } from "@types/style";
+import { StyleColor } from "@ctypes/style";
 import {
   classifyStyle,
   updateColor,

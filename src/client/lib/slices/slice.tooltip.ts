@@ -1,4 +1,3 @@
-import { ToolTip } from "@ctypes/contextmenu";
 import { createSlice } from "@reduxjs/toolkit";
 
 const tooltipSlice = createSlice({

@@ -1,5 +1,5 @@
 import './index.scss';
-import { Input as InputInterface} from '@ctypes/contextmenu';
+import { Input as InputInterface} from '@ctypes/input';
 
 
 export const Input = ({ type = 'default', value, placeholder = 'Enter a value', onChange, onBlur, onFocus, onEnter }: InputInterface) => {

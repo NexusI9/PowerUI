@@ -1,9 +1,9 @@
 import './index.scss';
-import { ContextMenuCommand, Folder as FolderInterface } from '@ctypes/contextmenu';
+import { ContextMenuCommand } from '@ctypes/contextmenu';
+import { Folder as FolderInterface, Option as OptionInterface } from '@ctypes/folder';
 import { OptionsRow } from '@components/options-row';
 import Move from '@icons/move.svg';
 import Carrot from '@icons/carrot.svg';
-import { Option as OptionInterface } from '@ctypes/contextmenu';
 import { useMemo, useState } from 'react';
 import Add from '@icons/add.svg';
 import Pen from '@icons/pencil.svg';

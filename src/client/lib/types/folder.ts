@@ -1,6 +1,14 @@
 import { StyleFolder } from "@ctypes/style";
 import { ContextMenuCommand } from "@ctypes/contextmenu";
 
+
+export interface Option{
+    icon: string;
+    onClick?: any;
+    toolTip?: string;
+    disabled?:boolean;
+}
+
 export interface Folder{
     title:string;
     children:React.JSX.Element; 

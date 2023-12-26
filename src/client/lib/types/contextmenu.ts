@@ -1,5 +1,6 @@
 import { MousePosition } from "@ctypes/global";
 
+
 export interface ContextMenuCommand{
     text:string; 
     action:string;

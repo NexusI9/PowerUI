@@ -1,7 +1,7 @@
 import { Swatch } from "@components/swatch/swatch";
 import { Style } from "@components/templates/style";
 import PaintPlus from '@icons/paint-plus.svg';
-import { ButtonPad } from "@ctypes/contextmenu";
+import { ButtonPad } from "@ctypes/input";
 import { send } from "@lib/ipc";
 import SwatchIcon from '@icons/swatch.svg';
 

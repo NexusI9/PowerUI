@@ -1,4 +1,5 @@
-import { ColorRGB, ColorOutput, StyleColor, StyleText, ColorHSL } from '@ctypes/contextmenu';
+import { ColorRGB, ColorOutput, ColorHSL } from '@ctypes/color';
+import { StyleColor, StyleText } from '@ctypes/style';
 import { replaceStyle } from './style';
 
 function to255(color: ColorRGB) {

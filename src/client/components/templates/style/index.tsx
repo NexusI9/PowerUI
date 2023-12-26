@@ -6,7 +6,8 @@ import Plus from '@icons/add.svg';
 import Grid from '@icons/table.svg';
 import { ButtonPad } from "@components/button-pad";
 import { FolderContainer } from "@components/folder-container";
-import { ButtonPad as ButtonPadInterface, FolderCustom } from "@ctypes/contextmenu";
+import { ButtonPad as ButtonPadInterface } from "@ctypes/input";
+import { FolderCustom } from '@ctypes/folder';
 import { get, listen } from '@lib/ipc';
 
 interface StyleTemplate {
