@@ -188,12 +188,12 @@ export function replaceStyle(list: Array<Styles>) {
 export function setCopyNumber(folder: StyleFolder): string {
 
     let folderName = folder.fullpath.split('/')[folder.level];
-    const {level} = folder;
-    let styles: Array<PaintStyle | TextStyle> = []; 
-    let checkedFolders:Array<string> = [];
+    const { level } = folder;
+    let styles: Array<PaintStyle | TextStyle> = [];
+    let uniqueFolders: Array<string> = [];
     let count = 0;
 
-    switch(folder.styles[0].type){
+    switch (folder.styles[0].type) {
         case 'COLOR':
             styles = figma.getLocalPaintStyles();
             break;
@@ -201,36 +201,55 @@ export function setCopyNumber(folder: StyleFolder): string {
             styles = figma.getLocalTextStyles();
             break;
     }
-    
-    //get folder unique names
+
+    //Get folder unique names
     styles.forEach(style => {
-        const folderPath = folderNameFromPath(style.name).folder; 
+        const folderPath = folderNameFromPath(style.name).folder;
         const parts = folderPath.split('/');
         const indexedFolder = parts[level];
-        
-        if(indexedFolder && checkedFolders.indexOf(indexedFolder) < 0){
-            checkedFolders.push(indexedFolder);
-            if(indexedFolder === folderName){
-                
-                count++;
-            }
+
+        if (indexedFolder && uniqueFolders.indexOf(indexedFolder) < 0) {
+            uniqueFolders.push(indexedFolder);
         }
-        
+
     });
 
-    //replace and increment last part if last part is a number (so "copy 1 1" => "copy 2")
+    //Defines number 
+    const setNumber = (folders: Array<string>, count: number) => {
+
+        folders.forEach( (folder,i) => {
+            const lastPart = lastIndexOfArray(folder.split(' '));
+            console.log({lastPart, count});
+            if (isNumber(lastPart) && Number(lastPart) >= count) {
+                count = Number(lastIndexOfArray(folder.split(' '))) + 1;
+                console.log(`Found ${lastPart} (${folder})`)
+                folders.splice(i,1);
+                //check once again
+                break;
+                return setNumber(folders, count);
+            }else{
+                count = 1;
+            }
+        });
+
+        return count;
+    }
+
+    count = setNumber(uniqueFolders, count);
+    console.log(count);
+
+    //Defines Output
     const currentFolderLastPart = lastIndexOfArray(folderName.split(' '), '');
-    
-    if( currentFolderLastPart === 'copy'){ //folder name copy
-        if(count > 0){
+
+    if (currentFolderLastPart === 'copy') { //Case 1 (end with copy) 
+        if (count > 0) {
             folderName += ` ${String(count)}`;
         }
-    }else if( isNumber(currentFolderLastPart) ){ //folder name copy 3
-        const newIndex = String(Number(currentFolderLastPart) + count);
+    } else if (isNumber(currentFolderLastPart)) { //Case 2 (end with number)
         let newName = folderName.split(' ');
         newName.pop();
-        folderName = `${newName.join(' ')} ${newIndex}`;
-    }else{ 
+        folderName = `${newName.join(' ')} ${count}`;
+    } else { //Case 3 (simple, no number/copy)
         folderName += ' copy';
     }
 
