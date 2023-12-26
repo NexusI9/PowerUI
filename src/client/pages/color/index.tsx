@@ -1,7 +1,7 @@
 import { Swatch } from "@components/swatch/swatch";
-import { StyleTemplate } from "@components/templates";
+import { Style } from "@components/templates/style";
 import PaintPlus from '@icons/paint-plus.svg';
-import { ButtonPad } from "@lib/interfaces";
+import { ButtonPad } from "@ctypes/contextmenu";
 import { send } from "@lib/ipc";
 import SwatchIcon from '@icons/swatch.svg';
 
@@ -20,7 +20,7 @@ export default () => {
 
 
     return (
-        <StyleTemplate
+        <Style
             title="Colors"
             onAddItem={handleAddItem}
             onSwitchDisplay={() => 0}

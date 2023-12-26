@@ -1,7 +1,7 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
-import { sort_by_hsl } from "@lib/utils/utils.color";
-import { StyleColor } from "@lib/interfaces";
+import { sort_by_hsl } from "@lib/utils/color";
+import { StyleColor } from "@types/style";
 import {
   classifyStyle,
   updateColor,
@@ -13,7 +13,7 @@ import {
   setCopyNumber,
   concatFolderName,
   folderNameFromPath
-} from "@lib/utils/utils.style";
+} from "@lib/utils/style";
 
 figma.showUI(__html__, { themeColors: true });
 figma.ui.resize(750, 655);

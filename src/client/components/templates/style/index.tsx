@@ -6,7 +6,7 @@ import Plus from '@icons/add.svg';
 import Grid from '@icons/table.svg';
 import { ButtonPad } from "@components/button-pad";
 import { FolderContainer } from "@components/folder-container";
-import { ButtonPad as ButtonPadInterface, FolderCustom } from "@lib/interfaces";
+import { ButtonPad as ButtonPadInterface, FolderCustom } from "@ctypes/contextmenu";
 import { get, listen } from '@lib/ipc';
 
 interface StyleTemplate {
@@ -20,7 +20,7 @@ interface StyleTemplate {
 };
 
 
-export default ({
+export const Style = ({
     title,
     onSwitchDisplay,
     onAddItem,

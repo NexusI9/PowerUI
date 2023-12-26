@@ -1,4 +1,4 @@
-import { StyleFolder } from "@lib/interfaces";
+import { StyleFolder } from "@ctypes/contextmenu";
 import { Folder } from "@components/folder";
 import * as React from 'react';
 import { ButtonIcon } from "@components/button-icon";

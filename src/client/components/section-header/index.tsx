@@ -1,5 +1,5 @@
 import './index.scss';
-import { Option } from "@lib/interfaces";
+import { Option } from "@ctypes/contextmenu";
 import { OptionsRow } from "@components/options-row";
 
 export const SectionHeader = ({ title = 'Section title', options }: { title: string, options?: Array<Option> }) => (

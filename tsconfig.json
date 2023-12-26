@@ -15,6 +15,8 @@
         "@icons/*": ["src/client/assets/icons/*"],
         "@styles/*": ["src/client/styles/*"],
         "@lib/*": ["src/client/lib/*"],
+        "@ctypes/*": ["src/client/lib/types/*"]
+
     }
   },
   "include": ["src","src/custom.d.ts"]

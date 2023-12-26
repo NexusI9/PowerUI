@@ -1,10 +1,10 @@
 import { Font } from "@components/font/font";
-import { StyleTemplate } from "@components/templates";
+import { Style } from "@components/templates/style";
 import FontPlus from '@icons/font-plus.svg';
 
 
 export default () => (
-    <StyleTemplate
+    <Style
         title="Fonts"
         onAddItem={() => 0}
         onSwitchDisplay={() => 0}

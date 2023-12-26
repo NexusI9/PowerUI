@@ -1,5 +1,5 @@
-import { ColorRGB, ColorOutput, StyleColor, StyleText, ColorHSL } from '@lib/interfaces';
-import { replaceStyle } from './utils.style';
+import { ColorRGB, ColorOutput, StyleColor, StyleText, ColorHSL } from '@ctypes/contextmenu';
+import { replaceStyle } from './style';
 
 function to255(color: ColorRGB) {
     const newColor: ColorRGB = { r: 0, g: 0, b: 0 };

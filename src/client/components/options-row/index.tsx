@@ -1,5 +1,5 @@
 import { ButtonIcon } from '@components/button-icon';
-import { Option } from "@lib/interfaces";
+import { Option } from "@ctypes/contextmenu";
 import './index.scss';
 
 export const OptionsRow = ({ options, className }:{options:Array<Option>, className?:string}) => (
