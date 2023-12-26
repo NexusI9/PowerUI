@@ -11,7 +11,7 @@ import Kebab from '@icons/kebab-vertical.svg';
 import { Input } from '@components/input';
 import { send } from '@lib/ipc';
 import { useDispatch } from 'react-redux';
-import { display as displayContextMenu } from '@lib/slices/slice.contextmenu';
+import { display as displayContextMenu } from '@lib/slices/contextmenu';
 
 export const Folder = ({
     title,

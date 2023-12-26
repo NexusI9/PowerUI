@@ -3,7 +3,7 @@ import { ButtonPad } from "@components/button-pad";
 import PaintPlus from '@icons/paint-plus.svg';
 import FontPlus from '@icons/font-plus.svg';
 import { useDispatch } from "react-redux";
-import { setPage } from "@lib/slices/slice.page";
+import { setPage } from "@lib/slices/page";
 
 const padMap = [
     { page: 'color', icon: PaintPlus, text: 'Create Swatch' },

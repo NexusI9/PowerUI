@@ -3,11 +3,11 @@ import { rgb, rgbToHex, hexToRgb, rgbToHsl } from '@lib/utils/color';
 import './swatch.scss';
 import { send } from '@lib/ipc';
 import { folderNameFromPath } from '@lib/utils/style';
-import { display as displayContextMenu } from '@lib/slices/slice.contextmenu';
+import { display as displayContextMenu } from '@lib/slices/contextmenu';
 import { useDispatch } from 'react-redux';
 import { ContextMenuCommand } from '@ctypes/contextmenu';
-import { display as displayTooltip, destroy as destroyTooltip } from '@lib/slices/slice.tooltip';
-import { display as displaySnackBar } from '@lib/slices/slice.snackbar';
+import { display as displayTooltip, destroy as destroyTooltip } from '@lib/slices/tooltip';
+import { display as displaySnackBar } from '@lib/slices/snackbar';
 
 export const Swatch = (props: any) => {
 
