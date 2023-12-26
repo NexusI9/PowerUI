@@ -215,24 +215,20 @@ export function setCopyNumber(folder: StyleFolder): string {
     });
 
     //Defines number 
-    const setNumber = (folders: Array<string>, count: number) => {
+    const setNumber = (folders: Array<string>, count: number):number => {
 
-        folders.forEach( (folder,i) => {
-            const lastPart = lastIndexOfArray(folder.split(' '));
+        for(var f = 0; f< folders.length; f++){
+            const lastPart = lastIndexOfArray(folders[f].split(' '));
             console.log({lastPart, count});
             if (isNumber(lastPart) && Number(lastPart) >= count) {
-                count = Number(lastIndexOfArray(folder.split(' '))) + 1;
-                console.log(`Found ${lastPart} (${folder})`)
-                folders.splice(i,1);
+                count = Number(lastIndexOfArray(folders[f].split(' '))) + 1;
+                console.log(`Found ${lastPart} (${folders[f]})`)
+                folders.splice(f,1);
                 //check once again
-                break;
                 return setNumber(folders, count);
-            }else{
-                count = 1;
             }
-        });
-
-        return count;
+        }
+        return count === 0 ? 1 : count;
     }
 
     count = setNumber(uniqueFolders, count);
