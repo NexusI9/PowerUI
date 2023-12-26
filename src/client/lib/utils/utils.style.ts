@@ -1,9 +1,9 @@
-import { ColorRGB, Folder, StyleFolder, StyleItem } from "@lib/interfaces";
+import { ColorRGB, Folder, StyleColor, StyleFolder, Styles } from "@lib/interfaces";
 import { hexToRgb } from "./utils.color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { clone } from '@lib/utils/utils';
 
-export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleFolder> {
+export function classifyStyle(style: Array<Styles>): Array<Styles | StyleFolder> {
 
     //initial folder
     let level = -1; // -1 cause Root (declared below) acts as a fake (hidden directory)
@@ -17,7 +17,7 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
     };
 
 
-    const createFolder: any = (structure: StyleFolder, path: string, style: StyleItem) => {
+    const createFolder: any = (structure: StyleFolder, path: string, style: Styles) => {
         const [folder, ...rest] = path.split('/');
 
         if (!rest.length) { //endpoint
@@ -52,7 +52,7 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
 
     };
 
-    style.forEach((item: StyleItem) => {
+    style.forEach((item) => {
         item.title = item.name.split('/').slice(-1)[0] || item.name;
         createFolder(organisedFolder, item.name, item); //append to root
     });
@@ -63,7 +63,7 @@ export function classifyStyle(style: Array<StyleItem>): Array<StyleItem | StyleF
 
 export function updateFolderName({ folder, level, name }: { folder: StyleFolder, level: number, name: string }): void {
 
-    const update = (style: StyleItem) => {
+    const update = (style: Styles) => {
         try {
             //split and replace folder name in styles
             const split: Array<string> = style.name.split('/');
@@ -80,12 +80,12 @@ export function updateFolderName({ folder, level, name }: { folder: StyleFolder,
         }
     }
 
-    folder.styles.forEach((style: StyleItem) => update(style));
+    folder.styles.forEach((style: Styles) => update(style));
     folder.folders.forEach((child: StyleFolder) => updateFolderName({ folder: child, level, name }));
 
 }
 
-export function updateColor({ style, color }: { style: StyleItem, color: ColorRGB | string }): void {
+export function updateColor({ style, color }: { style: StyleColor, color: ColorRGB | string }): void {
 
     const figmaStyle = figma.getStyleById(style.id) as PaintStyle;
     const newPaint = clone(figmaStyle.paints);
@@ -158,25 +158,36 @@ export function addStyle({ folder, name, style, type }: { folder?: string, name:
 
 }
 
-export function get_styles_of_folder(folder: StyleFolder, array: Array<StyleItem> = []): Array<StyleItem> {
+export function get_styles_of_folder(folder: StyleFolder, array: Array<Styles> = []): Array<Styles> {
     array.push(...folder.styles);
     folder.folders.forEach(subfolder => get_styles_of_folder(subfolder, array));
     return array;
 }
 
-export function sort_by_name(styles: Array<StyleItem>) {
+export function sort_by_name(styles: Array<Styles>) {
     styles.sort((a, b) => a.name > b.name ? 1 : -1);
     replaceStyle(styles);
 }
 
-export function replaceStyle(list: Array<StyleItem>) {
+export function replaceStyle(list: Array<Styles>) {
 
     //2. remove items
-    list.forEach( item => figma.getStyleById(item.id)?.remove() ); 
+    list.forEach(item => figma.getStyleById(item.id)?.remove());
 
     //3.instantiate new items
-    list.forEach( (item) => {
-        item = item as StyleItem;
-        addStyle({name:item.name, style: item.paints, type:item.type});
+    list.forEach((item) => {
+
+        addStyle({
+            name: item.name,
+            style: (item.type === 'COLOR' && item.paints) || (item.type === 'TEXT' && item.texts),
+            type: item.type
+        });
     });
+}
+
+export function setCopyNumber(folder: StyleFolder): string {
+
+
+
+    return '';
 }

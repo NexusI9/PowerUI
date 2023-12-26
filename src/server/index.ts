@@ -1,7 +1,7 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
 import { sort_by_hsl } from "@lib/utils/utils.color";
-import { StyleItem } from "@lib/interfaces";
+import { StyleColor } from "@lib/interfaces";
 import {
   classifyStyle,
   updateColor,
@@ -38,7 +38,7 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'GET_PAINT_STYLES':
-      let paintStyles: Array<StyleItem> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, figmaKey: key, name, paints: paints as Paint[], type: "COLOR" })); //only keep necessary keys;
+      let paintStyles: Array<StyleColor> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, figmaKey: key, name, paints: paints as Paint[], type: "COLOR" })); //only keep necessary keys;
       figma.ui.postMessage({ action: msg.action, styles: classifyStyle(paintStyles) });
       break;
 
@@ -65,8 +65,12 @@ figma.ui.onmessage = msg => {
     case 'DUPLICATE_FOLDER':
       get_styles_of_folder(msg.folder).forEach(item => {
         const parts = item.name.split('/');
-        parts[msg.folder.level] += ' (copy)';
-        addStyle({ name: parts.join('/'), style: item.paints, type: item.type });
+        parts[msg.folder.level] += ` (copy)`;
+        addStyle({ 
+          name: parts.join('/'), 
+          style: (item.type === 'COLOR' && item.paints) || (item.type === 'TEXT' && item.texts), 
+          type: item.type 
+        });
       });
       break;
 

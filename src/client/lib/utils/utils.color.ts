@@ -1,4 +1,4 @@
-import { ColorRGB, ColorOutput, StyleItem, ColorHSL } from '@lib/interfaces';
+import { ColorRGB, ColorOutput, StyleColor, StyleText, ColorHSL } from '@lib/interfaces';
 import { replaceStyle } from './utils.style';
 
 function to255(color: ColorRGB) {
@@ -76,7 +76,7 @@ export function rgbToHsl({ r, g, b }: { r: number, g: number, b: number }, outpu
 
 
 
-export function sort_by_hsl(styles: Array<StyleItem>, proprety:'HUE'|'BRIGHTNESS'|'SATURATION'='BRIGHTNESS') {
+export function sort_by_hsl(styles: Array<StyleColor>, proprety:'HUE'|'BRIGHTNESS'|'SATURATION'='BRIGHTNESS') {
 
     styles.sort((a, b) => {
 

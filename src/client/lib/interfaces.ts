@@ -34,20 +34,31 @@ export interface FolderCustom{
 }
 
 
-export interface StyleItem{
+export interface StyleColor{
     id:string; 
     figmaKey:string; 
     name:string;
     title?:string;
-    paints: Array<Paint|Text>;
-    type:"COLOR"|"TEXT";
+    paints: Array<Paint>;
+    type:"COLOR";
 }
+
+export interface StyleText{
+    id:string; 
+    figmaKey:string; 
+    name:string;
+    title?:string;
+    texts: Array<Text>;
+    type:"TEXT";
+}
+
+export type Styles = StyleColor | StyleText;
 
 export interface StyleFolder{
     title:string;
     type:"FOLDER";
     fullpath:string;
-    styles:Array<StyleItem>;
+    styles:Array<Styles>;
     level:number;
     folders:Array<StyleFolder>;
 }
