@@ -8,6 +8,7 @@ export interface Input {
     onEnter?: any;
 }
 
+
 export type DropdownCommand = {text:string; action?:string; onClick?:any; };
 export interface Dropdown extends Input{
     list:Array<DropdownCommand> | Array<Array<DropdownCommand>>;

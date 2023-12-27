@@ -1,13 +1,14 @@
 import { Dropdown, Input, InputColor, Slider, InputAmount } from "@ctypes/input";
 import { Command } from "./global";
 
+
 export type SidepanelList = {type: 'INPUT'; attributes:Input;} |
                             {type: 'DROPDOWN'; attributes:Dropdown;} |
                             {type: 'COLOR'; attributes:InputColor;} |
                             {type: 'AMOUNT'; attributes:InputAmount;} |
                             {type: 'SLIDER'; attributes:Slider;}
 
-interface SidepanelOptions{
+export interface SidepanelOptions{
     text: string;
     content: Array<SidepanelList> | Array<Array<SidepanelList>>;
 };

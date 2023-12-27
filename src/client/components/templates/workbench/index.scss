@@ -26,6 +26,7 @@
 
     &-container{
         flex-grow: 1;
+        overflow: hidden;
     }
 
     &-sidepanel{
@@ -33,10 +34,11 @@
         max-width: 227px;
         flex-grow: 1;
         padding: var(--space-l) var(--space-m);
+        overflow: auto;
     }
 
     &-content{
-        
+        overflow: auto;
     }
 
     &-footer{

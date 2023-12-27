@@ -85,7 +85,7 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
                 { text: 'Interpolation', content: interpolationSidepanelContent }
             ],
             [
-                { text: 'Material', content: basicSidepanelContent }
+                { text: 'Material Design', content: basicSidepanelContent }
             ]
         ]
     },
