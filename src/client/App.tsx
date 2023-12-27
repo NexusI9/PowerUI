@@ -17,6 +17,7 @@ import Color from './pages/color';
 import Home from './pages/home';
 import Font from './pages/font';
 import { Snackbar } from "@components/snackbar";
+import { WorkBench } from "@components/templates/workbench";
 
 
 const router = {
@@ -35,9 +36,12 @@ export default () => {
             <Container>
                 {router[page as keyof typeof router || 'home']}
             </Container>
+            
             <ContextMenu/>
             <Tooltip/>
             <Snackbar/>
+
+            <WorkBench />
         </>
     );
 }

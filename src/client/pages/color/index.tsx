@@ -5,7 +5,6 @@ import { ButtonPad } from "@ctypes/input";
 import { send } from "@lib/ipc";
 import SwatchIcon from '@icons/swatch.svg';
 
-
 export default () => {
 
     const buttonPadStyle: ButtonPad = {
@@ -15,7 +14,7 @@ export default () => {
     };
 
     const handleAddItem = ({ folder, name }: { folder: string, name: string }) => {
-        send({ action: "ADD_STYLE_COLOR", folder, name, type:'COLOR' });
+        send({ action: "ADD_STYLE_COLOR", folder, name, type: 'COLOR' });
     }
 
 

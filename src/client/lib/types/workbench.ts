@@ -1,7 +1,35 @@
-import { Dropdown, Input } from "@ctypes/input";
+import { Dropdown, Input, InputColor, Slider, InputAmount } from "@ctypes/input";
+import { Command } from "./global";
 
-export interface Sidepanel{
-    input?:Input;
-    color?:Input;
-    dropdown?: Dropdown;
+export type SidepanelList = {type: 'INPUT'; attributes:Input;} |
+                            {type: 'DROPDOWN'; attributes:Dropdown;} |
+                            {type: 'COLOR'; attributes:InputColor;} |
+                            {type: 'AMOUNT'; attributes:InputAmount;} |
+                            {type: 'SLIDER'; attributes:Slider;}
+
+interface SidepanelOptions{
+    text: string;
+    content: Array<SidepanelList> | Array<Array<SidepanelList>>;
+};
+
+export interface Sidepanel {
+    active?:string;
+    options:Array<SidepanelOptions> | Array<Array<SidepanelOptions>>;
 }
+
+export interface Content {
+    item?:React.JSX.Element;
+}
+
+interface Footer {
+    primaryAction: Command;
+}
+
+export interface Workbench {
+    active?:boolean; 
+    title: string;
+    sidepanel: Sidepanel;
+    content: Content;
+    footer?: Footer;
+}
+

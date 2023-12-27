@@ -22,7 +22,7 @@ export interface Folder{
 
 export interface FolderCustom{
     options?:{
-        add?:{icon:string};
+        add?:{icon:string, onClick?:any;};
         kebab?:Array<ContextMenuCommand>;
     }
 }

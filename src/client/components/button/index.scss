@@ -1,0 +1,17 @@
+.button {
+    min-height: var(--input-height);
+    padding: 0 24px;
+    border-radius: var(--radius-s);
+
+    &[data-role="PRIMARY"] {
+        background-color: var(--figma-color-bg-brand);
+    }
+
+    &[data-role="SECONDARY"] {
+        background-color: var(--figma-color-bg-brand-tertiary);
+    }
+
+    &[data-role="TERTIARY"] {
+        
+    }
+}
