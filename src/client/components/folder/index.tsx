@@ -18,7 +18,7 @@ export const Folder = ({
     children,
     hideHeader = false,
     allowEdit = true,
-    custom,
+    options,
     attributes,
     level,
     root = false
@@ -39,9 +39,9 @@ export const Folder = ({
         let menu: Array<ContextMenuCommand> | Array<Array<ContextMenuCommand>> = DEFAULT_COMMANDS;
         
         //concat eventuals custom options
-        if (custom?.folder?.options?.kebab) {
+        if (options?.folder?.kebab) {
             menu = [menu];
-            menu = menu.concat([custom.folder.options.kebab])
+            menu = menu.concat([options.folder.kebab])
         }
 
         //map folder to payload
@@ -59,7 +59,7 @@ export const Folder = ({
 
     const editIconMap: Array<OptionInterface> = [
         { icon: Pen, onClick: () => 0, disabled: !allowEdit },
-        { icon: custom?.folder?.options?.add?.icon || Add, onClick: () => 0 },
+        { icon: options?.folder?.add?.icon || Add, onClick: () => 0 },
         { icon: Kebab, onClick: (e: any) => dispatch(displayContextMenu({ commands: contextMenuItems, position: { x: e.clientX, y: e.clientY } })) }
     ];
 

@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ButtonIcon } from "@components/button-icon";
 import Add from '@icons/add.svg';
 
-export function generateFolder(folder: Array<StyleFolder>, styleItem: React.FunctionComponent, onAddItem: any, custom?: {}): any {
+export function generateFolder(folder: Array<StyleFolder>, styleItem: React.FunctionComponent, onAddItem: any, options?: {}): any {
     return folder.map((item: StyleFolder, i: number) => {
 
         const isRoot = item.title === 'root';
@@ -13,7 +13,7 @@ export function generateFolder(folder: Array<StyleFolder>, styleItem: React.Func
         return <Folder
             key={item.title + i}
             title={item.title}
-            custom={custom}
+            options={options}
             allowEdit={!!item.styles.length}
             attributes={item}
             level={item.level}
@@ -24,7 +24,7 @@ export function generateFolder(folder: Array<StyleFolder>, styleItem: React.Func
                     {item.styles.map(style => React.createElement(styleItem, { key: style.id, ...style }))}
                     <ButtonIcon icon={Add} onClick={handleAddItem} />
                 </div>
-                {generateFolder(item.folders, styleItem, onAddItem, custom)}
+                {generateFolder(item.folders, styleItem, onAddItem, options)}
             </>
         </Folder>
     });

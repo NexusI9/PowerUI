@@ -26,7 +26,8 @@ interface Footer {
 }
 
 export interface Workbench {
-    active?:boolean; 
+    active?:boolean;
+    parent:string; 
     title: string;
     sidepanel: Sidepanel;
     content: Content;

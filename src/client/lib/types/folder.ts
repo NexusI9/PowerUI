@@ -13,24 +13,20 @@ export interface Folder {
     title: string;
     children: React.JSX.Element;
     hideHeader?: boolean;
-    custom?: FolderCustom;
+    options?: FolderOptions;
     allowEdit?: boolean;
     attributes: StyleFolder;
     level?: number;
     root?: boolean;
 }
 
-export interface FolderCustom {
+export interface FolderOptions {
     header?:{
-        options?: {
-            add?: { icon?: string; onClick?: any; }
-         }
+            add: { icon?: string; onClick: any; }
     };
     folder?:{
-        options?: {
-            add?: { icon?: string; onClick?: any; };
+            add: { icon?: string; onClick: any; };
             kebab?: Array<ContextMenuCommand>;
-            edit?: { icon?: string; onClick?: any; };
-        }
+            edit: { icon?: string; onClick: any; };
     }
 }

@@ -7,6 +7,7 @@ import SwatchIcon from '@icons/swatch.svg';
 import { useDispatch } from "react-redux";
 import { spawn } from "@lib/slices/workbench";
 import { CREATE_SWATCH_CONFIG } from "./workbench.config";
+import { StyleFolder } from "@lib/types/style";
 
 export default () => {
 
@@ -30,21 +31,18 @@ export default () => {
             padStyle={buttonPadStyle}
             getStyleMethod="GET_PAINT_STYLES"
             styleItem={Swatch}
-            custom={{
+            options={{
                 header: {
-                    options: {
-                        add: { icon: SwatchIcon, onClick: () => dispatch(spawn(CREATE_SWATCH_CONFIG)) }
-                    }
+                    add: { icon: SwatchIcon, onClick: () => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, parent: 'root' })) }
                 },
                 folder: {
-                    options: {
-                        add: { icon: SwatchIcon, onClick: () => dispatch(spawn(CREATE_SWATCH_CONFIG)) },
-                        kebab: [
-                            { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {} },
-                            { text: 'Sort by brightness', action: 'SORT_STYLE_COLOR_BRIGHTNESS', payload: {} },
-                            { text: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', payload: {} }
-                        ]
-                    }
+                    add: { icon: SwatchIcon, onClick: (folder: StyleFolder) => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, parent: folder.fullpath })) },
+                    kebab: [
+                        { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {} },
+                        { text: 'Sort by brightness', action: 'SORT_STYLE_COLOR_BRIGHTNESS', payload: {} },
+                        { text: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', payload: {} }
+                    ],
+                    edit:{onClick: () => 0}
                 }
             }}
         />);

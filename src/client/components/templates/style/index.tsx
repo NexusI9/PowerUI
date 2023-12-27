@@ -7,7 +7,7 @@ import Grid from '@icons/table.svg';
 import { ButtonPad } from "@components/button-pad";
 import { FolderContainer } from "@components/folder-container";
 import { ButtonPad as ButtonPadInterface } from "@ctypes/input";
-import { FolderCustom } from '@ctypes/folder';
+import { FolderOptions } from '@ctypes/folder';
 import { get, listen } from '@lib/ipc';
 
 interface StyleTemplate {
@@ -17,7 +17,7 @@ interface StyleTemplate {
     padStyle: ButtonPadInterface;
     getStyleMethod?: string;
     styleItem: React.FunctionComponent;
-    custom?: FolderCustom;
+    options?: FolderOptions;
 };
 
 
@@ -28,7 +28,7 @@ export const Style = ({
     padStyle,
     getStyleMethod,
     styleItem,
-    custom
+    options
 }: StyleTemplate) => {
 
     const [displayMode, setDisplayMode] = useState<'grid' | 'list'>('grid');
@@ -45,7 +45,7 @@ export const Style = ({
             }
         },
         {
-            icon: custom?.header?.options?.add?.icon || Plus,
+            icon: options?.header?.add?.icon || Plus,
             onClick: () => onAddItem({ folder: '', name: 'new-item' })
         },
     ];
@@ -75,7 +75,7 @@ export const Style = ({
             <FolderContainer
                 styles={styles}
                 styleItem={styleItem}
-                custom={{ ...custom }}
+                options={{ ...options }}
                 onAddItem={onAddItem}
                 displayMode={displayMode}
             />
