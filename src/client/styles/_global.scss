@@ -67,6 +67,22 @@ hr{
         }
     }
 
+    &.f-end{
+        justify-content: end;
+    }
+
+    &.f-start{
+        justify-content: start;
+    }
+    
+    &.f-between{
+        justify-content: space-between;
+    }
+
+    &.f-around{
+        justify-content: space-around;
+    }
+
     &.gap {
         &-xs {
             gap: var(--space-xs);

@@ -2,16 +2,17 @@
     min-height: var(--input-height);
     padding: 0 24px;
     border-radius: var(--radius-s);
+    color: var(--figma-color-text);
+    border: none;
+    font-weight: bold;
 
     &[data-role="PRIMARY"] {
         background-color: var(--figma-color-bg-brand);
     }
 
     &[data-role="SECONDARY"] {
-        background-color: var(--figma-color-bg-brand-tertiary);
+        background-color: var(--figma-color-bg-secondary);
     }
 
-    &[data-role="TERTIARY"] {
-        
-    }
+    &[data-role="TERTIARY"] {}
 }

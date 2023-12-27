@@ -1,8 +1,20 @@
-import { Sidepanel as SidepanelInterface} from "@lib/types/workbench";
+import { Dropdown } from "@components/dropdown";
+import { Sidepanel as SidepanelInterface, SidepanelList } from "@lib/types/workbench";
 
-export const Sidepanel = ({options}:SidepanelInterface) => {
+export const Sidepanel = ({ options }: SidepanelInterface) => {
 
-    return (<div className="workbench-sidepanel">
-            
+    const generateOptions = () => {
+
+    }
+
+    console.log(options);
+    return (<div className="workbench-sidepanel flex f-col gap-m">
+        {
+            options.length &&
+             <>
+                <Dropdown list={options}/>
+                <hr />
+            </> || <></>
+        }
     </div>);
 }
