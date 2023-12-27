@@ -22,7 +22,7 @@ export interface Content {
 }
 
 interface Footer {
-    primaryAction: Command;
+    primaryAction: {text:string; action:string};
 }
 
 export interface Workbench {

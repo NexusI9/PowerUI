@@ -45,7 +45,7 @@ export const Style = ({
             }
         },
         {
-            icon: Plus,
+            icon: custom?.header?.options?.add?.icon || Plus,
             onClick: () => onAddItem({ folder: '', name: 'new-item' })
         },
     ];

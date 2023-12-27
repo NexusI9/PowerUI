@@ -23,7 +23,7 @@ export const WorkBench = () => {
                 </div>
                 <footer className="workbench-footer">
                     <Button text='Cancel' onClick={() => 0} role='SECONDARY' />
-                    <Button text={footer?.primaryAction.text || 'ADD'} onClick={footer?.primaryAction.onClick} role='SECONDARY' />
+                    <Button text={footer?.primaryAction.text || 'ADD'} onClick={() => 0} role='SECONDARY' />
                 </footer>
             </div>
         </div>

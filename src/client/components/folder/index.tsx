@@ -35,13 +35,16 @@ export const Folder = ({
     ];
 
     const contextMenuItems = useMemo(() => {
+        //set default commands
         let menu: Array<ContextMenuCommand> | Array<Array<ContextMenuCommand>> = DEFAULT_COMMANDS;
-
-        if (custom?.options?.kebab) {
+        
+        //concat eventuals custom options
+        if (custom?.folder?.options?.kebab) {
             menu = [menu];
-            menu = menu.concat([custom.options.kebab]) //concat eventuals custom options
+            menu = menu.concat([custom.folder.options.kebab])
         }
 
+        //map folder to payload
         return menu.map((item) =>
             Array.isArray(item) ?
                 item.map(it => ({ ...it, payload: { folder: attributes } })) :
@@ -54,11 +57,9 @@ export const Folder = ({
     ];
 
 
-
-
     const editIconMap: Array<OptionInterface> = [
         { icon: Pen, onClick: () => 0, disabled: !allowEdit },
-        { icon: custom?.options?.add?.icon || Add, onClick: () => 0 },
+        { icon: custom?.folder?.options?.add?.icon || Add, onClick: () => 0 },
         { icon: Kebab, onClick: (e: any) => dispatch(displayContextMenu({ commands: contextMenuItems, position: { x: e.clientX, y: e.clientY } })) }
     ];
 

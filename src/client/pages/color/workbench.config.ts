@@ -7,8 +7,6 @@ const basicSidepanelContent: Array<SidepanelList> = [
         attributes: {
             value: 'swatch-name',
             placeholder: 'Swatch name',
-            onBlur: () => 0,
-            onEnter: () => 0
         }
     },
     {
@@ -16,8 +14,6 @@ const basicSidepanelContent: Array<SidepanelList> = [
         attributes: {
             value: '#000000',
             placeholder: 'Color value',
-            onBlur: () => 0,
-            onEnter: () => 0
         }
     },
     {
@@ -25,8 +21,6 @@ const basicSidepanelContent: Array<SidepanelList> = [
         attributes: {
             value: 10,
             placeholder: 'Swatch steps',
-            onBlur: () => 0,
-            onEnter: () => 0,
             range: [1, 10]
         }
     },
@@ -35,13 +29,11 @@ const basicSidepanelContent: Array<SidepanelList> = [
         attributes: {
             value: 10,
             placeholder: 'Color mode',
-            onBlur: () => 0,
-            onEnter: () => 0,
-            list:[
-                {text:'RGB', onClick: () => 0},
-                {text:'HSL', onClick: () => 0},
-                {text:'Lab', onClick: () => 0},
-                {text:'Lch', onClick: () => 0}
+            list: [
+                { text: 'RGB', action: '' },
+                { text: 'HSL', action: '' },
+                { text: 'Lab', action: '' },
+                { text: 'Lch', action: '' }
             ]
         }
     }
@@ -55,8 +47,6 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         attributes: {
             value: 'swatch-name',
             placeholder: 'Swatch name',
-            onBlur: () => 0,
-            onEnter: () => 0
         }
     },
     {
@@ -64,8 +54,6 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         attributes: {
             value: '#000000',
             placeholder: 'Start value',
-            onBlur: () => 0,
-            onEnter: () => 0
         }
     },
     {
@@ -73,8 +61,6 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         attributes: {
             value: '#FFFFFF',
             placeholder: 'End value',
-            onBlur: () => 0,
-            onEnter: () => 0
         }
     },
     {
@@ -82,26 +68,28 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         attributes: {
             value: 10,
             placeholder: 'Swatch steps',
-            onBlur: () => 0,
-            onEnter: () => 0,
             range: [1, 10]
         }
     }
 ];
 
-const createSwatchConfig: Workbench = {
+export const CREATE_SWATCH_CONFIG: Workbench = {
     title: 'Create color swatch',
     sidepanel: {
         options: [
-            { text: 'Shades', content: basicSidepanelContent },
-            { text: 'Tones', content: basicSidepanelContent },
-            { text: 'Tints', content: basicSidepanelContent },
-            { text: 'Material', content: basicSidepanelContent },
-            { text: 'Interpolation', content: interpolationSidepanelContent }
+            [
+                { text: 'Shades', content: basicSidepanelContent },
+                { text: 'Tones', content: basicSidepanelContent },
+                { text: 'Tints', content: basicSidepanelContent },
+                { text: 'Interpolation', content: interpolationSidepanelContent }
+            ],
+            [
+                { text: 'Material', content: basicSidepanelContent }
+            ]
         ]
     },
     content: {},
     footer: {
-        primaryAction: { text: 'Add', onClick: () => 0 }
+        primaryAction: { text: 'Add', action: '' }
     }
 }
