@@ -76,7 +76,7 @@ export const Folder = ({
     return (
         <div className={`folder flex f-col ${!display && 'hide' || ''} ${root && 'root' || ''}`}>
             {!hideHeader && <div className='folder-header flex f-row'>
-                <div className="folder-header-left flex f-row gap-s">
+                <div className="folder-header-left flex f-row">
                     <OptionsRow options={folderIconMap} className='folder-grab' />
                     <Input value={title} type='DISCRETE' onBlur={handleOnBlur} onEnter={handleOnBlur} />
                 </div>

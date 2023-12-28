@@ -13,9 +13,6 @@ export interface InputAmount extends Input{
     range:Array<number>;
 }
 
-
-
-
 export type DropdownCommand = {text:string; action?:string; onClick?:any; };
 export interface Dropdown extends Input{
     list:Array<DropdownCommand> | Array<Array<DropdownCommand>>;

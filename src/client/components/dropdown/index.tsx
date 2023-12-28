@@ -1,7 +1,7 @@
+import './index.scss';
 import { Dropdown as DropdownInterface } from "@ctypes/input"
 import Carrot from '@icons/carrot.svg';
 import { Fragment, useEffect, useState } from "react";
-import './index.scss';
 import { setYPos } from "./helper";
 import { set_multi_array_active_item } from "@lib/utils/utils";
 
@@ -39,7 +39,7 @@ export const Dropdown = (props: DropdownInterface) => {
             className="dropdown"
             data-expanded={String(expanded)}
         >
-            {props.style?.label && <p className="dropdown-label"><small><b>{props.placeholder}</b></small></p>}
+            {props.style?.label && <p className="dropdown-label frozen"><small><b>{props.placeholder}</b></small></p>}
             <label className="flex f-row f-center f-between" onClick={(() => setExpanded(true))}>{set_multi_array_active_item(active, props.list).text} <Carrot /></label>
             <ul
                 className="dropdown-choices panel flex f-col gap-xs"
@@ -50,9 +50,7 @@ export const Dropdown = (props: DropdownInterface) => {
                     props.list.map((item, i) =>
                         Array.isArray(item) ?
                             <Fragment key={JSON.stringify(item) + i}>
-                                {
-                                    item.map((it, j) => <li key={it.text + i * j} onClick={() => { setActive([i, j]); setExpanded(false); }}>{it.text}</li>)
-                                }
+                                {item.map((it, j) => <li key={it.text + i * j} onClick={() => { setActive([i, j]); setExpanded(false); }}>{it.text}</li>)}
                                 {i < props.list.length - 1 && <hr />}
                             </Fragment> :
                             <li key={item.text + i} onClick={() => { setActive(i); setExpanded(false); }}>{item.text}</li>

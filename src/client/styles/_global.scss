@@ -132,3 +132,8 @@ hr{
     border-radius: var(--radius-s);
     border: solid 1px var(--figma-color-border);
 }
+
+.frozen{
+    pointer-events: none;
+    cursor:default;
+}

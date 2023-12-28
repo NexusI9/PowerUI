@@ -15,7 +15,7 @@ export const WorkBench = () => {
         <div className="workbench-wrapper flex f-center">
             <div className="workbench-window panel flex f-col">
                 <header className="workbench-header flex f-row f-center-h f-between">
-                    <p className="heading-8"><b>{title}</b></p>
+                    <p className="heading-8 frozen"><b>{title}</b></p>
                     <ButtonIcon icon={Close} onClick={() => 0} />
                 </header>
                 <div className="workbench-container flex f-row">   
@@ -27,8 +27,7 @@ export const WorkBench = () => {
                     <Button text={footer?.primaryAction.text || 'ADD'} onClick={() => 0} role='SECONDARY' />
                 </footer>
             </div>
-        </div>
-        || <></>}
+        </div>}
     </>);
 
 }
