@@ -1,17 +1,34 @@
 .button {
     min-height: var(--input-height);
-    padding: 0 24px;
-    border-radius: var(--radius-s);
+    min-width: 80px;
+    padding: 0 var(--space-l);
+    border-radius: var(--radius-m);
     color: var(--figma-color-text);
     border: none;
     font-weight: bold;
+    font-size: small;
+
 
     &[data-role="PRIMARY"] {
         background-color: var(--figma-color-bg-brand);
+        &:hover {
+            background-color: var(--figma-color-bg-brand-hover);
+        }
+    
+        &:focus {
+            background-color: var(--figma-color-bg-brand-pressed);
+        }
     }
 
     &[data-role="SECONDARY"] {
         background-color: var(--figma-color-bg-secondary);
+        &:hover {
+            background-color: var(--figma-color-bg-hover);
+        }
+    
+        &:focus {
+            background-color: var(--figma-color-bg-pressed);
+        }
     }
 
     &[data-role="TERTIARY"] {}
