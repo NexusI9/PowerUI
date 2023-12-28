@@ -46,6 +46,7 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
     {
         type: 'COLOR',
         attributes: {
+            type:'COLOR',
             value: '#000000',
             placeholder: 'Start value',
             style:{label:true}
@@ -54,6 +55,7 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
     {
         type: 'COLOR',
         attributes: {
+            type:'COLOR',
             value: '#FFFFFF',
             placeholder: 'End value',
             style:{label:true}
@@ -62,6 +64,7 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
     {
         type: 'AMOUNT',
         attributes: {
+            type:'AMOUNT',
             value: 10,
             placeholder: 'Swatch steps',
             range: [1, 10],

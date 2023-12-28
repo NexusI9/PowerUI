@@ -57,7 +57,7 @@ export const Sidepanel = ({ options }: SidepanelInterface) => {
             <>
                 <Dropdown list={options} onChange={setActiveIndex} style={{label:true}} placeholder="Swatch type" />
                 <hr />
-            </> || <></>
+            </>
         }
         {
             activeIndex && set_multi_array_active_item(activeIndex, options).content.map(generateOption)

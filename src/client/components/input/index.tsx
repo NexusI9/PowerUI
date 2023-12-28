@@ -36,6 +36,10 @@ export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', 
                             onEnter(e);
                             e.target.blur();
                         }
+                        if(type ==='AMOUNT'){
+                            if(e.code === 'ArrowUp'){ e.preventDefault(); setInnerValue(Number(innerValue)+1); }
+                            if(e.code === 'ArrowDown'){ e.preventDefault(); setInnerValue(Number(innerValue)-1); }
+                        }
                     }}
                 />
             </div>
