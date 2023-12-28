@@ -34,14 +34,24 @@ export function rgbToHex(color: ColorRGB): string {
 }
 
 
-export function hexToRgb(hex: string, normalize: boolean = false): ColorRGB {
+export function hexToRgb(hex: string, normalize: boolean = false, output: ColorOutput='OBJECT'): ColorRGB | string {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 
-    return result ? {
+    let rgb = result ? {
         r: parseInt(result[1], 16) / (normalize ? 255 : 1),
         g: parseInt(result[2], 16) / (normalize ? 255 : 1),
         b: parseInt(result[3], 16) / (normalize ? 255 : 1)
     } : { r: 0, g: 0, b: 0 };
+
+    console.log({hex, result: `rgb(${rgb.r},${rgb.g},${rgb.b})`});
+    switch(output){
+        case 'OBJECT':
+            return rgb;
+        case 'STRING':
+            return `rgb(${rgb.r},${rgb.g},${rgb.b})`;
+    }
+
+
 }
 
 

@@ -78,7 +78,7 @@ export const Folder = ({
             {!hideHeader && <div className='folder-header flex f-row'>
                 <div className="folder-header-left flex f-row gap-s">
                     <OptionsRow options={folderIconMap} className='folder-grab' />
-                    <Input value={title} type='discrete' onBlur={handleOnBlur} onEnter={handleOnBlur} />
+                    <Input value={title} type='DISCRETE' onBlur={handleOnBlur} onEnter={handleOnBlur} />
                 </div>
                 <OptionsRow options={editIconMap} />
             </div>

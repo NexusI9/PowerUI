@@ -1,12 +1,19 @@
 export interface Input {
-    type?: 'default' | 'discrete';
+    type?: 'DEFAULT' | 'COLOR' | 'AMOUNT' |'DISCRETE';
     value?: string | number;
     placeholder?: string;
     onChange?: any;
     onBlur?: any;
     onFocus?: any;
     onEnter?: any;
+    style?:{stroke?:boolean; label?:boolean}
 }
+
+export interface InputAmount extends Input{
+    range:Array<number>;
+}
+
+
 
 
 export type DropdownCommand = {text:string; action?:string; onClick?:any; };
@@ -14,9 +21,6 @@ export interface Dropdown extends Input{
     list:Array<DropdownCommand> | Array<Array<DropdownCommand>>;
 }
 
-export interface InputAmount extends Input{
-    range:Array<number>;
-}
 
 export interface Slider{
     onChange?:any;
@@ -24,9 +28,6 @@ export interface Slider{
     range:Array<number>;
 }
 
-export interface InputColor extends Input{
-    
-}
 
 export interface Button{
     text:string;

@@ -65,6 +65,7 @@ export const Tooltip = () => {
                             onBlur={handleAction}
                             onEnter={handleAction}
                             value={content.value}
+                            type='DISCRETE'
                             placeholder=''
                         />;
                         break;

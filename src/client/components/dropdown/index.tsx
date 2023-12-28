@@ -20,6 +20,20 @@ export const Dropdown = ({ onChange, list }: { onChange?: any, list: Array<Dropd
         if (onChange) onChange(active);
     }, [active])
 
+    useEffect(() => {
+        console.log(expanded);
+        const onClick = () => setExpanded(false);
+
+        if (expanded) {
+            window.addEventListener('click', onClick);
+        } else {
+            window.removeEventListener('click', onClick);
+        }
+
+        () => window.removeEventListener('click', onClick);
+
+    }, [expanded]);
+
     return (
         <div
             className="dropdown"

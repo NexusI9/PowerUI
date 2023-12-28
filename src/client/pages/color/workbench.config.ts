@@ -5,23 +5,29 @@ const basicSidepanelContent: Array<SidepanelList> = [
     {
         type: 'INPUT',
         attributes: {
+            type:'DEFAULT',
             value: 'swatch-name',
             placeholder: 'Swatch name',
+            style:{label:true}
         }
     },
     {
-        type: 'COLOR',
+        type: 'INPUT',
         attributes: {
+            type:'COLOR',
             value: '#000000',
             placeholder: 'Color value',
+            style:{label:true}
         }
     },
     {
         type: 'AMOUNT',
         attributes: {
+            type:'AMOUNT',
             value: 10,
             placeholder: 'Swatch steps',
-            range: [1, 10]
+            range: [1, 10],
+            style:{label:true}
         }
     },
     {

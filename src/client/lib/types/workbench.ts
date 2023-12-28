@@ -1,10 +1,10 @@
-import { Dropdown, Input, InputColor, Slider, InputAmount } from "@ctypes/input";
+import { Dropdown, Input, Slider, InputAmount } from "@ctypes/input";
 import { Command } from "./global";
 
 
 export type SidepanelList = {type: 'INPUT'; attributes:Input;} |
                             {type: 'DROPDOWN'; attributes:Dropdown;} |
-                            {type: 'COLOR'; attributes:InputColor;} |
+                            {type: 'COLOR'; attributes:Input;} |
                             {type: 'AMOUNT'; attributes:InputAmount;} |
                             {type: 'SLIDER'; attributes:Slider;}
 
