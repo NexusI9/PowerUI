@@ -59,7 +59,6 @@ export const Sidepanel = ({ options }: SidepanelInterface) => {
                 <hr />
             </> || <></>
         }
-        {console.log(activeIndex, options)}
         {
             activeIndex && set_multi_array_active_item(activeIndex, options).content.map(generateOption)
         }
