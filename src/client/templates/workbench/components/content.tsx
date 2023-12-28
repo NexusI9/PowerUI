@@ -8,7 +8,7 @@ export const Content = () => {
 
     const { type, set } = useSelector((state:any) => state.workbench);
 
-    const setComponent = type === 'COLOR' ? <ShadeSet shades={set as Array<Shade>} /> : <></>;
+    const setComponent = type === 'COLOR' ? <ShadeSet shades={set ? set as Array<Shade> : []} /> : <></>;
 
     return (<div className="workbench-content">
         {setComponent}

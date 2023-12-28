@@ -23,7 +23,7 @@ export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', 
                 {
                     type === 'COLOR' &&
                     <label style={{ backgroundColor: String(innerValue) }} >
-                        <input type='color' onChange={e => setInnerValue(e.target.value)} />
+                        <input type='color' onChange={e => setInnerValue(e.target.value)} onClick={ () => input.current?.focus() }/>
                     </label>
                 }
                 <input

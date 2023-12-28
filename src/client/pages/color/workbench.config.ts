@@ -13,7 +13,7 @@ const basicSidepanelContent: Array<SidepanelList> = [
         configKey:'name'
     },
     {
-        type: 'INPUT',
+        type: 'COLOR',
         attributes: {
             type:'COLOR',
             value: '#0c8ce9',
@@ -101,13 +101,13 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
     sidepanel: {
         options: [
             [
-                { text: 'Shades', content: basicSidepanelContent },
-                { text: 'Tones', content: basicSidepanelContent },
-                { text: 'Tints', content: basicSidepanelContent },
-                { text: 'Interpolation', content: interpolationSidepanelContent }
+                { text: 'Shades', content: basicSidepanelContent, action:'SHADE' },
+                { text: 'Tones', content: basicSidepanelContent, action:'TONE' },
+                { text: 'Tints', content: basicSidepanelContent, action:'TINT' },
+                { text: 'Interpolation', content: interpolationSidepanelContent, action:'INTERPOLATION' }
             ],
             [
-                { text: 'Material Design', content: basicSidepanelContent }
+                { text: 'Material Design', content: basicSidepanelContent, action:'MATERIAL'}
             ]
         ]
     },

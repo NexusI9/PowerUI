@@ -1,10 +1,10 @@
 import { Dropdown } from "@components/dropdown";
 import { Sidepanel as ISidepanel, SidepanelList, SidepanelOptions } from "@lib/types/workbench";
-import { Fragment, useEffect, useState } from "react";
+import { Fragment, SyntheticEvent, useEffect, useState } from "react";
 import { set_multi_array_active_item, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
 import { useDispatch } from "react-redux";
-import { updateSet } from "@lib/slices/workbench";
+import { updateConfig } from "@lib/slices/workbench";
 
 export const Sidepanel = ({ options }: ISidepanel) => {
 
@@ -19,7 +19,7 @@ export const Sidepanel = ({ options }: ISidepanel) => {
             case 'COLOR':
             case 'AMOUNT':
             case 'SLIDER':
-                dynamicComp = <Input {...input.attributes} onBlur={ dispatch(updateSet([])) }/>;
+                dynamicComp = <Input {...input.attributes} onBlur={ (e:any) => dispatch(updateConfig({key:input.configKey, value:e.target.value})) }/>;
                 break;
 
             case 'DROPDOWN':

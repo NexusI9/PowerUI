@@ -21,7 +21,6 @@ export const Dropdown = (props: IDropdown) => {
     }, [active])
 
     useEffect(() => {
-        console.log(expanded);
         const onClick = () => setExpanded(false);
 
         if (expanded) {

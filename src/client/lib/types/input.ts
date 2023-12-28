@@ -20,8 +20,10 @@ export interface Dropdown extends Input{
 
 
 export interface Slider{
+    value: number;
     onChange?:any;
     background:string;
+    placeholder:string;
     range:Array<number>;
 }
 
