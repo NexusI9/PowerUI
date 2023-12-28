@@ -55,7 +55,7 @@ export const Sidepanel = ({ options }: SidepanelInterface) => {
         {
             options.length &&
             <>
-                <Dropdown list={options} onChange={setActiveIndex} />
+                <Dropdown list={options} onChange={setActiveIndex} style={{label:true}} placeholder="Swatch type" />
                 <hr />
             </> || <></>
         }

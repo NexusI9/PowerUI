@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import Close from '@icons/x.svg';
 import { ButtonIcon } from "@components/button-icon";
 import { Button } from "@components/button";
-import { Content } from "./content";
-import { Sidepanel } from "./sidepanel";
+import { Content } from "./components/content";
+import { Sidepanel } from "./components/sidepanel";
 import './index.scss';
 
 export const WorkBench = () => {

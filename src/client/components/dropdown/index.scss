@@ -1,31 +1,37 @@
-.dropdown{
+.dropdown {
 
-    font-size:small;
+    font-size: small;
     position: relative;
 
-    label{
+    &-label {
+        font-size: small;
+        color: var(--figma-color-text-tertiary);
+    }
+
+    label {
         border-radius: var(--radius-s);
-        height:var(--input-height);
+        height: var(--input-height);
         padding: 0 var(--space-s);
         border: solid 1px var(--figma-color-border);
         cursor: pointer;
     }
 
-    &-choices{
+    &-choices {
         list-style: none;
         padding: var(--space-s) 0;
         position: absolute;
         top: 0;
         width: 100%;
 
-        &[data-expanded="false"]{
+        &[data-expanded="false"] {
             display: none;
         }
 
-        li{
+        li {
             cursor: pointer;
             padding: 0 var(--space-m);
-            &:hover{
+
+            &:hover {
                 background-color: var(--figma-color-bg-brand);
             }
         }

@@ -15,7 +15,7 @@ export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', 
 
     return (
         <div className={'input-field'}>
-            {style?.label && <p className='input-field-label'><small>{placeholder}</small></p>}
+            {style?.label && <p className='input-field-label'><small><b>{placeholder}</b></small></p>}
             <div className='input-field-content' data-type={type}>
                 {
                     type === 'COLOR' &&

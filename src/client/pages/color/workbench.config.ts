@@ -29,19 +29,6 @@ const basicSidepanelContent: Array<SidepanelList> = [
             range: [1, 10],
             style:{label:true}
         }
-    },
-    {
-        type: 'DROPDOWN',
-        attributes: {
-            value: 10,
-            placeholder: 'Color mode',
-            list: [
-                { text: 'RGB', action: '' },
-                { text: 'HSL', action: '' },
-                { text: 'Lab', action: '' },
-                { text: 'Lch', action: '' }
-            ]
-        }
     }
 
 ];
@@ -53,6 +40,7 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         attributes: {
             value: 'swatch-name',
             placeholder: 'Swatch name',
+            style:{label:true}
         }
     },
     {
@@ -60,6 +48,7 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         attributes: {
             value: '#000000',
             placeholder: 'Start value',
+            style:{label:true}
         }
     },
     {
@@ -67,6 +56,7 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         attributes: {
             value: '#FFFFFF',
             placeholder: 'End value',
+            style:{label:true}
         }
     },
     {
@@ -74,7 +64,21 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         attributes: {
             value: 10,
             placeholder: 'Swatch steps',
-            range: [1, 10]
+            range: [1, 10],
+            style:{label:true}
+        }
+    },
+    {
+        type: 'DROPDOWN',
+        attributes: {
+            placeholder: 'Color mode',
+            list: [
+                { text: 'RGB', action: '' },
+                { text: 'HSL', action: '' },
+                { text: 'Lab', action: '' },
+                { text: 'Lch', action: '' }
+            ],
+            style:{label:true}
         }
     }
 ];
