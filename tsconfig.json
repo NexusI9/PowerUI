@@ -14,9 +14,9 @@
         "@components/*": ["src/client/components/*"],
         "@icons/*": ["src/client/assets/icons/*"],
         "@styles/*": ["src/client/styles/*"],
+        "@ctypes/*": ["src/client/lib/types/*"],
         "@lib/*": ["src/client/lib/*"],
-        "@ctypes/*": ["src/client/lib/types/*"]
-
+        "@templates/*":["src/client/templates/*"]
     }
   },
   "include": ["src","src/custom.d.ts"]

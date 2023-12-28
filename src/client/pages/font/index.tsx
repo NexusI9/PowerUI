@@ -1,5 +1,5 @@
 import { Font } from "@components/font/font";
-import { Style } from "@components/templates/style";
+import { Style } from "@templates/style";
 import FontPlus from '@icons/font-plus.svg';
 
 

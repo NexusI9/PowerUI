@@ -1,6 +1,11 @@
 .shade{
 
-
+    font-size: small;
+    ul{
+        list-style: none;
+        padding: 0;
+        color: var(--figma-color-text-tertiary);
+    }
 
     
 }

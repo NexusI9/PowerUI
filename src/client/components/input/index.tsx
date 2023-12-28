@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from 'react';
 import './index.scss';
-import { Input as InputInterface } from '@ctypes/input';
+import { Input as IInput } from '@ctypes/input';
 import ChevronDown from '@icons/chevron-down.svg';
 import ChevronUp from '@icons/chevron-up.svg';
 import { ButtonIcon } from '@components/button-icon';
 
-export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', onChange, onBlur, onFocus, onEnter, style }: InputInterface) => {
+export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', onChange, onBlur, onFocus, onEnter, style }: IInput) => {
 
     const [innerValue, setInnerValue] = useState(value);
     const input = useRef<any>();

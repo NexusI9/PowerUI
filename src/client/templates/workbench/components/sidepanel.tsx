@@ -1,10 +1,10 @@
 import { Dropdown } from "@components/dropdown";
-import { Sidepanel as SidepanelInterface, SidepanelList, SidepanelOptions } from "@lib/types/workbench";
+import { Sidepanel as ISidepanel, SidepanelList, SidepanelOptions } from "@lib/types/workbench";
 import { Fragment, useEffect, useState } from "react";
 import { set_multi_array_active_item, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
 
-export const Sidepanel = ({ options }: SidepanelInterface) => {
+export const Sidepanel = ({ options }: ISidepanel) => {
 
     const [activeIndex, setActiveIndex] = useState<number | Array<number>>();
 

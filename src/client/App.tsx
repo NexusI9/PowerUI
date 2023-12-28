@@ -17,8 +17,7 @@ import Color from './pages/color';
 import Home from './pages/home';
 import Font from './pages/font';
 import { Snackbar } from "@components/snackbar";
-import { WorkBench } from "@components/templates/workbench";
-
+import { WorkBench } from "@templates/workbench";
 
 const router = {
     home: <Home/>, 

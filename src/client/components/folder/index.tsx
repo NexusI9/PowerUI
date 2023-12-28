@@ -1,6 +1,6 @@
 import './index.scss';
 import { ContextMenuCommand } from '@ctypes/contextmenu';
-import { Folder as FolderInterface, Option as OptionInterface } from '@ctypes/folder';
+import { Folder as IFolder, Option as IOption } from '@ctypes/folder';
 import { OptionsRow } from '@components/options-row';
 import Move from '@icons/move.svg';
 import Carrot from '@icons/carrot.svg';
@@ -22,7 +22,7 @@ export const Folder = ({
     attributes,
     level,
     root = false
-}: FolderInterface
+}: IFolder
 ) => {
 
     const dispatch = useDispatch();
@@ -49,13 +49,13 @@ export const Folder = ({
                 ({ ...item, payload: { folder: attributes } }));;
     }, [attributes]);
 
-    const folderIconMap: Array<OptionInterface> = [
+    const folderIconMap: Array<IOption> = [
         { icon: Move, onClick: () => 0 },
         { icon: Carrot, onClick: () => setDisplay(!display) }
     ];
 
 
-    const editIconMap: Array<OptionInterface> = [
+    const editIconMap: Array<IOption> = [
         { icon: Pen, onClick: () => 0, disabled: !allowEdit },
         { icon: options?.folder?.add?.icon || Add, onClick: options?.folder?.add?.onClick || null},
         { icon: Kebab, onClick: (e: any) => dispatch(displayContextMenu({ commands: contextMenuItems, position: { x: e.clientX, y: e.clientY } })) }

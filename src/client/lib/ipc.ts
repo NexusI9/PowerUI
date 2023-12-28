@@ -33,13 +33,13 @@ export function get(request:any){
 
 export function listen(callback:any){
 
-    interface callbackInterface{
+    interface ICallback{
         data:{
             pluginMessage:any;
         };
     }
 
-    const handleCallback = ({data:{pluginMessage}}:callbackInterface) => callback(pluginMessage);
+    const handleCallback = ({data:{pluginMessage}}:ICallback) => callback(pluginMessage);
 
     useEffect(() => {
         window.addEventListener("message", handleCallback)

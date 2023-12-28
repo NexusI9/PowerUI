@@ -6,7 +6,7 @@ import Plus from '@icons/add.svg';
 import Grid from '@icons/table.svg';
 import { ButtonPad } from "@components/button-pad";
 import { FolderContainer } from "@components/folder-container";
-import { ButtonPad as ButtonPadInterface } from "@ctypes/input";
+import { ButtonPad as IButtonPad } from "@ctypes/input";
 import { FolderOptions } from '@ctypes/folder';
 import { get, listen } from '@lib/ipc';
 
@@ -14,7 +14,7 @@ interface StyleTemplate {
     title: string;
     onSwitchDisplay: any;
     onAddItem: any;
-    padStyle: ButtonPadInterface;
+    padStyle: IButtonPad;
     getStyleMethod?: string;
     styleItem: React.FunctionComponent;
     options?: FolderOptions;

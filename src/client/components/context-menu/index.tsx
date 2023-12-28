@@ -1,5 +1,5 @@
 import './index.scss';
-import { ContextMenu as ContextMenuInterface } from "@ctypes/contextmenu";
+import { ContextMenu as IContextMenu } from "@ctypes/contextmenu";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { send } from "@lib/ipc";
@@ -11,7 +11,7 @@ import { clamp } from '@lib/utils/utils';
 export const ContextMenu = () => {
 
     const dispatch = useDispatch();
-    const { commands, position, id } = useSelector((state: { contextmenu: ContextMenuInterface }) => state.contextmenu);
+    const { commands, position, id } = useSelector((state: { contextmenu: IContextMenu }) => state.contextmenu);
     const [display, setDisplay] = useState(false);
     const MENU_WIDTH = 160;
     const lastId = useRef(id);

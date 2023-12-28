@@ -1,12 +1,12 @@
 import './index.scss';
-import { Dropdown as DropdownInterface } from "@ctypes/input"
+import { Dropdown as IDropdown } from "@ctypes/input"
 import Carrot from '@icons/carrot.svg';
 import { Fragment, useEffect, useState } from "react";
 import { setYPos } from "./helper";
 import { set_multi_array_active_item } from "@lib/utils/utils";
 
 
-export const Dropdown = (props: DropdownInterface) => {
+export const Dropdown = (props: IDropdown) => {
 
     const [active, setActive] = useState<number | Array<number>>(0);
     const [expanded, setExpanded] = useState(false);
