@@ -9,7 +9,8 @@ const basicSidepanelContent: Array<SidepanelList> = [
             value: 'swatch-name',
             placeholder: 'Swatch name',
             style:{label:true}
-        }
+        },
+        configKey:'name'
     },
     {
         type: 'INPUT',
@@ -18,7 +19,8 @@ const basicSidepanelContent: Array<SidepanelList> = [
             value: '#0c8ce9',
             placeholder: 'Color value',
             style:{label:true}
-        }
+        },
+        configKey:'colorStart'
     },
     {
         type: 'AMOUNT',
@@ -28,7 +30,8 @@ const basicSidepanelContent: Array<SidepanelList> = [
             placeholder: 'Swatch steps',
             range: [1, 10],
             style:{label:true}
-        }
+        },
+        configKey:'steps'
     }
 
 ];
@@ -41,7 +44,8 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
             value: 'swatch-name',
             placeholder: 'Swatch name',
             style:{label:true}
-        }
+        },
+        configKey:'name'
     },
     {
         type: 'COLOR',
@@ -50,7 +54,8 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
             value: '#0c8ce9',
             placeholder: 'Start value',
             style:{label:true}
-        }
+        },
+        configKey:'colorStart'
     },
     {
         type: 'COLOR',
@@ -59,7 +64,8 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
             value: '#FFFFFF',
             placeholder: 'End value',
             style:{label:true}
-        }
+        },
+        configKey:'colorEnd'
     },
     {
         type: 'AMOUNT',
@@ -69,7 +75,8 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
             placeholder: 'Swatch steps',
             range: [1, 10],
             style:{label:true}
-        }
+        },
+        configKey:'steps'
     },
     {
         type: 'DROPDOWN',
@@ -82,12 +89,14 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
                 { text: 'Lch', action: '' }
             ],
             style:{label:true}
-        }
+        },
+        configKey:'mode'
     }
 ];
 
 export const CREATE_SWATCH_CONFIG: Workbench = {
     parent:'root',
+    type:'COLOR',
     title: 'Create color swatch',
     sidepanel: {
         options: [
@@ -102,7 +111,6 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
             ]
         ]
     },
-    content: {},
     footer: {
         primaryAction: { text: 'Add', action: '' }
     }

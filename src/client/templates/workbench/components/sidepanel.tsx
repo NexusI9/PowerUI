@@ -3,41 +3,34 @@ import { Sidepanel as ISidepanel, SidepanelList, SidepanelOptions } from "@lib/t
 import { Fragment, useEffect, useState } from "react";
 import { set_multi_array_active_item, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
+import { useDispatch } from "react-redux";
+import { updateSet } from "@lib/slices/workbench";
 
 export const Sidepanel = ({ options }: ISidepanel) => {
 
     const [activeIndex, setActiveIndex] = useState<number | Array<number>>();
+    const dispatch = useDispatch();
 
     const generateInput = (input: SidepanelList): React.JSX.Element => {
 
         let dynamicComp;
-
         switch (input.type) {
             case 'INPUT':
-                dynamicComp = <Input {...input.attributes} />;
+            case 'COLOR':
+            case 'AMOUNT':
+            case 'SLIDER':
+                dynamicComp = <Input {...input.attributes} onBlur={ dispatch(updateSet([])) }/>;
                 break;
 
             case 'DROPDOWN':
                 dynamicComp = <Dropdown {...input.attributes} />;
                 break;
 
-            case 'COLOR':
-                dynamicComp = <Input {...input.attributes} />;
-                break;
-
-            case 'AMOUNT':
-                dynamicComp = <Input {...input.attributes} />;
-                break;
-
-            case 'SLIDER':
-                dynamicComp = <Input {...input.attributes} />;
-                break;
-
             default:
                 dynamicComp = <></>;
         }
 
-        return <Fragment key={JSON.stringify(input)}>{dynamicComp}</Fragment>
+        return <Fragment key={JSON.stringify(input)}>{dynamicComp}</Fragment>;
 
     }
 
@@ -55,7 +48,7 @@ export const Sidepanel = ({ options }: ISidepanel) => {
         {
             options.length &&
             <>
-                <Dropdown list={options} onChange={setActiveIndex} style={{label:true}} placeholder="Swatch type" />
+                <Dropdown list={options} onChange={setActiveIndex} style={{ label: true }} placeholder="Swatch type" />
                 <hr />
             </>
         }

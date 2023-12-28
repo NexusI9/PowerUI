@@ -1,4 +1,4 @@
-import { Workbench } from "@lib/types/workbench";
+import { Workbench, Set } from "@ctypes/workbench";
 import { createSlice } from "@reduxjs/toolkit";
 
 const workbenchSlice = createSlice({
@@ -6,10 +6,11 @@ const workbenchSlice = createSlice({
     initialState:{},
     reducers:{
         spawn: (state, {payload}:{payload:Workbench}) => ({...state, ...payload, active:true}),
-        destroy: (state) => ({...state, active:false})
+        destroy: (state) => ({...state, active:false}),
+        updateSet: (state, {payload}:{payload:Set}) => ({...state, content:{set:payload}})
     }
 });
 
-export const { spawn, destroy } = workbenchSlice.actions;
+export const { spawn, destroy, updateSet } = workbenchSlice.actions;
 export default workbenchSlice.reducer;
 

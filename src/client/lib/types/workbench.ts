@@ -1,37 +1,51 @@
 import { Dropdown, Input, Slider, InputAmount } from "@ctypes/input";
-import { Command } from "./global";
+import { Shade } from "./shade";
 
+export type SidepanelList = { type: 'INPUT'; attributes: Input; configKey: keyof ColorConfig; } |
+{ type: 'DROPDOWN'; attributes: Dropdown; configKey: keyof ColorConfig; } |
+{ type: 'COLOR'; attributes: Input; configKey: keyof ColorConfig; } |
+{ type: 'AMOUNT'; attributes: InputAmount; configKey: keyof ColorConfig; } |
+{ type: 'SLIDER'; attributes: Slider; configKey: keyof ColorConfig; }
 
-export type SidepanelList = {type: 'INPUT'; attributes:Input;} |
-                            {type: 'DROPDOWN'; attributes:Dropdown;} |
-                            {type: 'COLOR'; attributes:Input;} |
-                            {type: 'AMOUNT'; attributes:InputAmount;} |
-                            {type: 'SLIDER'; attributes:Slider;}
-
-export interface SidepanelOptions{
+export interface SidepanelOptions {
     text: string;
     content: Array<SidepanelList> | Array<Array<SidepanelList>>;
 };
 
 export interface Sidepanel {
-    active?:string;
-    options:Array<SidepanelOptions> | Array<Array<SidepanelOptions>>;
+    active?: string;
+    options: Array<SidepanelOptions> | Array<Array<SidepanelOptions>>;
 }
 
-export interface Content {
-    item?:React.JSX.Element;
-}
+export type Set = Array<Shade>;
 
 interface Footer {
-    primaryAction: {text:string; action:string};
+    primaryAction: { text: string; action: string };
+}
+
+interface ColorConfig {
+    name?: string;
+    colorStart?: string;
+    colorEnd?: string;
+    mode?: 'RGB' | 'HSL' | 'LAB' | 'LCH';
+    steps?: number;
+}
+
+interface FontConfig {
+    name: string;
+    baseSize: number;
+    scale: string;
+    roundvalue: boolean;
 }
 
 export interface Workbench {
-    active?:boolean;
-    parent:string; 
+    active?: boolean;
+    type: 'COLOR' | 'FONT';
+    parent: string;
     title: string;
     sidepanel: Sidepanel;
-    content: Content;
     footer?: Footer;
+    config?: ColorConfig | FontConfig;
+    set?: Set;
 }
 

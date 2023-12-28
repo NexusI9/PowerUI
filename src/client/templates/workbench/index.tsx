@@ -12,7 +12,7 @@ import './index.scss';
 export const WorkBench = () => {
 
     const dispatch = useDispatch();
-    const { title, sidepanel, content, footer, active } = useSelector((state: { workbench: Workbench }) => state.workbench);
+    const { title, sidepanel, footer, active } = useSelector((state: { workbench: Workbench }) => state.workbench);
 
     return (<>{active &&
         <div className="workbench-wrapper flex f-center">
@@ -23,7 +23,7 @@ export const WorkBench = () => {
                 </header>
                 <div className="workbench-container flex f-row">   
                     <Sidepanel {...sidepanel}/>
-                    <Content/>
+                    <Content />
                 </div>
                 <footer className="workbench-footer flex f-row f-end gap-m">
                     <Button text='Cancel' onClick={() => dispatch(destroy()) } role='SECONDARY' />
