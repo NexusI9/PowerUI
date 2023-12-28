@@ -76,7 +76,7 @@ export const Swatch = (props: any) => {
                             />
                         </label>
                         <div className='style-item-swatch-detail flex f-row gap-l'>
-                            <Input value={folderNameFromPath(props.name).name} onBlur={handleOnBlur} onEnter={handleOnBlur} />
+                            <Input value={folderNameFromPath(props.name).name} onBlur={handleOnBlur} onEnter={handleOnBlur} type='DISCRETE'/>
                             <div className='style-item-swatch-codes'>
                                 {
                                     colorValues.map((value, i) => <p key={paint.id + i + value}><small>{value}</small></p>)

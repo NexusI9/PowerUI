@@ -15,7 +15,7 @@ const basicSidepanelContent: Array<SidepanelList> = [
         type: 'INPUT',
         attributes: {
             type:'COLOR',
-            value: '#000000',
+            value: '#0c8ce9',
             placeholder: 'Color value',
             style:{label:true}
         }
@@ -47,7 +47,7 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         type: 'COLOR',
         attributes: {
             type:'COLOR',
-            value: '#000000',
+            value: '#0c8ce9',
             placeholder: 'Start value',
             style:{label:true}
         }

@@ -47,7 +47,7 @@ export const ContextMenu = () => {
         >
             {commands?.map((command, i) => {
                 if(Array.isArray(command) ){
-                    return <Fragment key={JSON.stringify(command) + i}>{command.map( cm => <li key={JSON.stringify(cm) + i} onClick={() => send({ action: cm.action, ...cm.payload })}>{cm.text}</li>)}{i < command.length-1 ? <hr/> : <></>}</Fragment>
+                    return <Fragment key={JSON.stringify(command) + i}>{command.map( cm => <li key={JSON.stringify(cm) + i} onClick={() => send({ action: cm.action, ...cm.payload })}>{cm.text}</li>)}{i < commands.length-1 && <hr/>}</Fragment>
                 }else{
                     return(<li key={JSON.stringify(command) + i} onClick={() => send({ action: command.action, ...command.payload })}>{command.text}</li>)
                 }
