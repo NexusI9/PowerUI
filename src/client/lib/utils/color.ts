@@ -43,7 +43,6 @@ export function hexToRgb(hex: string, normalize: boolean = false, output: ColorO
         b: parseInt(result[3], 16) / (normalize ? 255 : 1)
     } : { r: 0, g: 0, b: 0 };
 
-    console.log({hex, result: `rgb(${rgb.r},${rgb.g},${rgb.b})`});
     switch(output){
         case 'OBJECT':
             return rgb;

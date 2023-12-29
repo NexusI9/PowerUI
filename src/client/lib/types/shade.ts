@@ -1,4 +1,6 @@
+import { ColorRGB } from "./color";
+
 export interface Shade{
-    color:string;
+    color:ColorRGB;
     name:string;
 }

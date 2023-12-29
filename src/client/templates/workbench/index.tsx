@@ -22,7 +22,7 @@ export const WorkBench = () => {
                     <ButtonIcon icon={Close} onClick={() => dispatch(destroy()) } />
                 </header>
                 <div className="workbench-container flex f-row">   
-                    <Sidepanel {...sidepanel}/>
+                    <Sidepanel />
                     <Content />
                 </div>
                 <footer className="workbench-footer flex f-row f-end gap-m">

@@ -38,7 +38,10 @@
     }
 
     &-content{
+        padding: var(--space-m);
         overflow: auto;
+        height: inherit;
+        width: 100%;
     }
 
     &-footer{

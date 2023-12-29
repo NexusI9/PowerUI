@@ -35,7 +35,7 @@ export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', 
                     onBlur={onBlur}
                     onFocus={onFocus}
                     onKeyDown={(e: any) => {
-                        if (e.code === 'Enter') { onEnter(e); e.target.blur(); }
+                        if (e.code === 'Enter' && onEnter) { onEnter(e); e.target.blur(); }
                         if(type ==='AMOUNT'){
                             if(e.code === 'ArrowUp'){ e.preventDefault(); setInnerValue(Number(innerValue)+1); }
                             if(e.code === 'ArrowDown'){ e.preventDefault(); setInnerValue(Number(innerValue)-1); }

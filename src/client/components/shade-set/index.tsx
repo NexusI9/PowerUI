@@ -6,6 +6,6 @@ import { Shade } from '@components/shade';
 export const ShadeSet = ({ shades }: { shades: Array<IShade> }) => {
 
     return (<>
-        {shades.map(shade => <Shade {...shade} />)}
+        {shades.map( (shade,i) => <Shade key={JSON.stringify(shade)+i} {...shade} />)}
     </>);
 }

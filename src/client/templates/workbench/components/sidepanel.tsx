@@ -1,14 +1,16 @@
 import { Dropdown } from "@components/dropdown";
-import { Sidepanel as ISidepanel, SidepanelList, SidepanelOption } from "@lib/types/workbench";
+import { Sidepanel as ISidepanel, SidepanelList, SidepanelOption, Workbench } from "@lib/types/workbench";
 import { BaseSyntheticEvent, Fragment, useEffect, useState } from "react";
 import { itemFromIndex, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateConfig } from "@lib/slices/workbench";
 
-export const Sidepanel = ({ options }: ISidepanel) => {
+export const Sidepanel = () => {
 
     const [activeOption, setActiveOption] = useState<SidepanelOption>();
+    const { sidepanel:{options} } = useSelector((state:any) => state.workbench); 
+
     const dispatch = useDispatch();
 
     const updateIndex = (index: number | Array<number>) => {
@@ -43,12 +45,15 @@ export const Sidepanel = ({ options }: ISidepanel) => {
 
     useEffect(() => {
         //init
-        updateIndex(Array.isArray(options[0]) ? [0, 0] : 0);
-    }, []);
+        if(options){
+            updateIndex(Array.isArray(options[0]) ? [0, 0] : 0);
+        }
+
+    }, [options]);
 
     return (<div className="workbench-sidepanel flex f-col gap-l">
         {
-            options.length &&
+            options?.length &&
             <>
                 <Dropdown list={options} onChange={updateIndex} style={{ label: true }} placeholder="Swatch type" />
                 <hr />
