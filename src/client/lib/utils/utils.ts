@@ -26,7 +26,7 @@ export function traverseCallback(object:any, callback:any):any{
     }
 }
 
-export const set_multi_array_active_item = (active: number | Array<number>, list: Array<any> | Array<Array<any>>): any => {
+export const itemFromIndex = (active: number | Array<number>, list: Array<any> | Array<Array<any>>): any => {
     if (Array.isArray(active)) {
         return (list as Array<Array<any>>)[active[0]][active[1]];
     }

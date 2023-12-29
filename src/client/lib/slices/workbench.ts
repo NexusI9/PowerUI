@@ -1,10 +1,11 @@
-import { Workbench, ColorConfig, FontConfig, SidepanelOptions, SidepanelList } from "@ctypes/workbench";
+import { Workbench, ColorConfig, FontConfig, SidepanelOption, SidepanelList } from "@ctypes/workbench";
 import { traverseCallback } from "@lib/utils/utils";
 import { createSlice } from "@reduxjs/toolkit";
 
 const workbenchSlice = createSlice({
     name: 'workbench',
     initialState: {
+        type:'COLOR',
         config: {}
     },
     reducers: {
@@ -14,7 +15,7 @@ const workbenchSlice = createSlice({
             let config: { [key: string]: any } = {};
 
             if (payload.sidepanel) {
-                traverseCallback(payload.sidepanel, ({ options }: { options: SidepanelOptions }) => 
+                traverseCallback(payload.sidepanel, ({ options }: { options: SidepanelOption }) => 
                 traverseCallback(options, ({ content }: { content: SidepanelList }) => 
                 traverseCallback(content, (input:SidepanelList) => {
                     try {
@@ -25,12 +26,15 @@ const workbenchSlice = createSlice({
                 }
                 )))
             }
-
-            console.log(config);
+            
             return ({ ...state, ...payload, config:config, active: true })
         },
         destroy: (state) => ({ ...state, active: false }),
-        updateConfig: (state, { payload: { key, value } }: { payload: { key: keyof ColorConfig | keyof FontConfig; value: any } }) => ({ ...state, config: { ...state.config, [key]: value } })
+        updateConfig: (state, { payload: { key, value } }: { payload: { key: keyof ColorConfig | keyof FontConfig; value: any } }) => {
+            
+            console.log(JSON.parse(JSON.stringify(state)));
+            return ({ ...state, config: { ...state.config, [key]: value } });
+        }
     }
 });
 

@@ -3,7 +3,7 @@ import { Dropdown as IDropdown } from "@ctypes/input"
 import Carrot from '@icons/carrot.svg';
 import { Fragment, useEffect, useState } from "react";
 import { setYPos } from "./helper";
-import { set_multi_array_active_item } from "@lib/utils/utils";
+import { itemFromIndex } from "@lib/utils/utils";
 
 
 export const Dropdown = (props: IDropdown) => {
@@ -39,7 +39,7 @@ export const Dropdown = (props: IDropdown) => {
             data-expanded={String(expanded)}
         >
             {props.style?.label && <p className="dropdown-label frozen"><small><b>{props.placeholder}</b></small></p>}
-            <label className="flex f-row f-center f-between" onClick={(() => setExpanded(true))}>{set_multi_array_active_item(active, props.list).text} <Carrot /></label>
+            <label className="flex f-row f-center f-between" onClick={(() => setExpanded(true))}>{itemFromIndex(active, props.list).text} <Carrot /></label>
             <ul
                 className="dropdown-choices panel flex f-col gap-xs"
                 data-expanded={String(expanded)}

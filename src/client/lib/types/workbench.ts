@@ -10,7 +10,7 @@ export type SidepanelList =
 { type: 'AMOUNT'; attributes: InputAmount; configKey: keyof ColorConfig |keyof FontConfig; } |
 { type: 'SLIDER'; attributes: Slider; configKey: keyof ColorConfig | keyof FontConfig; }
 
-export interface SidepanelOptions {
+export interface SidepanelOption {
     text: string;
     action: SetMethod;
     content: Array<SidepanelList> | Array<Array<SidepanelList>>;
@@ -18,7 +18,7 @@ export interface SidepanelOptions {
 
 export interface Sidepanel {
     active?: string;
-    options: Array<SidepanelOptions> | Array<Array<SidepanelOptions>>;
+    options: Array<SidepanelOption> | Array<Array<SidepanelOption>>;
 }
 
 export type Set = Array<Shade>;
@@ -28,7 +28,7 @@ interface Footer {
 }
 
 interface BaseConfig{
-    generateMethod:string;
+    action:SetMethod;
 }
 
 export interface ColorConfig extends BaseConfig {
