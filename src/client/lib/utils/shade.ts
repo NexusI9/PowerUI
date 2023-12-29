@@ -1,27 +1,34 @@
 import { ColorRGB } from "@ctypes/color";
 import { SetMethod } from "@ctypes/workbench";
+import { clamp } from "./utils";
 
-export function declination({ color, steps, action }: { color: ColorRGB, steps: number, action:SetMethod }): Array<ColorRGB> {
+export function interpolate({ colorStart, colorEnd = { r: 0, g: 0, b: 0 }, steps, action }: { colorStart: ColorRGB, colorEnd: ColorRGB, steps: number, action: SetMethod }): Array<ColorRGB> {
 
-    const colorFunctions:Partial<{[key in SetMethod]:any}> = {
-        SHADE: (channel: number, step: number):number => channel /  step,
-        TINT: (channel: number, step: number):number => step * channel,
-        TONE: (channel: number, step: number):number => 20 * channel / step
+
+    const valueAt = (channelA: number, channelB: number, step: number) => channelA + (channelB - channelA) * step / steps;
+    const colorArray: Array<ColorRGB> = [];
+
+    switch (action) {
+        case 'SHADE':
+            colorEnd = { r: 0, g: 0, b: 0 };
+            break;
+        case 'TINT':
+            colorEnd = { r: 1, g: 1, b: 1 };
+            break;
+        case 'TONE':
+            const average = (colorStart.r+colorStart.g+colorStart.b)/3;
+            colorEnd = { r: average, g: average, b: average };
+            break;
     }
 
-    let colorArray: Array<ColorRGB> = [];
-    for (let s = 1; s < steps+1; s++) {
+
+    for (let s = 1; s < steps + 1; s++) {
         colorArray.push({
-            r: colorFunctions[action as keyof typeof colorFunctions](color.r, s),
-            g: colorFunctions[action as keyof typeof colorFunctions](color.g, s),
-            b: colorFunctions[action as keyof typeof colorFunctions](color.b, s)
+            r: clamp(0, valueAt(colorStart.r, colorEnd.r, s), 1),
+            g: clamp(0, valueAt(colorStart.g, colorEnd.g, s), 1),
+            b: clamp(0, valueAt(colorStart.b, colorEnd.b, s), 1)
         });
     }
 
     return colorArray;
-}
-
-export function interpolate({colorStart, colorEnd, steps}:{colorStart:ColorRGB, colorEnd:ColorRGB, steps:number}): Array<ColorRGB>{
-
-    return[];
 }

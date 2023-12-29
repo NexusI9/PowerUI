@@ -7,11 +7,9 @@ export interface Input {
     onFocus?: any;
     onEnter?: any;
     style?:{stroke?:boolean; label?:boolean}
+    range?:Array<number>;
 }
 
-export interface InputAmount extends Input{
-    range:Array<number>;
-}
 
 export type DropdownCommand = {text:string; action?:string; onClick?:any; };
 export interface Dropdown extends Input{

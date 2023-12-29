@@ -13,7 +13,7 @@ const basicSidepanelContent: Array<SidepanelList> = [
         configKey:'name'
     },
     {
-        type: 'COLOR',
+        type: 'INPUT',
         attributes: {
             type:'COLOR',
             value: '#0c8ce9',
@@ -23,12 +23,12 @@ const basicSidepanelContent: Array<SidepanelList> = [
         configKey:'colorStart'
     },
     {
-        type: 'AMOUNT',
+        type: 'INPUT',
         attributes: {
             type:'AMOUNT',
             value: 10,
             placeholder: 'Swatch steps',
-            range: [1, 10],
+            range: [2, 20],
             style:{label:true}
         },
         configKey:'steps'
@@ -48,7 +48,7 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         configKey:'name'
     },
     {
-        type: 'COLOR',
+        type: 'INPUT',
         attributes: {
             type:'COLOR',
             value: '#0c8ce9',
@@ -58,7 +58,7 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         configKey:'colorStart'
     },
     {
-        type: 'COLOR',
+        type: 'INPUT',
         attributes: {
             type:'COLOR',
             value: '#FFFFFF',
@@ -68,12 +68,12 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         configKey:'colorEnd'
     },
     {
-        type: 'AMOUNT',
+        type: 'INPUT',
         attributes: {
             type:'AMOUNT',
             value: 10,
             placeholder: 'Swatch steps',
-            range: [1, 10],
+            range: [2, 20],
             style:{label:true}
         },
         configKey:'steps'

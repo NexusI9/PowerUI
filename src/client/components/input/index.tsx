@@ -4,8 +4,9 @@ import { Input as IInput } from '@ctypes/input';
 import ChevronDown from '@icons/chevron-down.svg';
 import ChevronUp from '@icons/chevron-up.svg';
 import { ButtonIcon } from '@components/button-icon';
+import { clamp } from '@lib/utils/utils';
 
-export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', onChange, onBlur, onFocus, onEnter, style }: IInput) => {
+export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', onChange, onBlur, onFocus, onEnter, style, range = [1,10] }: IInput) => {
 
     const [innerValue, setInnerValue] = useState(value);
     const input = useRef<any>();
@@ -13,6 +14,7 @@ export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', 
     useEffect(() => {
         if (input.current) {
             input.current.value = String(innerValue);
+            if(onChange){ onChange({target:input.current}); }
         }
     }, [innerValue]);
 
@@ -37,16 +39,16 @@ export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', 
                     onKeyDown={(e: any) => {
                         if (e.code === 'Enter' && onEnter) { onEnter(e); e.target.blur(); }
                         if(type ==='AMOUNT'){
-                            if(e.code === 'ArrowUp'){ e.preventDefault(); setInnerValue(Number(innerValue)+1); }
-                            if(e.code === 'ArrowDown'){ e.preventDefault(); setInnerValue(Number(innerValue)-1); }
+                            if(e.code === 'ArrowUp'){ e.preventDefault(); setInnerValue(clamp(range[0], Number(innerValue)+1, range[1])); }
+                            if(e.code === 'ArrowDown'){ e.preventDefault(); setInnerValue(clamp(range[0], Number(innerValue)-1, range[1])); }
                         }
                     }}
                 />
                 {
                     type === 'AMOUNT' &&
                     <label className='input-field-amount flex f-col'>
-                        <ButtonIcon icon={ChevronUp} onClick={ () => setInnerValue(Number(innerValue)+1) }/>
-                        <ButtonIcon icon={ChevronDown} onClick={ () => setInnerValue(Number(innerValue)-1) }/>
+                        <ButtonIcon icon={ChevronUp} onClick={ () => setInnerValue(clamp(range[0], Number(innerValue)+1, range[1])) }/>
+                        <ButtonIcon icon={ChevronDown} onClick={ () => setInnerValue(clamp(range[0], Number(innerValue)-1, range[1])) }/>
                     </label>
                 }
             </div>

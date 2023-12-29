@@ -24,10 +24,8 @@ export const Sidepanel = () => {
         let dynamicComp;
         switch (input.type) {
             case 'INPUT':
-            case 'COLOR':
-            case 'AMOUNT':
             case 'SLIDER':
-                dynamicComp = <Input {...input.attributes} onBlur={(e: BaseSyntheticEvent) => dispatch(updateConfig({ key: input.configKey, value: e.target.value }))} />;
+                dynamicComp = <Input {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateConfig({ key: input.configKey, value: e.target.value }))} />;
                 break;
 
             case 'DROPDOWN':

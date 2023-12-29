@@ -1,4 +1,4 @@
-import { Dropdown, Input, Slider, InputAmount } from "@ctypes/input";
+import { Dropdown, Input, Slider } from "@ctypes/input";
 import { Shade } from "./shade";
 
 export type SetMethod = 'SHADE' | 'TINT' | 'INTERPOLATION' | 'MATERIAL' | 'FONT' | 'TONE';
@@ -6,8 +6,6 @@ export type SetMethod = 'SHADE' | 'TINT' | 'INTERPOLATION' | 'MATERIAL' | 'FONT'
 export type SidepanelList = 
 { type: 'INPUT'; attributes: Input; configKey: keyof ColorConfig | keyof FontConfig;} |
 { type: 'DROPDOWN'; attributes: Dropdown; configKey: keyof ColorConfig | keyof FontConfig; } |
-{ type: 'COLOR'; attributes: Input; configKey: keyof ColorConfig | keyof FontConfig; } |
-{ type: 'AMOUNT'; attributes: InputAmount; configKey: keyof ColorConfig |keyof FontConfig; } |
 { type: 'SLIDER'; attributes: Slider; configKey: keyof ColorConfig | keyof FontConfig; }
 
 export interface SidepanelOption {

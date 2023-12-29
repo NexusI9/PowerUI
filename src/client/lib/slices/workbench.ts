@@ -1,17 +1,17 @@
 import { ColorRGB } from "@ctypes/color";
 import { Workbench, ColorConfig, FontConfig, SidepanelOption, SidepanelList, SetMethod, Set } from "@ctypes/workbench";
 import { hexToRgb } from "@lib/utils/color";
-import { declination, interpolate } from "@lib/utils/shade";
+import { interpolate } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";
 import { createSlice } from "@reduxjs/toolkit";
 
 const actionMap: { [key in SetMethod]: any; } = {
-    SHADE: declination,
-    TINT: declination,
-    TONE: declination,
+    SHADE: interpolate,
+    TINT: interpolate,
+    TONE: interpolate,
     INTERPOLATION: interpolate,
-    MATERIAL: () => 0,
-    FONT: () => 0
+    MATERIAL: () => [],
+    FONT: () => []
 };
 
 
@@ -52,8 +52,12 @@ const workbenchSlice = createSlice({
                 switch (state.type) {
                     case 'COLOR':
                         let { colorStart, colorEnd, steps, name } = newConfig as ColorConfig;
-                        actionMap[action]({ color: hexToRgb(colorStart || "#CCCCCC", true, 'OBJECT'), steps, action }).forEach((color: ColorRGB, i: number) => newSet.push({ name: `${name}-${i}` || 'swatch', color }));
-                        console.log(name);
+                        actionMap[action]({ 
+                            colorStart: hexToRgb(colorStart || "#CCCCCC", true, 'OBJECT'),
+                            colorEnd: hexToRgb(colorEnd || "#CCCCCC", true, 'OBJECT'),
+                            steps: Number(steps), 
+                            action 
+                        })?.forEach((color: ColorRGB, i: number) => newSet.push({ name: `${name}-${i+1}` || 'swatch', color }));
                         break;
 
                     case 'FONT':
