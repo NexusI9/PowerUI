@@ -95,7 +95,7 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
 ];
 
 export const CREATE_SWATCH_CONFIG: Workbench = {
-    parent:'root',
+    folder:'root',
     type:'COLOR',
     title: 'Create color swatch',
     sidepanel: {
@@ -112,6 +112,6 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
         ]
     },
     footer: {
-        primaryAction: { text: 'Add', action: '' }
+        primaryAction: { text: 'Add', action: 'GENERATE_SWATCH' }
     }
 }

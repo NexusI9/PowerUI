@@ -4,7 +4,6 @@ import { clamp } from "./utils";
 
 export function interpolate({ colorStart, colorEnd = { r: 0, g: 0, b: 0 }, steps, action }: { colorStart: ColorRGB, colorEnd: ColorRGB, steps: number, action: SetMethod }): Array<ColorRGB> {
 
-
     const valueAt = (channelA: number, channelB: number, step: number) => channelA + (channelB - channelA) * step / steps;
     const colorArray: Array<ColorRGB> = [];
 

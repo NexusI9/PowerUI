@@ -65,8 +65,6 @@ const workbenchSlice = createSlice({
                 }
             }
 
-            //console.log({ key, value });
-
             return ({
                 ...state,
                 config: {...newConfig},

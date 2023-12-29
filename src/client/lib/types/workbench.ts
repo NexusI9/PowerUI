@@ -47,7 +47,7 @@ export interface FontConfig extends BaseConfig {
 export interface Workbench {
     active?: boolean;
     type: 'COLOR' | 'FONT';
-    parent: string;
+    folder: string;
     title: string;
     sidepanel: Sidepanel;
     footer?: Footer;
