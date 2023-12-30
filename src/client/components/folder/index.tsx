@@ -6,7 +6,7 @@ import Move from '@icons/move.svg';
 import Carrot from '@icons/carrot.svg';
 import { useMemo, useState } from 'react';
 import Add from '@icons/add.svg';
-import Pen from '@icons/pencil.svg';
+import Filter from '@icons/filter.svg'
 import Kebab from '@icons/kebab-vertical.svg';
 import { Input } from '@components/input';
 import { send } from '@lib/ipc';
@@ -56,7 +56,7 @@ export const Folder = ({
 
 
     const editIconMap: Array<IOption> = [
-        { icon: Pen, onClick: () => 0, disabled: !allowEdit },
+        { icon: Filter, onClick: () => 0, disabled: !allowEdit },
         { icon: options?.folder?.add?.icon || Add, onClick: () => options?.folder?.add?.onClick(attributes) || null},
         { icon: Kebab, onClick: (e: any) => dispatch(displayContextMenu({ commands: contextMenuItems, position: { x: e.clientX, y: e.clientY } })) }
     ];

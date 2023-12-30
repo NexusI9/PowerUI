@@ -11,11 +11,6 @@ export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', 
     const [innerValue, setInnerValue] = useState(value);
     const input = useRef<any>();
 
-    const pattern = (type === 'DEFAULT' || type === 'DISCRETE') ? '.*\S.*' :
-        (type === 'AMOUNT') ? `\d{2}` :
-            (type === 'COLOR') ? '[a-fA-F\d]+' : '';
-
-
     const handleOnChange = (e: BaseSyntheticEvent) => {
         //handle amount clamping
         if (range && type === 'AMOUNT') {
@@ -47,7 +42,6 @@ export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', 
                 <input
                     type='text'
                     ref={input}
-                    pattern={pattern}
                     placeholder={placeholder}
                     defaultValue={value}
                     onChange={handleOnChange}
