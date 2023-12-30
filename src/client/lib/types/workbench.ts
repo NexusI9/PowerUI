@@ -2,12 +2,12 @@ import { Dropdown, Input, Slider } from "@ctypes/input";
 import { Shade } from "./shade";
 import { ColorRGB } from "./color";
 
-export type SetMethod = 'SHADE' | 'TINT' | 'INTERPOLATION' | 'MATERIAL' | 'FONT' | 'TONE';
+export type SetMethod = 'SHADE' | 'TINT' | 'INTERPOLATION' | 'MATERIAL' | 'FONT' | 'TONE' | 'ANT' | 'ORBIT' | 'ATLASSIAN';
 
-export type SidepanelList = 
-{ type: 'INPUT'; attributes: Input; configKey: keyof ColorConfig | keyof FontConfig;} |
-{ type: 'DROPDOWN'; attributes: Dropdown; configKey: keyof ColorConfig | keyof FontConfig; } |
-{ type: 'SLIDER'; attributes: Slider; configKey: keyof ColorConfig | keyof FontConfig; }
+export type SidepanelList =
+    { type: 'INPUT'; attributes: Input; configKey: keyof ColorConfig | keyof FontConfig; } |
+    { type: 'DROPDOWN'; attributes: Dropdown; configKey: keyof ColorConfig | keyof FontConfig; } |
+    { type: 'SLIDER'; attributes: Slider; configKey: keyof ColorConfig | keyof FontConfig; }
 
 export interface SidepanelOption {
     text: string;
@@ -26,8 +26,8 @@ interface Footer {
     primaryAction: { text: string; action: string };
 }
 
-interface BaseConfig{
-    action?:SetMethod;
+interface BaseConfig {
+    action?: SetMethod;
 }
 
 export interface ColorConfig extends BaseConfig {
@@ -36,7 +36,8 @@ export interface ColorConfig extends BaseConfig {
     colorEnd?: string | ColorRGB;
     mode?: 'rgb' | 'hsl' | 'lab' | 'lch';
     steps?: number;
-    palette?:'primary'|'secondary'|'tertiary'|'error'|'neutral'|'neutralVariant';
+    palette?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'neutral' | 'neutralVariant';
+    theme?: 'default' | 'dark';
 }
 
 export interface FontConfig extends BaseConfig {

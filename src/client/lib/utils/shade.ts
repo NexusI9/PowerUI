@@ -4,11 +4,12 @@ import { Shade } from "@ctypes/shade";
 import { concatFolderName } from "./style";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import chroma, { InterpolationMode } from 'chroma-js';
-import { TonalPalette, argbFromHex, themeFromSourceColor, hexFromArgb } from '@material/material-color-utilities';
+import { argbFromHex, themeFromSourceColor, hexFromArgb } from '@material/material-color-utilities';
 import { hexToRgb } from "./color";
+import { generate } from '@ant-design/colors';
 
 
-export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: SetMethod, mode: string, name:string }): Array<Shade> {
+export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: SetMethod, mode: string, name: string }): Array<Shade> {
 
     const colorArray: Array<Shade> = [];
 
@@ -40,12 +41,12 @@ export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, acti
     return colorArray;
 }
 
-export function material({ colorStart, steps = 10, name, palette}:ColorConfig): Array<Shade> {
+export function material({ colorStart, steps = 10, name, palette }: ColorConfig): Array<Shade> {
     //https://stackoverflow.com/questions/70323955/how-to-generate-material-3-color-palettes-in-js-scss
 
     const colorArray: Array<Shade> = [];
     const materialTheme = themeFromSourceColor(argbFromHex(colorStart as string), []);
-   // const primary = materialTheme.schemes[theme || 'light'].primary;
+    // const primary = materialTheme.schemes[theme || 'light'].primary;
     const materialPalette = materialTheme.palettes[palette || 'primary'];
 
     const keys = [0, 10, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 95, 98, 99, 100];
@@ -53,13 +54,18 @@ export function material({ colorStart, steps = 10, name, palette}:ColorConfig): 
         const value = materialPalette.tone(k);
         const rgb = hexToRgb(hexFromArgb(value), true, 'OBJECT');
         colorArray.push({
-            name: `${name}-${k*10}`,
+            name: `${name}-${k * 10}`,
             color: rgb as ColorRGB
         });
     }
 
 
     return colorArray;
+}
+
+export function ant({ colorStart, name, theme }: ColorConfig) {
+    const palette = generate(colorStart as string, { theme: theme || 'default' });
+    return palette.map((color, i) => ({ name: `${name}-${i+1}`, color: hexToRgb(color, true, 'OBJECT') }));
 }
 
 

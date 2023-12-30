@@ -75,7 +75,7 @@ const materialSidepanelContent: Array<SidepanelList> = [
     {
         type: 'DROPDOWN',
         attributes: {
-            placeholder: 'Theme',
+            placeholder: 'Palette',
             list: [
                 { text: 'primary' },
                 { text: 'secondary' },
@@ -87,6 +87,41 @@ const materialSidepanelContent: Array<SidepanelList> = [
             style:{label:true}
         },
         configKey:'palette'
+    }
+];
+
+const antSidepanelContent: Array<SidepanelList> = [
+    {
+        type: 'INPUT',
+        attributes: {
+            type:'DEFAULT',
+            value: 'blue',
+            placeholder: 'Swatch name',
+            style:{label:true}
+        },
+        configKey:'name'
+    },
+    {
+        type: 'INPUT',
+        attributes: {
+            type:'COLOR',
+            value: '#0c8ce9',
+            placeholder: 'Color value',
+            style:{label:true}
+        },
+        configKey:'colorStart'
+    },
+    {
+        type: 'DROPDOWN',
+        attributes: {
+            placeholder: 'Theme',
+            list: [
+                { text: 'default' },
+                { text: 'dark' },
+            ],
+            style:{label:true}
+        },
+        configKey:'theme'
     }
 ];
 
@@ -161,7 +196,8 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
                 { text: 'Interpolation', content: interpolationSidepanelContent, action:'INTERPOLATION' }
             ],
             [
-                { text: 'Material Design', content: materialSidepanelContent, action:'MATERIAL'}
+                { text: 'Material Design', content: materialSidepanelContent, action:'MATERIAL'},
+                { text: 'Ant Design', content: antSidepanelContent, action:'ANT'}
             ]
         ]
     },
