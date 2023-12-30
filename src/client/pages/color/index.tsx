@@ -22,7 +22,7 @@ export default () => {
     }
 
     const dispatch = useDispatch();
-
+    
     return (
         <Style
             title="Colors"

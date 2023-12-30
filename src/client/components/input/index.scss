@@ -19,6 +19,20 @@
 
         input {
 
+            &[type="number"]::-webkit-outer-spin-button,
+            &[type="number"]::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+
+            &[type="number"] {
+                -moz-appearance: textfield;
+            }
+
+            &::placeholder{
+                color: var(--figma-color-text-tertiary);
+            }
+
             background-color: transparent;
             border: none;
             user-select: none;

@@ -28,7 +28,7 @@ const basicSidepanelContent: Array<SidepanelList> = [
             type:'AMOUNT',
             value: 10,
             placeholder: 'Swatch steps',
-            range: [2, 20],
+            range: [1, 100],
             style:{label:true}
         },
         configKey:'steps'
@@ -73,7 +73,7 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
             type:'AMOUNT',
             value: 10,
             placeholder: 'Swatch steps',
-            range: [2, 20],
+            range: [1, 100],
             style:{label:true}
         },
         configKey:'steps'
