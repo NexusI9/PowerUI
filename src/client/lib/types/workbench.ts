@@ -34,8 +34,9 @@ export interface ColorConfig extends BaseConfig {
     name?: string;
     colorStart?: string | ColorRGB;
     colorEnd?: string | ColorRGB;
-    mode?: 'RGB' | 'HSL' | 'LAB' | 'LCH';
+    mode?: 'rgb' | 'hsl' | 'lab' | 'lch';
     steps?: number;
+    palette?:'primary'|'secondary'|'tertiary'|'error'|'neutral'|'neutralVariant';
 }
 
 export interface FontConfig extends BaseConfig {

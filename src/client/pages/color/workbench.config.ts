@@ -6,7 +6,7 @@ const basicSidepanelContent: Array<SidepanelList> = [
         type: 'INPUT',
         attributes: {
             type:'DEFAULT',
-            value: 'swatch-name',
+            value: 'blue',
             placeholder: 'Swatch name',
             style:{label:true}
         },
@@ -51,11 +51,51 @@ const basicSidepanelContent: Array<SidepanelList> = [
 ];
 
 
+const materialSidepanelContent: Array<SidepanelList> = [
+    {
+        type: 'INPUT',
+        attributes: {
+            type:'DEFAULT',
+            value: 'blue',
+            placeholder: 'Swatch name',
+            style:{label:true}
+        },
+        configKey:'name'
+    },
+    {
+        type: 'INPUT',
+        attributes: {
+            type:'COLOR',
+            value: '#0c8ce9',
+            placeholder: 'Color value',
+            style:{label:true}
+        },
+        configKey:'colorStart'
+    },
+    {
+        type: 'DROPDOWN',
+        attributes: {
+            placeholder: 'Theme',
+            list: [
+                { text: 'primary' },
+                { text: 'secondary' },
+                { text: 'tertiary' },
+                { text: 'neutral' },
+                { text: 'neutralVariant' },
+                { text: 'error' }
+            ],
+            style:{label:true}
+        },
+        configKey:'palette'
+    }
+];
+
+
 const interpolationSidepanelContent: Array<SidepanelList> = [
     {
         type: 'INPUT',
         attributes: {
-            value: 'swatch-name',
+            value: 'sky',
             placeholder: 'Swatch name',
             style:{label:true}
         },
@@ -121,7 +161,7 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
                 { text: 'Interpolation', content: interpolationSidepanelContent, action:'INTERPOLATION' }
             ],
             [
-                { text: 'Material Design', content: basicSidepanelContent, action:'MATERIAL'}
+                { text: 'Material Design', content: materialSidepanelContent, action:'MATERIAL'}
             ]
         ]
     },

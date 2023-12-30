@@ -38,7 +38,7 @@ const workbenchSlice = createSlice({
         },
         updateConfig: (state, { payload: { key, value } }: { payload: { key: keyof ColorConfig | keyof FontConfig; value: any } }) => {
 
-            //update config 
+            //update Config 
             const newConfig = {
                 ...state.config,
                 [key]: value
@@ -50,24 +50,8 @@ const workbenchSlice = createSlice({
             if (action && actionMap[action]) {
                 switch (state.type) {
                     case 'COLOR':
-                        let { colorStart, colorEnd, steps, name, mode } = newConfig as ColorConfig;
-                        if(!colorStart){ break; }
                         //caculate interpolation and assign it to NewSet
-                        actionMap[action](
-                            {
-                                colorStart: colorStart as string || "#CCCCCC",
-                                colorEnd: colorEnd as string || "#CCCCCC",
-                                steps: Number(steps),
-                                action,
-                                mode
-                            }
-                        )?.forEach((color: ColorRGB, i: number) =>
-                            newSet.push(
-                                {
-                                    name: `${name}-${i + 1}` || 'swatch',
-                                    color
-                                }
-                            ));
+                        newSet.push(...actionMap[action](newConfig));
                         break;
 
                     case 'FONT':
