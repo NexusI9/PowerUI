@@ -57,7 +57,7 @@ export const Folder = ({
 
     const editIconMap: Array<IOption> = [
         { icon: Pen, onClick: () => 0, disabled: !allowEdit },
-        { icon: options?.folder?.add?.icon || Add, onClick: options?.folder?.add?.onClick || null},
+        { icon: options?.folder?.add?.icon || Add, onClick: () => options?.folder?.add?.onClick(attributes) || null},
         { icon: Kebab, onClick: (e: any) => dispatch(displayContextMenu({ commands: contextMenuItems, position: { x: e.clientX, y: e.clientY } })) }
     ];
 
