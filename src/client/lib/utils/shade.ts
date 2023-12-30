@@ -27,9 +27,9 @@ export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, acti
 
 
     if (mode) {
-        for (let s = 1; s < steps + 1; s++) {
+        for (let s = 1; s < Number(steps) + 1; s++) {
             const scale = chroma.scale([colorStart, colorEnd]).mode(mode as InterpolationMode);
-            const value = scale(s / steps).rgb();
+            const value = scale(s / Number(steps)).rgb();
             colorArray.push({
                 name: `${name}-${s}`,
                 color: { r: value[0] / 255, g: value[1] / 255, b: value[2] / 255 }
