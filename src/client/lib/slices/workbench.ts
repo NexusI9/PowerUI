@@ -1,6 +1,6 @@
 import { ColorRGB } from "@ctypes/color";
 import { Workbench, ColorConfig, FontConfig, SidepanelOption, SidepanelList, SetMethod, Set } from "@ctypes/workbench";
-import { interpolate } from "@lib/utils/shade";
+import { interpolate, material } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -9,7 +9,7 @@ const actionMap: { [key in SetMethod]: any; } = {
     TINT: interpolate,
     TONE: interpolate,
     INTERPOLATION: interpolate,
-    MATERIAL: () => [],
+    MATERIAL: material,
     FONT: () => []
 };
 

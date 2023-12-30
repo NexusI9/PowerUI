@@ -1,8 +1,10 @@
 {
   "compilerOptions": {
     "target": "es6",
+    "lib": ["es6","DOM"],
     "strict": true,
     "outDir": "dist",
+    "allowJs": true,
     "jsx": "react-jsx",
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,

@@ -12,11 +12,11 @@ module.exports = (env, argv) => ({
     ui: './src/client/index.tsx', // The entry point for your plugin code
     index: './src/server/index.ts', // The entry point for your plugin code
   },
-
+  target:['web','es2020'],
   module: {
     rules: [
       // Converts TypeScript code to JavaScript
-      { test: /\.tsx?$/, use: 'ts-loader', exclude: /node_modules/ },
+      { test: /\.tsx?$/, use: ['babel-loader']  },
 
       // Enables including CSS by doing "import './file.css'" in your TypeScript code
       { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] },
@@ -55,14 +55,14 @@ module.exports = (env, argv) => ({
       "@styles": path.resolve(__dirname, "src/client/styles/"),
       "@lib": path.resolve(__dirname, "src/client/lib/"),
       "@ctypes": path.resolve(__dirname, "src/client/lib/types/"),
-      "@templates":path.resolve(__dirname,"src/client/templates/")
+      "@templates": path.resolve(__dirname, "src/client/templates/")
     }
   },
 
   output: {
     filename: '[name].js',
     path: path.resolve(__dirname, 'dist'), // Compile into a folder called "dist"
-    clean:true
+    clean: true
   },
 
   // Tells Webpack to generate "ui.html" and to inline "ui.ts" into it

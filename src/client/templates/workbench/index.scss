@@ -33,8 +33,12 @@
         border-right: solid 1px var(--figma-color-border);
         max-width: 200px;
         flex-grow: 1;
-        padding: var(--space-l) var(--space-m);
+        padding: var(--space-m) var(--space-m);
         overflow: auto;
+
+        & > hr{
+            margin: var(--space-s) 0;
+        }
     }
 
     &-content{
