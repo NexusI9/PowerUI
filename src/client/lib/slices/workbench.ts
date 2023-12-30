@@ -32,7 +32,7 @@ const workbenchSlice = createSlice({
                         traverseCallback(content, (input: SidepanelList) => {
                             try { config[input.configKey] = input.attributes.value; } catch (_) { }
                         }
-                        )))
+                        )));
             }
 
             return ({ ...state, ...payload, config: config, active: true })

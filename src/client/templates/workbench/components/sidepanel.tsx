@@ -50,7 +50,7 @@ export const Sidepanel = () => {
 
     }, [options]);
 
-    return (<div className="workbench-sidepanel flex f-col gap-l">
+    return (<div className="workbench-sidepanel flex f-col gap-m">
         {
             options?.length &&
             <>
