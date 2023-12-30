@@ -5,6 +5,7 @@ import { itemFromIndex, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
 import { useDispatch, useSelector } from "react-redux";
 import { updateConfig } from "@lib/slices/workbench";
+import { DropdownCommand } from "@ctypes/input";
 
 export const Sidepanel = () => {
 
@@ -29,7 +30,7 @@ export const Sidepanel = () => {
                 break;
 
             case 'DROPDOWN':
-                dynamicComp = <Dropdown {...input.attributes} />;
+                dynamicComp = <Dropdown {...input.attributes} onChange={({item}:{item:DropdownCommand}) => dispatch(updateConfig({ key: input.configKey, value: item.text })) }/>;
                 break;
 
             default:
@@ -53,7 +54,7 @@ export const Sidepanel = () => {
         {
             options?.length &&
             <>
-                <Dropdown list={options} onChange={updateIndex} style={{ label: true }} placeholder="Swatch type" />
+                <Dropdown list={options} onChange={ ({id}:{id:number | Array<number>}) => updateIndex(id) } style={{ label: true }} placeholder="Swatch type" />
                 <hr />
             </>
         }

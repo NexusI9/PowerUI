@@ -17,8 +17,8 @@ export const Dropdown = (props: IDropdown) => {
     }, []);
 
     useEffect(() => {
-        if (props.onChange) props.onChange(active);
-    }, [active])
+        if (props.onChange) props.onChange({ id: active, item: itemFromIndex(active, props.list) });
+    }, [active]);
 
     useEffect(() => {
         const onClick = () => setExpanded(false);

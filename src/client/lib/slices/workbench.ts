@@ -51,14 +51,16 @@ const workbenchSlice = createSlice({
             if (action && actionMap[action]) {
                 switch (state.type) {
                     case 'COLOR':
-                        let { colorStart, colorEnd, steps, name } = newConfig as ColorConfig;
+                        let { colorStart, colorEnd, steps, name, mode } = newConfig as ColorConfig;
+                        if(!colorStart){ break; }
                         //caculate interpolation and assign it to NewSet
                         actionMap[action](
                             {
-                                colorStart: hexToRgb(colorStart || "#CCCCCC", true, 'OBJECT'),
-                                colorEnd: hexToRgb(colorEnd || "#CCCCCC", true, 'OBJECT'),
+                                colorStart: colorStart as string || "#CCCCCC",
+                                colorEnd: colorEnd as string || "#CCCCCC",
                                 steps: Number(steps),
-                                action
+                                action,
+                                mode
                             }
                         )?.forEach((color: ColorRGB, i: number) =>
                             newSet.push(

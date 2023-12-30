@@ -1,5 +1,6 @@
 import { Dropdown, Input, Slider } from "@ctypes/input";
 import { Shade } from "./shade";
+import { ColorRGB } from "./color";
 
 export type SetMethod = 'SHADE' | 'TINT' | 'INTERPOLATION' | 'MATERIAL' | 'FONT' | 'TONE';
 
@@ -31,8 +32,8 @@ interface BaseConfig{
 
 export interface ColorConfig extends BaseConfig {
     name?: string;
-    colorStart?: string;
-    colorEnd?: string;
+    colorStart?: string | ColorRGB;
+    colorEnd?: string | ColorRGB;
     mode?: 'RGB' | 'HSL' | 'LAB' | 'LCH';
     steps?: number;
 }

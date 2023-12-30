@@ -32,6 +32,20 @@ const basicSidepanelContent: Array<SidepanelList> = [
             style:{label:true}
         },
         configKey:'steps'
+    },
+    {
+        type: 'DROPDOWN',
+        attributes: {
+            placeholder: 'Color mode',
+            list: [
+                { text: 'rgb' },
+                { text: 'hsl' },
+                { text: 'lab' },
+                { text: 'lch' }
+            ],
+            style:{label:true}
+        },
+        configKey:'mode'
     }
 
 ];
@@ -83,10 +97,10 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         attributes: {
             placeholder: 'Color mode',
             list: [
-                { text: 'RGB', action: '' },
-                { text: 'HSL', action: '' },
-                { text: 'Lab', action: '' },
-                { text: 'Lch', action: '' }
+                { text: 'rgb' },
+                { text: 'hsl' },
+                { text: 'lab' },
+                { text: 'lch' }
             ],
             style:{label:true}
         },
