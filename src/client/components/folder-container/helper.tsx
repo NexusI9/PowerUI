@@ -7,7 +7,7 @@ import Add from '@icons/add.svg';
 export function generateFolder(folder: Array<StyleFolder>, styleItem: React.FunctionComponent, onAddItem: any, options?: {}): any {
     return folder.map((item: StyleFolder, i: number) => {
 
-        const isRoot = item.title === 'root';
+        const isRoot = !item.title.length;
         const handleAddItem = () => onAddItem({ folder: item.fullpath, name: 'new-style'});
 
         return <Folder

@@ -7,12 +7,14 @@ import { Content } from "./components/content";
 import { Sidepanel } from "./components/sidepanel";
 import { useDispatch } from "react-redux";
 import { destroy } from "@lib/slices/workbench";
+import { send } from "@lib/ipc";
 import './index.scss';
 
 export const WorkBench = () => {
 
     const dispatch = useDispatch();
-    const { title, sidepanel, footer, active } = useSelector((state: { workbench: Workbench }) => state.workbench);
+    const workbenchPayload = useSelector( (state:any) => state.workbench);
+    const { title, footer, active } = useSelector((state: { workbench: Workbench }) => state.workbench);
 
     return (<>{active &&
         <div className="workbench-wrapper flex f-center">
@@ -25,9 +27,9 @@ export const WorkBench = () => {
                     <Sidepanel />
                     <Content />
                 </div>
-                <footer className="workbench-footer flex f-row f-end gap-m">
+                <footer className="workbench-footer flex f-row f-end gap-s">
                     <Button text='Cancel' onClick={() => dispatch(destroy()) } role='SECONDARY' />
-                    <Button text={footer?.primaryAction.text || 'ADD'} onClick={() => 0} role='PRIMARY' />
+                    <Button text={footer?.primaryAction.text || 'ADD'} onClick={() => { send({action:footer?.primaryAction.action, ...workbenchPayload}); dispatch(destroy()); }} role='PRIMARY' />
                 </footer>
             </div>
         </div>}

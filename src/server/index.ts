@@ -14,6 +14,8 @@ import {
   concatFolderName,
   folderNameFromPath
 } from "@lib/utils/style";
+import { createSwatch } from "@lib/utils/shade";
+
 
 figma.showUI(__html__, { themeColors: true });
 figma.ui.resize(750, 655);
@@ -68,7 +70,6 @@ figma.ui.onmessage = msg => {
     case 'DUPLICATE_FOLDER':
 
       const newFolderName = setCopyNumber(msg.folder);
-
       get_styles_of_folder(msg.folder).forEach(item => {
         const itemName = folderNameFromPath(item.name).name;
         addStyle({
@@ -100,6 +101,10 @@ figma.ui.onmessage = msg => {
 
     case 'SORT_STYLE_COLOR_SATURATION':
       sort_by_hsl(msg.folder.styles, 'SATURATION');
+      break;
+
+    case 'CREATE_SWATCH':
+      createSwatch(msg);
       break;
 
     default:

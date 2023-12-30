@@ -1,4 +1,4 @@
-import { ColorRGB  } from "@ctypes/color";
+import { ColorRGB } from "@ctypes/color";
 import { StyleColor, StyleFolder, Styles } from "@ctypes/style";
 import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
@@ -10,7 +10,7 @@ export function classifyStyle(style: Array<Styles>): Array<Styles | StyleFolder>
     let level = -1; // -1 cause Root (declared below) acts as a fake (hidden directory)
     let organisedFolder: StyleFolder = {
         type: 'FOLDER',
-        title: 'root',
+        title: '',
         fullpath: '',
         level: level,
         styles: [],
@@ -110,8 +110,8 @@ export function updateColor({ style, color }: { style: StyleColor, color: ColorR
 
 }
 
-export function concatFolderName(folder: string, name: string): string {
-
+export function concatFolderName(folder: string | undefined, name: string): string {
+    if (!folder) { return name; }
     return folder.length ? [folder, name].join('/') : name;
 }
 
@@ -146,13 +146,13 @@ export function addStyle({ folder, name, style, type }: { folder?: string, name:
 
         case 'COLOR':
             const newStyleColor = figma.createPaintStyle();
-            newStyleColor.name = folder ? concatFolderName(folder, name) : name;
+            newStyleColor.name =  concatFolderName(folder, name);
             newStyleColor.paints = style || DEFAULT_STYLE_COLOR;
             break;
 
         case 'TEXT':
             const newStyleText = figma.createTextStyle();
-            newStyleText.name = folder ? concatFolderName(folder, name) : name;
+            newStyleText.name =  concatFolderName(folder, name);
             newStyleText.textCase = style || DEFAULT_STYLE_COLOR;
             break;
     }
@@ -215,13 +215,13 @@ export function setCopyNumber(folder: StyleFolder): string {
     });
 
     //Defines number 
-    const setNumber = (folders: Array<string>, count: number):number => {
+    const setNumber = (folders: Array<string>, count: number): number => {
 
-        for(var f = 0; f< folders.length; f++){
+        for (var f = 0; f < folders.length; f++) {
             const lastPart = lastIndexOfArray(folders[f].split(' '));
             if (isNumber(lastPart) && Number(lastPart) >= count) {
                 count = Number(lastIndexOfArray(folders[f].split(' '))) + 1;
-                folders.splice(f,1);
+                folders.splice(f, 1);
                 //check once again
                 return setNumber(folders, count);
             }

@@ -1,6 +1,9 @@
 import { ColorRGB } from "@ctypes/color";
-import { SetMethod } from "@ctypes/workbench";
+import { SetMethod, Workbench } from "@ctypes/workbench";
 import { clamp } from "./utils";
+import { Shade } from "@ctypes/shade";
+import { concatFolderName } from "./style";
+import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 
 export function interpolate({ colorStart, colorEnd = { r: 0, g: 0, b: 0 }, steps, action }: { colorStart: ColorRGB, colorEnd: ColorRGB, steps: number, action: SetMethod }): Array<ColorRGB> {
 
@@ -30,4 +33,15 @@ export function interpolate({ colorStart, colorEnd = { r: 0, g: 0, b: 0 }, steps
     }
 
     return colorArray;
+}
+
+
+export function createSwatch({folder, set, config:{name}}:Workbench){
+    const baseName = name;
+
+    set?.forEach( ({name, color}:Shade) => {
+        const newStyle = figma.createPaintStyle();
+        newStyle.name = concatFolderName(folder, [baseName,name].join('/'));
+        newStyle.paints = DEFAULT_STYLE_COLOR.map( paint => ({...paint, color: color}) );
+    })
 }

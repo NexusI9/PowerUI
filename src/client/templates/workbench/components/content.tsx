@@ -1,10 +1,6 @@
-import { SetMethod, Workbench } from "@ctypes/workbench";
 import { ShadeSet } from "@components/shade-set";
 import { useSelector } from "react-redux";
 import { Shade } from "@ctypes/shade";
-import { useEffect } from "react";
-
-
 
 export const Content = () => {
 

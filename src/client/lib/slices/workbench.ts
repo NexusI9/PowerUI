@@ -52,12 +52,21 @@ const workbenchSlice = createSlice({
                 switch (state.type) {
                     case 'COLOR':
                         let { colorStart, colorEnd, steps, name } = newConfig as ColorConfig;
-                        actionMap[action]({ 
-                            colorStart: hexToRgb(colorStart || "#CCCCCC", true, 'OBJECT'),
-                            colorEnd: hexToRgb(colorEnd || "#CCCCCC", true, 'OBJECT'),
-                            steps: Number(steps), 
-                            action 
-                        })?.forEach((color: ColorRGB, i: number) => newSet.push({ name: `${name}-${i+1}` || 'swatch', color }));
+                        //caculate interpolation and assign it to NewSet
+                        actionMap[action](
+                            {
+                                colorStart: hexToRgb(colorStart || "#CCCCCC", true, 'OBJECT'),
+                                colorEnd: hexToRgb(colorEnd || "#CCCCCC", true, 'OBJECT'),
+                                steps: Number(steps),
+                                action
+                            }
+                        )?.forEach((color: ColorRGB, i: number) =>
+                            newSet.push(
+                                {
+                                    name: `${name}-${i + 1}` || 'swatch',
+                                    color
+                                }
+                            ));
                         break;
 
                     case 'FONT':
@@ -67,7 +76,7 @@ const workbenchSlice = createSlice({
 
             return ({
                 ...state,
-                config: {...newConfig},
+                config: { ...newConfig },
                 set: [...newSet]
             });
         },

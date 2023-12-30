@@ -33,7 +33,7 @@ export default () => {
             styleItem={Swatch}
             options={{
                 header: {
-                    add: { icon: SwatchIcon, onClick: () => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: 'root' })) }
+                    add: { icon: SwatchIcon, onClick: () => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: '' })) }
                 },
                 folder: {
                     add: { icon: SwatchIcon, onClick: (folder: StyleFolder) => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: folder.fullpath })) },

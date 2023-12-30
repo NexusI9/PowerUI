@@ -26,7 +26,7 @@ interface Footer {
 }
 
 interface BaseConfig{
-    action:SetMethod;
+    action?:SetMethod;
 }
 
 export interface ColorConfig extends BaseConfig {
@@ -51,7 +51,7 @@ export interface Workbench {
     title: string;
     sidepanel: Sidepanel;
     footer?: Footer;
-    config?: ColorConfig | FontConfig;
+    config: ColorConfig | FontConfig;
     set?: Set;
 }
 
