@@ -1,16 +1,13 @@
 import { ColorRGB } from "@ctypes/color";
-import { ColorConfig, SetMethod, Workbench } from "@ctypes/workbench";
-import { clamp } from "./utils";
+import { SetMethod, Workbench } from "@ctypes/workbench";
 import { Shade } from "@ctypes/shade";
 import { concatFolderName } from "./style";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import chroma, { InterpolationMode } from 'chroma-js';
-import { hexToRgb } from "./color";
 
 
 export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, action, mode }: { colorStart: string, colorEnd: string, steps: number, action: SetMethod, mode: string }): Array<ColorRGB> {
 
-    const valueAt = (channelA: number, channelB: number, step: number) => channelA + (channelB - channelA) * step / steps;
     const colorArray: Array<ColorRGB> = [];
 
     //Set color end depending
@@ -22,8 +19,7 @@ export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, acti
             colorEnd = "#FFFFFF";
             break;
         case 'TONE':
-            //const average = (colorStart.r+colorStart.g+colorStart.b)/3;
-            //colorEnd = { r: average, g: average, b: average };
+            colorEnd = chroma(colorStart).desaturate(steps).hex();
             break;
     }
 
@@ -33,7 +29,6 @@ export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, acti
             const scale = chroma.scale([colorStart, colorEnd]).mode(mode as InterpolationMode);
             const value = scale(s / steps).rgb();
             colorArray.push({ r: value[0] / 255, g: value[1] / 255, b: value[2] / 255 });
-            console.log();
         }
     }
 
