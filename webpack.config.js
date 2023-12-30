@@ -12,11 +12,10 @@ module.exports = (env, argv) => ({
     ui: './src/client/index.tsx', // The entry point for your plugin code
     index: './src/server/index.ts', // The entry point for your plugin code
   },
-  target:['web','es2020'],
   module: {
     rules: [
       // Converts TypeScript code to JavaScript
-      { test: /\.tsx?$/, use: ['babel-loader']  },
+      { test: /\.(t|j)sx?$/, use: ['ts-loader']  },
 
       // Enables including CSS by doing "import './file.css'" in your TypeScript code
       { test: /\.scss$/, use: ['style-loader', 'css-loader', 'sass-loader'] },

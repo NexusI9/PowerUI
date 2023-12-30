@@ -40,8 +40,8 @@ export function material({colorStart}:{colorStart:string;}):Array<ColorRGB>{
     //https://stackoverflow.com/questions/70323955/how-to-generate-material-3-color-palettes-in-js-scss
 
     //const m3ThemeColorsJSON = themeFromSourceColor(argbFromHex(colorStart), []);
-    //const argb = argbFromHex("#330000");
-    //console.log(null ?? 'a');
+    const argb = argbFromHex("#330000");
+    console.log(argb);
 
     return [];
 }

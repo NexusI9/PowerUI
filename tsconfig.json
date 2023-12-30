@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
-    "target": "es6",
-    "lib": ["es6","DOM"],
+    "target": "es2015",
+    "lib": ["DOM"],
     "strict": true,
     "outDir": "dist",
     "allowJs": true,
