@@ -16,6 +16,7 @@ export const Shade = (props: IShade) => {
         <div className="shade">
             <span className="shade-color" style={{ backgroundColor: colorValue.rgb as string }}></span>
             <p>{name}</p>
+            <p>{colorValue.hex}</p>
             <ul>
                 {Object.keys(colorValue).map((key, i) => <li key={key + i}>{String(colorValue[key as keyof typeof colorValue])}</li>)}
             </ul>

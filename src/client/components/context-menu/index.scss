@@ -7,6 +7,11 @@
     position: absolute;
     width: 160px;
     display: block;
+
+    hr{
+        margin: var(--space-s) auto;
+        width: 90%;
+    }
    
 
     &.hide {

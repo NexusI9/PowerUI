@@ -5,13 +5,19 @@
     grid-template-columns: repeat(3,1fr);
     align-items: center;
     gap: var(--space-m);
+    min-height: var(--input-height);
 
     & > span{
         height: 100%;
         border-radius: var(--radius-m);
     }
 
+    p:last-of-type{
+        color: var(--figma-color-text-tertiary);
+    }
+
     ul{
+        display: none;
         list-style: none;
         padding: 0;
         color: var(--figma-color-text-tertiary);

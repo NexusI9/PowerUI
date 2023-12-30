@@ -24,6 +24,11 @@
         top: 0;
         width: 100%;
 
+        hr{
+            margin: var(--space-s) auto;
+            width: 90%;
+        }
+
         &[data-expanded="false"] {
             display: none;
         }
