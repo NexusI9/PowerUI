@@ -1,36 +1,16 @@
 import { ColorHSL, ColorRGB } from "@ctypes/color";
 import { ColorAdjustConfig, ColorConfig, SetMethod, Workbench } from "@ctypes/workbench";
-import { Contrast, ContrastPropreties, Shade } from "@ctypes/shade";
+import { Shade } from "@ctypes/shade";
 import { concatFolderName, folderNameFromPath } from "./style";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import chroma, { InterpolationMode } from 'chroma-js';
 import { argbFromHex, themeFromSourceColor, hexFromArgb } from '@material/material-color-utilities';
-import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb } from "./color";
+import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, rgb } from "./color";
 import { generate } from '@ant-design/colors';
 import { generateColors } from "@mantine/colors-generator";
-import { ratio } from "wcag-color";
-import { wcagContrastChecker } from "@mdhnpm/wcag-contrast-checker";
 import { StyleColor } from "@ctypes/style";
 import { envelop } from "./utils";
-
-
-function checkContrast(target: string): Contrast {
-
-    function calculate(target: string, comparator: string): ContrastPropreties {
-        const { largeText, regularText } = wcagContrastChecker(target, comparator);
-        return {
-            ratio: ratio(target, comparator),
-            large: largeText.aaa ? 'AAA' : largeText.aa ? 'AA' : undefined,
-            regular: regularText.aaa ? 'AAA' : regularText.aa ? 'AA' : undefined
-        };
-    };
-
-
-    return {
-        black: calculate(target, "#000000"),
-        white: calculate(target, "#FFFFFF")
-    };
-}
+import { checkContrast, convertTemperature } from "./shade.helper";
 
 /*
 ** CLASSIC INTERPOLATIONS 
@@ -123,29 +103,36 @@ export function ant({ colorStart, name, theme }: ColorConfig): Array<Shade> {
 export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
 
 
-    return props.styles.map((style: StyleColor, i:number) => {
-        
+    return props.styles.map((style: StyleColor, i: number) => {
+
         const { color } = style.paints[0] as SolidPaint;
         const { hue, saturation, brightness, contrast, temperature } = props;
-        
+
         //convert to HSL
         const hslColor = rgbToHsl(color, 'OBJECT') as ColorHSL;
 
-        //apply correction
-        if(hue) hslColor.h += envelop(-180,hue,180);
-        if(saturation) hslColor.s += envelop(-100,saturation,100);
-        if(brightness) hslColor.l += envelop(-100,brightness,100);
+        //apply correction for basic adjustments
+        if (hue) hslColor.h += envelop(-180, hue, 180);
+        if (saturation) hslColor.s += envelop(-100, saturation, 100);
+        if (brightness) hslColor.l += envelop(-100, brightness, 100);
 
-        console.log(hslColor);
+        //convert back to RGB for more complex adjustments
+        const rgbColor = hslToRgb(hslColor, true, 'OBJECT') as ColorRGB;
+        if (temperature) {
+            const tempColor = convertTemperature(envelop(40000, temperature, 1000));
+            rgbColor.r = (rgbColor.r + tempColor.r) / 2;
+            rgbColor.g = (rgbColor.g + tempColor.g) / 2;
+            rgbColor.b = (rgbColor.b + tempColor.b) / 2;
+        }
 
-        //convert back to RGB
-        const newColor = hslToRgb(hslColor, true, 'OBJECT') as ColorRGB;
+        //console.log(rgbColor);
+
 
         return ({
             name: folderNameFromPath(style.name).name,
-            color: newColor,
-            contrast: checkContrast(rgbToHex(color) )
-        })
+            color: rgbColor,
+            contrast: checkContrast(rgbToHex(rgbColor))
+        });
     });
 
 }
