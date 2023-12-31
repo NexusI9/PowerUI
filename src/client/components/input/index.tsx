@@ -6,10 +6,16 @@ import ChevronUp from '@icons/chevron-up.svg';
 import { ButtonIcon } from '@components/button-icon';
 import { clamp } from '@lib/utils/utils';
 
-export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', onChange, onBlur, onFocus, onEnter, style, range = [1, 10] }: IInput) => {
+export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'Enter a value', onChange, onBlur, onFocus, onEnter, style, range = [1, 10], step = 1 }: IInput) => {
 
     const [innerValue, setInnerValue] = useState(value);
     const input = useRef<any>();
+
+    useEffect(() => {
+        if (dynamicValue) {
+            handleOnChange({ target: { value: dynamicValue } } as BaseSyntheticEvent);
+        }
+    }, [dynamicValue]);
 
     const handleOnChange = (e: BaseSyntheticEvent) => {
         //handle amount clamping
@@ -29,7 +35,7 @@ export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', 
     }, [innerValue]);
 
     return (
-        <div className={'input-field'}>
+        <div className={'input-field'} data-minified={String(style?.minified)}>
             {style?.label && <p className='input-field-label frozen'><small><b>{placeholder}</b></small></p>}
             <div className='input-field-content' data-type={type}>
                 {
@@ -50,8 +56,8 @@ export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', 
                     onKeyDown={(e: any) => {
                         if (e.code === 'Enter' && onEnter) { onEnter(e); e.target.blur(); }
                         if (type === 'AMOUNT') {
-                            if (e.code === 'ArrowUp') { e.preventDefault(); setInnerValue(clamp(range[0], Number(innerValue) + 1, range[1])); }
-                            if (e.code === 'ArrowDown') { e.preventDefault(); setInnerValue(clamp(range[0], Number(innerValue) - 1, range[1])); }
+                            if (e.code === 'ArrowUp') { e.preventDefault(); setInnerValue(clamp(range[0], Number(innerValue) + step, range[1])); }
+                            if (e.code === 'ArrowDown') { e.preventDefault(); setInnerValue(clamp(range[0], Number(innerValue) - step, range[1])); }
                         }
                     }}
                 />
@@ -59,8 +65,8 @@ export const Input = ({ type = 'DEFAULT', value, placeholder = 'Enter a value', 
                     //Display amount arrows
                     type === 'AMOUNT' &&
                     <label className='input-field-amount flex f-col'>
-                        <ButtonIcon icon={ChevronUp} onClick={() => setInnerValue(clamp(range[0], Number(innerValue) + 1, range[1]))} />
-                        <ButtonIcon icon={ChevronDown} onClick={() => setInnerValue(clamp(range[0], Number(innerValue) - 1, range[1]))} />
+                        <ButtonIcon icon={ChevronUp} onClick={() => setInnerValue(clamp(range[0], Number(innerValue) + step, range[1]))} />
+                        <ButtonIcon icon={ChevronDown} onClick={() => setInnerValue(clamp(range[0], Number(innerValue) - step, range[1]))} />
                     </label>
                 }
             </div>

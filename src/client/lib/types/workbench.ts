@@ -7,7 +7,7 @@ export type SetMethod = 'SHADE' | 'TINT' | 'INTERPOLATION' | 'MATERIAL' | 'FONT'
 export type SidepanelList =
     { type: 'INPUT'; attributes: Input; configKey: keyof ColorConfig | keyof FontConfig; } |
     { type: 'DROPDOWN'; attributes: Dropdown; configKey: keyof ColorConfig | keyof FontConfig; } |
-    { type: 'SLIDER'; attributes: Slider; configKey: keyof ColorConfig | keyof FontConfig; }
+    { type: 'SLIDER'; attributes: Slider; configKey: keyof ColorAdjustConfig; }
 
 export interface SidepanelOption {
     text: string;
@@ -38,6 +38,15 @@ export interface ColorConfig extends BaseConfig {
     steps?: number;
     palette?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'neutral' | 'neutralVariant';
     theme?: 'default' | 'dark';
+}
+
+export interface ColorAdjustConfig extends BaseConfig{
+    hue?:number;
+    saturation?:number;
+    contrast?:number;
+    brightness?:number;
+    temperature?:number;
+    tint?:number;
 }
 
 export interface FontConfig extends BaseConfig {

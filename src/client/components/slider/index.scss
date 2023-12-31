@@ -1,0 +1,23 @@
+.input-slider {
+
+
+    &-header {
+        width: 100%;
+
+        .input-field {
+            width: 40px;
+
+            input {
+                text-align: right;
+            }
+
+        }
+    }
+
+    &-label {
+        font-size: small;
+        color: var(--figma-color-text-tertiary);
+    }
+
+
+}

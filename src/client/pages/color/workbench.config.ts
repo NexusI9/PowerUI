@@ -207,6 +207,57 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
     }
 ];
 
+const adjustSidepanelContent: Array<SidepanelList> = [
+    {
+        type: 'SLIDER',
+        attributes: {
+            background:'linear-gradient(90deg, #F00 0%, #F90 13.02%, #FFE500 27.01%, #24FF00 41.67%, #00F0FF 59.51%, #1400FF 77.79%, #FF00B2 90.17%, #F90 100%);',
+            placeholder: 'Hue',
+        },
+        configKey:'hue'
+    },
+    {
+        type: 'SLIDER',
+        attributes: {
+            background:'linear-gradient(90deg, #979797 0%, #F00 100%);',
+            placeholder: 'Saturation',
+        },
+        configKey:'saturation'
+    },
+    {
+        type: 'SLIDER',
+        attributes: {
+            background:'linear-gradient(90deg, #BDBDBD 0%, #2F2F2F 100%);',
+            placeholder: 'Contrast',
+        },
+        configKey:'contrast'
+    },
+    {
+        type: 'SLIDER',
+        attributes: {
+            background:'linear-gradient(90deg, #BDBDBD 0%, #2F2F2F 100%);',
+            placeholder: 'Brightness',
+        },
+        configKey:'brightness'
+    },
+    {
+        type: 'SLIDER',
+        attributes: {
+            background:'linear-gradient(90deg, #BDBDBD 0%, #2F2F2F 100%);',
+            placeholder: 'Temperature',
+        },
+        configKey:'temperature'
+    },
+    {
+        type: 'SLIDER',
+        attributes: {
+            background:'linear-gradient(90deg, #3F0 0%, #FF00E5 100%);',
+            placeholder: 'Tint'
+        },
+        configKey:'tint'
+    },
+];
+
 
 export const CREATE_SWATCH_CONFIG: Workbench = {
     folder:'',
@@ -239,7 +290,7 @@ export const EDIT_SWATCH_CONFIG:Workbench = {
     type:'COLOR',
     sidepanel: {
         options: [
-                { text: 'Adjustments', content: basicSidepanelContent, action:'SHADE' }
+                { text: 'Adjustments', content: adjustSidepanelContent, action:'SHADE' }
         ]
     },
     footer: {

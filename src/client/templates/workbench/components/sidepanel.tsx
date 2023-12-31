@@ -6,11 +6,12 @@ import { Input } from "@components/input";
 import { useDispatch, useSelector } from "react-redux";
 import { updateConfig } from "@lib/slices/workbench";
 import { DropdownCommand } from "@ctypes/input";
+import { Slider } from "@components/slider";
 
 export const Sidepanel = () => {
 
     const [activeOption, setActiveOption] = useState<SidepanelOption>();
-    const { sidepanel:{options} } = useSelector((state:any) => state.workbench); 
+    const { sidepanel: { options } } = useSelector((state: any) => state.workbench);
 
     const dispatch = useDispatch();
 
@@ -25,12 +26,15 @@ export const Sidepanel = () => {
         let dynamicComp;
         switch (input.type) {
             case 'INPUT':
-            case 'SLIDER':
                 dynamicComp = <Input {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateConfig({ key: input.configKey, value: e.target.value }))} />;
                 break;
 
+            case 'SLIDER':
+                dynamicComp = <Slider {...input.attributes} />
+                break;
+
             case 'DROPDOWN':
-                dynamicComp = <Dropdown {...input.attributes} onChange={({item}:{item:DropdownCommand}) => dispatch(updateConfig({ key: input.configKey, value: item.text })) }/>;
+                dynamicComp = <Dropdown {...input.attributes} onChange={({ item }: { item: DropdownCommand }) => dispatch(updateConfig({ key: input.configKey, value: item.text }))} />;
                 break;
 
             default:
@@ -44,7 +48,7 @@ export const Sidepanel = () => {
 
     useEffect(() => {
         //init
-        if(options){
+        if (options) {
             updateIndex(Array.isArray(options[0]) ? [0, 0] : 0);
         }
 
@@ -54,7 +58,7 @@ export const Sidepanel = () => {
         {
             (options?.length > 1) &&
             <>
-                <Dropdown list={options} onChange={ ({id}:{id:number | Array<number>}) => updateIndex(id) } style={{ label: true }} placeholder="Swatch type" />
+                <Dropdown list={options} onChange={({ id }: { id: number | Array<number> }) => updateIndex(id)} style={{ label: true }} placeholder="Swatch type" />
                 <hr />
             </>
         }

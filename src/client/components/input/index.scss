@@ -1,5 +1,23 @@
 .input-field {
 
+    &[data-minified='true'] {
+
+        .input-field-content{
+                border: none;
+                height: fit-content;
+    
+                &:hover {
+                    box-shadow: 0px 0px 0px 1px var(--figma-color-border);
+                }
+        }
+
+        .input-field-amount{
+            display: none;
+        }
+
+
+    }
+
     &-label {
         font-size: small;
         color: var(--figma-color-text-tertiary);
@@ -29,7 +47,7 @@
                 -moz-appearance: textfield;
             }
 
-            &::placeholder{
+            &::placeholder {
                 color: var(--figma-color-text-tertiary);
             }
 
@@ -48,15 +66,6 @@
                 color: var(--figma-color-text);
             }
 
-        }
-
-        &[data-type='DISCRETE'] {
-            border: none;
-            height: fit-content;
-
-            &:hover {
-                box-shadow: 0px 0px 0px 1px var(--figma-color-border);
-            }
         }
 
         &[data-type='COLOR'],
