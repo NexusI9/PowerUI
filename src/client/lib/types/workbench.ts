@@ -2,7 +2,7 @@ import { Dropdown, Input, Slider } from "@ctypes/input";
 import { Shade } from "./shade";
 import { ColorRGB } from "./color";
 
-export type SetMethod = 'SHADE' | 'TINT' | 'INTERPOLATION' | 'MATERIAL' | 'FONT' | 'TONE' | 'ANT' | 'ORBIT' | 'ATLASSIAN';
+export type SetMethod = 'SHADE' | 'TINT' | 'INTERPOLATION' | 'MATERIAL' | 'FONT' | 'TONE' | 'ANT' | 'ORBIT' | 'ATLASSIAN' | 'MANTINE' | 'CHAKRA';
 
 export type SidepanelList =
     { type: 'INPUT'; attributes: Input; configKey: keyof ColorConfig | keyof FontConfig; } |

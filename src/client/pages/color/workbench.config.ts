@@ -126,6 +126,30 @@ const antSidepanelContent: Array<SidepanelList> = [
 ];
 
 
+const mantineSidepanelContent: Array<SidepanelList> = [
+    {
+        type: 'INPUT',
+        attributes: {
+            type:'DEFAULT',
+            value: 'blue',
+            placeholder: 'Swatch name',
+            style:{label:true}
+        },
+        configKey:'name'
+    },
+    {
+        type: 'INPUT',
+        attributes: {
+            type:'COLOR',
+            value: '#0c8ce9',
+            placeholder: 'Color value',
+            style:{label:true}
+        },
+        configKey:'colorStart'
+    }
+];
+
+
 const interpolationSidepanelContent: Array<SidepanelList> = [
     {
         type: 'INPUT',
@@ -197,7 +221,9 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
             ],
             [
                 { text: 'Material Design', content: materialSidepanelContent, action:'MATERIAL'},
-                { text: 'Ant Design', content: antSidepanelContent, action:'ANT'}
+                { text: 'Ant Design', content: antSidepanelContent, action:'ANT'},
+                { text: 'Mantine', content: mantineSidepanelContent, action:'MANTINE'},
+                { text: 'Chakra UI', content: mantineSidepanelContent, action:'CHAKRA'}
             ]
         ]
     },

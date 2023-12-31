@@ -7,6 +7,7 @@ import chroma, { InterpolationMode } from 'chroma-js';
 import { argbFromHex, themeFromSourceColor, hexFromArgb } from '@material/material-color-utilities';
 import { hexToRgb } from "./color";
 import { generate } from '@ant-design/colors';
+import { generateColors } from "@mantine/colors-generator";
 
 
 export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: SetMethod, mode: string, name: string }): Array<Shade> {
@@ -63,9 +64,21 @@ export function material({ colorStart, steps = 10, name, palette }: ColorConfig)
     return colorArray;
 }
 
-export function ant({ colorStart, name, theme }: ColorConfig) {
+
+export function mantine({colorStart, name, theme}:ColorConfig):Array<Shade>{
+    return generateColors(colorStart as string).map( (color,i) => ({name: `${name}-${i+1}`, color: hexToRgb(color, true, 'OBJECT') as ColorRGB }));
+}
+
+export function ant({ colorStart, name, theme }: ColorConfig):Array<Shade>{
     const palette = generate(colorStart as string, { theme: theme || 'default' });
-    return palette.map((color, i) => ({ name: `${name}-${i+1}`, color: hexToRgb(color, true, 'OBJECT') }));
+    return palette.map((color, i) => ({ name: `${name}-${i+1}`, color: hexToRgb(color, true, 'OBJECT') as ColorRGB}));
+}
+
+export function chakra({colorStart}:ColorConfig){
+    //const palette = createPalette(colorStart as string);
+    //console.log(palette);
+    return [];
+    //return palette.map((color, i) => ({ name: `${name}-${i+1}`, color: hexToRgb(color, true, 'OBJECT') as ColorRGB}));
 }
 
 
