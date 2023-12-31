@@ -1,5 +1,5 @@
 import { ColorRGB } from "@ctypes/color";
-import { Workbench, ColorConfig, FontConfig, SidepanelOption, SidepanelList, SetMethod, Set } from "@ctypes/workbench";
+import { Workbench, ColorConfig, FontConfig, SidepanelOption, SidepanelList, SetMethod, Set, ColorAdjustConfig } from "@ctypes/workbench";
 import { ant, colorAdjust, interpolate, mantine, material } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";
 import { createSlice } from "@reduxjs/toolkit";
@@ -41,7 +41,7 @@ const workbenchSlice = createSlice({
 
             return ({ ...state, ...payload, config: {...initConfig}, active: true })
         },
-        updateConfig: (state, { payload: { key, value } }: { payload: { key: keyof ColorConfig | keyof FontConfig; value: any } }) => {
+        updateConfig: (state, { payload: { key, value } }: { payload: { key: keyof ColorConfig | keyof FontConfig | keyof ColorAdjustConfig; value: any } }) => {
 
             //update Config 
             const newConfig = {

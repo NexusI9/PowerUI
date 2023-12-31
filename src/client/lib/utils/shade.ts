@@ -1,11 +1,11 @@
-import { ColorRGB } from "@ctypes/color";
+import { ColorHSL, ColorRGB } from "@ctypes/color";
 import { ColorAdjustConfig, ColorConfig, SetMethod, Workbench } from "@ctypes/workbench";
 import { Contrast, ContrastPropreties, Shade } from "@ctypes/shade";
 import { concatFolderName, folderNameFromPath } from "./style";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import chroma, { InterpolationMode } from 'chroma-js';
 import { argbFromHex, themeFromSourceColor, hexFromArgb } from '@material/material-color-utilities';
-import { hexToRgb, rgbToHex } from "./color";
+import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb } from "./color";
 import { generate } from '@ant-design/colors';
 import { generateColors } from "@mantine/colors-generator";
 import { ratio } from "wcag-color";
@@ -31,6 +31,9 @@ function checkContrast(target: string): Contrast {
     };
 }
 
+/*
+** CLASSIC INTERPOLATIONS 
+*/
 export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: SetMethod, mode: string, name: string }): Array<Shade> {
 
     const colorArray: Array<Shade> = [];
@@ -66,12 +69,12 @@ export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, acti
     return colorArray;
 }
 
+/*
+** MATERIAL DESIGN 
+*/
 export function material({ colorStart, steps = 10, name, palette }: ColorConfig): Array<Shade> {
-    //https://stackoverflow.com/questions/70323955/how-to-generate-material-3-color-palettes-in-js-scss
-
     const colorArray: Array<Shade> = [];
     const materialTheme = themeFromSourceColor(argbFromHex(colorStart as string), []);
-    // const primary = materialTheme.schemes[theme || 'light'].primary;
     const materialPalette = materialTheme.palettes[palette || 'primary'];
 
     const keys = [0, 10, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 95, 98, 99, 100];
@@ -90,6 +93,9 @@ export function material({ colorStart, steps = 10, name, palette }: ColorConfig)
 }
 
 
+/*
+** MANTINE DESIGN 
+*/
 export function mantine({ colorStart, name, theme }: ColorConfig): Array<Shade> {
     return generateColors(colorStart as string).map((color, i) => ({
         name: `${name}-${i + 1}`,
@@ -98,6 +104,9 @@ export function mantine({ colorStart, name, theme }: ColorConfig): Array<Shade> 
     }));
 }
 
+/*
+** ANT DESIGN 
+*/
 export function ant({ colorStart, name, theme }: ColorConfig): Array<Shade> {
     const palette = generate(colorStart as string, { theme: theme || 'default' });
     return palette.map((color, i) => ({
@@ -107,22 +116,42 @@ export function ant({ colorStart, name, theme }: ColorConfig): Array<Shade> {
     }));
 }
 
+/*
+** COLOR ADJUSTMENTS 
+*/
+export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
 
-export function colorAdjust({ styles }: ColorAdjustConfig): Array<Shade> {
+    const convSliderValue = (value:number,step:number=1, multiplier:number = 1):number => {
 
-    return styles.map((style: StyleColor) => {
+        if(value < 0.5){ return value - step * multiplier; }
+        else{ return value + step * multiplier; }
+        
+    }
+
+    return props.styles.map((style: StyleColor, i:number) => {
+        
         const { color } = style.paints[0] as SolidPaint;
+        const { hue, saturation, brightness, contrast, temperature } = props;
+        const hslColor = rgbToHsl(color, 'OBJECT') as ColorHSL;
 
+        //hslColor[0] += convSliderValue(hue ?? 0, 1, 2);
+        //hslColor.s += convSliderValue(saturation ?? 0, 1, 2);
+        //hslColor.l += convSliderValue(brightness ?? 0, 1, 2);
+        const newColor = hslToRgb(hslColor, true, 'OBJECT') as ColorRGB;
+
+        console.log(newColor);
         return ({
             name: folderNameFromPath(style.name).name,
-            color: color,
+            color: newColor,
             contrast: checkContrast(rgbToHex(color) )
         })
     });
 
 }
 
-
+/*
+** CREATE FIGMA PALELTTE FROM SET 
+*/
 export function createSwatch({ folder, set, config }: Workbench) {
     const baseName = (config as ColorConfig).name;
     if (!set) { return; }

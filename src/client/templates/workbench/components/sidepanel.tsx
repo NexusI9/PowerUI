@@ -18,6 +18,7 @@ export const Sidepanel = () => {
     const updateIndex = (index: number | Array<number>) => {
         const activeOption = itemFromIndex(index, options);
         setActiveOption(activeOption);
+        //store initial config
         dispatch(updateConfig({ key: 'action', value: activeOption.action }));
     }
 
@@ -30,7 +31,7 @@ export const Sidepanel = () => {
                 break;
 
             case 'SLIDER':
-                dynamicComp = <Slider {...input.attributes} />
+                dynamicComp = <Slider {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateConfig({ key: input.configKey, value: e.target.value }))} />
                 break;
 
             case 'DROPDOWN':

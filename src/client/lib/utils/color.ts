@@ -34,7 +34,7 @@ export function rgbToHex(color: ColorRGB): string {
 }
 
 
-export function hexToRgb(hex: string, normalize: boolean = false, output: ColorOutput='OBJECT'): ColorRGB | string {
+export function hexToRgb(hex: string, normalize: boolean = false, output: ColorOutput = 'OBJECT'): ColorRGB | string {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 
     let rgb = result ? {
@@ -43,7 +43,7 @@ export function hexToRgb(hex: string, normalize: boolean = false, output: ColorO
         b: parseInt(result[3], 16) / (normalize ? 255 : 1)
     } : { r: 0, g: 0, b: 0 };
 
-    switch(output){
+    switch (output) {
         case 'OBJECT':
             return rgb;
         case 'STRING':
@@ -85,22 +85,69 @@ export function rgbToHsl({ r, g, b }: { r: number, g: number, b: number }, outpu
 
 
 
+export function hslToRgb(hsl: ColorHSL, normalize: boolean = false, ouput: 'STRING' | 'OBJECT' = 'OBJECT'): ColorRGB | string {
 
-export function sort_by_hsl(styles: Array<StyleColor>, proprety:'HUE'|'BRIGHTNESS'|'SATURATION'='BRIGHTNESS') {
+    const h = hsl.h / 360;
+    const s = hsl.s / 100;
+    const l = hsl.l / 100;
+
+    const hueToRgb = (p: number, q: number, t: number): number => {
+        if (t < 0) t += 1;
+        if (t > 1) t -= 1;
+        if (t < 1 / 6) return p + (q - p) * 6 * t;
+        if (t < 1 / 2) return q;
+        if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
+        return p;
+    };
+
+    let r, g, b;
+
+    if (s === 0) {
+        r = g = b = l;
+    } else {
+        const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
+        const p = 2 * l - q;
+
+        r = hueToRgb(p, q, h + 1 / 3);
+        g = hueToRgb(p, q, h);
+        b = hueToRgb(p, q, h - 1 / 3);
+    }
+
+    const result = {
+        r: r * (!normalize ? 255 : 1),
+        g: g * (!normalize ? 255 : 1),
+        b: b * (!normalize ? 255 : 1)
+    };
+
+    switch (ouput) {
+        case 'OBJECT':
+            return result;
+
+        case 'STRING':
+            return `rgb(${result.r},${result.g},${result.b})`;
+    }
+
+
+}
+
+
+
+
+export function sort_by_hsl(styles: Array<StyleColor>, proprety: 'HUE' | 'BRIGHTNESS' | 'SATURATION' = 'BRIGHTNESS') {
 
     styles.sort((a, b) => {
 
-        const paint:{a:SolidPaint, b: SolidPaint} = { 
-            a: a.paints[0] as SolidPaint, 
+        const paint: { a: SolidPaint, b: SolidPaint } = {
+            a: a.paints[0] as SolidPaint,
             b: b.paints[0] as SolidPaint
         };
 
-        const lightValues = { 
+        const lightValues = {
             a: rgbToHsl(paint.a.color, 'OBJECT') as ColorHSL,
             b: rgbToHsl(paint.b.color, 'OBJECT') as ColorHSL
         }
 
-        switch(proprety){
+        switch (proprety) {
             case 'HUE':
                 return lightValues.a.h > lightValues.b.h ? 1 : -1
             case 'BRIGHTNESS':
