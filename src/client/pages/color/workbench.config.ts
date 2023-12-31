@@ -207,6 +207,7 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
     }
 ];
 
+
 export const CREATE_SWATCH_CONFIG: Workbench = {
     folder:'',
     title: 'Create color swatch',
@@ -228,6 +229,21 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
     },
     footer: {
         primaryAction: { text: 'Add', action: 'CREATE_SWATCH' }
+    },
+    config:{}
+}
+
+export const EDIT_SWATCH_CONFIG:Workbench = {
+    folder:'',
+    title: 'Edit color swatch',
+    type:'COLOR',
+    sidepanel: {
+        options: [
+                { text: 'Adjustments', content: basicSidepanelContent, action:'SHADE' }
+        ]
+    },
+    footer: {
+        primaryAction: { text: 'Edit', action: 'UPDATE_SWATCH' }
     },
     config:{}
 }

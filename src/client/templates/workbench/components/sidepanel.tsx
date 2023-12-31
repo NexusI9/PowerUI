@@ -52,7 +52,7 @@ export const Sidepanel = () => {
 
     return (<div className="workbench-sidepanel flex f-col gap-m">
         {
-            options?.length &&
+            (options?.length > 1) &&
             <>
                 <Dropdown list={options} onChange={ ({id}:{id:number | Array<number>}) => updateIndex(id) } style={{ label: true }} placeholder="Swatch type" />
                 <hr />

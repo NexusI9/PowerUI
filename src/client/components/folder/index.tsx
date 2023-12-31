@@ -35,7 +35,7 @@ export const Folder = ({
     const contextMenuItems = useMemo(() => {
         //set default commands
         let menu: Array<ContextMenuCommand> | Array<Array<ContextMenuCommand>> = DEFAULT_COMMANDS;
-        
+
         //concat eventuals custom options
         if (options?.folder?.kebab) {
             menu = [menu];
@@ -56,9 +56,19 @@ export const Folder = ({
 
 
     const editIconMap: Array<IOption> = [
-        { icon: Filter, onClick: () => 0, disabled: !allowEdit },
-        { icon: options?.folder?.add?.icon || Add, onClick: () => options?.folder?.add?.onClick(attributes) || null},
-        { icon: Kebab, onClick: (e: any) => dispatch(displayContextMenu({ commands: contextMenuItems, position: { x: e.clientX, y: e.clientY } })) }
+        {
+            icon: Filter,
+            onClick: () => options?.folder?.edit?.onClick(attributes) || void 0,
+            disabled: !allowEdit
+        },
+        {
+            icon: options?.folder?.add?.icon || Add,
+            onClick: () => options?.folder?.add?.onClick(attributes) || void 0
+        },
+        {
+            icon: Kebab,
+            onClick: (e: any) => dispatch(displayContextMenu({ commands: contextMenuItems, position: { x: e.clientX, y: e.clientY } }))
+        }
     ];
 
 

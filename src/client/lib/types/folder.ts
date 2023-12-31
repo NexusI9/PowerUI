@@ -26,7 +26,7 @@ export interface FolderOptions {
     };
     folder?:{
             add: { icon?: string; onClick: any; };
-            kebab?: Array<ContextMenuCommand>;
             edit: { icon?: string; onClick: any; };
+            kebab?: Array<ContextMenuCommand>;
     }
 }
