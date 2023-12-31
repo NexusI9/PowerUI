@@ -1,20 +1,21 @@
 import { ColorRGB } from "@ctypes/color";
 import { Workbench, ColorConfig, FontConfig, SidepanelOption, SidepanelList, SetMethod, Set } from "@ctypes/workbench";
-import { ant, interpolate, mantine, material } from "@lib/utils/shade";
+import { ant, colorAdjust, interpolate, mantine, material } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";
 import { createSlice } from "@reduxjs/toolkit";
 
 const actionMap: { [key in SetMethod]: any; } = {
-    "SHADE": interpolate,
-    "TINT": interpolate,
-    "TONE": interpolate,
-    "INTERPOLATION": interpolate,
-    "MATERIAL": material,
-    "ANT": ant,
-    "MANTINE":mantine,
-    "ORBIT": () => [],
-    "ATLASSIAN": () => [],
-    "FONT": () => []
+    SHADE: interpolate,
+    TINT: interpolate,
+    TONE: interpolate,
+    INTERPOLATION: interpolate,
+    MATERIAL: material,
+    ANT: ant,
+    MANTINE:mantine,
+    COLORADJUST: colorAdjust,
+    ORBIT: () => [],
+    ATLASSIAN: () => [],
+    FONT: () => []
 };
 
 
@@ -28,17 +29,17 @@ const workbenchSlice = createSlice({
         spawn: (state, { payload }: { payload: Workbench }) => {
 
             //setup initial config from sidepanel
-            let config: { [key: string]: any } = {};
+            const initConfig: { [key: string]: any } = {...payload.config};
             if (payload.sidepanel) {
                 traverseCallback(payload.sidepanel, ({ options }: { options: SidepanelOption }) =>
                     traverseCallback(options, ({ content }: { content: SidepanelList }) =>
                         traverseCallback(content, (input: SidepanelList) => {
-                            try { config[input.configKey] = input.attributes.value; } catch (_) { }
+                            try { initConfig[input.configKey] = input.attributes.value; } catch (_) { }
                         }
                         )));
             }
 
-            return ({ ...state, ...payload, config: config, active: true })
+            return ({ ...state, ...payload, config: {...initConfig}, active: true })
         },
         updateConfig: (state, { payload: { key, value } }: { payload: { key: keyof ColorConfig | keyof FontConfig; value: any } }) => {
 
@@ -54,8 +55,7 @@ const workbenchSlice = createSlice({
             if (action && actionMap[action]) {
                 switch (state.type) {
                     case 'COLOR':
-                        //caculate interpolation and assign it to NewSet
-                        newSet.push(...actionMap[action](newConfig));
+                        newSet.push(...actionMap[action](newConfig)); //caculate interpolation and assign it to NewSet
                         break;
 
                     case 'FONT':

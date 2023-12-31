@@ -1,8 +1,9 @@
 import { Dropdown, Input, Slider } from "@ctypes/input";
 import { Shade } from "./shade";
 import { ColorRGB } from "./color";
+import { StyleColor } from "./style";
 
-export type SetMethod = 'SHADE' | 'TINT' | 'INTERPOLATION' | 'MATERIAL' | 'FONT' | 'TONE' | 'ANT' | 'ORBIT' | 'ATLASSIAN' | 'MANTINE';
+export type SetMethod = 'SHADE' | 'TINT' | 'INTERPOLATION' | 'MATERIAL' | 'FONT' | 'TONE' | 'ANT' | 'ORBIT' | 'ATLASSIAN' | 'MANTINE' | 'COLORADJUST';
 
 export type SidepanelList =
     { type: 'INPUT'; attributes: Input; configKey: keyof ColorConfig | keyof FontConfig; } |
@@ -47,6 +48,8 @@ export interface ColorAdjustConfig extends BaseConfig{
     brightness?:number;
     temperature?:number;
     tint?:number;
+    folder?:string;
+    styles:Array<StyleColor>;
 }
 
 export interface FontConfig extends BaseConfig {
@@ -63,7 +66,7 @@ export interface Workbench {
     title: string;
     sidepanel: Sidepanel;
     footer?: Footer;
-    config: ColorConfig | FontConfig;
+    config: ColorConfig | FontConfig | ColorAdjustConfig;
     set?: Set;
 }
 

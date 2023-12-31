@@ -35,7 +35,7 @@ export const Dropdown = (props: IDropdown) => {
 
     return (
         <div
-            className="dropdown"
+            className="dropdown flex f-col gap-xs"
             data-expanded={String(expanded)}
         >
             {props.style?.label && <p className="dropdown-label frozen"><small><b>{props.placeholder}</b></small></p>}

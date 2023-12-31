@@ -211,7 +211,7 @@ const adjustSidepanelContent: Array<SidepanelList> = [
     {
         type: 'SLIDER',
         attributes: {
-            background:'linear-gradient(90deg, #F00 0%, #F90 13.02%, #FFE500 27.01%, #24FF00 41.67%, #00F0FF 59.51%, #1400FF 77.79%, #FF00B2 90.17%, #F90 100%)',
+            background:'linear-gradient( 89.7deg, rgba(223,0,0,1) 2.7%, rgba(214,91,0,1) 15.1%, rgba(233,245,0,1) 29.5%, rgba(23,255,17,1) 45.8%, rgba(29,255,255,1) 61.5%, rgba(5,17,255,1) 76.4%, rgba(202,0,253,1) 92.4% )',
             placeholder: 'Hue',
         },
         configKey:'hue'
@@ -261,7 +261,7 @@ const adjustSidepanelContent: Array<SidepanelList> = [
 
 export const CREATE_SWATCH_CONFIG: Workbench = {
     folder:'',
-    title: 'Create color swatch',
+    title: 'Generate a new palette',
     type:'COLOR',
     sidepanel: {
         options: [
@@ -286,11 +286,11 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
 
 export const EDIT_SWATCH_CONFIG:Workbench = {
     folder:'',
-    title: 'Edit color swatch',
+    title: 'Edit current palette',
     type:'COLOR',
     sidepanel: {
         options: [
-                { text: 'Adjustments', content: adjustSidepanelContent, action:'SHADE' }
+                { text: 'Adjustments', content: adjustSidepanelContent, action:'COLORADJUST' }
         ]
     },
     footer: {

@@ -1,15 +1,16 @@
 import { ColorRGB } from "@ctypes/color";
-import { ColorConfig, SetMethod, Workbench } from "@ctypes/workbench";
+import { ColorAdjustConfig, ColorConfig, SetMethod, Workbench } from "@ctypes/workbench";
 import { Contrast, ContrastPropreties, Shade } from "@ctypes/shade";
-import { concatFolderName } from "./style";
+import { concatFolderName, folderNameFromPath } from "./style";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import chroma, { InterpolationMode } from 'chroma-js';
 import { argbFromHex, themeFromSourceColor, hexFromArgb } from '@material/material-color-utilities';
-import { hexToRgb } from "./color";
+import { hexToRgb, rgbToHex } from "./color";
 import { generate } from '@ant-design/colors';
 import { generateColors } from "@mantine/colors-generator";
 import { ratio } from "wcag-color";
 import { wcagContrastChecker } from "@mdhnpm/wcag-contrast-checker";
+import { StyleColor } from "@ctypes/style";
 
 
 function checkContrast(target: string): Contrast {
@@ -52,7 +53,7 @@ export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, acti
         for (let s = 1; s < Number(steps) + 1; s++) {
             const scale = chroma.scale([colorStart, colorEnd]).mode(mode as InterpolationMode);
             const value = scale(s / Number(steps));
-            const rgb =  value.rgb();
+            const rgb = value.rgb();
             const hex = value.hex();
 
             colorArray.push({
@@ -90,8 +91,8 @@ export function material({ colorStart, steps = 10, name, palette }: ColorConfig)
 
 
 export function mantine({ colorStart, name, theme }: ColorConfig): Array<Shade> {
-    return generateColors(colorStart as string).map((color, i) => ({ 
-        name: `${name}-${i + 1}`, 
+    return generateColors(colorStart as string).map((color, i) => ({
+        name: `${name}-${i + 1}`,
         color: hexToRgb(color, true, 'OBJECT') as ColorRGB,
         contrast: checkContrast(color)
     }));
@@ -99,17 +100,31 @@ export function mantine({ colorStart, name, theme }: ColorConfig): Array<Shade> 
 
 export function ant({ colorStart, name, theme }: ColorConfig): Array<Shade> {
     const palette = generate(colorStart as string, { theme: theme || 'default' });
-    return palette.map((color, i) => ({ 
-        name: `${name}-${i + 1}`, 
+    return palette.map((color, i) => ({
+        name: `${name}-${i + 1}`,
         color: hexToRgb(color, true, 'OBJECT') as ColorRGB,
         contrast: checkContrast(color)
     }));
 }
 
 
+export function colorAdjust({ styles }: ColorAdjustConfig): Array<Shade> {
 
-export function createSwatch({ folder, set, config: { name } }: Workbench) {
-    const baseName = name;
+    return styles.map((style: StyleColor) => {
+        const { color } = style.paints[0] as SolidPaint;
+
+        return ({
+            name: folderNameFromPath(style.name).name,
+            color: color,
+            contrast: checkContrast(rgbToHex(color) )
+        })
+    });
+
+}
+
+
+export function createSwatch({ folder, set, config }: Workbench) {
+    const baseName = (config as ColorConfig).name;
     if (!set) { return; }
     set.forEach(({ name, color }: Shade) => {
         const newStyle = figma.createPaintStyle();
