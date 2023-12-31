@@ -32,3 +32,11 @@ export const itemFromIndex = (active: number | Array<number>, list: Array<any> |
     }
     return (list as Array<any>)[active];
 };
+
+
+export const envelop = (min:number, value:number, max:number = 1):number => {
+
+    //convert 0 <> 0.5 <> 1 to 0 <> 1 <> max
+    return min + (max - min) * value;
+    
+}

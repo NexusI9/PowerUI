@@ -11,6 +11,7 @@ import { generateColors } from "@mantine/colors-generator";
 import { ratio } from "wcag-color";
 import { wcagContrastChecker } from "@mdhnpm/wcag-contrast-checker";
 import { StyleColor } from "@ctypes/style";
+import { envelop } from "./utils";
 
 
 function checkContrast(target: string): Contrast {
@@ -121,25 +122,25 @@ export function ant({ colorStart, name, theme }: ColorConfig): Array<Shade> {
 */
 export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
 
-    const convSliderValue = (value:number,step:number=1, multiplier:number = 1):number => {
-
-        if(value < 0.5){ return value - step * multiplier; }
-        else{ return value + step * multiplier; }
-        
-    }
 
     return props.styles.map((style: StyleColor, i:number) => {
         
         const { color } = style.paints[0] as SolidPaint;
         const { hue, saturation, brightness, contrast, temperature } = props;
+        
+        //convert to HSL
         const hslColor = rgbToHsl(color, 'OBJECT') as ColorHSL;
 
-        //hslColor[0] += convSliderValue(hue ?? 0, 1, 2);
-        //hslColor.s += convSliderValue(saturation ?? 0, 1, 2);
-        //hslColor.l += convSliderValue(brightness ?? 0, 1, 2);
+        //apply correction
+        if(hue) hslColor.h += envelop(-180,hue,180);
+        if(saturation) hslColor.s += envelop(-100,saturation,100);
+        if(brightness) hslColor.l += envelop(-100,brightness,100);
+
+        console.log(hslColor);
+
+        //convert back to RGB
         const newColor = hslToRgb(hslColor, true, 'OBJECT') as ColorRGB;
 
-        console.log(newColor);
         return ({
             name: folderNameFromPath(style.name).name,
             color: newColor,

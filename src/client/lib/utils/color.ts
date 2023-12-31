@@ -114,9 +114,9 @@ export function hslToRgb(hsl: ColorHSL, normalize: boolean = false, ouput: 'STRI
     }
 
     const result = {
-        r: r * (!normalize ? 255 : 1),
-        g: g * (!normalize ? 255 : 1),
-        b: b * (!normalize ? 255 : 1)
+        r: Math.max(0, Math.min(r, 1)) * (!normalize ? 255 : 1),
+        g: Math.max(0, Math.min(g, 1)) * (!normalize ? 255 : 1),
+        b: Math.max(0, Math.min(b, 1)) * (!normalize ? 255 : 1)
     };
 
     switch (ouput) {
