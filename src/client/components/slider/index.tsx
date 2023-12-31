@@ -15,16 +15,14 @@ export const Slider = ({ placeholder, onChange = (e: BaseSyntheticEvent) => void
     }
 
     useEffect(() => {
-
         if (ref.current) {
             ref.current.value = innerValue;
         }
-
     }, [innerValue]);
 
 
 
-    return (<div className='input-slider flex f-col'>
+    return (<div className='input-slider flex f-col gap-xs'>
         <div className="input-slider-header flex f-row f-between">
             {placeholder && <p className="input-slider-label"><small><b>{placeholder}</b></small></p>}
             <Input
@@ -48,6 +46,7 @@ export const Slider = ({ placeholder, onChange = (e: BaseSyntheticEvent) => void
             defaultValue={value}
             onChange={handleOnChange}
             onDoubleClick={() => setInnerValue(value)}
+            style={{background:background}}
         />
     </div>);
 }

@@ -35,7 +35,7 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
     }, [innerValue]);
 
     return (
-        <div className={'input-field'} data-minified={String(style?.minified)}>
+        <div className='input-field flex f-col gap-xs' data-minified={String(style?.minified)}>
             {style?.label && <p className='input-field-label frozen'><small><b>{placeholder}</b></small></p>}
             <div className='input-field-content' data-type={type}>
                 {
