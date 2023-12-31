@@ -1,6 +1,6 @@
 import { ColorRGB } from "@ctypes/color";
 import { Workbench, ColorConfig, FontConfig, SidepanelOption, SidepanelList, SetMethod, Set } from "@ctypes/workbench";
-import { ant, chakra, interpolate, mantine, material } from "@lib/utils/shade";
+import { ant, interpolate, mantine, material } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -12,7 +12,6 @@ const actionMap: { [key in SetMethod]: any; } = {
     "MATERIAL": material,
     "ANT": ant,
     "MANTINE":mantine,
-    "CHAKRA":chakra,
     "ORBIT": () => [],
     "ATLASSIAN": () => [],
     "FONT": () => []

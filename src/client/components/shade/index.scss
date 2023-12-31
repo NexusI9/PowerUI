@@ -7,6 +7,12 @@
     align-items: center;
     gap: var(--space-m);
     min-height: 46px;
+    font-size: 0.7em;
+
+    &-contrast{
+        & > *:first-child{ color: white; }
+        & > *:last-child{ color: black; }
+    }
 
     &:first-of-type{
         & > span{ 
@@ -24,9 +30,10 @@
 
     & > span{
         height: 100%;
+        padding-left: var(--space-s);
     }
 
-    p:last-of-type{
+    & > p:last-of-type{
         color: var(--figma-color-text-tertiary);
     }
 

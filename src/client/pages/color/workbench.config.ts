@@ -222,8 +222,7 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
             [
                 { text: 'Material Design', content: materialSidepanelContent, action:'MATERIAL'},
                 { text: 'Ant Design', content: antSidepanelContent, action:'ANT'},
-                { text: 'Mantine', content: mantineSidepanelContent, action:'MANTINE'},
-                { text: 'Chakra UI', content: mantineSidepanelContent, action:'CHAKRA'}
+                { text: 'Mantine', content: mantineSidepanelContent, action:'MANTINE'}
             ]
         ]
     },

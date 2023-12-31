@@ -1,6 +1,6 @@
 import { ColorRGB } from "@ctypes/color";
 import { ColorConfig, SetMethod, Workbench } from "@ctypes/workbench";
-import { Shade } from "@ctypes/shade";
+import { Contrast, ContrastPropreties, Shade } from "@ctypes/shade";
 import { concatFolderName } from "./style";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import chroma, { InterpolationMode } from 'chroma-js';
@@ -8,7 +8,27 @@ import { argbFromHex, themeFromSourceColor, hexFromArgb } from '@material/materi
 import { hexToRgb } from "./color";
 import { generate } from '@ant-design/colors';
 import { generateColors } from "@mantine/colors-generator";
+import { ratio } from "wcag-color";
+import { wcagContrastChecker } from "@mdhnpm/wcag-contrast-checker";
 
+
+function checkContrast(target: string): Contrast {
+
+    function calculate(target: string, comparator: string): ContrastPropreties {
+        const { largeText, regularText } = wcagContrastChecker(target, comparator);
+        return {
+            ratio: ratio(target, comparator),
+            large: largeText.aaa ? 'AAA' : largeText.aa ? 'AA' : undefined,
+            regular: regularText.aaa ? 'AAA' : regularText.aa ? 'AA' : undefined
+        };
+    };
+
+
+    return {
+        black: calculate(target, "#000000"),
+        white: calculate(target, "#FFFFFF")
+    };
+}
 
 export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: SetMethod, mode: string, name: string }): Array<Shade> {
 
@@ -31,14 +51,17 @@ export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, acti
     if (mode) {
         for (let s = 1; s < Number(steps) + 1; s++) {
             const scale = chroma.scale([colorStart, colorEnd]).mode(mode as InterpolationMode);
-            const value = scale(s / Number(steps)).rgb();
+            const value = scale(s / Number(steps));
+            const rgb =  value.rgb();
+            const hex = value.hex();
+
             colorArray.push({
                 name: `${name}-${s}`,
-                color: { r: value[0] / 255, g: value[1] / 255, b: value[2] / 255 }
+                color: { r: rgb[0] / 255, g: rgb[1] / 255, b: rgb[2] / 255 },
+                contrast: checkContrast(hex)
             });
         }
     }
-
     return colorArray;
 }
 
@@ -53,33 +76,36 @@ export function material({ colorStart, steps = 10, name, palette }: ColorConfig)
     const keys = [0, 10, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 95, 98, 99, 100];
     for (let k of keys) {
         const value = materialPalette.tone(k);
-        const rgb = hexToRgb(hexFromArgb(value), true, 'OBJECT');
+        const hex = hexFromArgb(value);
+        const rgb = hexToRgb(hex, true, 'OBJECT');
         colorArray.push({
             name: `${name}-${k * 10}`,
-            color: rgb as ColorRGB
+            color: rgb as ColorRGB,
+            contrast: checkContrast(hex)
         });
     }
-
 
     return colorArray;
 }
 
 
-export function mantine({colorStart, name, theme}:ColorConfig):Array<Shade>{
-    return generateColors(colorStart as string).map( (color,i) => ({name: `${name}-${i+1}`, color: hexToRgb(color, true, 'OBJECT') as ColorRGB }));
+export function mantine({ colorStart, name, theme }: ColorConfig): Array<Shade> {
+    return generateColors(colorStart as string).map((color, i) => ({ 
+        name: `${name}-${i + 1}`, 
+        color: hexToRgb(color, true, 'OBJECT') as ColorRGB,
+        contrast: checkContrast(color)
+    }));
 }
 
-export function ant({ colorStart, name, theme }: ColorConfig):Array<Shade>{
+export function ant({ colorStart, name, theme }: ColorConfig): Array<Shade> {
     const palette = generate(colorStart as string, { theme: theme || 'default' });
-    return palette.map((color, i) => ({ name: `${name}-${i+1}`, color: hexToRgb(color, true, 'OBJECT') as ColorRGB}));
+    return palette.map((color, i) => ({ 
+        name: `${name}-${i + 1}`, 
+        color: hexToRgb(color, true, 'OBJECT') as ColorRGB,
+        contrast: checkContrast(color)
+    }));
 }
 
-export function chakra({colorStart}:ColorConfig){
-    //const palette = createPalette(colorStart as string);
-    //console.log(palette);
-    return [];
-    //return palette.map((color, i) => ({ name: `${name}-${i+1}`, color: hexToRgb(color, true, 'OBJECT') as ColorRGB}));
-}
 
 
 export function createSwatch({ folder, set, config: { name } }: Workbench) {
