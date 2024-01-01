@@ -56,30 +56,31 @@ export function hexToRgb(hex: string, normalize: boolean = false, output: ColorO
 
 export function rgbToHsl({ r, g, b }: { r: number, g: number, b: number }, output: ColorOutput = 'STRING'): string | ColorHSL {
 
-    const l = Math.max(r, g, b);
-    const s = l - Math.min(r, g, b);
-    const h = s
-        ? l === r
-            ? (g - b) / s
-            : l === g
-                ? 2 + (b - r) / s
-                : 4 + (r - g) / s
-        : 0;
+    
+    const vmax = Math.max(r, g, b), vmin = Math.min(r, g, b);
+    let h = (vmax + vmin) / 2;
+    let s = (vmax + vmin) / 2;
+    let l = (vmax + vmin) / 2;
 
-    const result: ColorHSL = {
-        h: Math.floor(60 * h < 0 ? 60 * h + 360 : 60 * h),
-        s: Math.floor(100 * (s ? (l <= 0.5 ? s / (2 * l - s) : s / (2 - (2 * l - s))) : 0)),
-        l: Math.floor((100 * (2 * l - s)) / 2)
-    };
+    if (vmax === vmin) {
+        h = 0;
+        s = 0; // achromatic
+    }else{
+        const d = vmax - vmin;
+        s = l > 0.5 ? d / (2 - vmax - vmin) : d / (vmax + vmin);
+        if (vmax === r) h = (g - b) / d + (g < b ? 6 : 0);
+        if (vmax === g) h = (b - r) / d + 2;
+        if (vmax === b) h = (r - g) / d + 4;
+        h /= 6;
+    }
 
     switch (output) {
 
         case 'STRING':
-            return `hsl(${result.h},  ${result.s}%, ${result.l}%)`;
+            return `hsl(${h},  ${s}%, ${l}%)`;
         case 'OBJECT':
-            return result;
+            return { h, s, l };
     }
-
 
 };
 
@@ -87,44 +88,34 @@ export function rgbToHsl({ r, g, b }: { r: number, g: number, b: number }, outpu
 
 export function hslToRgb(hsl: ColorHSL, normalize: boolean = false, ouput: 'STRING' | 'OBJECT' = 'OBJECT'): ColorRGB | string {
 
-    const h = hsl.h / 360;
-    const s = hsl.s / 100;
-    const l = hsl.l / 100;
-
-    const hueToRgb = (p: number, q: number, t: number): number => {
+    function hueToRgb(p: number, q: number, t: number) {
         if (t < 0) t += 1;
         if (t > 1) t -= 1;
         if (t < 1 / 6) return p + (q - p) * 6 * t;
         if (t < 1 / 2) return q;
         if (t < 2 / 3) return p + (q - p) * (2 / 3 - t) * 6;
         return p;
-    };
+    }
 
+    const { h, s, l } = hsl;
     let r, g, b;
 
     if (s === 0) {
-        r = g = b = l;
+        r = g = b = l; // achromatic
     } else {
         const q = l < 0.5 ? l * (1 + s) : l + s - l * s;
         const p = 2 * l - q;
-
-        r = hueToRgb(p, q, h + 1 / 3);
-        g = hueToRgb(p, q, h);
-        b = hueToRgb(p, q, h - 1 / 3);
+        r = hueToRgb(p, q, h + 1 / 3) || 0;
+        g = hueToRgb(p, q, h) || 0;
+        b = hueToRgb(p, q, h - 1 / 3) || 0;
     }
-
-    const result = {
-        r: Math.max(0, Math.min(r, 1)) * (!normalize ? 255 : 1),
-        g: Math.max(0, Math.min(g, 1)) * (!normalize ? 255 : 1),
-        b: Math.max(0, Math.min(b, 1)) * (!normalize ? 255 : 1)
-    };
 
     switch (ouput) {
         case 'OBJECT':
-            return result;
+            return { r, g, b };
 
         case 'STRING':
-            return `rgb(${result.r},${result.g},${result.b})`;
+            return `rgb(${r},${g},${b})`;
     }
 
 

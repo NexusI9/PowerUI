@@ -111,13 +111,16 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
         //convert to HSL
         const hslColor = rgbToHsl(color, 'OBJECT') as ColorHSL;
 
+ 
         //apply correction for basic adjustments
-        //if (hue) hslColor.h += envelop(-180, hue, 180);
-        //if (saturation) hslColor.s += envelop(-100, saturation, 100);
-        //if (brightness) hslColor.l += envelop(-100, brightness, 100);
+        if (hue) hslColor.h += Math.abs(envelop(-1, hue, 1));
+        if (saturation) hslColor.s = (hslColor.s + Number(saturation))/2;
+        if (brightness) hslColor.l = (hslColor.l + Number(brightness))/2;
 
+        
         //convert back to RGB for more complex adjustments
         const rgbColor = hslToRgb(hslColor, true, 'OBJECT') as ColorRGB;
+ 
 
         if (contrast) {
 
@@ -141,26 +144,27 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
                 factor = 0.1;
             }
 
-            //rgbColor.r = f(rgbColor.r, factor, bright, dark) || rgbColor.r;
-            //rgbColor.g = f(rgbColor.g, factor, bright, dark) || rgbColor.g;
-            //rgbColor.b = f(rgbColor.b, factor, bright, dark) || rgbColor.b;
+            rgbColor.r = f(rgbColor.r, factor, bright, dark) || rgbColor.r;
+            rgbColor.g = f(rgbColor.g, factor, bright, dark) || rgbColor.g;
+            rgbColor.b = f(rgbColor.b, factor, bright, dark) || rgbColor.b;
         }
         if (temperature) {
             const tempColor = convertTemperature(envelop(40000, temperature, 1000));
             const factor = Math.abs(envelop(-1, temperature, 1));
 
-            //rgbColor.r = mix(rgbColor.r, tempColor.r, factor);
-            //rgbColor.g = mix(rgbColor.g, tempColor.g, factor);
-            //rgbColor.b = mix(rgbColor.b, tempColor.b, factor);
+            rgbColor.r = mix(rgbColor.r, tempColor.r, factor);
+            rgbColor.g = mix(rgbColor.g, tempColor.g, factor);
+            rgbColor.b = mix(rgbColor.b, tempColor.b, factor);
         }
 
+        
         //console.log(rgbColor);
 
 
         return ({
             name: folderNameFromPath(style.name).name,
-            color: color,
-            contrast: checkContrast(rgbToHex(color))
+            color: rgbColor,
+            contrast: checkContrast(rgbToHex(rgbColor))
         });
     });
 

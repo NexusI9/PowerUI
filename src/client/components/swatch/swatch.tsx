@@ -54,7 +54,7 @@ export const Swatch = (props: any) => {
 
                 const rgbValue = rgb(paint.color) as string;
                 const hexValue = rgbToHex(paint.color) as string;
-                const hslValue = rgbToHsl(paint.color) as string;
+                const hslValue = rgbToHsl(paint.color, 'STRING') as string;
                 const colorValues = [hexValue, rgbValue, hslValue];
 
                 return (

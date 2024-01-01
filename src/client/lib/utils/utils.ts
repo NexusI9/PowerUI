@@ -34,11 +34,6 @@ export const itemFromIndex = (active: number | Array<number>, list: Array<any> |
 };
 
 
-export const envelop = (min:number, value:number, max:number = 1):number => {
-
-    //convert 0 <> 0.5 <> 1 to 0 <> 1 <> max
-    return min + (max - min) * value;
-    
-}
+export const envelop = (min:number, value:number, max:number = 1):number =>  min + (max - min) * value;
 
 export const mix = (valueA: number, valueB: number, factor:number) => ((1 - factor) * valueA) + factor * ((valueA + valueB) / 2);
