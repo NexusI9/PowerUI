@@ -17,6 +17,7 @@ export const Slider = ({ placeholder, onChange = (e: BaseSyntheticEvent) => void
     useEffect(() => {
         if (ref.current) {
             ref.current.value = innerValue;
+            onChange({target:ref.current});
         }
     }, [innerValue]);
 
@@ -30,9 +31,9 @@ export const Slider = ({ placeholder, onChange = (e: BaseSyntheticEvent) => void
                 value={value}
                 dynamicValue={innerValue}
                 placeholder={placeholder}
-                range={[0, 1]}
+                range={range}
                 onChange={handleOnChange}
-                step={0.1}
+                step={step}
                 style={{ minified: true }}
             />
         </div>

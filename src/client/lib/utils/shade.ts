@@ -110,10 +110,11 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
 
         //convert to HSL
         const hslColor = rgbToHsl(color, 'OBJECT') as ColorHSL;
-
-
         //apply correction for basic adjustments
-        if (hue) hslColor.h += Number(hue);
+        if (hue) {
+            hslColor.h += Math.abs(Number(hue))*0.4;
+            hslColor.h = clamp(0, hslColor.h, 1);
+        }
         if (saturation) {
             hslColor.s += Number(saturation);
             hslColor.s = clamp(0, hslColor.s, 1);
@@ -142,7 +143,7 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
             const f = (teta: number, strength: number, bright: number = 0.5, dark: number = 0) => dark + (bright / (s(1, strength))) * s(2 * teta - 1, strength) + bright;
 
             let factor = Math.abs(Number(contrast) * 10);
-           
+
             if (Number(contrast) < 0) {
                 //If less contrast: Reduce bright/black value
                 bright = dbEase(envelop(0, contrast, 1));

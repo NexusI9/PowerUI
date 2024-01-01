@@ -11,13 +11,8 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
     const [innerValue, setInnerValue] = useState(value);
     const input = useRef<any>();
 
-    useEffect(() => {
-        if (dynamicValue) {
-            handleOnChange({ target: { value: dynamicValue } } as BaseSyntheticEvent);
-        }
-    }, [dynamicValue]);
-
     const handleOnChange = (e: BaseSyntheticEvent) => {
+        console.log(e.target.value);
         //handle amount clamping
         if (range && type === 'AMOUNT') {
             if (e.target.value.length) { e.target.value = clamp(range[0], Number(e.target.value), range[1]) || range[0]; }
@@ -25,7 +20,17 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
         }
         //external callback
         if (onChange) { onChange(e); }
+
     }
+    
+
+    useEffect(() => {
+        if (dynamicValue !== undefined) {
+            setInnerValue(dynamicValue);
+            handleOnChange({ target: { value: dynamicValue } } as BaseSyntheticEvent);
+        }
+    }, [dynamicValue]);
+
 
     useEffect(() => {
         if (input.current) {
