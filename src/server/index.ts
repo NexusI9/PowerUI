@@ -15,6 +15,9 @@ import {
   folderNameFromPath
 } from "@lib/utils/style";
 import { createSwatch } from "@lib/utils/shade";
+import { ColorConfig, Workbench } from "@ctypes/workbench";
+import { Shade } from "@ctypes/shade";
+import { ColorRGB } from "@ctypes/color";
 
 
 figma.showUI(__html__, { themeColors: true });
@@ -105,6 +108,19 @@ figma.ui.onmessage = msg => {
 
     case 'CREATE_SWATCH':
       createSwatch(msg);
+      break;
+
+    case 'EDIT_SWATCH':
+
+      //get styles of folder n
+      //map out set color values to respective styles in folder n
+      msg.config?.styles?.forEach((style: StyleColor, i: number) => {
+        try{
+          updateColor({style, color: msg.set[i].color as ColorRGB});
+        }catch(_){
+          console.log(_);
+        }
+      });
       break;
 
     default:

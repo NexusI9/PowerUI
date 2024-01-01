@@ -294,7 +294,7 @@ export const EDIT_SWATCH_CONFIG:Workbench = {
         ]
     },
     footer: {
-        primaryAction: { text: 'Edit', action: 'UPDATE_SWATCH' }
+        primaryAction: { text: 'Edit', action: 'EDIT_SWATCH' }
     },
     config:{}
 }
