@@ -213,6 +213,8 @@ const adjustSidepanelContent: Array<SidepanelList> = [
         attributes: {
             background:'linear-gradient( 89.7deg, rgba(223,0,0,1) 2.7%, rgba(214,91,0,1) 15.1%, rgba(233,245,0,1) 29.5%, rgba(23,255,17,1) 45.8%, rgba(29,255,255,1) 61.5%, rgba(5,17,255,1) 76.4%, rgba(202,0,253,1) 92.4% )',
             placeholder: 'Hue',
+            range:[-1,1],
+            value:0
         },
         configKey:'hue'
     },
@@ -221,6 +223,8 @@ const adjustSidepanelContent: Array<SidepanelList> = [
         attributes: {
             background:'linear-gradient(90deg, #979797 0%, #F00 100%)',
             placeholder: 'Saturation',
+            range:[-1,1],
+            value:0
         },
         configKey:'saturation'
     },
@@ -229,6 +233,8 @@ const adjustSidepanelContent: Array<SidepanelList> = [
         attributes: {
             background:'linear-gradient(90deg, #BDBDBD 0%, #2F2F2F 100%)',
             placeholder: 'Contrast',
+            range:[-1,1],
+            value:0
         },
         configKey:'contrast'
     },
@@ -237,6 +243,8 @@ const adjustSidepanelContent: Array<SidepanelList> = [
         attributes: {
             background:'linear-gradient(90deg, #000 0%, #FFF 100%)',
             placeholder: 'Brightness',
+            range:[-1,1],
+            value:0
         },
         configKey:'brightness'
     },
@@ -245,6 +253,8 @@ const adjustSidepanelContent: Array<SidepanelList> = [
         attributes: {
             background:'linear-gradient(90deg, #0075FF 0%, #F90 100%)',
             placeholder: 'Temperature',
+            range:[-1,1],
+            value:0
         },
         configKey:'temperature'
     },

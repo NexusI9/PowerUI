@@ -24,6 +24,8 @@ export interface Slider {
     onChange?: any;
     background: string;
     placeholder: string;
+    range?:Array<number>;
+    step?:number;
 }
 
 

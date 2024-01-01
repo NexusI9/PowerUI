@@ -9,7 +9,7 @@ import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, rgb } from "./color";
 import { generate } from '@ant-design/colors';
 import { generateColors } from "@mantine/colors-generator";
 import { StyleColor } from "@ctypes/style";
-import { envelop, mix } from "./utils";
+import { clamp, envelop, mix } from "./utils";
 import { checkContrast, convertTemperature } from "./shade.helper";
 
 /*
@@ -111,16 +111,22 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
         //convert to HSL
         const hslColor = rgbToHsl(color, 'OBJECT') as ColorHSL;
 
- 
-        //apply correction for basic adjustments
-        if (hue) hslColor.h += Math.abs(envelop(-1, hue, 1));
-        if (saturation) hslColor.s = (hslColor.s + Number(saturation))/2;
-        if (brightness) hslColor.l = (hslColor.l + Number(brightness))/2;
 
-        
+        //apply correction for basic adjustments
+        if (hue) hslColor.h += Number(hue);
+        if (saturation) {
+            hslColor.s += Number(saturation);
+            hslColor.s = clamp(0, hslColor.s, 1);
+        }
+        if (brightness) {
+            hslColor.l += Number(brightness);
+            hslColor.l = clamp(0, hslColor.l, 1);
+        }
+
+
+        //console.log({ brightness, light:hslColor.l, average: (hslColor.l + Number(brightness)) / 2, i })
         //convert back to RGB for more complex adjustments
         const rgbColor = hslToRgb(hslColor, true, 'OBJECT') as ColorRGB;
- 
 
         if (contrast) {
 
@@ -129,35 +135,35 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
             let dark: number = 0; // 0 < x < 0.5
 
             //bright/dark easing function
-            const dbEase = (val: number) => 0.1 + 1.6 * val**2;
+            const dbEase = (val: number) => 0.5 - 0.3 * val ** 2;
 
             //sigmoid function
             const s = (alpha: number, teta: number) => 1 / (1 + Math.exp(-1 * alpha * teta)) - 0.5;
             const f = (teta: number, strength: number, bright: number = 0.5, dark: number = 0) => dark + (bright / (s(1, strength))) * s(2 * teta - 1, strength) + bright;
 
-            let factor = Math.abs(envelop(-10, contrast, 10));
-
-            if (contrast < 0.5) {
+            let factor = Math.abs(Number(contrast) * 10);
+           
+            if (Number(contrast) < 0) {
                 //If less contrast: Reduce bright/black value
-                bright = dbEase(Number(contrast));
+                bright = dbEase(envelop(0, contrast, 1));
                 dark = 0.5 - bright;
                 factor = 0.1;
             }
 
-            rgbColor.r = f(rgbColor.r, factor, bright, dark) || rgbColor.r;
-            rgbColor.g = f(rgbColor.g, factor, bright, dark) || rgbColor.g;
-            rgbColor.b = f(rgbColor.b, factor, bright, dark) || rgbColor.b;
+            rgbColor.r = clamp(0, f(rgbColor.r, factor, bright, dark), 1) || rgbColor.r;
+            rgbColor.g = clamp(0, f(rgbColor.g, factor, bright, dark), 1) || rgbColor.g;
+            rgbColor.b = clamp(0, f(rgbColor.b, factor, bright, dark), 1) || rgbColor.b;
         }
         if (temperature) {
             const tempColor = convertTemperature(envelop(40000, temperature, 1000));
-            const factor = Math.abs(envelop(-1, temperature, 1));
+            const factor = Math.abs(Number(temperature));
 
             rgbColor.r = mix(rgbColor.r, tempColor.r, factor);
             rgbColor.g = mix(rgbColor.g, tempColor.g, factor);
             rgbColor.b = mix(rgbColor.b, tempColor.b, factor);
         }
 
-        
+
         //console.log(rgbColor);
 
 

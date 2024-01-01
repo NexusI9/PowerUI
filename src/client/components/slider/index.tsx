@@ -3,7 +3,7 @@ import './index.scss';
 import { BaseSyntheticEvent, useEffect, useRef, useState } from "react";
 import { Input } from "@components/input";
 
-export const Slider = ({ placeholder, onChange = (e: BaseSyntheticEvent) => void 0, value = 0.5, background }: ISlider) => {
+export const Slider = ({ placeholder, onChange = (e: BaseSyntheticEvent) => void 0, value = 0.5, background, range = [0, 1], step = 0.01 }: ISlider) => {
 
 
     const [innerValue, setInnerValue] = useState(value);
@@ -40,13 +40,13 @@ export const Slider = ({ placeholder, onChange = (e: BaseSyntheticEvent) => void
         <input
             ref={ref}
             type='range'
-            min={0}
-            max={1}
-            step={0.01}
+            min={range[0]}
+            max={range[1]}
+            step={step}
             defaultValue={value}
             onChange={handleOnChange}
-            onDoubleClick={() => setInnerValue(value)}
-            style={{background:background}}
+            onDoubleClick={(e) => { setInnerValue(value); }}
+            style={{ background: background }}
         />
     </div>);
 }
