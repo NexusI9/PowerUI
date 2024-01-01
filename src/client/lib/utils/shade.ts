@@ -120,9 +120,12 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
         const rgbColor = hslToRgb(hslColor, true, 'OBJECT') as ColorRGB;
         if (temperature) {
             const tempColor = convertTemperature(envelop(40000, temperature, 1000));
-            rgbColor.r = ((rgbColor.r + tempColor.r) / 2);
-            rgbColor.g = ((rgbColor.g + tempColor.g) / 2);
-            rgbColor.b = ((rgbColor.b + tempColor.b) / 2);
+            const factor = Math.abs(envelop(-1, temperature, 1));
+            const mix = (rgb: number, tmp: number) => ((1 - factor) * rgb) + factor * ((rgb + tmp) / 2);
+
+            rgbColor.r = mix(rgbColor.r, tempColor.r);
+            rgbColor.g = mix(rgbColor.g, tempColor.g);
+            rgbColor.b = mix(rgbColor.b, tempColor.b);
         }
 
         //console.log(rgbColor);
