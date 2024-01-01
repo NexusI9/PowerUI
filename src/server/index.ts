@@ -112,14 +112,9 @@ figma.ui.onmessage = msg => {
 
     case 'EDIT_SWATCH':
 
-      //get styles of folder n
-      //map out set color values to respective styles in folder n
       msg.config?.styles?.forEach((style: StyleColor, i: number) => {
-        try{
-          updateColor({style, color: msg.set[i].color as ColorRGB});
-        }catch(_){
-          console.log(_);
-        }
+        try{ updateColor({style, color: msg.set[i].color as ColorRGB}); }
+        catch(_){}
       });
       break;
 
