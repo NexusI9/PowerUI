@@ -15,8 +15,6 @@ import {
   folderNameFromPath
 } from "@lib/utils/style";
 import { createSwatch } from "@lib/utils/shade";
-import { ColorConfig, Workbench } from "@ctypes/workbench";
-import { Shade } from "@ctypes/shade";
 import { ColorRGB } from "@ctypes/color";
 
 

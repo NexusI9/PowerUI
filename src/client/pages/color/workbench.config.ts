@@ -248,14 +248,14 @@ const adjustSidepanelContent: Array<SidepanelList> = [
         },
         configKey:'temperature'
     },
-    {
+    /*{
         type: 'SLIDER',
         attributes: {
             background:'linear-gradient(90deg, #3F0 0%, #FF00E5 100%)',
             placeholder: 'Tint'
         },
         configKey:'tint'
-    },
+    },*/
 ];
 
 
