@@ -40,3 +40,5 @@ export const envelop = (min:number, value:number, max:number = 1):number => {
     return min + (max - min) * value;
     
 }
+
+export const mix = (valueA: number, valueB: number, factor:number) => ((1 - factor) * valueA) + factor * ((valueA + valueB) / 2);
