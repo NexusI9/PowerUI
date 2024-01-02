@@ -60,10 +60,18 @@ export function material({ colorStart, steps = 10, name, palette }: ColorConfig)
     const materialTheme = themeFromSourceColor(argbColorStart, []);
     const materialPalette = materialTheme.palettes[palette || 'primary'];
 
+    //define shade keys
     const keys = [0, 10, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 95, 98, 99, 100];
     const tones = keys.map(key => materialPalette.tone(key));
-    //find closest tone to primary (colorStart)
-    const closestKeyToPrimary = tones.reduce((curr, prev) => Math.abs(curr - argbColorStart) < Math.abs(prev - argbColorStart) ? curr : prev);
+
+    //find closest tone to primary (colorStart) depending on light intensity
+    const closestKeyToPrimary = tones.reduce((curr, prev) => {
+        const primaryL = chroma(colorStart as string).get('hsl.l');
+        const currentToneL = chroma(hexFromArgb(curr)).get('hsl.l');
+        const prevToneL = chroma(hexFromArgb(prev)).get('hsl.l');
+
+        return Math.abs(primaryL - currentToneL) < Math.abs(primaryL - prevToneL) ? curr : prev;
+    });
 
     //apply
     tones.forEach((value, i) => {

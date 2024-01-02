@@ -75,7 +75,11 @@ const materialSidepanelContent: Array<SidepanelList> = [
             type: 'DEFAULT',
             value: 'blue',
             placeholder: 'Swatch name',
-            style: { label: true }
+            style: { label: true },
+            portal: {
+                key: 'colorname',
+                override:false
+            }
         },
         configKey: 'name'
     },
@@ -85,7 +89,11 @@ const materialSidepanelContent: Array<SidepanelList> = [
             type: 'COLOR',
             value: '#0c8ce9',
             placeholder: 'Color value',
-            style: { label: true }
+            style: { label: true },
+            portal: {
+                target: 'colorname',
+                colorformat:'NAME'
+            }
         },
         configKey: 'colorStart'
     },
@@ -114,7 +122,11 @@ const antSidepanelContent: Array<SidepanelList> = [
             type: 'DEFAULT',
             value: 'blue',
             placeholder: 'Swatch name',
-            style: { label: true }
+            style: { label: true },
+            portal: {
+                key: 'colorname',
+                override:false
+            }
         },
         configKey: 'name'
     },
@@ -124,7 +136,11 @@ const antSidepanelContent: Array<SidepanelList> = [
             type: 'COLOR',
             value: '#0c8ce9',
             placeholder: 'Color value',
-            style: { label: true }
+            style: { label: true },
+            portal: {
+                target: 'colorname',
+                colorformat:'NAME'
+            }
         },
         configKey: 'colorStart'
     },
@@ -150,7 +166,11 @@ const mantineSidepanelContent: Array<SidepanelList> = [
             type: 'DEFAULT',
             value: 'blue',
             placeholder: 'Swatch name',
-            style: { label: true }
+            style: { label: true },
+            portal: {
+                key: 'colorname',
+                override:false
+            }
         },
         configKey: 'name'
     },
@@ -160,7 +180,11 @@ const mantineSidepanelContent: Array<SidepanelList> = [
             type: 'COLOR',
             value: '#0c8ce9',
             placeholder: 'Color value',
-            style: { label: true }
+            style: { label: true },
+            portal: {
+                target: 'colorname',
+                colorformat:'NAME'
+            }
         },
         configKey: 'colorStart'
     }
@@ -173,7 +197,11 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         attributes: {
             value: 'sky',
             placeholder: 'Swatch name',
-            style: { label: true }
+            style: { label: true },
+            portal: {
+                key: 'colorname',
+                override:false
+            }
         },
         configKey: 'name'
     },
@@ -183,7 +211,11 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
             type: 'COLOR',
             value: '#0c8ce9',
             placeholder: 'Start value',
-            style: { label: true }
+            style: { label: true },
+            portal: {
+                target: 'colorname',
+                colorformat:'NAME'
+            }
         },
         configKey: 'colorStart'
     },
