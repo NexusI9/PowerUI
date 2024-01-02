@@ -7,12 +7,11 @@ import chroma, { InterpolationMode } from 'chroma-js';
 import { argbFromHex, themeFromSourceColor, hexFromArgb } from '@material/material-color-utilities';
 import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, rgb } from "./color";
 import { generate } from '@ant-design/colors';
-import { generateColors } from "@mantine/colors-generator";
 import { StyleColor } from "@ctypes/style";
 import { clamp, envelop, mix } from "./utils";
 import { checkContrast, convertTemperature } from "./shade.helper";
 import TailwindPalette, { Palette } from '@lib/vendor/tailwind-swatch';
-
+import { generateColorsMap, generateColors } from "@lib/vendor/mantine-swatch";
 /*
 ** CLASSIC INTERPOLATIONS 
 */
