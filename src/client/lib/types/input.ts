@@ -10,6 +10,13 @@ export interface Input {
     style?: { stroke?: boolean; label?: boolean, minified?: boolean; }
     range?: Array<number>;
     step?: number;
+    portal?: {
+        key?: string;                    //id
+        target?: string | undefined;     //targeted id
+        value?: number | string;         //value to replace at target
+        override?: boolean;              //over ride after first manual input
+        colorformat?: 'HEX' | 'NAME'    //output either color by Name or Hex
+    }
 }
 
 
@@ -24,8 +31,8 @@ export interface Slider {
     onChange?: any;
     background: string;
     placeholder: string;
-    range?:Array<number>;
-    step?:number;
+    range?: Array<number>;
+    step?: number;
 }
 
 

@@ -4,6 +4,7 @@ import snackbarSlice from "./slices/snackbar";
 import contextMenuSlice from "./slices/contextmenu";
 import tooltipSlice from "./slices/tooltip";
 import workbenchSlice from "./slices/workbench";
+import inputSlice from './slices/input';
 
 export default configureStore({
     reducer:{
@@ -11,6 +12,7 @@ export default configureStore({
         snackbar: snackbarSlice,
         contextmenu: contextMenuSlice,
         tooltip: tooltipSlice,
-        workbench: workbenchSlice
+        workbench: workbenchSlice,
+        input: inputSlice
     }
 });

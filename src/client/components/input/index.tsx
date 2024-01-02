@@ -6,29 +6,36 @@ import ChevronDown from '@icons/chevron-down.svg';
 import ChevronUp from '@icons/chevron-up.svg';
 import { ButtonIcon } from '@components/button-icon';
 import { clamp } from '@lib/utils/utils';
+import { useDispatch, useSelector } from 'react-redux';
+import { send as sendPortal } from '@lib/slices/input';
 
-export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'Enter a value', onChange, onBlur, onFocus, onEnter, style, range = [1, 10], step = 1 }: IInput) => {
+export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'Enter a value', onChange, onBlur, onFocus, onEnter, style, range = [1, 10], step = 1, portal }: IInput) => {
 
     const [innerValue, setInnerValue] = useState(value);
+    const [manualyChanged, setManualyChanged] = useState(false);
+    const portalSelector = useSelector((state: any) => state.input.portal);
+    const dispatch = useDispatch();
+    const updatePortal = ({ target, value }: { target: string; value: string | number; }) => dispatch(sendPortal({ target: target, value: value }));
     const input = useRef<any>();
 
     const handleOnChange = (e: BaseSyntheticEvent) => {
+
+        //update manualy changed state (prevent portal override)
+        setManualyChanged(true);
+
         //handle amount clamping
         switch (type) {
             case 'AMOUNT':
                 if (e.target.value.length) { e.target.value = clamp(range[0], Number(e.target.value), range[1]) || range[0]; }
                 setInnerValue(String(e.target.value));
                 break;
-
-            case 'COLOR':
-                break;
-
         }
-
-        //handle color naming
 
         //external callback
         if (onChange) { onChange(e); }
+
+        //store update (portal)
+        if (portal?.target) { updatePortal({ target: portal.target as string, value: e.target.value }); }
 
     }
 
@@ -44,18 +51,42 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
     useEffect(() => {
 
         if (input.current) {
-            input.current.value = String(innerValue);
+
+            let storeValue = innerValue || '';
 
             //update color name from hex value
-            if(type === 'COLOR'){ 
-                const { ntc } = colorNamer(innerValue, {pick:'ntc'});
-                console.log(ntc[0].name); 
+            if (type === 'COLOR' && portal?.colorformat === 'NAME') {
+                const { ntc } = colorNamer(innerValue, { pick: 'ntc' });
+                storeValue = ntc[0].name || innerValue;
             }
 
-            //external callback
+            //update store target
+            if (portal?.target) {
+                updatePortal({ target: portal?.target, value: storeValue });
+            }
+
+            //update ref value
+            input.current.value = String(innerValue);
+
+            //call external callback
             if (onChange) { onChange({ target: input.current }); }
+
+
         }
     }, [innerValue]);
+
+    useEffect(() => {
+
+        //portal receiving
+        if (
+            (portal?.key && portalSelector.target === portal.key) &&
+            (!portal?.override && !manualyChanged)
+        ) {
+            setInnerValue(portalSelector.value);
+        }
+    }, [portalSelector]);
+
+
 
     return (
         <div className='input-field flex f-col gap-xs' data-minified={String(style?.minified)}>

@@ -3,9 +3,12 @@
     font-size: small;
     position: relative;
     text-transform: capitalize;
+    color: var(--figma-color-text-secondary);
 
-    & > svg{
+
+    svg{
         width: var(--icon-size-small);
+        fill: var(--figma-color-icon-secondary);
     }
 
     &-label {
