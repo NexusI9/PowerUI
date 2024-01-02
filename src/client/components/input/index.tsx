@@ -1,4 +1,5 @@
 import { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
+import colorNamer from "color-namer";
 import './index.scss';
 import { Input as IInput } from '@ctypes/input';
 import ChevronDown from '@icons/chevron-down.svg';
@@ -13,15 +14,24 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
 
     const handleOnChange = (e: BaseSyntheticEvent) => {
         //handle amount clamping
-        if (range && type === 'AMOUNT') {
-            if (e.target.value.length) { e.target.value = clamp(range[0], Number(e.target.value), range[1]) || range[0]; }
-            setInnerValue(String(e.target.value));
+        switch (type) {
+            case 'AMOUNT':
+                if (e.target.value.length) { e.target.value = clamp(range[0], Number(e.target.value), range[1]) || range[0]; }
+                setInnerValue(String(e.target.value));
+                break;
+
+            case 'COLOR':
+                break;
+
         }
+
+        //handle color naming
+
         //external callback
         if (onChange) { onChange(e); }
 
     }
-    
+
 
     useEffect(() => {
         if (dynamicValue !== undefined) {
@@ -32,8 +42,17 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
 
 
     useEffect(() => {
+
         if (input.current) {
             input.current.value = String(innerValue);
+
+            //update color name from hex value
+            if(type === 'COLOR'){ 
+                const { ntc } = colorNamer(innerValue, {pick:'ntc'});
+                console.log(ntc[0].name); 
+            }
+
+            //external callback
             if (onChange) { onChange({ target: input.current }); }
         }
     }, [innerValue]);

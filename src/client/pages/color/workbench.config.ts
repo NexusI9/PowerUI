@@ -285,16 +285,16 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
     sidepanel: {
         options: [
             [
-                { text: 'Shades', content: basicSidepanelContent, action:'SHADE', icon:Shade},
-                { text: 'Tones', content: basicSidepanelContent, action:'TONE', icon: Drop },
-                { text: 'Tints', content: basicSidepanelContent, action:'TINT', icon: Sun },
-                { text: 'Interpolation', content: interpolationSidepanelContent, action:'INTERPOLATION', icon: Interpolation }
+                { text: 'Shades', content: basicSidepanelContent, action:'SHADE', icon: "shade"},
+                { text: 'Tones', content: basicSidepanelContent, action:'TONE', icon: "drop" },
+                { text: 'Tints', content: basicSidepanelContent, action:'TINT', icon: "sun" },
+                { text: 'Interpolation', content: interpolationSidepanelContent, action:'INTERPOLATION', icon: "interpolation" }
             ],
             [
-                { text: 'Material Design', content: materialSidepanelContent, action:'MATERIAL', icon: Material},
-                { text: 'Ant Design', content: antSidepanelContent, action:'ANT', icon: Ant},
-                { text: 'Mantine', content: mantineSidepanelContent, action:'MANTINE', icon: Mantine},
-                { text: 'Tailwind', content: mantineSidepanelContent, action:'TAILWIND', icon: Tailwind}
+                { text: 'Material Design', content: materialSidepanelContent, action:'MATERIAL', icon: "material design"},
+                { text: 'Ant Design', content: antSidepanelContent, action:'ANT', icon: "ant"},
+                { text: 'Mantine', content: mantineSidepanelContent, action:'MANTINE', icon: "mantine"},
+                { text: 'Tailwind', content: mantineSidepanelContent, action:'TAILWIND', icon: "tailwind"}
             ]
         ]
     },
