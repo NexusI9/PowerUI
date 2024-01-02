@@ -16,7 +16,7 @@ import TailwindPalette, { Palette } from '@lib/vendor/tailwind-swatch';
 /*
 ** CLASSIC INTERPOLATIONS 
 */
-export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: SetMethod, mode: string, name: string }): Array<Shade> {
+export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: SetMethod, mode: string, name: string }): Array<Shade> {
 
     const colorArray: Array<Shade> = [];
 
@@ -35,7 +35,7 @@ export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, acti
 
 
     if (mode) {
-        for (let s = 1; s < Number(steps) + 1; s++) {
+        for (let s = 0; s <= Number(steps); s++) {
             const scale = chroma.scale([colorStart, colorEnd]).mode(mode as InterpolationMode);
             const value = scale(s / Number(steps));
             const rgb = value.rgb();
@@ -44,7 +44,8 @@ export function interpolate({ colorStart, colorEnd = "#CCCCCC", steps = 10, acti
             colorArray.push({
                 name: `${name}-${s}`,
                 color: { r: rgb[0] / 255, g: rgb[1] / 255, b: rgb[2] / 255 },
-                contrast: checkContrast(hex)
+                contrast: checkContrast(hex),
+                primary: hex.toLowerCase() === colorStart.toLowerCase() || (action === 'INTERPOLATION' && hex.toLowerCase() === colorEnd.toLowerCase())
             });
         }
     }
@@ -67,7 +68,8 @@ export function material({ colorStart, steps = 10, name, palette }: ColorConfig)
         colorArray.push({
             name: `${name}-${k * 10}`,
             color: rgb as ColorRGB,
-            contrast: checkContrast(hex)
+            contrast: checkContrast(hex),
+            primary: hex.toLowerCase() === (colorStart as string).toLowerCase()
         });
     }
 
@@ -82,7 +84,8 @@ export function mantine({ colorStart, name, theme }: ColorConfig): Array<Shade> 
     return generateColors(colorStart as string).map((color, i) => ({
         name: `${name}-${i + 1}`,
         color: hexToRgb(color, true, 'OBJECT') as ColorRGB,
-        contrast: checkContrast(color)
+        contrast: checkContrast(color),
+        primary: (colorStart as string).toLowerCase() === color.toLowerCase()
     }));
 }
 
@@ -94,9 +97,38 @@ export function ant({ colorStart, name, theme }: ColorConfig): Array<Shade> {
     return palette.map((color, i) => ({
         name: `${name}-${i + 1}`,
         color: hexToRgb(color, true, 'OBJECT') as ColorRGB,
-        contrast: checkContrast(color)
+        contrast: checkContrast(color),
+        primary: (colorStart as string).toLowerCase() === color.toLowerCase()
     }));
 }
+
+
+/*
+** TAILWIND SWATCH
+*/
+export function tailwind({colorStart, name}:ColorConfig):Array<Shade>{
+    
+    const {colors} = TailwindPalette(colorStart as string) as Palette;
+
+    const result:Array<Shade> = [];
+    if(colors){
+        Object.keys(colors).forEach( (key) => {
+            const nkey = Number(key);
+            const hex = colors[nkey as keyof typeof colors];
+            const rgb = hexToRgb(hex,true,'OBJECT') as ColorRGB;
+            result.push({
+                name: `${name}-${key}`, 
+                color: rgb,
+                contrast:checkContrast(hex),
+                primary: (colorStart as string).toLowerCase() === hex.toLowerCase()
+            })
+        });
+    }
+    
+    return result;
+}
+
+
 
 /*
 ** COLOR ADJUSTMENTS 
@@ -178,29 +210,7 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
 
 }
 
-/*
-** TAILWIND SWATCH
-*/
-export function tailwind({colorStart, name}:ColorConfig):Array<Shade>{
-    
-    const {colors} = TailwindPalette(colorStart as string) as Palette;
 
-    const result:Array<Shade> = [];
-    if(colors){
-        Object.keys(colors).forEach( (key) => {
-            const nkey = Number(key);
-            const hex = colors[nkey as keyof typeof colors];
-            const rgb = hexToRgb(hex,true,'OBJECT') as ColorRGB;
-            result.push({
-                name: `${name}-${key}`, 
-                color: rgb,
-                contrast:checkContrast(hex)
-            })
-        });
-    }
-    
-    return result;
-}
 
 /*
 ** CREATE FIGMA PALELTTE FROM SET 

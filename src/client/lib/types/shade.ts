@@ -15,4 +15,5 @@ export interface Shade{
     color:ColorRGB;
     name:string;
     contrast:Contrast;
+    primary?:boolean;
 }
