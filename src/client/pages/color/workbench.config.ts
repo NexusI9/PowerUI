@@ -1,4 +1,13 @@
 import { SidepanelList, Workbench } from "@ctypes/workbench";
+import Shade from '@icons/shade.svg';
+import Drop from '@icons/drop.svg';
+import Sun from '@icons/sun.svg';
+import Material from '@icons/material design.svg';
+import Ant from '@icons/ant.svg';
+import Tailwind from '@icons/tailwind.svg';
+import Mantine from '@icons/mantine.svg';
+import Interpolation from '@icons/interpolation.svg';
+
 
 
 const basicSidepanelContent: Array<SidepanelList> = [
@@ -276,16 +285,16 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
     sidepanel: {
         options: [
             [
-                { text: 'Shades', content: basicSidepanelContent, action:'SHADE' },
-                { text: 'Tones', content: basicSidepanelContent, action:'TONE' },
-                { text: 'Tints', content: basicSidepanelContent, action:'TINT' },
-                { text: 'Interpolation', content: interpolationSidepanelContent, action:'INTERPOLATION' }
+                { text: 'Shades', content: basicSidepanelContent, action:'SHADE', icon:Shade},
+                { text: 'Tones', content: basicSidepanelContent, action:'TONE', icon: Drop },
+                { text: 'Tints', content: basicSidepanelContent, action:'TINT', icon: Sun },
+                { text: 'Interpolation', content: interpolationSidepanelContent, action:'INTERPOLATION', icon: Interpolation }
             ],
             [
-                { text: 'Material Design', content: materialSidepanelContent, action:'MATERIAL'},
-                { text: 'Ant Design', content: antSidepanelContent, action:'ANT'},
-                { text: 'Mantine', content: mantineSidepanelContent, action:'MANTINE'},
-                { text: 'Tailwind', content: mantineSidepanelContent, action:'TAILWIND'}
+                { text: 'Material Design', content: materialSidepanelContent, action:'MATERIAL', icon: Material},
+                { text: 'Ant Design', content: antSidepanelContent, action:'ANT', icon: Ant},
+                { text: 'Mantine', content: mantineSidepanelContent, action:'MANTINE', icon: Mantine},
+                { text: 'Tailwind', content: mantineSidepanelContent, action:'TAILWIND', icon: Tailwind}
             ]
         ]
     },

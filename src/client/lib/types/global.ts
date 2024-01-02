@@ -7,3 +7,5 @@ export interface Command{
     text:string;
     onClick:any;
 }
+
+export interface Label{children?:React.ReactNode; iconLeft?:string; iconRight?:string; size?:'SMALL'|'MID'|'BIG'; }

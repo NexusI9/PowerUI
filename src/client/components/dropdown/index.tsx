@@ -4,6 +4,7 @@ import Carrot from '@icons/carrot.svg';
 import { Fragment, useEffect, useState } from "react";
 import { setYPos } from "./helper";
 import { itemFromIndex } from "@lib/utils/utils";
+import { Label } from '@components/label';
 
 
 export const Dropdown = (props: IDropdown) => {
@@ -39,7 +40,12 @@ export const Dropdown = (props: IDropdown) => {
             data-expanded={String(expanded)}
         >
             {props.style?.label && <p className="dropdown-label frozen"><small><b>{props.placeholder}</b></small></p>}
-            <label className="flex f-row f-center f-between" onClick={(() => setExpanded(true))}>{itemFromIndex(active, props.list).text} <Carrot /></label>
+            <label className="flex f-row f-center f-between" onClick={(() => setExpanded(true))}>
+                <>
+                    <Label iconLeft={itemFromIndex(active, props.list).icon}>{itemFromIndex(active, props.list).text}</Label>
+                    <Carrot />
+                </>
+            </label>
             <ul
                 className="dropdown-choices panel flex f-col gap-xs"
                 data-expanded={String(expanded)}
@@ -49,10 +55,10 @@ export const Dropdown = (props: IDropdown) => {
                     props.list.map((item, i) =>
                         Array.isArray(item) ?
                             <Fragment key={JSON.stringify(item) + i}>
-                                {item.map((it, j) => <li key={it.text + i * j} onClick={() => { setActive([i, j]); setExpanded(false); }}>{it.text}</li>)}
+                                {item.map((it, j) => <li key={it.text + i * j} onClick={() => { setActive([i, j]); setExpanded(false); }}><Label iconLeft={it.icon}>{it.text}</Label></li>)}
                                 {i < props.list.length - 1 && <hr />}
                             </Fragment> :
-                            <li key={item.text + i} onClick={() => { setActive(i); setExpanded(false); }}>{item.text}</li>
+                            <li key={item.text + i} onClick={() => { setActive(i); setExpanded(false); }}><Label iconLeft={item.icon}>{item.text}</Label></li>
                     )
                 }
             </ul>

@@ -4,6 +4,10 @@
     position: relative;
     text-transform: capitalize;
 
+    & > svg{
+        width: var(--icon-size-small);
+    }
+
     &-label {
         font-size: small;
         color: var(--figma-color-text-tertiary);

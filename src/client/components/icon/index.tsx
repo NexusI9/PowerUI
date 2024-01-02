@@ -1,4 +1,4 @@
-export const Icon = ({icon}:{icon:string}) => {
+export const Icon = ({icon}:{icon:string;}) => {
     const DynamicIcon = icon;
     return(<DynamicIcon/>);
 }

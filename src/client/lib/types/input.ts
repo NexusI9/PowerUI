@@ -13,7 +13,7 @@ export interface Input {
 }
 
 
-export type DropdownCommand = { text: string; action?: string; onClick?: any; };
+export type DropdownCommand = { icon?: string; text: string; action?: string; onClick?: any; };
 export interface Dropdown extends Input {
     list: Array<DropdownCommand> | Array<Array<DropdownCommand>>;
 }

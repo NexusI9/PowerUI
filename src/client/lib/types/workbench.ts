@@ -24,6 +24,7 @@ export type SidepanelList =
 export interface SidepanelOption {
     text: string;
     action: SetMethod;
+    icon?: string;
     content: Array<SidepanelList> | Array<Array<SidepanelList>>;
 };
 
