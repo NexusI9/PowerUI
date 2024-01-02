@@ -1,6 +1,6 @@
 import { ColorRGB } from "@ctypes/color";
 import { Workbench, ColorConfig, FontConfig, SidepanelOption, SidepanelList, SetMethod, Set, ColorAdjustConfig } from "@ctypes/workbench";
-import { ant, colorAdjust, interpolate, mantine, material } from "@lib/utils/shade";
+import { ant, colorAdjust, interpolate, mantine, material, tailwind } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -13,6 +13,7 @@ const actionMap: { [key in SetMethod]: any; } = {
     ANT: ant,
     MANTINE:mantine,
     COLORADJUST: colorAdjust,
+    TAILWIND: tailwind,
     ORBIT: () => [],
     ATLASSIAN: () => [],
     FONT: () => []

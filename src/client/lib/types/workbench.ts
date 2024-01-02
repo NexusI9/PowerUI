@@ -3,7 +3,18 @@ import { Shade } from "./shade";
 import { ColorRGB } from "./color";
 import { StyleColor } from "./style";
 
-export type SetMethod = 'SHADE' | 'TINT' | 'INTERPOLATION' | 'MATERIAL' | 'FONT' | 'TONE' | 'ANT' | 'ORBIT' | 'ATLASSIAN' | 'MANTINE' | 'COLORADJUST';
+export type SetMethod = 'SHADE' | 
+                        'TINT' | 
+                        'INTERPOLATION' | 
+                        'MATERIAL' | 
+                        'FONT' | 
+                        'TONE' | 
+                        'ANT' | 
+                        'ORBIT' | 
+                        'ATLASSIAN' | 
+                        'MANTINE' | 
+                        'COLORADJUST' |
+                        'TAILWIND';
 
 export type SidepanelList =
     { type: 'INPUT'; attributes: Input; configKey: keyof ColorConfig | keyof FontConfig; } |

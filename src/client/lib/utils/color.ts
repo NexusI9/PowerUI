@@ -29,7 +29,6 @@ export function rgb(color: ColorRGB, output: ColorOutput = 'STRING'): string | C
 
 export function rgbToHex(color: ColorRGB): string {
     const newColor = to255(color);
-
     return "#" + componentToHex(newColor.r) + componentToHex(newColor.g) + componentToHex(newColor.b);
 }
 
@@ -54,9 +53,9 @@ export function hexToRgb(hex: string, normalize: boolean = false, output: ColorO
 }
 
 
-export function rgbToHsl({ r, g, b }: { r: number, g: number, b: number }, output: ColorOutput = 'STRING'): string | ColorHSL {
+export function rgbToHsl({ r, g, b }: { r: number, g: number, b: number }, output: ColorOutput = 'STRING', round: boolean = false): string | ColorHSL {
 
-    
+
     const vmax = Math.max(r, g, b), vmin = Math.min(r, g, b);
     let h = (vmax + vmin) / 2;
     let s = (vmax + vmin) / 2;
@@ -65,13 +64,19 @@ export function rgbToHsl({ r, g, b }: { r: number, g: number, b: number }, outpu
     if (vmax === vmin) {
         h = 0;
         s = 0; // achromatic
-    }else{
+    } else {
         const d = vmax - vmin;
         s = l > 0.5 ? d / (2 - vmax - vmin) : d / (vmax + vmin);
         if (vmax === r) h = (g - b) / d + (g < b ? 6 : 0);
         if (vmax === g) h = (b - r) / d + 2;
         if (vmax === b) h = (r - g) / d + 4;
         h /= 6;
+    }
+
+    if (round) {
+        h = Math.floor(h * 360);
+        s = Math.floor(s * 100);
+        l = Math.floor(l * 100);
     }
 
     switch (output) {

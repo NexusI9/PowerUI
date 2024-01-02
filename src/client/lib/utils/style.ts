@@ -40,6 +40,7 @@ export function classifyStyle(style: Array<Styles>): Array<Styles | StyleFolder>
                 styles: [],
                 folders: []
             };
+
             structure.folders.push(foundFolder);
 
         }

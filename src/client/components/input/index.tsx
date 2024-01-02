@@ -12,7 +12,6 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
     const input = useRef<any>();
 
     const handleOnChange = (e: BaseSyntheticEvent) => {
-        console.log(e.target.value);
         //handle amount clamping
         if (range && type === 'AMOUNT') {
             if (e.target.value.length) { e.target.value = clamp(range[0], Number(e.target.value), range[1]) || range[0]; }

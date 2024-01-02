@@ -11,6 +11,7 @@ import { generateColors } from "@mantine/colors-generator";
 import { StyleColor } from "@ctypes/style";
 import { clamp, envelop, mix } from "./utils";
 import { checkContrast, convertTemperature } from "./shade.helper";
+import TailwindPalette, { Palette } from '@lib/vendor/tailwind-swatch';
 
 /*
 ** CLASSIC INTERPOLATIONS 
@@ -175,6 +176,30 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
         });
     });
 
+}
+
+/*
+** TAILWIND SWATCH
+*/
+export function tailwind({colorStart, name}:ColorConfig):Array<Shade>{
+    
+    const {colors} = TailwindPalette(colorStart as string) as Palette;
+
+    const result:Array<Shade> = [];
+    if(colors){
+        Object.keys(colors).forEach( (key) => {
+            const nkey = Number(key);
+            const hex = colors[nkey as keyof typeof colors];
+            const rgb = hexToRgb(hex,true,'OBJECT') as ColorRGB;
+            result.push({
+                name: `${name}-${key}`, 
+                color: rgb,
+                contrast:checkContrast(hex)
+            })
+        });
+    }
+    
+    return result;
 }
 
 /*

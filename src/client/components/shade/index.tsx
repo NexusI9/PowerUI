@@ -10,7 +10,7 @@ export const Shade = (props: IShade) => {
     const colorValue = {
         hex: rgbToHex(color),
         rgb: rgb(color, 'STRING'),
-        hsl: rgbToHsl(color, 'STRING')
+        hsl: rgbToHsl(color, 'STRING', true)
     };
 
     return (
