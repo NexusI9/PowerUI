@@ -56,21 +56,31 @@ export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, na
 */
 export function material({ colorStart, steps = 10, name, palette }: ColorConfig): Array<Shade> {
     const colorArray: Array<Shade> = [];
-    const materialTheme = themeFromSourceColor(argbFromHex(colorStart as string), []);
+    const argbColorStart = argbFromHex(colorStart as string);
+    const materialTheme = themeFromSourceColor(argbColorStart, []);
     const materialPalette = materialTheme.palettes[palette || 'primary'];
 
     const keys = [0, 10, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 95, 98, 99, 100];
-    for (let k of keys) {
-        const value = materialPalette.tone(k);
-        const hex = hexFromArgb(value);
-        const rgb = hexToRgb(hex, true, 'OBJECT');
+    const tones = keys.map(key => materialPalette.tone(key));
+    //find closest tone to primary (colorStart)
+    const closestKeyToPrimary = tones.reduce((curr, prev) => Math.abs(curr - argbColorStart) < Math.abs(prev - argbColorStart) ? curr : prev);
+
+    //apply
+    tones.forEach((value, i) => {
+        //replace closest tone for primary 
+        const isPrimary = value === closestKeyToPrimary;
+        value = isPrimary ? closestKeyToPrimary : value;
+        const hex = isPrimary ? (colorStart as string) : hexFromArgb(value);
+        const rgb = hexToRgb(hex, true, 'OBJECT') as ColorRGB;
+
         colorArray.push({
-            name: `${name}-${k * 10}`,
-            color: rgb as ColorRGB,
+            name: `${name}-${i * 10}`,
+            color: rgb,
             contrast: checkContrast(hex),
-            primary: hex.toLowerCase() === (colorStart as string).toLowerCase()
+            primary: value === closestKeyToPrimary
         });
-    }
+    });
+
 
     return colorArray;
 }
@@ -105,25 +115,25 @@ export function ant({ colorStart, name, theme }: ColorConfig): Array<Shade> {
 /*
 ** TAILWIND SWATCH
 */
-export function tailwind({colorStart, name}:ColorConfig):Array<Shade>{
-    
-    const {colors} = TailwindPalette(colorStart as string) as Palette;
+export function tailwind({ colorStart, name }: ColorConfig): Array<Shade> {
 
-    const result:Array<Shade> = [];
-    if(colors){
-        Object.keys(colors).forEach( (key) => {
+    const { colors } = TailwindPalette(colorStart as string) as Palette;
+
+    const result: Array<Shade> = [];
+    if (colors) {
+        Object.keys(colors).forEach((key) => {
             const nkey = Number(key);
             const hex = colors[nkey as keyof typeof colors];
-            const rgb = hexToRgb(hex,true,'OBJECT') as ColorRGB;
+            const rgb = hexToRgb(hex, true, 'OBJECT') as ColorRGB;
             result.push({
-                name: `${name}-${key}`, 
+                name: `${name}-${key}`,
                 color: rgb,
-                contrast:checkContrast(hex),
+                contrast: checkContrast(hex),
                 primary: (colorStart as string).toLowerCase() === hex.toLowerCase()
             })
         });
     }
-    
+
     return result;
 }
 
@@ -144,7 +154,7 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
         const hslColor = rgbToHsl(color, 'OBJECT') as ColorHSL;
         //apply correction for basic adjustments
         if (hue) {
-            hslColor.h += Math.abs(Number(hue))*0.4;
+            hslColor.h += Math.abs(Number(hue)) * 0.4;
             hslColor.h = clamp(0, hslColor.h, 1);
         }
         if (saturation) {
