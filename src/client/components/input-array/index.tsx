@@ -19,6 +19,10 @@ export const InputArray = ({ value = [], min, max, float = false, placeholder = 
     const onAdd = ({ value }: { value: number | string }) => {
         //convert to right type
         value = type === 'NUMBER' ? Number(value) : String(value);
+
+        //filter non valid values
+        if(isNaN(value as number) && !(value as string).length){ return; }
+
         //clamp
         if (max && (value as number) > max) { value = max };
         if (min && (value as number) < min) { value = min };
