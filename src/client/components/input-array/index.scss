@@ -15,7 +15,7 @@
         border-radius: var(--radius-s);
         background: var(--figma-color-bg-hover);
         padding: var(--space-xs) var(--space-s);
-
+        padding-left: var(--space-m);
         svg {
             width: var(--icon-size-small);
             fill: var(--figma-color-icon-onbrand-secondary);
