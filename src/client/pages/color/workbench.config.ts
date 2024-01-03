@@ -1,14 +1,4 @@
 import { SidepanelList, Workbench } from "@ctypes/workbench";
-import Shade from '@icons/shade.svg';
-import Drop from '@icons/drop.svg';
-import Sun from '@icons/sun.svg';
-import Material from '@icons/material design.svg';
-import Ant from '@icons/ant.svg';
-import Tailwind from '@icons/tailwind.svg';
-import Mantine from '@icons/mantine.svg';
-import Interpolation from '@icons/interpolation.svg';
-
-
 
 const basicSidepanelContent: Array<SidepanelList> = [
     {

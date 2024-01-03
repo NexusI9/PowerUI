@@ -11,7 +11,7 @@ import { StyleColor } from "@ctypes/style";
 import { clamp, envelop, mix } from "./utils";
 import { checkContrast, convertTemperature } from "./shade.helper";
 import TailwindPalette, { Palette } from '@lib/vendor/tailwind-swatch';
-import { generateColorsMap, generateColors } from "@lib/vendor/mantine-swatch";
+import { generateColors } from "@lib/vendor/mantine-swatch";
 /*
 ** CLASSIC INTERPOLATIONS 
 */
@@ -82,7 +82,7 @@ export function material({ colorStart, steps = 10, name, palette }: ColorConfig)
         const rgb = hexToRgb(hex, true, 'OBJECT') as ColorRGB;
 
         colorArray.push({
-            name: `${name}-${i * 10}`,
+            name: `${name}-${keys[i]*10}`,
             color: rgb,
             contrast: checkContrast(hex),
             primary: value === closestKeyToPrimary
