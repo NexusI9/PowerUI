@@ -2,7 +2,7 @@
 
     font-size: small;
     display: grid;
-    grid-template-columns: 2fr repeat(2,1fr);
+    grid-template-columns: 1fr 1fr;
     align-items: center;
     gap: var(--space-m);
     min-height: 46px;
@@ -43,7 +43,6 @@
     }
 
     ul{
-        display: none;
         list-style: none;
         padding: 0;
         color: var(--figma-color-text-tertiary);

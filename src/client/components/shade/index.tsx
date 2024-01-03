@@ -24,11 +24,13 @@ export const Shade = (props: IShade) => {
                 </div>
                 {props.primary && <Icon icon={Lock} />}
             </span>
-            <p>{name}</p>
-            <p>{colorValue.hex}</p>
-            <ul>
-                {Object.keys(colorValue).map((key, i) => <li key={key + i}>{String(colorValue[key as keyof typeof colorValue])}</li>)}
-            </ul>
+            <div className='flex f-col'>
+                <p>{name}</p>
+                <ul className="flex f-row gap-m">
+                    {Object.keys(colorValue).map((key, i) => key === 'hsl' && <li key={key + i}><small>{String(colorValue[key as keyof typeof colorValue])}</small></li>)}
+                </ul>
+            </div>
+
         </div>
     );
 

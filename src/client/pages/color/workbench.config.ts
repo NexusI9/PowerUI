@@ -61,6 +61,22 @@ const basicSidepanelContent: Array<SidepanelList> = [
 
 const materialSidepanelContent: Array<SidepanelList> = [
     {
+        type: 'DROPDOWN',
+        attributes: {
+            placeholder: 'Palette',
+            list: [
+                { text: 'primary' },
+                { text: 'secondary' },
+                { text: 'tertiary' },
+                { text: 'neutral' },
+                { text: 'neutralVariant' },
+                { text: 'error' }
+            ],
+            style: { label: true }
+        },
+        configKey: 'palette'
+    },
+    {
         type: 'INPUT',
         attributes: {
             type: 'DEFAULT',
@@ -87,22 +103,6 @@ const materialSidepanelContent: Array<SidepanelList> = [
             }
         },
         configKey: 'colorStart'
-    },
-    {
-        type: 'DROPDOWN',
-        attributes: {
-            placeholder: 'Palette',
-            list: [
-                { text: 'primary' },
-                { text: 'secondary' },
-                { text: 'tertiary' },
-                { text: 'neutral' },
-                { text: 'neutralVariant' },
-                { text: 'error' }
-            ],
-            style: { label: true }
-        },
-        configKey: 'palette'
     },
     {
         type: 'INPUT_ARRAY',
