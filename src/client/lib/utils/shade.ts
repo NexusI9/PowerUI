@@ -76,7 +76,7 @@ export function material({ colorStart, steps = 10, name, palette }: ColorConfig)
     //apply
     tones.forEach((value, i) => {
         //replace closest tone for primary 
-        const isPrimary = value === closestKeyToPrimary;
+        const isPrimary = (value === closestKeyToPrimary) && palette === 'primary';
         value = isPrimary ? closestKeyToPrimary : value;
         const hex = isPrimary ? (colorStart as string) : hexFromArgb(value);
         const rgb = hexToRgb(hex, true, 'OBJECT') as ColorRGB;
@@ -85,7 +85,7 @@ export function material({ colorStart, steps = 10, name, palette }: ColorConfig)
             name: `${name}-${keys[i]*10}`,
             color: rgb,
             contrast: checkContrast(hex),
-            primary: value === closestKeyToPrimary
+            primary: isPrimary
         });
     });
 
