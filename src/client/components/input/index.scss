@@ -2,16 +2,16 @@
 
     &[data-minified='true'] {
 
-        .input-field-content{
-                border: none;
-                height: fit-content;
-    
-                &:hover {
-                    box-shadow: 0px 0px 0px 1px var(--figma-color-border);
-                }
+        .input-field-content {
+            border: none;
+            height: fit-content;
+
+            &:hover {
+                box-shadow: 0px 0px 0px 1px var(--figma-color-border);
+            }
         }
 
-        .input-field-amount{
+        .input-field-amount {
             display: none;
         }
 
@@ -36,6 +36,19 @@
         }
 
         input {
+
+            &[type='text'] {
+                &::placeholder {
+                    color: var(--figma-color-text-tertiary);
+                }
+
+                &::-ms-input-placeholder {
+                    /* Edge 12 -18 */
+                    color: var(--figma-color-text-tertiary);
+                }
+            }
+
+
 
             &[type="number"]::-webkit-outer-spin-button,
             &[type="number"]::-webkit-inner-spin-button {

@@ -23,3 +23,6 @@ export const DEFAULT_CONTEXT_MENU = {
     commands:[],
     position:{x:0, y:0}
 };
+
+
+export const MATERIAL_DEFAULT_KEYS = [0, 100, 200, 250, 300, 350, 400, 500, 600, 700, 800, 900, 950, 980, 990, 1000];

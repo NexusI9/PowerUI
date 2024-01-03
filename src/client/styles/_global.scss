@@ -67,6 +67,10 @@ hr{
         }
     }
 
+    &.f-wrap{
+        flex-wrap: wrap;
+    }
+
     &.f-end{
         justify-content: end;
     }

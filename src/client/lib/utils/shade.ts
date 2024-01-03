@@ -2,7 +2,7 @@ import { ColorHSL, ColorRGB } from "@ctypes/color";
 import { ColorAdjustConfig, ColorConfig, SetMethod, Workbench } from "@ctypes/workbench";
 import { Shade } from "@ctypes/shade";
 import { concatFolderName, folderNameFromPath } from "./style";
-import { DEFAULT_STYLE_COLOR } from "@lib/constants";
+import { DEFAULT_STYLE_COLOR, MATERIAL_DEFAULT_KEYS } from "@lib/constants";
 import chroma, { InterpolationMode } from 'chroma-js';
 import { argbFromHex, themeFromSourceColor, hexFromArgb } from '@material/material-color-utilities';
 import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, rgb } from "./color";
@@ -54,15 +54,15 @@ export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, na
 /*
 ** MATERIAL DESIGN 
 */
-export function material({ colorStart, steps = 10, name, palette }: ColorConfig): Array<Shade> {
+export function material({ colorStart, steps = 10, name, palette, keys }: ColorConfig): Array<Shade> {
     const colorArray: Array<Shade> = [];
     const argbColorStart = argbFromHex(colorStart as string);
     const materialTheme = themeFromSourceColor(argbColorStart, []);
     const materialPalette = materialTheme.palettes[palette || 'primary'];
 
-    //define shade keys
-    const keys = [0, 10, 20, 25, 30, 35, 40, 50, 60, 70, 80, 90, 95, 98, 99, 100];
-    const tones = keys.map(key => materialPalette.tone(key));
+    //define shade keys (use fallback o)
+     keys = (keys && keys.length) ? keys : MATERIAL_DEFAULT_KEYS;
+    const tones = keys.map(key => materialPalette.tone(key/10));
 
     //find closest tone to primary (colorStart) depending on light intensity
     const closestKeyToPrimary = tones.reduce((curr, prev) => {
@@ -82,7 +82,7 @@ export function material({ colorStart, steps = 10, name, palette }: ColorConfig)
         const rgb = hexToRgb(hex, true, 'OBJECT') as ColorRGB;
 
         colorArray.push({
-            name: `${name}-${keys[i]*10}`,
+            name: `${name}-${(keys || MATERIAL_DEFAULT_KEYS)[i]}`,
             color: rgb,
             contrast: checkContrast(hex),
             primary: isPrimary

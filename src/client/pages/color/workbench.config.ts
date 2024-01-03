@@ -1,4 +1,5 @@
 import { SidepanelList, Workbench } from "@ctypes/workbench";
+import { MATERIAL_DEFAULT_KEYS } from "@lib/constants";
 
 const basicSidepanelContent: Array<SidepanelList> = [
     {
@@ -102,6 +103,18 @@ const materialSidepanelContent: Array<SidepanelList> = [
             style: { label: true }
         },
         configKey: 'palette'
+    },
+    {
+        type: 'INPUT_ARRAY',
+        attributes: {
+            type: 'NUMBER',
+            value: MATERIAL_DEFAULT_KEYS,
+            min:0,
+            max:1000,
+            placeholder: 'Shade keys',
+            style:{label:true}
+        },
+        configKey: 'keys'
     }
 ];
 

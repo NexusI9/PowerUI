@@ -50,7 +50,7 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
 
     useEffect(() => {
 
-        if (input.current) {
+        if (input.current && innerValue) {
 
             let storeValue = innerValue || '';
 

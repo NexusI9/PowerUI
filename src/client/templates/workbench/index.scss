@@ -1,7 +1,5 @@
 .workbench{
 
-
-
     &-wrapper{
         position: fixed;
         top: 0;
@@ -31,8 +29,7 @@
 
     &-sidepanel{
         border-right: solid 1px var(--figma-color-border);
-        max-width: 300px;
-        min-width: 200px;
+        width: 300px;
         flex-grow: 1;
         gap:16px;
         padding: var(--space-m) var(--space-m);

@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateConfig } from "@lib/slices/workbench";
 import { DropdownCommand } from "@ctypes/input";
 import { Slider } from "@components/slider";
+import { InputArray } from "@components/input-array";
 
 export const Sidepanel = () => {
 
@@ -28,6 +29,10 @@ export const Sidepanel = () => {
         switch (input.type) {
             case 'INPUT':
                 dynamicComp = <Input {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateConfig({ key: input.configKey, value: e.target.value }))} />;
+                break;
+
+            case 'INPUT_ARRAY':
+                dynamicComp = <InputArray {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateConfig({ key: input.configKey, value: e.target.value }))} />;
                 break;
 
             case 'SLIDER':

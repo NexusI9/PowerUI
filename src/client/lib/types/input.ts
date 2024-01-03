@@ -47,3 +47,14 @@ export interface ButtonPad {
     text: string;
     onClick: any;
 }
+
+export interface InputArray {
+    value: Array<number | string>;
+    min?: number;
+    max?: number;
+    type: 'NUMBER' | 'STRING';
+    placeholder: string;
+    float?: boolean;
+    onChange?: any;
+    style?:{label?:boolean};
+}

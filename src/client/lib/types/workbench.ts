@@ -1,4 +1,4 @@
-import { Dropdown, Input, Slider } from "@ctypes/input";
+import { Dropdown, Input, InputArray, Slider } from "@ctypes/input";
 import { Shade } from "./shade";
 import { ColorRGB } from "./color";
 import { StyleColor } from "./style";
@@ -19,7 +19,8 @@ export type SetMethod = 'SHADE' |
 export type SidepanelList =
     { type: 'INPUT'; attributes: Input; configKey: keyof ColorConfig | keyof FontConfig; } |
     { type: 'DROPDOWN'; attributes: Dropdown; configKey: keyof ColorConfig | keyof FontConfig; } |
-    { type: 'SLIDER'; attributes: Slider; configKey: keyof ColorAdjustConfig; }
+    { type: 'INPUT_ARRAY'; attributes: InputArray; configKey: keyof ColorConfig; } |
+    { type: 'SLIDER'; attributes: Slider; configKey: keyof ColorAdjustConfig; } 
 
 export interface SidepanelOption {
     text: string;
@@ -51,6 +52,7 @@ export interface ColorConfig extends BaseConfig {
     steps?: number;
     palette?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'neutral' | 'neutralVariant';
     theme?: 'default' | 'dark';
+    keys?:Array<number>;
 }
 
 export interface ColorAdjustConfig extends BaseConfig{

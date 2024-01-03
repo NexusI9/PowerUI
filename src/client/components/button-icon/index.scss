@@ -6,7 +6,10 @@
     aspect-ratio: 1/1;
     height: auto;
 
-    &:hover{
-        background-color: var(--figma-color-bg-hover);
+    &[data-hover='1']{
+        &:hover{
+            background-color: var(--figma-color-bg-hover);
+        }
     }
+
 }
