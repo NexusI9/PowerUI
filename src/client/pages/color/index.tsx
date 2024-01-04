@@ -33,16 +33,16 @@ export default () => {
             styleItem={Swatch}
             options={{
                 header: {
-                    add: { icon: SwatchIcon, onClick: () => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: '' })) }
+                    add: { icon: SwatchIcon, onClick: (folder:StyleFolder) => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: folder })) }
                 },
                 folder: {
-                    add: { icon: SwatchIcon, onClick: (folder: StyleFolder) => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: folder.fullpath })) },
+                    add: { icon: SwatchIcon, onClick: (folder: StyleFolder) => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: folder })) },
                     kebab: [
                         { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {} },
                         { text: 'Sort by brightness', action: 'SORT_STYLE_COLOR_BRIGHTNESS', payload: {} },
                         { text: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', payload: {} }
                     ],
-                    edit:{onClick: (folder:StyleFolder) => dispatch(spawn({ ...EDIT_SWATCH_CONFIG, folder: folder.fullpath, config:{styles: [...folder.styles as Array<StyleColor>]}}))}
+                    edit:{onClick: (folder:StyleFolder) => dispatch(spawn({ ...EDIT_SWATCH_CONFIG, folder: folder, config:{styles: [...folder.styles as Array<StyleColor>]}}))}
                 }
             }}
         />);

@@ -1,7 +1,7 @@
 import { Dropdown, Input, InputArray, Slider } from "@ctypes/input";
 import { Shade } from "./shade";
 import { ColorRGB } from "./color";
-import { StyleColor } from "./style";
+import { StyleColor, StyleFolder } from "./style";
 
 export type SetMethod = 'SHADE' | 
                         'TINT' | 
@@ -76,7 +76,7 @@ export interface FontConfig extends BaseConfig {
 export interface Workbench {
     active?: boolean;
     type: 'COLOR' | 'FONT';
-    folder: string;
+    folder: StyleFolder | null;
     title: string;
     sidepanel: Sidepanel;
     footer?: Footer;

@@ -1,7 +1,7 @@
 import { ColorHSL, ColorRGB } from "@ctypes/color";
 import { ColorAdjustConfig, ColorConfig, SetMethod, Workbench } from "@ctypes/workbench";
 import { Shade } from "@ctypes/shade";
-import { concatFolderName, folderNameFromPath } from "./style";
+import { concatFolderName, folderAtLevel, folderNameFromPath, get_styles_of_folder, setCopyNumber } from "./style";
 import { DEFAULT_STYLE_COLOR, MATERIAL_DEFAULT_KEYS } from "@lib/constants";
 import chroma, { InterpolationMode } from 'chroma-js';
 import { argbFromHex, themeFromSourceColor, hexFromArgb } from '@material/material-color-utilities';
@@ -61,8 +61,8 @@ export function material({ colorStart, steps = 10, name, palette, keys }: ColorC
     const materialPalette = materialTheme.palettes[palette || 'primary'];
 
     //define shade keys (use fallback o)
-     keys = (keys && keys.length) ? keys : MATERIAL_DEFAULT_KEYS;
-    const tones = keys.map(key => materialPalette.tone(key/10));
+    keys = (keys && keys.length) ? keys : MATERIAL_DEFAULT_KEYS;
+    const tones = keys.map(key => materialPalette.tone(key / 10));
 
     //find closest tone to primary (colorStart) depending on light intensity
     const closestKeyToPrimary = tones.reduce((curr, prev) => {
@@ -233,11 +233,15 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
 ** CREATE FIGMA PALELTTE FROM SET 
 */
 export function createSwatch({ folder, set, config }: Workbench) {
-    const baseName = (config as ColorConfig).name;
-    if (!set) { return; }
-    set.forEach(({ name, color }: Shade) => {
+    if (!folder) { return; }
+    const baseName = (config as ColorConfig).name || '';
+    const { level, fullpath } = folder;
+    const styleFolders = (get_styles_of_folder(folder) ?? []).map(style => folderAtLevel(style.name, level));
+
+    set?.forEach(({ name, color }: Shade) => {
         const newStyle = figma.createPaintStyle();
-        newStyle.name = concatFolderName(folder, [baseName, name].join('/'));
+        const copyName = setCopyNumber(baseName, styleFolders) || '';
+        newStyle.name = concatFolderName(copyName, name);
         newStyle.paints = DEFAULT_STYLE_COLOR.map(paint => ({ ...paint, color: color }));
     })
 }

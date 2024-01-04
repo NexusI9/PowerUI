@@ -9,6 +9,7 @@ import { FolderContainer } from "@components/folder-container";
 import { ButtonPad as IButtonPad } from "@ctypes/input";
 import { FolderOptions } from '@ctypes/folder';
 import { get, listen } from '@lib/ipc';
+import { StyleFolder } from "@ctypes/style";
 
 interface StyleTemplate {
     title: string;
@@ -34,21 +35,7 @@ export const Style = ({
     const [displayMode, setDisplayMode] = useState<'grid' | 'list'>('grid');
     const [reload, setReload] = useState(0);
     const [styles, setStyles] = useState([]);
-
-    const optionMap = [
-        {
-            icon: displayMode === 'grid' ? List : Grid,
-            onClick: () => {
-                const newDisplayMode = displayMode == 'grid' ? 'list' : 'grid';
-                setDisplayMode(newDisplayMode);
-                onSwitchDisplay(newDisplayMode);
-            }
-        },
-        {
-            icon: options?.header?.add?.icon || Plus,
-            onClick: options?.header?.add?.onClick
-        },
-    ];
+    const [headerOptions, setHeaderOptions] = useState<any>([]);
 
 
     const handleOnMessage = (e: any) => {
@@ -67,9 +54,28 @@ export const Style = ({
 
     }, [reload]);
 
+    useEffect(() => {
+        const optionMap = [
+            {
+                icon: displayMode === 'grid' ? List : Grid,
+                onClick: () => {
+                    const newDisplayMode = displayMode == 'grid' ? 'list' : 'grid';
+                    setDisplayMode(newDisplayMode);
+                    onSwitchDisplay(newDisplayMode);
+                }
+            },
+            {
+                icon: options?.header?.add?.icon || Plus,
+                onClick: () => styles.map(style => options?.header?.add?.onClick(style))
+            },
+        ];
+
+        setHeaderOptions(optionMap);
+    }, [styles]);
+
 
     return (<>
-        <SectionHeader title={title} options={optionMap} />
+        {!!headerOptions.length && <SectionHeader title={title} options={headerOptions} />}
         {!!styles && !!styles.length ?
             //styles view
             <FolderContainer

@@ -111,6 +111,10 @@ export function updateColor({ style, color }: { style: StyleColor, color: ColorR
 
 }
 
+export function folderAtLevel(folder:string, level:number):string{
+    return folder.split('/')[Math.max(0,level)] || '';
+}
+
 export function concatFolderName(folder: string | undefined, name: string): string {
     if (!folder) { return name; }
     return folder.length ? [folder, name].join('/') : name;
@@ -192,10 +196,9 @@ export function setCopyNumber(currentName: string, list: Array<string>): string 
 
     //define Regex
     const SUFFIX_REGEX = /(\scopy)$|(\scopy\s\d+)$/gm;
-    const COPY_REGEX = /(\scopy)$/gm;
     const INDEX_REGEX = /(\d+)$/gm;
 
-    const baseOf = (name: string) => name.replace(SUFFIX_REGEX, '');
+    const baseOf = (name: string) => name?.replace(SUFFIX_REGEX, '') || '';
     const instances: Array<string> = [];
     const baseName = baseOf(currentName);
 
@@ -209,15 +212,17 @@ export function setCopyNumber(currentName: string, list: Array<string>): string 
     });
 
     //2. calculate instance index depending on exisint indexes
-    const index: number = Number(instances.reduce((curr, prev) => {
-        const currentIndex = Number(curr.match(INDEX_REGEX));
+    const index: number = instances.length && Number(instances.reduce((curr, prev) => {
         const prevIndex = Number(prev.match(INDEX_REGEX));
-        console.log({currentIndex, prevIndex});
+        const currentIndex = Number(curr.match(INDEX_REGEX));
         return String(Math.max(currentIndex, prevIndex) + 1);
     })) || 1;
 
 
     switch (instances.length) {
+        case 0:
+            return currentName;
+
         case 1:
             return `${baseName} copy`;
 
@@ -233,6 +238,7 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
     //get current level name to change
     const { level } = folder;
     let folderName = folder.fullpath.split('/')[level];
+    console.log({fullpath: folder.fullpath, level});
 
     //get Styles depending on type
     let styles: Array<PaintStyle | TextStyle> = [];

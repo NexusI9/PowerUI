@@ -322,7 +322,7 @@ const adjustSidepanelContent: Array<SidepanelList> = [
 
 
 export const CREATE_SWATCH_CONFIG: Workbench = {
-    folder: '',
+    folder: null,
     title: 'Generate a new palette',
     type: 'COLOR',
     sidepanel: {
@@ -348,7 +348,7 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
 }
 
 export const EDIT_SWATCH_CONFIG: Workbench = {
-    folder: '',
+    folder: null,
     title: 'Edit current palette',
     type: 'COLOR',
     sidepanel: {

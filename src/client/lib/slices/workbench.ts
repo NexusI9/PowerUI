@@ -11,7 +11,7 @@ const actionMap: { [key in SetMethod]: any; } = {
     INTERPOLATION: interpolate,
     MATERIAL: material,
     ANT: ant,
-    MANTINE:mantine,
+    MANTINE: mantine,
     COLORADJUST: colorAdjust,
     TAILWIND: tailwind,
     ORBIT: () => [],
@@ -30,7 +30,7 @@ const workbenchSlice = createSlice({
         spawn: (state, { payload }: { payload: Workbench }) => {
 
             //setup initial config from sidepanel
-            const initConfig: { [key: string]: any } = {...payload.config};
+            const initConfig: { [key: string]: any } = { ...payload.config };
             if (payload.sidepanel) {
                 traverseCallback(payload.sidepanel, ({ options }: { options: SidepanelOption }) =>
                     traverseCallback(options, ({ content }: { content: SidepanelList }) =>
@@ -40,7 +40,7 @@ const workbenchSlice = createSlice({
                         )));
             }
 
-            return ({ ...state, ...payload, config: {...initConfig}, active: true })
+            return ({ ...state, ...payload, config: { ...initConfig }, active: true })
         },
         updateConfig: (state, { payload: { key, value } }: { payload: { key: keyof ColorConfig | keyof FontConfig | keyof ColorAdjustConfig; value: any } }) => {
 
@@ -54,14 +54,7 @@ const workbenchSlice = createSlice({
             const { action } = newConfig as ColorConfig | FontConfig;
             const newSet: Set = [];
             if (action && actionMap[action]) {
-                switch (state.type) {
-                    case 'COLOR':
-                        newSet.push(...actionMap[action](newConfig)); //caculate interpolation and assign it to NewSet
-                        break;
-
-                    case 'FONT':
-                        break;
-                }
+                newSet.push(...actionMap[action](newConfig)); //caculate interpolation and assign it to NewSet
             }
 
             return ({

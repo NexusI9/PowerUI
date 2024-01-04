@@ -97,7 +97,6 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'EDIT_SWATCH':
-
       msg.config?.styles?.forEach((style: StyleColor, i: number) => {
         try { updateColor({ style, color: msg.set[i].color as ColorRGB }); }
         catch (_) { }
