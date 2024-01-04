@@ -189,42 +189,35 @@ export function replaceStyle(list: Array<Styles>) {
 
 export function setCopyNumber(currentName: string, list: Array<string>): string {
 
+    //set new name a current name for fallback
     let newName: string = currentName;
 
-    const baseNames: { [key: string]: number } = {};
-    const checkedNames: Array<string> = [];
+    //define Regex
     const SUFFIX_REGEX = /(\scopy)$|(\scopy\s\d+)$/gm;
+    const COPY_REGEX = /(\scopy)$/gm;
+    const INDEX_REGEX = /(\scopy\s\d+)$/gm;
 
-    //Get folder unique names from folder level
-    for (let name of list) {
+    const baseOf = (name: string) => name.replace(SUFFIX_REGEX, '');
+    const instances: Array<string> = [];
+    const baseName = baseOf(currentName);
 
+
+    //1. Gather name with same base and add it
+    list.forEach(name => {
         //get right level of folder and base name (without copy + number suffix);
-        const baseName = name.replace(SUFFIX_REGEX, '');
-
-        //if base name exists and hasn't already checked for increment
-        if (baseName && !checkedNames.includes(name)) {
-            checkedNames.push(name); //add to checked names
-            if (baseNames[baseName] === undefined) { baseNames[baseName] = 0; } //create key if doesn't exists with 0 as value
-            else { baseNames[baseName]++; } //increment already existing key
-        }
-    }
-
-    //check if match pattern 'name copy' or 'name copy number' and increment folder number accordingly
-    Object.keys(baseNames).forEach(key => (key.match(/.* (copy)$/) || key.match(/.* (copy \d+)$/)) && baseNames[key]++);
-    console.log({newName, baseNames});
-
-    //check if folder is already present and how many times
-    Object.keys(baseNames).forEach(key => {
-        if (newName === key) {
-            const count = baseNames[key];
-            if (count) {
-                newName = `${key} copy ${String(count)}`; //add up current number
-            } else {
-                newName += ' copy'; //simply add up copy
-            }
-        }
+        const currBaseName = baseOf(name);
+        //if share same base name (w/out copy + number)
+        if (currBaseName === baseName && !instances.includes(name)) { instances.push(name); }
     });
 
+    switch (instances.length) {
+        case 0:
+            newName = `${baseName} copy`;
+            break;
+        
+        default:
+            newName = `${baseName} copy ${instances.length}`;
+    }
 
     return newName;
 
