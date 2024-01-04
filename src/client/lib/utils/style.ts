@@ -189,13 +189,11 @@ export function replaceStyle(list: Array<Styles>) {
 
 export function setCopyNumber(currentName: string, list: Array<string>): string {
 
-    //set new name a current name for fallback
-    let newName: string = currentName;
 
     //define Regex
     const SUFFIX_REGEX = /(\scopy)$|(\scopy\s\d+)$/gm;
     const COPY_REGEX = /(\scopy)$/gm;
-    const INDEX_REGEX = /(\scopy\s\d+)$/gm;
+    const INDEX_REGEX = /(\d+)$/gm;
 
     const baseOf = (name: string) => name.replace(SUFFIX_REGEX, '');
     const instances: Array<string> = [];
@@ -210,16 +208,23 @@ export function setCopyNumber(currentName: string, list: Array<string>): string 
         if (currBaseName === baseName && !instances.includes(name)) { instances.push(name); }
     });
 
+    //2. calculate instance index depending on exisint indexes
+    const index: number = Number(instances.reduce((curr, prev) => {
+        const currentIndex = Number(curr.match(INDEX_REGEX));
+        const prevIndex = Number(prev.match(INDEX_REGEX));
+        console.log({currentIndex, prevIndex});
+        return String(Math.max(currentIndex, prevIndex) + 1);
+    })) || 1;
+
+
     switch (instances.length) {
-        case 0:
-            newName = `${baseName} copy`;
-            break;
-        
+        case 1:
+            return `${baseName} copy`;
+
         default:
-            newName = `${baseName} copy ${instances.length}`;
+            return `${baseName} copy ${index}`;
     }
 
-    return newName;
 
 }
 
