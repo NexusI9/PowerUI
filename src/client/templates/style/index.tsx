@@ -71,7 +71,7 @@ export const Style = ({
         ];
 
         setHeaderOptions(optionMap);
-    }, [styles]);
+    }, [styles, displayMode]);
 
 
     return (<>
