@@ -10,9 +10,7 @@ import {
   addStyle,
   get_styles_of_folder,
   sort_by_name,
-  setCopyNumber,
-  concatFolderName,
-  folderNameFromPath
+  duplicateFolder
 } from "@lib/utils/style";
 import { createSwatch } from "@lib/utils/shade";
 import { ColorRGB } from "@ctypes/color";
@@ -69,17 +67,7 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'DUPLICATE_FOLDER':
-
-      const newFolderName = setCopyNumber(msg.folder);
-      get_styles_of_folder(msg.folder).forEach(item => {
-        const itemName = folderNameFromPath(item.name).name;
-        addStyle({
-          name: concatFolderName(newFolderName, itemName),
-          style: (item.type === 'COLOR' && item.paints) || (item.type === 'TEXT' && item.texts),
-          type: item.type
-        });
-      });
-
+      duplicateFolder(msg);
       break;
 
     case 'DELETE_FOLDER':
@@ -111,8 +99,8 @@ figma.ui.onmessage = msg => {
     case 'EDIT_SWATCH':
 
       msg.config?.styles?.forEach((style: StyleColor, i: number) => {
-        try{ updateColor({style, color: msg.set[i].color as ColorRGB}); }
-        catch(_){}
+        try { updateColor({ style, color: msg.set[i].color as ColorRGB }); }
+        catch (_) { }
       });
       break;
 

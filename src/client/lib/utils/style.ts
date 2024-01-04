@@ -1,5 +1,5 @@
 import { ColorRGB } from "@ctypes/color";
-import { StyleColor, StyleFolder, Styles } from "@ctypes/style";
+import { StyleColor, StyleFolder, StyleText, Styles } from "@ctypes/style";
 import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { clone, isNumber, lastIndexOfArray } from '@lib/utils/utils';
@@ -147,13 +147,13 @@ export function addStyle({ folder, name, style, type }: { folder?: string, name:
 
         case 'COLOR':
             const newStyleColor = figma.createPaintStyle();
-            newStyleColor.name =  concatFolderName(folder, name);
+            newStyleColor.name = concatFolderName(folder, name);
             newStyleColor.paints = style || DEFAULT_STYLE_COLOR;
             break;
 
         case 'TEXT':
             const newStyleText = figma.createTextStyle();
-            newStyleText.name =  concatFolderName(folder, name);
+            newStyleText.name = concatFolderName(folder, name);
             newStyleText.textCase = style || DEFAULT_STYLE_COLOR;
             break;
     }
@@ -187,13 +187,57 @@ export function replaceStyle(list: Array<Styles>) {
     });
 }
 
-export function setCopyNumber(folder: StyleFolder): string {
+export function setCopyNumber(currentName: string, list: Array<string>): string {
 
-    let folderName = folder.fullpath.split('/')[folder.level];
+    let newName: string = currentName;
+
+    const baseNames: { [key: string]: number } = {};
+    const checkedNames: Array<string> = [];
+    const SUFFIX_REGEX = /(\scopy)$|(\scopy\s\d+)$/gm;
+
+    //Get folder unique names from folder level
+    for (let name of list) {
+
+        //get right level of folder and base name (without copy + number suffix);
+        const baseName = name.replace(SUFFIX_REGEX, '');
+
+        //if base name exists and hasn't already checked for increment
+        if (baseName && !checkedNames.includes(name)) {
+            checkedNames.push(name); //add to checked names
+            if (baseNames[baseName] === undefined) { baseNames[baseName] = 0; } //create key if doesn't exists with 0 as value
+            else { baseNames[baseName]++; } //increment already existing key
+        }
+    }
+
+    //check if match pattern 'name copy' or 'name copy number' and increment folder number accordingly
+    Object.keys(baseNames).forEach(key => (key.match(/.* (copy)$/) || key.match(/.* (copy \d+)$/)) && baseNames[key]++);
+    console.log({newName, baseNames});
+
+    //check if folder is already present and how many times
+    Object.keys(baseNames).forEach(key => {
+        if (newName === key) {
+            const count = baseNames[key];
+            if (count) {
+                newName = `${key} copy ${String(count)}`; //add up current number
+            } else {
+                newName += ' copy'; //simply add up copy
+            }
+        }
+    });
+
+
+    return newName;
+
+}
+
+export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
+
+    //get current level name to change
     const { level } = folder;
-    let styles: Array<PaintStyle | TextStyle> = [];
-    let uniqueFolders: Array<string> = [];
+    let folderName = folder.fullpath.split('/')[level];
 
+    //get Styles depending on type
+    let styles: Array<PaintStyle | TextStyle> = [];
     switch (folder.styles[0].type) {
         case 'COLOR':
             styles = figma.getLocalPaintStyles();
@@ -203,50 +247,20 @@ export function setCopyNumber(folder: StyleFolder): string {
             break;
     }
 
-    //Get folder unique names
-    styles.forEach(style => {
-        const folderPath = folderNameFromPath(style.name).folder;
-        const parts = folderPath.split('/');
-        const indexedFolder = parts[level];
+    //retrieve folder path from style name
+    let list = styles.map((style: PaintStyle | TextStyle) => folderNameFromPath(style.name).folder.split('/')[level]);
 
-        if (indexedFolder && uniqueFolders.indexOf(indexedFolder) < 0) {
-            uniqueFolders.push(indexedFolder);
-        }
+    //defign new folder name based on current name as base and list to compare and define index or copies
+    const newFolderName = setCopyNumber(folderName, list);
 
+    //replace styles name with new forlder name
+    get_styles_of_folder(folder).forEach(item => {
+        const itemName = folderNameFromPath(item.name).name;
+        addStyle({
+            name: concatFolderName(newFolderName, itemName),
+            style: (item.type === 'COLOR' && item.paints) || (item.type === 'TEXT' && item.texts),
+            type: item.type
+        });
     });
-
-    //Defines number 
-    const setNumber = (folders: Array<string>, count: number): number => {
-
-        for (var f = 0; f < folders.length; f++) {
-            const lastPart = lastIndexOfArray(folders[f].split(' '));
-            if (isNumber(lastPart) && Number(lastPart) >= count) {
-                count = Number(lastIndexOfArray(folders[f].split(' '))) + 1;
-                folders.splice(f, 1);
-                //check once again
-                return setNumber(folders, count);
-            }
-        }
-        return count === 0 ? 1 : count;
-    }
-
-
-    //Defines Output
-    const count = setNumber(uniqueFolders, 0);
-    const currentFolderLastPart = lastIndexOfArray(folderName.split(' '), '');
-
-    if (currentFolderLastPart === 'copy') { //Case 1 (end with copy) 
-        if (count > 0) {
-            folderName += ` ${String(count)}`;
-        }
-    } else if (isNumber(currentFolderLastPart)) { //Case 2 (end with number)
-        let newName = folderName.split(' ');
-        newName.pop();
-        folderName = `${newName.join(' ')} ${count}`;
-    } else { //Case 3 (simple, no number/copy)
-        folderName += ' copy';
-    }
-
-    return folderName;
 
 }
