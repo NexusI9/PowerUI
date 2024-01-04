@@ -9,7 +9,7 @@ import { FolderContainer } from "@components/folder-container";
 import { ButtonPad as IButtonPad } from "@ctypes/input";
 import { FolderOptions } from '@ctypes/folder';
 import { get, listen } from '@lib/ipc';
-import { StyleFolder } from "@ctypes/style";
+import { StyleColor, StyleFolder, StyleText } from "@ctypes/style";
 
 interface StyleTemplate {
     title: string;
@@ -34,7 +34,7 @@ export const Style = ({
 
     const [displayMode, setDisplayMode] = useState<'grid' | 'list'>('grid');
     const [reload, setReload] = useState(0);
-    const [styles, setStyles] = useState([]);
+    const [styles, setStyles] = useState<null | Array<StyleFolder>>();
     const [headerOptions, setHeaderOptions] = useState<any>([]);
 
 
@@ -66,7 +66,7 @@ export const Style = ({
             },
             {
                 icon: options?.header?.add?.icon || Plus,
-                onClick: () => styles.map(style => options?.header?.add?.onClick(style))
+                onClick: () => styles?.map(style => options?.header?.add?.onClick(style))
             },
         ];
 
@@ -76,7 +76,7 @@ export const Style = ({
 
     return (<>
         {!!headerOptions.length && <SectionHeader title={title} options={headerOptions} />}
-        {!!styles && !!styles.length ?
+        {styles ? (!!styles.length ?
             //styles view
             <FolderContainer
                 styles={styles}
@@ -89,7 +89,7 @@ export const Style = ({
             //default view
             <div className="full-height full-width flex f-center">
                 <ButtonPad icon={padStyle.icon} text={padStyle.text} onClick={padStyle.onClick} />
-            </div>
+            </div>) : <></>
         }
     </>);
 };

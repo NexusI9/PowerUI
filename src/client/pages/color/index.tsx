@@ -8,6 +8,7 @@ import { useDispatch } from "react-redux";
 import { spawn } from "@lib/slices/workbench";
 import { CREATE_SWATCH_CONFIG, EDIT_SWATCH_CONFIG } from "./workbench.config";
 import { StyleColor, StyleFolder } from "@lib/types/style";
+import { GET_PAINT_STYLES_COMMAND } from "@lib/constants";
 
 export default () => {
 
@@ -29,7 +30,7 @@ export default () => {
             onAddItem={handleAddItem}
             onSwitchDisplay={() => 0}
             padStyle={buttonPadStyle}
-            getStyleMethod="GET_PAINT_STYLES"
+            getStyleMethod={GET_PAINT_STYLES_COMMAND}
             styleItem={Swatch}
             options={{
                 header: {

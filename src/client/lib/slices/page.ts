@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const pageSlice = createSlice({
     name:'page',
-    initialState:'home',
+    initialState:'',
     reducers:{
         setPage: (state, {payload}) => state = payload || 'home'
     }

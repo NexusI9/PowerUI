@@ -26,3 +26,7 @@ export const DEFAULT_CONTEXT_MENU = {
 
 
 export const MATERIAL_DEFAULT_KEYS = [0, 100, 200, 250, 300, 350, 400, 500, 600, 700, 800, 900, 950, 980, 990, 1000];
+
+export const GET_PAINT_STYLES_COMMAND:string = "GET_PAINT_STYLES";
+export const GET_TEXT_STYLES_COMMAND:string = "GET_TEXT_STYLES";
+

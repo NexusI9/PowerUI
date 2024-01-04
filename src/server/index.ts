@@ -14,6 +14,7 @@ import {
 } from "@lib/utils/style";
 import { createSwatch } from "@lib/utils/shade";
 import { ColorRGB } from "@ctypes/color";
+import { GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 
 
 figma.showUI(__html__, { themeColors: true });
@@ -41,13 +42,13 @@ figma.ui.onmessage = msg => {
 
       break;
 
-    case 'GET_PAINT_STYLES':
+    case GET_PAINT_STYLES_COMMAND:
       let paintStyles: Array<StyleColor> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, figmaKey: key, name, paints: paints as Paint[], type: "COLOR" })); //only keep necessary keys;
       figma.ui.postMessage({ action: msg.action, styles: classifyStyle(paintStyles) });
       break;
 
-    case 'GET_TEXT_STYLES':
-      figma.ui.postMessage(figma.getLocalTextStyles());
+    case GET_TEXT_STYLES_COMMAND:
+      figma.ui.postMessage({action: msg.action, styles: figma.getLocalTextStyles() });
       break;
 
     case 'UPDATE_STYLE_FOLDER':

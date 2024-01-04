@@ -235,7 +235,7 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
 export function createSwatch({ folder, set, config }: Workbench) {
     if (!folder) { return; }
     const baseName = (config as ColorConfig).name || '';
-    const { level, fullpath } = folder;
+    const { level } = folder;
     const styleFolders = (get_styles_of_folder(folder) ?? []).map(style => folderAtLevel(style.name, level));
 
     set?.forEach(({ name, color }: Shade) => {

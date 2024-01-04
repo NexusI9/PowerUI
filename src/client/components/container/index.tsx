@@ -4,11 +4,11 @@ import './index.scss';
 export default(
     {children}
     :
-    {children:React.JSX.Element}
+    {children:0 |React.JSX.Element}
     ) => {
 
 
     return(<div className="container">
-        {children}
+        {children && children}
     </div>);
 }

@@ -2,7 +2,7 @@
 import "@styles/index.scss";
 
 //reducer
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 //structural
 import Sidebar from '@components/sidebar';
@@ -18,27 +18,44 @@ import Home from './pages/home';
 import Font from './pages/font';
 import { Snackbar } from "@components/snackbar";
 import { WorkBench } from "@templates/workbench";
+import { useEffect } from "react";
+import { get } from "@lib/ipc";
+import { GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
+import { setPage } from "@lib/slices/page";
 
 const router = {
-    home: <Home/>, 
-    color: <Color/>, 
-    font: <Font/> 
+    home: <Home />,
+    color: <Color />,
+    font: <Font />
 };
 
 export default () => {
 
-    const page = useSelector( (state:{page:string} ) => state.page);
+    const page = useSelector((state: { page: string }) => state.page);
+    const dispatch = useDispatch();
 
-    return(
+    useEffect(() => {
+
+        const getStyles = async function () {
+            const textArray = await get({ action: GET_TEXT_STYLES_COMMAND });
+            const colorArray = await get({ action: GET_PAINT_STYLES_COMMAND });
+            dispatch(setPage(colorArray.styles.length ? 'color' : textArray.styles.length ? 'font' : 'home'));
+        }
+
+        getStyles();
+
+    }, []);
+
+    return (
         <>
             <Sidebar />
             <Container>
-                {router[page as keyof typeof router || 'home']}
+                {page.length && router[page as keyof typeof router || 'home']}
             </Container>
-            
-            <ContextMenu/>
-            <Tooltip/>
-            <Snackbar/>
+
+            <ContextMenu />
+            <Tooltip />
+            <Snackbar />
 
             <WorkBench />
         </>
