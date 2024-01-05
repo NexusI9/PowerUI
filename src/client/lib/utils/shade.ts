@@ -73,8 +73,6 @@ export function material({ colorStart, steps = 10, name, palette, keys, preserve
         return Math.abs(primaryL - currentToneL) < Math.abs(primaryL - prevToneL) ? curr : prev;
     });
 
-    console.log(preserve);
-
     //apply
     tones.forEach((value, i) => {
         //replace closest tone for primary 
@@ -176,8 +174,6 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
             hslColor.l = clamp(0, hslColor.l, 1);
         }
 
-
-        //console.log({ brightness, light:hslColor.l, average: (hslColor.l + Number(brightness)) / 2, i })
         //convert back to RGB for more complex adjustments
         const rgbColor = hslToRgb(hslColor, true, 'OBJECT') as ColorRGB;
 

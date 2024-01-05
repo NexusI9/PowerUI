@@ -7,6 +7,6 @@ export function setYPos(
     step: number = 20,
     list: MultiArray<ContextMenuCommand>
 ): number {
-    traverseCallback(list, (e:ContextMenuCommand, index:number) => console.log(index));
+    //traverseCallback(list, (e:ContextMenuCommand, index:number) => console.log(index));
     return 0;
 }
