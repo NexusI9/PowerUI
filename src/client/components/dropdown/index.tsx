@@ -13,14 +13,13 @@ export const Dropdown = (props: IDropdown) => {
 
     const [activeItem, setActiveItem] = useState<ContextMenuCommand | undefined>();
     const id = useRef<number>(performance.now());
-    //const list = useRef(traverseCallback(props.list, (e: any) => ({ ...e, id: id.current }))); //add Id to 
     const lastState = useSelector((state: any) => state.contextmenu);
     const dispatch = useDispatch();
 
     const handleOnClick = (e: BaseSyntheticEvent) => {
+        if(!activeItem){ return; }
         const { x, y } = e.target.getBoundingClientRect() || 0;
-        //setYPos(active, 20, props.list)
-        const offset = Math.max(0, 0);
+        const offset = Math.max(0, setYPos(activeItem, 20, props.list));
         dispatch(displayContextMenu({ commands: props.list, position: { x: x, y: y + offset }, id: id.current }))
     }
 

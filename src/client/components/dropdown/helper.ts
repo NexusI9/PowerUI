@@ -1,18 +1,14 @@
 import { ContextMenuCommand } from "@ctypes/contextmenu";
 import { MultiArray } from "@ctypes/global";
+import { traverseCallback } from "@lib/utils/utils";
 
 export function setYPos(
-    active: number | Array<number>,
+    active: ContextMenuCommand,
     step: number = 20,
     list: MultiArray<ContextMenuCommand>
 ): number {
-
-    if (Array.isArray(active)) {
-        const prevGroupLength = (list as Array<Array<ContextMenuCommand>>)[Math.max(active[0] - 1, 0)].length;
-        return -1 * (((active[0] * prevGroupLength) + active[1]) * step);
-    }
-    else {
-        return -1 * active * step;
-    }
-
+    //get index from json
+    //let index = 0;
+    traverseCallback(list, (e:ContextMenuCommand, index:number) => console.log(index));
+    return 0;
 }

@@ -9,20 +9,20 @@ export function clamp(min: number, value: number, max: number): number {
 }
 
 
-export function isNumber(value:string){
+export function isNumber(value: string) {
     return !Number.isNaN(Number(value))
 }
 
-export function lastIndexOfArray(array:Array<any>, fallback?:any){
-    return array.slice(-1)[0] || fallback ;
+export function lastIndexOfArray(array: Array<any>, fallback?: any) {
+    return array.slice(-1)[0] || fallback;
 }
 
 
-export function traverseCallback(object:any, callback:any):any{
-    if(Array.isArray(object)){
-        return object.map( (item:any) => traverseCallback(item, callback))
-    }else{
-        return callback(object);
+export function traverseCallback(object: any, callback: any, index: number = 0): any {
+    if (Array.isArray(object)) {
+        return object.map((item: any, i: number) => traverseCallback(item, callback, i))
+    } else {
+        return callback(object, index);
     }
 }
 
@@ -34,6 +34,6 @@ export const itemFromIndex = (active: number | Array<number>, list: Array<any> |
 };
 
 
-export const envelop = (min:number, value:number, max:number = 1):number =>  min + (max - min) * value;
+export const envelop = (min: number, value: number, max: number = 1): number => min + (max - min) * value;
 
-export const mix = (valueA: number, valueB: number, factor:number) => ((1 - factor) * valueA) + factor * ((valueA + valueB) / 2);
+export const mix = (valueA: number, valueB: number, factor: number) => ((1 - factor) * valueA) + factor * ((valueA + valueB) / 2);

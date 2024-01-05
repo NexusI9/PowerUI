@@ -24,7 +24,8 @@
         font-size: small;
         margin: var(--space-s) 0;
         padding: 0 var(--space-m);
-
+        text-transform: capitalize;
+        
         &:hover {
             background-color: var(--figma-color-bg-brand);
         }
