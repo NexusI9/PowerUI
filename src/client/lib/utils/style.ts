@@ -173,8 +173,8 @@ export function get_styles_of_folder(folder: StyleFolder, array: Array<Styles> =
 }
 
 export function sort_by_name(styles: Array<Styles>) {
-    styles.sort((a, b) => a.name > b.name ? 1 : -1);
-    replaceStyle(styles);
+    const newStyle = styles.sort((a, b) => a.name > b.name ? 1 : -1);
+    replaceStyle(newStyle);
 }
 
 export function replaceStyle(list: Array<Styles>) {
