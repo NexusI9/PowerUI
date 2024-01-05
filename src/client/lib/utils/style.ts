@@ -115,10 +115,10 @@ export function folderAtLevel(folder: string, level: number): string {
     return folder.split('/')[Math.max(0, level)] || '';
 }
 
-export function concatFolderName(path:Array<string|undefined>): string {
+export function concatFolderName(path: Array<string | undefined>): string {
     //remove underfined and empty string values
-    let chain:string = path.filter(e => e !== undefined && e.length).join('/');
-    if(chain[0] === '/'){ chain = chain.slice(1); }
+    let chain: string = path.filter(e => e !== undefined && e.length).join('/');
+    if (chain[0] === '/') { chain = chain.slice(1); }
     return chain;
 }
 
@@ -179,18 +179,15 @@ export function sort_by_name(styles: Array<Styles>) {
 
 export function replaceStyle(list: Array<Styles>) {
 
-    //2. remove items
-    list.forEach(item => figma.getStyleById(item.id)?.remove());
-
-    //3.instantiate new items
     list.forEach((item) => {
-
+        figma.getStyleById(item.id)?.remove();
         addStyle({
             name: item.name,
             style: (item.type === 'COLOR' && item.paints) || (item.type === 'TEXT' && item.texts),
             type: item.type
         });
     });
+
 }
 
 export function setCopyNumber(currentName: string, list: Array<string>): string {
@@ -256,14 +253,14 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
 
     //retrieve folder path from style name
     let list = styles.map((style: PaintStyle | TextStyle) => folderNameFromPath(style.name).folder.split('/')[level]);
-    
+
     //defign new folder name based on current name as base and list to compare and define index or copies
     const newFolderName = setCopyNumber(styleFolder, list);
 
     //replace styles name with new forlder name
     get_styles_of_folder(folder).forEach(item => {
         //retrieve, name and folder form style
-        const {name, folder} = folderNameFromPath(item.name);
+        const { name, folder } = folderNameFromPath(item.name);
         //replace old folder name (at level n) with new folder name
         const convertedName = folder.split('/');
         convertedName.splice(level, 1, newFolderName);

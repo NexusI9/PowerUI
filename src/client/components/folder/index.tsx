@@ -12,6 +12,8 @@ import { Input } from '@components/input';
 import { send } from '@lib/ipc';
 import { useDispatch } from 'react-redux';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
+import { MultiArray } from '@ctypes/global';
+import { traverseCallback } from '@lib/utils/utils';
 
 export const Folder = ({
     title,
@@ -34,7 +36,7 @@ export const Folder = ({
 
     const contextMenuItems = useMemo(() => {
         //set default commands
-        let menu: Array<ContextMenuCommand> | Array<Array<ContextMenuCommand>> = DEFAULT_COMMANDS;
+        let menu: MultiArray<ContextMenuCommand> = DEFAULT_COMMANDS;
 
         //concat eventuals custom options
         if (options?.folder?.kebab) {
@@ -43,10 +45,7 @@ export const Folder = ({
         }
 
         //map folder to payload
-        return menu.map((item) =>
-            Array.isArray(item) ?
-                item.map(it => ({ ...it, payload: { folder: attributes } })) :
-                ({ ...item, payload: { folder: attributes } }));;
+        return traverseCallback(menu, (item:any) => ({ ...item, payload: { folder: attributes } }));
     }, [attributes]);
 
     const folderIconMap: Array<IOption> = [
