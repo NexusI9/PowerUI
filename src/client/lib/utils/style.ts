@@ -240,31 +240,36 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
     //get current level name to change
     const { level } = folder;
     const parentFolders = folder.fullpath.split('/');
+    //pop last element from fullpath
     const styleFolder = parentFolders.pop() || 'New style';
-    //const baseName = folder.fullpath.split('/').slice(Math.max(level-1, 0));
 
     //get Styles depending on type
-    let styles: Array<PaintStyle | TextStyle> = [];
+    const styles: Array<PaintStyle | TextStyle> = [];
     switch (folder.styles[0].type) {
         case 'COLOR':
-            styles = figma.getLocalPaintStyles();
+            styles.push(...figma.getLocalPaintStyles());
             break;
         case 'TEXT':
-            styles = figma.getLocalTextStyles();
+            styles.push(...figma.getLocalTextStyles());
             break;
     }
 
     //retrieve folder path from style name
     let list = styles.map((style: PaintStyle | TextStyle) => folderNameFromPath(style.name).folder.split('/')[level]);
-
+    
     //defign new folder name based on current name as base and list to compare and define index or copies
     const newFolderName = setCopyNumber(styleFolder, list);
 
     //replace styles name with new forlder name
     get_styles_of_folder(folder).forEach(item => {
-        const itemName = folderNameFromPath(item.name).name;
+        //retrieve, name and folder form style
+        const {name, folder} = folderNameFromPath(item.name);
+        //replace old folder name (at level n) with new folder name
+        const convertedName = folder.split('/');
+        convertedName.splice(level, 1, newFolderName);
+
         addStyle({
-            name: concatFolderName([...parentFolders ,newFolderName, itemName]),
+            name: concatFolderName([...convertedName, name]),
             style: (item.type === 'COLOR' && item.paints) || (item.type === 'TEXT' && item.texts),
             type: item.type
         });
