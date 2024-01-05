@@ -6,9 +6,16 @@
     height: auto;
     aspect-ratio: 1/1;
 
+    svg{
+        fill:var(--figma-color-icon-secondary);
+    }
+
     &[data-hover='1']{
         &:hover{
             background-color: var(--figma-color-bg-hover);
+            svg{
+                fill:var(--figma-color-icon);
+            }
         }
     }
 
