@@ -111,13 +111,15 @@ export function updateColor({ style, color }: { style: StyleColor, color: ColorR
 
 }
 
-export function folderAtLevel(folder:string, level:number):string{
-    return folder.split('/')[Math.max(0,level)] || '';
+export function folderAtLevel(folder: string, level: number): string {
+    return folder.split('/')[Math.max(0, level)] || '';
 }
 
-export function concatFolderName(folder: string | undefined, name: string): string {
-    if (!folder) { return name; }
-    return folder.length ? [folder, name].join('/') : name;
+export function concatFolderName(path:Array<string|undefined>): string {
+    //remove underfined and empty string values
+    let chain:string = path.filter(e => e !== undefined && e.length).join('/');
+    if(chain[0] === '/'){ chain = chain.slice(1); }
+    return chain;
 }
 
 export function updateStyleName({ style, name }: { style: PaintStyle, name: string }) {
@@ -127,7 +129,7 @@ export function updateStyleName({ style, name }: { style: PaintStyle, name: stri
         //get style folder name and add msg.name 
 
         const folder = folderNameFromPath(style.name).folder;
-        if (newStyleName) newStyleName.name = concatFolderName(folder, name);
+        if (newStyleName) newStyleName.name = concatFolderName([folder, name]);
 
     } catch (_) {
         console.warn('Could not update style name');
@@ -151,13 +153,13 @@ export function addStyle({ folder, name, style, type }: { folder?: string, name:
 
         case 'COLOR':
             const newStyleColor = figma.createPaintStyle();
-            newStyleColor.name = concatFolderName(folder, name);
+            newStyleColor.name = concatFolderName([folder, name]);
             newStyleColor.paints = style || DEFAULT_STYLE_COLOR;
             break;
 
         case 'TEXT':
             const newStyleText = figma.createTextStyle();
-            newStyleText.name = concatFolderName(folder, name);
+            newStyleText.name = concatFolderName([folder, name]);
             newStyleText.textCase = style || DEFAULT_STYLE_COLOR;
             break;
     }
@@ -237,8 +239,9 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
 
     //get current level name to change
     const { level } = folder;
-    let folderName = folder.fullpath.split('/')[level];
-    console.log({fullpath: folder.fullpath, level});
+    const parentFolders = folder.fullpath.split('/');
+    const styleFolder = parentFolders.pop() || 'New style';
+    //const baseName = folder.fullpath.split('/').slice(Math.max(level-1, 0));
 
     //get Styles depending on type
     let styles: Array<PaintStyle | TextStyle> = [];
@@ -255,13 +258,13 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
     let list = styles.map((style: PaintStyle | TextStyle) => folderNameFromPath(style.name).folder.split('/')[level]);
 
     //defign new folder name based on current name as base and list to compare and define index or copies
-    const newFolderName = setCopyNumber(folderName, list);
+    const newFolderName = setCopyNumber(styleFolder, list);
 
     //replace styles name with new forlder name
     get_styles_of_folder(folder).forEach(item => {
         const itemName = folderNameFromPath(item.name).name;
         addStyle({
-            name: concatFolderName(newFolderName, itemName),
+            name: concatFolderName([...parentFolders ,newFolderName, itemName]),
             style: (item.type === 'COLOR' && item.paints) || (item.type === 'TEXT' && item.texts),
             type: item.type
         });

@@ -241,7 +241,7 @@ export function createSwatch({ folder, set, config }: Workbench) {
     set?.forEach(({ name, color }: Shade) => {
         const newStyle = figma.createPaintStyle();
         const copyName = setCopyNumber(baseName, styleFolders) || '';
-        newStyle.name = concatFolderName(copyName, name);
+        newStyle.name = concatFolderName([folder.fullpath, copyName, name]);
         newStyle.paints = DEFAULT_STYLE_COLOR.map(paint => ({ ...paint, color: color }));
     })
 }
