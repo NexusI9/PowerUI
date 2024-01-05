@@ -1,3 +1,6 @@
+import {ContextMenuCommand} from '@ctypes/contextmenu';
+import { MultiArray } from './global';
+
 export interface Input {
     type?: 'DEFAULT' | 'COLOR' | 'AMOUNT';
     value?: string | number;
@@ -20,9 +23,8 @@ export interface Input {
 }
 
 
-export type DropdownCommand = { icon?: string; text: string; action?: string; onClick?: any; };
 export interface Dropdown extends Input {
-    list: Array<DropdownCommand> | Array<Array<DropdownCommand>>;
+    list: MultiArray<ContextMenuCommand>;
 }
 
 

@@ -1,3 +1,5 @@
+import { ContextMenu } from "@ctypes/contextmenu";
+
 export const DEFAULT_STYLE_COLOR:Array<Paint> = [
     {
         "type": "SOLID",
@@ -18,10 +20,11 @@ export const DEFAULT_TOOLTIP = {
     boundingBox:{x:0, y:0, width:0, height:0}
 }
 
-export const DEFAULT_CONTEXT_MENU = {
+export const DEFAULT_CONTEXT_MENU:ContextMenu = {
     id:0,
     commands:[],
-    position:{x:0, y:0}
+    position:{x:0, y:0},
+    activeCommand:undefined
 };
 
 

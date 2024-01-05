@@ -1,11 +1,11 @@
 import { Dropdown } from "@components/dropdown";
-import { Sidepanel as ISidepanel, SidepanelList, SidepanelOption, Workbench } from "@lib/types/workbench";
+import { SidepanelList, SidepanelOption } from "@lib/types/workbench";
 import { BaseSyntheticEvent, Fragment, useEffect, useState } from "react";
 import { itemFromIndex, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
 import { useDispatch, useSelector } from "react-redux";
 import { updateConfig } from "@lib/slices/workbench";
-import { DropdownCommand } from "@ctypes/input";
+import { ContextMenuCommand } from "@ctypes/contextmenu";
 import { Slider } from "@components/slider";
 import { InputArray } from "@components/input-array";
 
@@ -16,15 +16,13 @@ export const Sidepanel = () => {
 
     const dispatch = useDispatch();
 
-    const updateIndex = (index: number | Array<number>) => {
-        const activeOption = itemFromIndex(index, options);
-        setActiveOption(activeOption);
-        //store initial config
-        dispatch(updateConfig({ key: 'action', value: activeOption.action }));
+    const updateOption = (option:SidepanelOption) => {
+        setActiveOption(option);
+        dispatch(updateConfig({ key: 'action', value: option.action })); //store initial config
     }
 
     const generateInput = (input: SidepanelList): React.JSX.Element => {
-
+        console.log(input);
         let dynamicComp;
         switch (input.type) {
             case 'INPUT':
@@ -40,7 +38,7 @@ export const Sidepanel = () => {
                 break;
 
             case 'DROPDOWN':
-                dynamicComp = <Dropdown {...input.attributes} onChange={({ item }: { item: DropdownCommand }) => dispatch(updateConfig({ key: input.configKey, value: item.text }))} />;
+                dynamicComp = <Dropdown {...input.attributes} onChange={(e:ContextMenuCommand) => dispatch(updateConfig({ key: input.configKey, value: e.text }))} />;
                 break;
 
             default:
@@ -55,7 +53,7 @@ export const Sidepanel = () => {
     useEffect(() => {
         //init
         if (options) {
-            updateIndex(Array.isArray(options[0]) ? [0, 0] : 0);
+            updateOption(Array.isArray(options[0]) ? options[0][0] : options[0]);
         }
 
     }, [options]);
@@ -64,7 +62,7 @@ export const Sidepanel = () => {
         {
             (options?.length > 1) &&
             <>
-                <Dropdown list={options} onChange={({ id }: { id: number | Array<number> }) => updateIndex(id)} style={{ label: true }} placeholder="Swatch type" />
+                <Dropdown list={options} onChange={updateOption} style={{ label: true }} placeholder="Swatch type" />
                 <hr />
             </>
         }

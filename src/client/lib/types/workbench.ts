@@ -2,6 +2,8 @@ import { Dropdown, Input, InputArray, Slider } from "@ctypes/input";
 import { Shade } from "./shade";
 import { ColorRGB } from "./color";
 import { StyleColor, StyleFolder } from "./style";
+import { ContextMenuCommand } from "./contextmenu";
+import { MultiArray } from "./global";
 
 export type SetMethod = 'SHADE' | 
                         'TINT' | 
@@ -22,16 +24,13 @@ export type SidepanelList =
     { type: 'INPUT_ARRAY'; attributes: InputArray; configKey: keyof ColorConfig; } |
     { type: 'SLIDER'; attributes: Slider; configKey: keyof ColorAdjustConfig; } 
 
-export interface SidepanelOption {
-    text: string;
-    action: SetMethod;
-    icon?: string;
-    content: Array<SidepanelList> | Array<Array<SidepanelList>>;
+export interface SidepanelOption extends ContextMenuCommand {
+    content: MultiArray<SidepanelList>;
 };
 
 export interface Sidepanel {
     active?: string;
-    options: Array<SidepanelOption> | Array<Array<SidepanelOption>>;
+    options:MultiArray<SidepanelOption>;
 }
 
 export type Set = Array<Shade>;

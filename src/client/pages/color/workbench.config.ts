@@ -46,10 +46,10 @@ const basicSidepanelContent: Array<SidepanelList> = [
         attributes: {
             placeholder: 'Color mode',
             list: [
-                { text: 'rgb' },
-                { text: 'hsl' },
-                { text: 'lab' },
-                { text: 'lch' }
+                { text: 'rgb', receiver:'STORE' },
+                { text: 'hsl', receiver:'STORE' },
+                { text: 'lab', receiver:'STORE' },
+                { text: 'lch', receiver:'STORE' }
             ],
             style: { label: true }
         },
@@ -65,12 +65,12 @@ const materialSidepanelContent: Array<SidepanelList> = [
         attributes: {
             placeholder: 'Palette',
             list: [
-                { text: 'primary' },
-                { text: 'secondary' },
-                { text: 'tertiary' },
-                { text: 'neutral' },
-                { text: 'neutralVariant' },
-                { text: 'error' }
+                { text: 'primary', receiver:'STORE' },
+                { text: 'secondary', receiver:'STORE' },
+                { text: 'tertiary', receiver:'STORE' },
+                { text: 'neutral', receiver:'STORE' },
+                { text: 'neutralVariant', receiver:'STORE' },
+                { text: 'error', receiver:'STORE' }
             ],
             style: { label: true }
         },
@@ -152,8 +152,8 @@ const antSidepanelContent: Array<SidepanelList> = [
         attributes: {
             placeholder: 'Theme',
             list: [
-                { text: 'default' },
-                { text: 'dark' },
+                { text: 'default', receiver:'STORE' },
+                { text: 'dark', receiver:'STORE' },
             ],
             style: { label: true }
         },
@@ -248,10 +248,10 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
         attributes: {
             placeholder: 'Color mode',
             list: [
-                { text: 'rgb' },
-                { text: 'hsl' },
-                { text: 'lab' },
-                { text: 'lch' }
+                { text: 'rgb', receiver:'STORE' },
+                { text: 'hsl', receiver:'STORE' },
+                { text: 'lab', receiver:'STORE' },
+                { text: 'lch', receiver:'STORE' }
             ],
             style: { label: true }
         },
@@ -328,16 +328,16 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
     sidepanel: {
         options: [
             [
-                { text: 'Shades', content: basicSidepanelContent, action: 'SHADE', icon: "shade" },
-                { text: 'Tones', content: basicSidepanelContent, action: 'TONE', icon: "drop" },
-                { text: 'Tints', content: basicSidepanelContent, action: 'TINT', icon: "sun" },
-                { text: 'Interpolation', content: interpolationSidepanelContent, action: 'INTERPOLATION', icon: "interpolation" }
+                { text: 'Shades', content: basicSidepanelContent, action: 'SHADE', icon: "shade", receiver:'STORE' },
+                { text: 'Tones', content: basicSidepanelContent, action: 'TONE', icon: "drop", receiver:'STORE' },
+                { text: 'Tints', content: basicSidepanelContent, action: 'TINT', icon: "sun", receiver:'STORE' },
+                { text: 'Interpolation', content: interpolationSidepanelContent, action: 'INTERPOLATION', icon: "interpolation", receiver:'STORE' }
             ],
             [
-                { text: 'Material Design', content: materialSidepanelContent, action: 'MATERIAL', icon: "material design" },
-                { text: 'Ant Design', content: antSidepanelContent, action: 'ANT', icon: "ant" },
-                { text: 'Mantine', content: mantineSidepanelContent, action: 'MANTINE', icon: "mantine" },
-                { text: 'Tailwind', content: mantineSidepanelContent, action: 'TAILWIND', icon: "tailwind" }
+                { text: 'Material Design', content: materialSidepanelContent, action: 'MATERIAL', icon: "material design", receiver:'STORE' },
+                { text: 'Ant Design', content: antSidepanelContent, action: 'ANT', icon: "ant", receiver:'STORE' },
+                { text: 'Mantine', content: mantineSidepanelContent, action: 'MANTINE', icon: "mantine" , receiver:'STORE'},
+                { text: 'Tailwind', content: mantineSidepanelContent, action: 'TAILWIND', icon: "tailwind" , receiver:'STORE'}
             ]
         ]
     },
@@ -353,7 +353,7 @@ export const EDIT_SWATCH_CONFIG: Workbench = {
     type: 'COLOR',
     sidepanel: {
         options: [
-            { text: 'Adjustments', content: adjustSidepanelContent, action: 'COLORADJUST' }
+            { text: 'Adjustments', content: adjustSidepanelContent, action: 'COLORADJUST', receiver:'STORE' }
         ]
     },
     footer: {

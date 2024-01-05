@@ -9,3 +9,5 @@ export interface Command{
 }
 
 export interface Label{children?:React.ReactNode; iconLeft?:string; iconRight?:string; size?:'SMALL'|'MID'|'BIG'; }
+
+export type MultiArray<T> = Array<T>|Array<Array<T>>;

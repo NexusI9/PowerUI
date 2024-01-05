@@ -24,7 +24,8 @@ figma.ui.resize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 // posted message.
 figma.ui.onmessage = msg => {
 
-  switch (msg.action) {
+  const {action, payload} = msg;
+  switch (action) {
 
     //styles references: https://www.figma.com/plugin-docs/api/figma/#styles
     case "create-rectangles":
@@ -44,68 +45,68 @@ figma.ui.onmessage = msg => {
 
     case GET_PAINT_STYLES_COMMAND:
       let paintStyles: Array<StyleColor> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, figmaKey: key, name, paints: paints as Paint[], type: "COLOR" })); //only keep necessary keys;
-      figma.ui.postMessage({ action: msg.action, styles: classifyStyle(paintStyles) });
+      figma.ui.postMessage({ action: action, styles: classifyStyle(paintStyles) });
       break;
 
     case GET_TEXT_STYLES_COMMAND:
-      figma.ui.postMessage({ action: msg.action, styles: figma.getLocalTextStyles() });
+      figma.ui.postMessage({ action: action, styles: figma.getLocalTextStyles() });
       break;
 
     case 'UPDATE_STYLE_FOLDER':
-      updateFolderName({ folder: msg.folder, level: msg.level, name: msg.newName });
+      updateFolderName({ folder: payload.folder, level: payload.level, name: payload.newName });
       break;
 
     case 'UPDATE_STYLE_NAME':
-      updateStyleName(msg);
+      updateStyleName(payload);
       break;
 
     case 'UPDATE_STYLE_COLOR':
-      updateColor(msg);
+      updateColor(payload);
       break;
 
     case 'ADD_STYLE_COLOR':
-      addStyle(msg);
+      addStyle(payload);
       break;
 
     case 'DUPLICATE_FOLDER':
-      duplicateFolder(msg);
+      duplicateFolder(payload);
       break;
 
     case 'DELETE_FOLDER':
-      get_styles_of_folder(msg.folder).forEach(item => figma.getStyleById(item.id)?.remove());
+      get_styles_of_folder(payload.folder).forEach(item => figma.getStyleById(item.id)?.remove());
       break;
 
     case 'DELETE_STYLE':
-      figma.getStyleById(msg.style.id)?.remove();
+      figma.getStyleById(payload.style.id)?.remove();
       break;
 
     case 'SORT_STYLE_NAME':
-      sort_by_name(msg.folder.styles);
+      sort_by_name(payload.folder.styles);
       break;
 
 
     case 'SORT_STYLE_COLOR_BRIGHTNESS':
-      sort_by_hsl(msg.folder.styles, 'BRIGHTNESS');
+      sort_by_hsl(payload.folder.styles, 'BRIGHTNESS');
       break;
 
 
     case 'SORT_STYLE_COLOR_SATURATION':
-      sort_by_hsl(msg.folder.styles, 'SATURATION');
+      sort_by_hsl(payload.folder.styles, 'SATURATION');
       break;
 
     case 'CREATE_SWATCH':
-      createSwatch(msg);
+      createSwatch(payload);
       break;
 
     case 'EDIT_SWATCH':
-      msg.config?.styles?.forEach((style: StyleColor, i: number) => {
-        try { updateColor({ style, color: msg.set[i].color as ColorRGB }); }
+      payload.config?.styles?.forEach((style: StyleColor, i: number) => {
+        try { updateColor({ style, color: payload.set[i].color as ColorRGB }); }
         catch (_) { }
       });
       break;
 
     case 'RESIZE_WINDOW':
-      figma.ui.resize(Math.max(msg.width, 540) || DEFAULT_WINDOW_WIDTH, Math.max(msg.height, 320) || DEFAULT_WINDOW_HEIGHT);
+      figma.ui.resize(Math.max(payload.width, 540) || DEFAULT_WINDOW_WIDTH, Math.max(payload.height, 320) || DEFAULT_WINDOW_HEIGHT);
       break;
     default:
 

@@ -1,12 +1,14 @@
 import './index.scss';
-import { ContextMenu as IContextMenu } from "@ctypes/contextmenu";
+import { ContextMenu as IContextMenu, ContextMenuCommand } from "@ctypes/contextmenu";
 import { Fragment, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { send } from "@lib/ipc";
 import { destroy as destroyTooltip } from '@lib/slices/tooltip';
-import { destroy as destroyContextMenu } from '@lib/slices/contextmenu';
+import { destroy as destroyContextMenu, setActiveCommand } from '@lib/slices/contextmenu';
 import { useDispatch } from 'react-redux';
 import { clamp } from '@lib/utils/utils';
+import { Label } from '@components/label';
+
 
 export const ContextMenu = () => {
 
@@ -16,6 +18,15 @@ export const ContextMenu = () => {
     const MENU_WIDTH = 160;
     const lastId = useRef(id);
 
+    const routeDispatch = (command: ContextMenuCommand) => {
+        switch (command.receiver) {
+            case 'API':
+                return send(command);
+            case 'STORE':
+                return dispatch(setActiveCommand(command));
+        }
+    }
+
     useEffect(() => { lastId.current = id; }, [display]);
 
     useEffect(() => {
@@ -24,8 +35,8 @@ export const ContextMenu = () => {
             //if new id has same as before means user clicked outside (since no new id invoked)
             if (lastId.current === id) {
                 dispatch(destroyContextMenu());
-            }else{
-                lastId.current = id;   
+            } else {
+                lastId.current = id;
             }
         };
         window.addEventListener('click', onClick);
@@ -46,10 +57,17 @@ export const ContextMenu = () => {
             style={{ top: `${position.y}px`, left: `${clamp(0, position.x, window.innerWidth - 1.1 * MENU_WIDTH) || position.x}px` }}
         >
             {commands?.map((command, i) => {
-                if(Array.isArray(command) ){
-                    return <Fragment key={JSON.stringify(command) + i}>{command.map( cm => <li key={JSON.stringify(cm) + i} onClick={() => send({ action: cm.action, ...cm.payload })}>{cm.text}</li>)}{i < commands.length-1 && <hr/>}</Fragment>
-                }else{
-                    return(<li key={JSON.stringify(command) + i} onClick={() => send({ action: command.action, ...command.payload })}>{command.text}</li>)
+                if (Array.isArray(command)) {
+                    return <Fragment key={JSON.stringify(command) + i}>
+                        {
+                            command.map(cm => <li key={JSON.stringify(cm) + i} onClick={() => routeDispatch(cm)}><Label iconLeft={cm.icon}>{cm.text}</Label></li>)
+                        }
+                        {
+                            i < commands.length - 1 && <hr />
+                        }
+                    </Fragment>
+                } else {
+                    return (<li key={JSON.stringify(command) + i} onClick={() => routeDispatch(command)}><Label iconLeft={command.icon}>{command.text}</Label></li>)
                 }
             })}
         </ul>

@@ -1,14 +1,17 @@
-import { MousePosition } from "@ctypes/global";
+import { MousePosition, MultiArray } from "@ctypes/global";
 
 
 export interface ContextMenuCommand{
+    icon?:string;
     text:string; 
-    action:string;
-    payload:any;
+    action?:string;
+    payload?:any;
+    receiver:'API' | 'STORE';
 }
 
 export interface ContextMenu{
-    commands: Array<ContextMenuCommand> | Array<Array<ContextMenuCommand>>;
+    commands: MultiArray<ContextMenuCommand>;
     position: MousePosition;
     id:number | string;
+    activeCommand: ContextMenuCommand | undefined;
 }
