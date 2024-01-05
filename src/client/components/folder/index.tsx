@@ -28,8 +28,8 @@ export const Folder = ({
     const dispatch = useDispatch();
     const [display, setDisplay] = useState(true);
     const DEFAULT_COMMANDS: Array<ContextMenuCommand> = [
-        { text: 'Duplicate folder', action: 'DUPLICATE_FOLDER', payload: {}, receiver:'API' },
-        { text: 'Delete folder', action: 'DELETE_FOLDER', payload: {}, receiver:'API' }
+        { text: 'Duplicate folder', action: 'DUPLICATE_FOLDER', payload: {}, receiver: 'API' },
+        { text: 'Delete folder', action: 'DELETE_FOLDER', payload: {}, receiver: 'API' }
     ];
 
     const contextMenuItems = useMemo(() => {
@@ -77,7 +77,7 @@ export const Folder = ({
         const newName = e.target.value;
         const oldName = attributes.title;
         if (newName !== oldName) {
-            send({ action: 'UPDATE_STYLE_FOLDER', level, newName, folder: attributes });
+            send({ action: 'UPDATE_STYLE_FOLDER', payload: { level, newName, folder: attributes } });
         }
     }
 
@@ -86,7 +86,7 @@ export const Folder = ({
             {!hideHeader && <div className='folder-header flex f-row'>
                 <div className="folder-header-left flex f-row">
                     <OptionsRow options={folderIconMap} className='folder-grab' />
-                    <Input value={title} style={{minified:true}} onBlur={handleOnBlur} onEnter={handleOnBlur} />
+                    <Input value={title} style={{ minified: true }} onBlur={handleOnBlur} onEnter={handleOnBlur} />
                 </div>
                 <OptionsRow options={editIconMap} />
             </div>

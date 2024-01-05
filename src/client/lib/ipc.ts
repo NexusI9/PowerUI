@@ -1,10 +1,12 @@
 import { useEffect } from "react";
 
-export function send(request:any){
+type Request = {action:string; payload?:any;};
+
+export function send(request:Request){
     parent.postMessage( { pluginMessage: request }, "*" );
 }
 
-export function get(request:{action:string}){
+export function get(request:Request){
 
     return new Promise<any>((resolve, reject) => {
         send(request);

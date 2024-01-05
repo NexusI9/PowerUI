@@ -24,6 +24,7 @@ figma.ui.resize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 // posted message.
 figma.ui.onmessage = msg => {
 
+  console.log(msg);
   const {action, payload} = msg;
   switch (action) {
 

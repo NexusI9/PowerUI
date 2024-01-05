@@ -12,15 +12,15 @@ import { display as displaySnackBar } from '@lib/slices/snackbar';
 export const Swatch = (props: any) => {
 
     const swatchContextMenu: Array<ContextMenuCommand> = [
-        { text: 'Edit', action: 'MODALE_EDIT_STYLE_COLOR', payload: { style: props }, receiver:'API' },
-        { text: 'Duplicate', action: 'ADD_STYLE_COLOR', payload: { style: props.paints, name: props.name, type:'COLOR'}, receiver:'API' },
-        { text: 'Delete', action: 'DELETE_STYLE', payload: { style: props }, receiver:'API' },
+        { text: 'Edit', action: 'MODALE_EDIT_STYLE_COLOR', payload: { style: props }, receiver: 'API' },
+        { text: 'Duplicate', action: 'ADD_STYLE_COLOR', payload: { style: props.paints, name: props.name, type: 'COLOR' }, receiver: 'API' },
+        { text: 'Delete', action: 'DELETE_STYLE', payload: { style: props }, receiver: 'API' },
     ];
 
     const dispatch = useDispatch();
 
-    const handleOnChange = (e: any) => send({ action: 'UPDATE_STYLE_COLOR', style: props, color: hexToRgb(e.target.value, true) });
-    const handleOnBlur = (e: any) => send({ action: "UPDATE_STYLE_NAME", style: props, name: e.target.value });
+    const handleOnChange = (e: any) => send({ action: 'UPDATE_STYLE_COLOR', payload: { style: props, color: hexToRgb(e.target.value, true) } });
+    const handleOnBlur = (e: any) => send({ action: "UPDATE_STYLE_NAME", payload: { style: props, name: e.target.value } });
 
     const handleContextMenu = (e: any) => {
         dispatch(displayContextMenu({
@@ -76,7 +76,7 @@ export const Swatch = (props: any) => {
                             />
                         </label>
                         <div className='style-item-swatch-detail flex f-row gap-l'>
-                            <Input value={folderNameFromPath(props.name).name} onBlur={handleOnBlur} onEnter={handleOnBlur} style={{minified:true}}/>
+                            <Input value={folderNameFromPath(props.name).name} onBlur={handleOnBlur} onEnter={handleOnBlur} style={{ minified: true }} />
                             <div className='style-item-swatch-codes'>
                                 {
                                     colorValues.map((value, i) => <p key={paint.id + i + value}><small>{value}</small></p>)

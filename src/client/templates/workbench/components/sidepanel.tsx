@@ -22,7 +22,7 @@ export const Sidepanel = () => {
     }
 
     const generateInput = (input: SidepanelList): React.JSX.Element => {
-        console.log(input);
+
         let dynamicComp;
         switch (input.type) {
             case 'INPUT':

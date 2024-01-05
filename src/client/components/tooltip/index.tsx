@@ -54,7 +54,7 @@ export const Tooltip = () => {
 
                 const handleAction = (e: any) => {
                     if (content.type == 'INPUT') {
-                        send({ action: content.action, ...convertPayload(content.payload, e.target.value) })
+                        send({ action: content.action, payload: { ...convertPayload(content.payload, e.target.value) } })
                     }
                 };
                 let dynamicElement;
@@ -65,7 +65,7 @@ export const Tooltip = () => {
                             onBlur={handleAction}
                             onEnter={handleAction}
                             value={content.value}
-                            style={{minified:true}}
+                            style={{ minified: true }}
                             placeholder=''
                         />;
                         break;

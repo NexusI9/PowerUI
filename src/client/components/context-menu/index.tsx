@@ -21,7 +21,7 @@ export const ContextMenu = () => {
     const routeDispatch = (command: ContextMenuCommand) => {
         switch (command.receiver) {
             case 'API':
-                return send(command);
+                return send({ action: command.action || '', payload: {...command.payload} });
             case 'STORE':
                 return dispatch(setActiveCommand(command));
         }
