@@ -22,6 +22,7 @@ import { useEffect } from "react";
 import { get } from "@lib/ipc";
 import { GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 import { setPage } from "@lib/slices/page";
+import { Resizer } from "@components/resizer";
 
 const router = {
     home: <Home />,
@@ -58,6 +59,7 @@ export default () => {
             <Snackbar />
 
             <WorkBench />
+            <Resizer/>
         </>
     );
 }

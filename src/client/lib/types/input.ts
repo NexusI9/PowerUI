@@ -48,6 +48,16 @@ export interface ButtonPad {
     onClick: any;
 }
 
+export interface ButtonIcon{
+    icon: string;
+    onClick?: any; 
+    onMouseDown?:any;
+    onMouseUp?:any;
+    disabled?: boolean;
+    style?: { hover?: boolean };
+    className?:string; 
+}
+
 export interface InputArray {
     value: Array<number | string>;
     min?: number;

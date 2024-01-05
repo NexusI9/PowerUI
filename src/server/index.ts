@@ -14,11 +14,11 @@ import {
 } from "@lib/utils/style";
 import { createSwatch } from "@lib/utils/shade";
 import { ColorRGB } from "@ctypes/color";
-import { GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
+import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 
 
 figma.showUI(__html__, { themeColors: true });
-figma.ui.resize(750, 655);
+figma.ui.resize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 // Calls to "parent.postMessage" from within the HTML page will trigger this
 // callback. The callback will be passed the "pluginMessage" property of the
 // posted message.
@@ -48,7 +48,7 @@ figma.ui.onmessage = msg => {
       break;
 
     case GET_TEXT_STYLES_COMMAND:
-      figma.ui.postMessage({action: msg.action, styles: figma.getLocalTextStyles() });
+      figma.ui.postMessage({ action: msg.action, styles: figma.getLocalTextStyles() });
       break;
 
     case 'UPDATE_STYLE_FOLDER':
@@ -104,6 +104,9 @@ figma.ui.onmessage = msg => {
       });
       break;
 
+    case 'RESIZE_WINDOW':
+      figma.ui.resize(Math.max(msg.width, 540) || DEFAULT_WINDOW_WIDTH, Math.max(msg.height, 320) || DEFAULT_WINDOW_HEIGHT);
+      break;
     default:
 
   }

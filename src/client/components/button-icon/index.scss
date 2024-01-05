@@ -3,8 +3,8 @@
     border: none;
     border-radius: var(--radius-s);
     background-color: transparent;
-    aspect-ratio: 1/1;
     height: auto;
+    aspect-ratio: 1/1;
 
     &[data-hover='1']{
         &:hover{

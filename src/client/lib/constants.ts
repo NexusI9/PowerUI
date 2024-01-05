@@ -30,3 +30,5 @@ export const MATERIAL_DEFAULT_KEYS = [0, 100, 200, 250, 300, 350, 400, 500, 600,
 export const GET_PAINT_STYLES_COMMAND:string = "GET_PAINT_STYLES";
 export const GET_TEXT_STYLES_COMMAND:string = "GET_TEXT_STYLES";
 
+export const DEFAULT_WINDOW_WIDTH:number = 750;
+export const DEFAULT_WINDOW_HEIGHT:number = 655;

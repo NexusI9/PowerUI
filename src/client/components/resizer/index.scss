@@ -1,0 +1,13 @@
+.resizer{
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: var(--size-icon-s);
+    height: var(--size-icon-s);
+    padding: 0;
+    z-index: 4;
+
+    svg{
+        fill: var(--figma-color-icon-tertiary);
+    }
+}
