@@ -53,6 +53,7 @@ export interface ColorConfig extends BaseConfig {
     palette?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'neutral' | 'neutralVariant';
     theme?: 'default' | 'dark';
     keys?:Array<number>;
+    preserve?:boolean;
 }
 
 export interface ColorAdjustConfig extends BaseConfig{

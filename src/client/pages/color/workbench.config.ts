@@ -1,3 +1,4 @@
+import { MultiArray } from "@ctypes/global";
 import { SidepanelInput, Workbench } from "@ctypes/workbench";
 import { MATERIAL_DEFAULT_KEYS } from "@lib/constants";
 
@@ -11,7 +12,7 @@ const basicSidepanelContent: Array<SidepanelInput> = [
             style: { label: true },
             portal: {
                 key: 'colorname',
-                override:false
+                override: false
             }
         },
         configKey: 'name'
@@ -25,7 +26,7 @@ const basicSidepanelContent: Array<SidepanelInput> = [
             style: { label: true },
             portal: {
                 target: 'colorname',
-                colorformat:'NAME'
+                colorformat: 'NAME'
             }
         },
         configKey: 'colorStart'
@@ -46,10 +47,10 @@ const basicSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             placeholder: 'Color mode',
             list: [
-                { text: 'rgb', receiver:'STORE' },
-                { text: 'hsl', receiver:'STORE' },
-                { text: 'lab', receiver:'STORE' },
-                { text: 'lch', receiver:'STORE' }
+                { text: 'rgb', receiver: 'STORE' },
+                { text: 'hsl', receiver: 'STORE' },
+                { text: 'lab', receiver: 'STORE' },
+                { text: 'lch', receiver: 'STORE' }
             ],
             style: { label: true }
         },
@@ -65,12 +66,12 @@ const materialSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             placeholder: 'Palette',
             list: [
-                { text: 'primary', receiver:'STORE' },
-                { text: 'secondary', receiver:'STORE' },
-                { text: 'tertiary', receiver:'STORE' },
-                { text: 'neutral', receiver:'STORE' },
-                { text: 'neutralVariant', receiver:'STORE' },
-                { text: 'error', receiver:'STORE' }
+                { text: 'primary', receiver: 'STORE' },
+                { text: 'secondary', receiver: 'STORE' },
+                { text: 'tertiary', receiver: 'STORE' },
+                { text: 'neutral', receiver: 'STORE' },
+                { text: 'neutralVariant', receiver: 'STORE' },
+                { text: 'error', receiver: 'STORE' }
             ],
             style: { label: true }
         },
@@ -85,7 +86,7 @@ const materialSidepanelContent: Array<SidepanelInput> = [
             style: { label: true },
             portal: {
                 key: 'colorname',
-                override:false
+                override: false
             }
         },
         configKey: 'name'
@@ -99,20 +100,28 @@ const materialSidepanelContent: Array<SidepanelInput> = [
             style: { label: true },
             portal: {
                 target: 'colorname',
-                colorformat:'NAME'
+                colorformat: 'NAME'
             }
         },
         configKey: 'colorStart'
+    },
+    {
+        type: 'CHECKBOX',
+        attributes: {
+            label: 'Preserve primary',
+            value: true,
+        },
+        configKey: 'preserve'
     },
     {
         type: 'INPUT_ARRAY',
         attributes: {
             type: 'NUMBER',
             value: MATERIAL_DEFAULT_KEYS,
-            min:0,
-            max:1000,
+            min: 0,
+            max: 1000,
             placeholder: 'Shade keys',
-            style:{label:true}
+            style: { label: true }
         },
         configKey: 'keys'
     }
@@ -128,7 +137,7 @@ const antSidepanelContent: Array<SidepanelInput> = [
             style: { label: true },
             portal: {
                 key: 'colorname',
-                override:false
+                override: false
             }
         },
         configKey: 'name'
@@ -142,7 +151,7 @@ const antSidepanelContent: Array<SidepanelInput> = [
             style: { label: true },
             portal: {
                 target: 'colorname',
-                colorformat:'NAME'
+                colorformat: 'NAME'
             }
         },
         configKey: 'colorStart'
@@ -152,8 +161,8 @@ const antSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             placeholder: 'Theme',
             list: [
-                { text: 'default', receiver:'STORE' },
-                { text: 'dark', receiver:'STORE' },
+                { text: 'default', receiver: 'STORE' },
+                { text: 'dark', receiver: 'STORE' },
             ],
             style: { label: true }
         },
@@ -172,7 +181,7 @@ const mantineSidepanelContent: Array<SidepanelInput> = [
             style: { label: true },
             portal: {
                 key: 'colorname',
-                override:false
+                override: false
             }
         },
         configKey: 'name'
@@ -186,7 +195,7 @@ const mantineSidepanelContent: Array<SidepanelInput> = [
             style: { label: true },
             portal: {
                 target: 'colorname',
-                colorformat:'NAME'
+                colorformat: 'NAME'
             }
         },
         configKey: 'colorStart'
@@ -203,7 +212,7 @@ const interpolationSidepanelContent: Array<SidepanelInput> = [
             style: { label: true },
             portal: {
                 key: 'colorname',
-                override:false
+                override: false
             }
         },
         configKey: 'name'
@@ -217,7 +226,7 @@ const interpolationSidepanelContent: Array<SidepanelInput> = [
             style: { label: true },
             portal: {
                 target: 'colorname',
-                colorformat:'NAME'
+                colorformat: 'NAME'
             }
         },
         configKey: 'colorStart'
@@ -248,10 +257,10 @@ const interpolationSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             placeholder: 'Color mode',
             list: [
-                { text: 'rgb', receiver:'STORE' },
-                { text: 'hsl', receiver:'STORE' },
-                { text: 'lab', receiver:'STORE' },
-                { text: 'lch', receiver:'STORE' }
+                { text: 'rgb', receiver: 'STORE' },
+                { text: 'hsl', receiver: 'STORE' },
+                { text: 'lab', receiver: 'STORE' },
+                { text: 'lch', receiver: 'STORE' }
             ],
             style: { label: true }
         },
@@ -328,16 +337,16 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
     sidepanel: {
         options: [
             [
-                { text: 'Shades', content: basicSidepanelContent, action: 'SHADE', icon: "shade", receiver:'STORE' },
-                { text: 'Tones', content: basicSidepanelContent, action: 'TONE', icon: "drop", receiver:'STORE' },
-                { text: 'Tints', content: basicSidepanelContent, action: 'TINT', icon: "sun", receiver:'STORE' },
-                { text: 'Interpolation', content: interpolationSidepanelContent, action: 'INTERPOLATION', icon: "interpolation", receiver:'STORE' }
+                { text: 'Shades', content: basicSidepanelContent, action: 'SHADE', icon: "shade", receiver: 'STORE' },
+                { text: 'Tones', content: basicSidepanelContent, action: 'TONE', icon: "drop", receiver: 'STORE' },
+                { text: 'Tints', content: basicSidepanelContent, action: 'TINT', icon: "sun", receiver: 'STORE' },
+                { text: 'Interpolation', content: interpolationSidepanelContent, action: 'INTERPOLATION', icon: "interpolation", receiver: 'STORE' }
             ],
             [
-                { text: 'Material Design', content: materialSidepanelContent, action: 'MATERIAL', icon: "material design", receiver:'STORE' },
-                { text: 'Ant Design', content: antSidepanelContent, action: 'ANT', icon: "ant", receiver:'STORE' },
-                { text: 'Mantine', content: mantineSidepanelContent, action: 'MANTINE', icon: "mantine" , receiver:'STORE'},
-                { text: 'Tailwind', content: mantineSidepanelContent, action: 'TAILWIND', icon: "tailwind" , receiver:'STORE'}
+                { text: 'Material Design', content: materialSidepanelContent, action: 'MATERIAL', icon: "material design", receiver: 'STORE' },
+                { text: 'Ant Design', content: antSidepanelContent, action: 'ANT', icon: "ant", receiver: 'STORE' },
+                { text: 'Mantine', content: mantineSidepanelContent, action: 'MANTINE', icon: "mantine", receiver: 'STORE' },
+                { text: 'Tailwind', content: mantineSidepanelContent, action: 'TAILWIND', icon: "tailwind", receiver: 'STORE' }
             ]
         ]
     },
@@ -353,7 +362,7 @@ export const EDIT_SWATCH_CONFIG: Workbench = {
     type: 'COLOR',
     sidepanel: {
         options: [
-            { text: 'Adjustments', content: adjustSidepanelContent, action: 'COLORADJUST', receiver:'STORE' }
+            { text: 'Adjustments', content: adjustSidepanelContent, action: 'COLORADJUST', receiver: 'STORE' }
         ]
     },
     footer: {

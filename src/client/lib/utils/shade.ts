@@ -54,7 +54,7 @@ export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, na
 /*
 ** MATERIAL DESIGN 
 */
-export function material({ colorStart, steps = 10, name, palette, keys }: ColorConfig): Array<Shade> {
+export function material({ colorStart, steps = 10, name, palette, keys, preserve }: ColorConfig): Array<Shade> {
     const colorArray: Array<Shade> = [];
     const argbColorStart = argbFromHex(colorStart as string);
     const materialTheme = themeFromSourceColor(argbColorStart, []);
@@ -64,14 +64,16 @@ export function material({ colorStart, steps = 10, name, palette, keys }: ColorC
     keys = (keys && keys.length) ? keys : MATERIAL_DEFAULT_KEYS;
     const tones = keys.map(key => materialPalette.tone(key / 10));
 
+ 
     //find closest tone to primary (colorStart) depending on light intensity
-    const closestKeyToPrimary = tones.reduce((curr, prev) => {
+    const closestKeyToPrimary = preserve && tones.reduce((curr, prev) => {
         const primaryL = chroma(colorStart as string).get('hsl.l');
         const currentToneL = chroma(hexFromArgb(curr)).get('hsl.l');
         const prevToneL = chroma(hexFromArgb(prev)).get('hsl.l');
-
         return Math.abs(primaryL - currentToneL) < Math.abs(primaryL - prevToneL) ? curr : prev;
     });
+
+    console.log(preserve);
 
     //apply
     tones.forEach((value, i) => {

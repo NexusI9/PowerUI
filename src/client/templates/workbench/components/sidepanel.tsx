@@ -8,6 +8,7 @@ import { updateConfig } from "@lib/slices/workbench";
 import { ContextMenuCommand } from "@ctypes/contextmenu";
 import { Slider } from "@components/slider";
 import { InputArray } from "@components/input-array";
+import { Checkbox } from "@components/checkbox";
 
 export const Sidepanel = () => {
 
@@ -16,7 +17,7 @@ export const Sidepanel = () => {
 
     const dispatch = useDispatch();
 
-    const updateOption = (option:SidepanelOption) => {
+    const updateOption = (option: SidepanelOption) => {
         setActiveOption(option);
         dispatch(updateConfig({ key: 'action', value: option.action })); //store initial config
     }
@@ -37,8 +38,12 @@ export const Sidepanel = () => {
                 dynamicComp = <Slider {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateConfig({ key: input.configKey, value: e.target.value }))} />
                 break;
 
+            case 'CHECKBOX':
+                dynamicComp = <Checkbox {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateConfig({ key: input.configKey, value: e.target.checked }))} />;
+                break;
+
             case 'DROPDOWN':
-                dynamicComp = <Dropdown {...input.attributes} onChange={(e:ContextMenuCommand) => dispatch(updateConfig({ key: input.configKey, value: e.text }))} />;
+                dynamicComp = <Dropdown {...input.attributes} onChange={(e: ContextMenuCommand) => dispatch(updateConfig({ key: input.configKey, value: e.text }))} />;
                 break;
 
             default:
