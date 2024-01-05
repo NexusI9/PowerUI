@@ -10,10 +10,7 @@ export const Resizer = () => {
 
     useEffect(() => {
 
-        const onMouseMove = (e: any) =>{
-            console.log(e);
-            send({ action: 'RESIZE_WINDOW', width: e.x, height: e.y });
-         };
+        const onMouseMove = (e: any) => send({ action: 'RESIZE_WINDOW', width: e.x, height: e.y });
         const setFalse = () => setActive(false);
 
         if (active) {
