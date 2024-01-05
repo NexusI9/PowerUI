@@ -15,7 +15,7 @@ export const Tooltip = () => {
     const [hover, setHover] = useState(false);
     const checkTimeout: any = useRef();
 
-    const MAX_WIDTH = 100; //tooltip max width
+    const MAX_WIDTH = 130; //tooltip max width
     const OVERLAP_MARGIN = 2; //margin to maintain hover state when mouse goes out of target to got to tooltip
 
 

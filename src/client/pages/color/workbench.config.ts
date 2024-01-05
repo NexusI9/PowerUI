@@ -1,7 +1,7 @@
-import { SidepanelList, Workbench } from "@ctypes/workbench";
+import { SidepanelInput, Workbench } from "@ctypes/workbench";
 import { MATERIAL_DEFAULT_KEYS } from "@lib/constants";
 
-const basicSidepanelContent: Array<SidepanelList> = [
+const basicSidepanelContent: Array<SidepanelInput> = [
     {
         type: 'INPUT',
         attributes: {
@@ -59,7 +59,7 @@ const basicSidepanelContent: Array<SidepanelList> = [
 ];
 
 
-const materialSidepanelContent: Array<SidepanelList> = [
+const materialSidepanelContent: Array<SidepanelInput> = [
     {
         type: 'DROPDOWN',
         attributes: {
@@ -118,7 +118,7 @@ const materialSidepanelContent: Array<SidepanelList> = [
     }
 ];
 
-const antSidepanelContent: Array<SidepanelList> = [
+const antSidepanelContent: Array<SidepanelInput> = [
     {
         type: 'INPUT',
         attributes: {
@@ -162,7 +162,7 @@ const antSidepanelContent: Array<SidepanelList> = [
 ];
 
 
-const mantineSidepanelContent: Array<SidepanelList> = [
+const mantineSidepanelContent: Array<SidepanelInput> = [
     {
         type: 'INPUT',
         attributes: {
@@ -194,7 +194,7 @@ const mantineSidepanelContent: Array<SidepanelList> = [
 ];
 
 
-const interpolationSidepanelContent: Array<SidepanelList> = [
+const interpolationSidepanelContent: Array<SidepanelInput> = [
     {
         type: 'INPUT',
         attributes: {
@@ -259,7 +259,7 @@ const interpolationSidepanelContent: Array<SidepanelList> = [
     }
 ];
 
-const adjustSidepanelContent: Array<SidepanelList> = [
+const adjustSidepanelContent: Array<SidepanelInput> = [
     {
         type: 'SLIDER',
         attributes: {

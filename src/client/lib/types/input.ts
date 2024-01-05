@@ -1,4 +1,4 @@
-import {ContextMenuCommand} from '@ctypes/contextmenu';
+import { ContextMenuCommand } from '@ctypes/contextmenu';
 import { MultiArray } from './global';
 
 export interface Input {
@@ -27,6 +27,12 @@ export interface Dropdown extends Input {
     list: MultiArray<ContextMenuCommand>;
 }
 
+export interface Checkbox {
+    label?: string;
+    value?: boolean;
+    onChange?: any;
+}
+
 
 export interface Slider {
     value?: number;
@@ -50,14 +56,14 @@ export interface ButtonPad {
     onClick: any;
 }
 
-export interface ButtonIcon{
+export interface ButtonIcon {
     icon: string;
-    onClick?: any; 
-    onMouseDown?:any;
-    onMouseUp?:any;
+    onClick?: any;
+    onMouseDown?: any;
+    onMouseUp?: any;
     disabled?: boolean;
     style?: { hover?: boolean };
-    className?:string; 
+    className?: string;
 }
 
 export interface InputArray {
@@ -68,5 +74,5 @@ export interface InputArray {
     placeholder: string;
     float?: boolean;
     onChange?: any;
-    style?:{label?:boolean};
+    style?: { label?: boolean };
 }

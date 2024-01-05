@@ -1,5 +1,5 @@
 import { ColorRGB } from "@ctypes/color";
-import { Workbench, ColorConfig, FontConfig, SidepanelOption, SidepanelList, SetMethod, Set, ColorAdjustConfig } from "@ctypes/workbench";
+import { Workbench, ColorConfig, FontConfig, SidepanelOption, SidepanelInput, SetMethod, Set, ColorAdjustConfig } from "@ctypes/workbench";
 import { ant, colorAdjust, interpolate, mantine, material, tailwind } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";
 import { createSlice } from "@reduxjs/toolkit";
@@ -33,8 +33,8 @@ const workbenchSlice = createSlice({
             const initConfig: { [key: string]: any } = { ...payload.config };
             if (payload.sidepanel) {
                 traverseCallback(payload.sidepanel, ({ options }: { options: SidepanelOption }) =>
-                    traverseCallback(options, ({ content }: { content: SidepanelList }) =>
-                        traverseCallback(content, (input: SidepanelList) => {
+                    traverseCallback(options, ({ content }: { content: SidepanelInput }) =>
+                        traverseCallback(content, (input: SidepanelInput) => {
                             try { initConfig[input.configKey] = input.attributes.value; } catch (_) { }
                         }
                         )));

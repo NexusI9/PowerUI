@@ -1,4 +1,4 @@
-import { Dropdown, Input, InputArray, Slider } from "@ctypes/input";
+import { Dropdown, Input, InputArray, Slider, Checkbox } from "@ctypes/input";
 import { Shade } from "./shade";
 import { ColorRGB } from "./color";
 import { StyleColor, StyleFolder } from "./style";
@@ -18,14 +18,15 @@ export type SetMethod = 'SHADE' |
                         'COLORADJUST' |
                         'TAILWIND';
 
-export type SidepanelList =
+export type SidepanelInput =
     { type: 'INPUT'; attributes: Input; configKey: keyof ColorConfig | keyof FontConfig; } |
     { type: 'DROPDOWN'; attributes: Dropdown; configKey: keyof ColorConfig | keyof FontConfig; } |
-    { type: 'INPUT_ARRAY'; attributes: InputArray; configKey: keyof ColorConfig; } |
+    { type: 'CHECKBOX'; attributes: Checkbox; configKey: keyof ColorConfig | keyof FontConfig; } |
+    { type: 'INPUT_ARRAY'; attributes: InputArray; configKey: keyof ColorConfig | keyof FontConfig; } |
     { type: 'SLIDER'; attributes: Slider; configKey: keyof ColorAdjustConfig; } 
 
 export interface SidepanelOption extends ContextMenuCommand {
-    content: MultiArray<SidepanelList>;
+    content: MultiArray<SidepanelInput>;
 };
 
 export interface Sidepanel {

@@ -1,5 +1,5 @@
 import { Dropdown } from "@components/dropdown";
-import { SidepanelList, SidepanelOption } from "@lib/types/workbench";
+import { SidepanelInput, SidepanelOption } from "@lib/types/workbench";
 import { BaseSyntheticEvent, Fragment, useEffect, useState } from "react";
 import { itemFromIndex, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
@@ -21,7 +21,7 @@ export const Sidepanel = () => {
         dispatch(updateConfig({ key: 'action', value: option.action })); //store initial config
     }
 
-    const generateInput = (input: SidepanelList): React.JSX.Element => {
+    const generateInput = (input: SidepanelInput): React.JSX.Element => {
 
         let dynamicComp;
         switch (input.type) {
