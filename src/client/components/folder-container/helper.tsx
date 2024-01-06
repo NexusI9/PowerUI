@@ -21,7 +21,7 @@ export function generateFolder(folder: Array<StyleFolder>, styleItem: React.Func
         >
             <>
                 <div className="folder-style flex f-row gap-s f-center-h">
-                    {item.styles.map(style => React.createElement(styleItem, style))}
+                    {item.styles.map((style,i) => <React.Fragment key={style.id+i}>{React.createElement(styleItem, style)}</React.Fragment>)}
                     <ButtonIcon icon={Add} onClick={handleAddItem} />
                 </div>
                 {generateFolder(item.folders, styleItem, onAddItem, options)}
