@@ -156,5 +156,4 @@ export function sort_by_hsl(styles: Array<PaintStyle>, proprety: 'HUE' | 'BRIGHT
 
     replaceStyle(styles);
 
-
 }

@@ -145,10 +145,10 @@ export function folderNameFromPath(path: string) {
     };
 }
 
-export function addStyle({ folder, name, style, type }: { folder?: string, name: string, style: any, type: 'COLOR' | 'TEXT' | 'PAINT' }) {
+export function addStyle({ folder, name, style, type }: { folder?: string, name: string, style: any, type: 'TEXT' | 'PAINT' }) {
     switch (type) {
 
-        case 'COLOR':
+        case 'PAINT':
             const newPaintStyle = figma.createPaintStyle();
             newPaintStyle.name = concatFolderName([folder, name]);
             newPaintStyle.paints = style || DEFAULT_STYLE_COLOR;
@@ -177,12 +177,15 @@ export function sort_by_name(styles: Array<Styles>) {
 export function replaceStyle(list: Array<Styles>) {
 
     list.forEach((item) => {
-        figma.getStyleById(item.id)?.remove();
-        addStyle({
-            name: item.name,
-            style: (item.type === 'PAINT' && item.paints) || (item.type === 'TEXT' && item),
-            type: item.type
-        });
+        const style = figma.getStyleById(item.id);
+        if (style) {
+            style.remove();
+            addStyle({
+                name: item.name,
+                style: (item.type === 'PAINT' && item.paints) || (item.type === 'TEXT' && item),
+                type: item.type
+            });
+        }
     });
 
 }
