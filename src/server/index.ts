@@ -15,6 +15,7 @@ import {
 import { createSwatch } from "@lib/utils/shade";
 import { ColorRGB } from "@ctypes/color";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
+import { clone } from "@lib/utils/utils";
 
 
 figma.showUI(__html__, { themeColors: true });
@@ -24,7 +25,7 @@ figma.ui.resize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 // posted message.
 figma.ui.onmessage = msg => {
 
-  const {action, payload} = msg;
+  const { action, payload } = msg;
   switch (action) {
 
     //styles references: https://www.figma.com/plugin-docs/api/figma/#styles
@@ -44,12 +45,11 @@ figma.ui.onmessage = msg => {
       break;
 
     case GET_PAINT_STYLES_COMMAND:
-      let paintStyles: Array<StyleColor> = figma.getLocalPaintStyles().map(({ name, id, key, paints }) => ({ id, figmaKey: key, name, paints: paints as Paint[], type: "COLOR" })); //only keep necessary keys;
-      figma.ui.postMessage({ action: action, styles: classifyStyle(paintStyles) });
+      figma.ui.postMessage({ action: action, styles: classifyStyle(figma.getLocalPaintStyles()) });
       break;
 
     case GET_TEXT_STYLES_COMMAND:
-      figma.ui.postMessage({ action: action, styles: figma.getLocalTextStyles() });
+      figma.ui.postMessage({ action: action, styles: classifyStyle(figma.getLocalTextStyles()) });
       break;
 
     case 'UPDATE_STYLE_FOLDER':

@@ -2,64 +2,61 @@ import { ColorRGB } from "@ctypes/color";
 import { StyleColor, StyleFolder, Styles } from "@ctypes/style";
 import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
-import { clone } from '@lib/utils/utils';
+import { clone, shallowClone } from '@lib/utils/utils';
 
-export function classifyStyle(style: Array<Styles>): Array<Styles | StyleFolder> {
+export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
-    //initial folder
-    let level = -1; // -1 cause Root (declared below) acts as a fake (hidden directory)
-    let organisedFolder: StyleFolder = {
+    //Set initial folder
+    let rootFolder: StyleFolder = {
         type: 'FOLDER',
-        title: '',
+        name: '',
         fullpath: '',
-        level: level,
+        level: -1,// -1 cause Root (declared below) acts as a fake (hidden directory)
         styles: [],
         folders: []
     };
 
 
     const createFolder: any = (structure: StyleFolder, path: string, style: Styles) => {
+        //separate base folder from rest of path
         const [folder, ...rest] = path.split('/');
+        const isStyle = !!!rest.length;
 
-        if (!rest.length) { //endpoint
-            level = -1;
-            return structure.styles.push(style);
-        }
-
-        //update tree level
-        level++;
-
-        let foundFolder = structure.folders.find(item => item.title === folder);
-        if (!foundFolder) { //first iteration
-
-            foundFolder = {
-                type: 'FOLDER',
-                title: folder,
-                fullpath: structure.fullpath.length && [structure.fullpath, folder].join('/') || folder,
-                level: level,
-                styles: [],
-                folders: []
-            };
-
-            structure.folders.push(foundFolder);
-
-        }
-
-        if (!!rest.length) {
-            createFolder(foundFolder, rest.join('/'), style);
+        if (isStyle) {
+            //push style to current structure
+            structure.styles.push(shallowClone(style) as any);
         } else {
-            foundFolder.styles.push(style);
-            level = -1;
+            //check if a subfolder already exists
+            let foundFolder = structure.folders.find(item => item.name === folder);
+
+            //if subfolder doesn't already exists 
+            if (!foundFolder) {
+                //create subfolder
+                foundFolder = {
+                    type: 'FOLDER',
+                    name: folder,
+                    fullpath: structure.fullpath.length && [structure.fullpath, folder].join('/') || folder,
+                    level: Math.max(0, style.name.split('/').length - 2),
+                    styles: [shallowClone(style) as any],
+                    folders: []
+                };
+
+                //push subfolder to current structure
+                structure.folders.push(foundFolder);
+            }
+
+            //dig within style
+            createFolder(foundFolder, rest.join('/'), style);
         }
+
+
 
     };
 
-    style.forEach((item) => {
-        item.title = item.name.split('/').slice(-1)[0] || item.name;
-        createFolder(organisedFolder, item.name, item); //append to root
-    });
+    style.forEach((item) => createFolder(rootFolder, item.name, item)); //append to root;
+    return [rootFolder];
 
-    return [organisedFolder];
+
 }
 
 
@@ -148,7 +145,7 @@ export function folderNameFromPath(path: string) {
     };
 }
 
-export function addStyle({ folder, name, style, type }: { folder?: string, name: string, style: any, type: 'COLOR' | 'TEXT' }) {
+export function addStyle({ folder, name, style, type }: { folder?: string, name: string, style: any, type: 'COLOR' | 'TEXT' | 'PAINT' }) {
     switch (type) {
 
         case 'COLOR':
@@ -183,7 +180,7 @@ export function replaceStyle(list: Array<Styles>) {
         figma.getStyleById(item.id)?.remove();
         addStyle({
             name: item.name,
-            style: (item.type === 'COLOR' && item.paints) || (item.type === 'TEXT' && item.texts),
+            style: (item.type === 'COLOR' || item.type === 'PAINT' && item.paints) || (item.type === 'TEXT' && item),
             type: item.type
         });
     });
@@ -267,7 +264,7 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
 
         addStyle({
             name: concatFolderName([...convertedName, name]),
-            style: (item.type === 'COLOR' && item.paints) || (item.type === 'TEXT' && item.texts),
+            style: (item.type === 'COLOR' || item.type === 'PAINT' && item.paints) || (item.type === 'TEXT' && item),
             type: item.type
         });
     });

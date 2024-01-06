@@ -7,12 +7,12 @@ import Add from '@icons/add.svg';
 export function generateFolder(folder: Array<StyleFolder>, styleItem: React.FunctionComponent, onAddItem: any, options?: {}): any {
     return folder.map((item: StyleFolder, i: number) => {
 
-        const isRoot = !item.title.length;
+        const isRoot = !item.name.length;
         const handleAddItem = () => onAddItem({ folder: item.fullpath, name: 'new-style'});
-
+ 
         return <Folder
-            key={item.title + i}
-            title={item.title}
+            key={item.name + i}
+            title={item.name}
             options={options}
             allowEdit={!!item.styles.length}
             attributes={item}

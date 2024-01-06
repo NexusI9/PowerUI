@@ -2,6 +2,12 @@ export function clone(val: any) {
     return JSON.parse(JSON.stringify(val))
 }
 
+export function shallowClone(obj: any) {
+    let copy: { [key: string]: any } = {};
+    for (let key in obj) { copy[key] = obj[key as keyof typeof obj]; }
+    return copy || obj;
+}
+
 export function clamp(min: number, value: number, max: number): number {
     if (value <= min) { return min; }
     if (value >= max) { return max; }

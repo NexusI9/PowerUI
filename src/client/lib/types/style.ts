@@ -16,10 +16,10 @@ export interface StyleText{
     type:"TEXT";
 }
 
-export type Styles = StyleColor | StyleText;
+export type Styles = StyleColor | StyleText | PaintStyle | TextStyle;
 
 export interface StyleFolder{
-    title:string;
+    name:string;
     type:"FOLDER";
     fullpath:string;
     styles:Array<Styles>;

@@ -1,6 +1,7 @@
 import { Font } from "@components/font/font";
 import { Style } from "@templates/style";
 import FontPlus from '@icons/font-plus.svg';
+import { GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 
 
 export default () => (
@@ -13,7 +14,7 @@ export default () => (
             text: 'Create Fonts Set',
             onClick: () => 0
         }}
-        getStyleMethod="GET_TEXT_STYLES"
+        getStyleMethod={GET_TEXT_STYLES_COMMAND}
         styleItem={Font}
     />
-    );
+);
