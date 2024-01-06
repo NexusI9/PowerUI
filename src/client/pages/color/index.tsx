@@ -7,7 +7,7 @@ import SwatchIcon from '@icons/swatch.svg';
 import { useDispatch } from "react-redux";
 import { spawn } from "@lib/slices/workbench";
 import { CREATE_SWATCH_CONFIG, EDIT_SWATCH_CONFIG } from "./workbench.config";
-import { StyleColor, StyleFolder } from "@lib/types/style";
+import { StyleFolder } from "@lib/types/style";
 import { GET_PAINT_STYLES_COMMAND } from "@lib/constants";
 
 export default () => {
@@ -43,7 +43,7 @@ export default () => {
                         { text: 'Sort by brightness', action: 'SORT_STYLE_COLOR_BRIGHTNESS', payload: {}, receiver: 'API' },
                         { text: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', payload: {}, receiver: 'API' }
                     ],
-                    edit: { onClick: (folder: StyleFolder) => dispatch(spawn({ ...EDIT_SWATCH_CONFIG, folder: folder, config: { styles: [...folder.styles as Array<StyleColor>] } })) }
+                    edit: { onClick: (folder: StyleFolder) => dispatch(spawn({ ...EDIT_SWATCH_CONFIG, folder: folder, config: { styles: [...folder.styles as Array<PaintStyle>] } })) }
                 }
             }}
         />);

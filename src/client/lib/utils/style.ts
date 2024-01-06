@@ -1,5 +1,5 @@
 import { ColorRGB } from "@ctypes/color";
-import { StyleColor, StyleFolder, Styles } from "@ctypes/style";
+import { StyleFolder, Styles } from "@ctypes/style";
 import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { clone, shallowClone } from '@lib/utils/utils';
@@ -84,7 +84,7 @@ export function updateFolderName({ folder, level, name }: { folder: StyleFolder,
 
 }
 
-export function updateColor({ style, color }: { style: StyleColor, color: ColorRGB | string }): void {
+export function updateColor({ style, color }: { style: PaintStyle, color: ColorRGB | string }): void {
 
     const figmaStyle = figma.getStyleById(style.id) as PaintStyle;
     const newPaint = clone(figmaStyle.paints);
@@ -149,15 +149,15 @@ export function addStyle({ folder, name, style, type }: { folder?: string, name:
     switch (type) {
 
         case 'COLOR':
-            const newStyleColor = figma.createPaintStyle();
-            newStyleColor.name = concatFolderName([folder, name]);
-            newStyleColor.paints = style || DEFAULT_STYLE_COLOR;
+            const newPaintStyle = figma.createPaintStyle();
+            newPaintStyle.name = concatFolderName([folder, name]);
+            newPaintStyle.paints = style || DEFAULT_STYLE_COLOR;
             break;
 
         case 'TEXT':
-            const newStyleText = figma.createTextStyle();
-            newStyleText.name = concatFolderName([folder, name]);
-            newStyleText.textCase = style || DEFAULT_STYLE_COLOR;
+            const newTextStyle = figma.createTextStyle();
+            newTextStyle.name = concatFolderName([folder, name]);
+            newTextStyle.textCase = style || DEFAULT_STYLE_COLOR;
             break;
     }
 
@@ -180,7 +180,7 @@ export function replaceStyle(list: Array<Styles>) {
         figma.getStyleById(item.id)?.remove();
         addStyle({
             name: item.name,
-            style: (item.type === 'COLOR' || item.type === 'PAINT' && item.paints) || (item.type === 'TEXT' && item),
+            style: (item.type === 'PAINT' && item.paints) || (item.type === 'TEXT' && item),
             type: item.type
         });
     });
@@ -240,7 +240,7 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
     //get Styles depending on type
     const styles: Array<PaintStyle | TextStyle> = [];
     switch (folder.styles[0].type) {
-        case 'COLOR':
+        case 'PAINT':
             styles.push(...figma.getLocalPaintStyles());
             break;
         case 'TEXT':
@@ -264,7 +264,7 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
 
         addStyle({
             name: concatFolderName([...convertedName, name]),
-            style: (item.type === 'COLOR' || item.type === 'PAINT' && item.paints) || (item.type === 'TEXT' && item),
+            style: (item.type === 'PAINT' && item.paints) || (item.type === 'TEXT' && item),
             type: item.type
         });
     });

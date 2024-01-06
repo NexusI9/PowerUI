@@ -7,7 +7,6 @@ import chroma, { InterpolationMode } from 'chroma-js';
 import { argbFromHex, themeFromSourceColor, hexFromArgb } from '@material/material-color-utilities';
 import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, rgb } from "./color";
 import { generate } from '@ant-design/colors';
-import { StyleColor } from "@ctypes/style";
 import { clamp, envelop, mix } from "./utils";
 import { checkContrast, convertTemperature } from "./shade.helper";
 import TailwindPalette, { Palette } from '@lib/vendor/tailwind-swatch';
@@ -153,7 +152,7 @@ export function tailwind({ colorStart, name }: ColorConfig): Array<Shade> {
 export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
 
 
-    return props.styles.map((style: StyleColor, i: number) => {
+    return props.styles.map((style: PaintStyle, i: number) => {
 
         const { color } = style.paints[0] as SolidPaint;
         const { hue, saturation, brightness, contrast, temperature, tint } = props;

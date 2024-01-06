@@ -1,7 +1,6 @@
 // full browser environment (See https://www.figma.com/plugin-docs/how-plugins-run).
 
 import { sort_by_hsl } from "@lib/utils/color";
-import { StyleColor } from "@ctypes/style";
 import {
   classifyStyle,
   updateColor,
@@ -15,7 +14,6 @@ import {
 import { createSwatch } from "@lib/utils/shade";
 import { ColorRGB } from "@ctypes/color";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
-import { clone } from "@lib/utils/utils";
 
 
 figma.showUI(__html__, { themeColors: true });
@@ -99,7 +97,7 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'EDIT_SWATCH':
-      payload.config?.styles?.forEach((style: StyleColor, i: number) => {
+      payload.config?.styles?.forEach((style: PaintStyle, i: number) => {
         try { updateColor({ style, color: payload.set[i].color as ColorRGB }); }
         catch (_) { }
       });

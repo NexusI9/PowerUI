@@ -1,7 +1,7 @@
 import { Dropdown, Input, InputArray, Slider, Checkbox } from "@ctypes/input";
+import { StyleFolder } from "@ctypes/style";
 import { Shade } from "./shade";
 import { ColorRGB } from "./color";
-import { StyleColor, StyleFolder } from "./style";
 import { ContextMenuCommand } from "./contextmenu";
 import { MultiArray } from "./global";
 
@@ -64,7 +64,7 @@ export interface ColorAdjustConfig extends BaseConfig{
     temperature?:number;
     tint?:number;
     folder?:string;
-    styles:Array<StyleColor>;
+    styles:Array<PaintStyle>;
 }
 
 export interface FontConfig extends BaseConfig {

@@ -1,5 +1,4 @@
 import { ColorRGB, ColorOutput, ColorHSL } from '@ctypes/color';
-import { StyleColor, StyleText } from '@ctypes/style';
 import { replaceStyle } from './style';
 
 function to255(color: ColorRGB) {
@@ -129,7 +128,7 @@ export function hslToRgb(hsl: ColorHSL, normalize: boolean = false, ouput: 'STRI
 
 
 
-export function sort_by_hsl(styles: Array<StyleColor>, proprety: 'HUE' | 'BRIGHTNESS' | 'SATURATION' = 'BRIGHTNESS') {
+export function sort_by_hsl(styles: Array<PaintStyle>, proprety: 'HUE' | 'BRIGHTNESS' | 'SATURATION' = 'BRIGHTNESS') {
 
     styles.sort((a, b) => {
 

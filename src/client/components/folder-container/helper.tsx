@@ -8,8 +8,8 @@ export function generateFolder(folder: Array<StyleFolder>, styleItem: React.Func
     return folder.map((item: StyleFolder, i: number) => {
 
         const isRoot = !item.name.length;
-        const handleAddItem = () => onAddItem({ folder: item.fullpath, name: 'new-style'});
- 
+        const handleAddItem = () => onAddItem({ folder: item.fullpath, name: 'new-style' });
+
         return <Folder
             key={item.name + i}
             title={item.name}
@@ -21,7 +21,7 @@ export function generateFolder(folder: Array<StyleFolder>, styleItem: React.Func
         >
             <>
                 <div className="folder-style flex f-row gap-s f-center-h">
-                    {item.styles.map(style => React.createElement(styleItem, { key: style.id, ...style }))}
+                    {item.styles.map(style => React.createElement(styleItem, style))}
                     <ButtonIcon icon={Add} onClick={handleAddItem} />
                 </div>
                 {generateFolder(item.folders, styleItem, onAddItem, options)}

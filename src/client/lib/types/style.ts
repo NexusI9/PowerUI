@@ -1,22 +1,4 @@
-export interface StyleColor{
-    id:string; 
-    figmaKey:string; 
-    name:string;
-    title?:string;
-    paints: Array<Paint>;
-    type:"COLOR";
-}
-
-export interface StyleText{
-    id:string; 
-    figmaKey:string; 
-    name:string;
-    title?:string;
-    texts: Array<Text>;
-    type:"TEXT";
-}
-
-export type Styles = StyleColor | StyleText | PaintStyle | TextStyle;
+export type Styles = PaintStyle | TextStyle;
 
 export interface StyleFolder{
     name:string;

@@ -9,7 +9,7 @@ import { FolderContainer } from "@components/folder-container";
 import { ButtonPad as IButtonPad } from "@ctypes/input";
 import { FolderOptions } from '@ctypes/folder';
 import { get, listen } from '@lib/ipc';
-import { StyleColor, StyleFolder, StyleText } from "@ctypes/style";
+import { StyleFolder } from "@ctypes/style";
 
 interface StyleTemplate {
     title: string;
