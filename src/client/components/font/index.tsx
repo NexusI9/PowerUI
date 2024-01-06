@@ -5,7 +5,7 @@ import './index.scss';
 import { Icon } from '@components/icon';
 
 export const Font = (props: any) => {
-
+    
     const style = {
         fontWeight:props.fontName.style, 
         fontSize:props.fontSize+'px',
