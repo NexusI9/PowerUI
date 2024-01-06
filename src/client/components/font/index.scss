@@ -1,0 +1,24 @@
+.style-item-font {
+
+    display: grid;
+    grid-template-columns: 120px auto;
+
+    ul {
+
+        padding: 0;
+        list-style: none;
+
+        li {
+            color: var(--figma-color-text-tertiary);
+
+            svg {
+                fill: var(--figma-color-icon-tertiary);
+                width: var(--size-icon-xs);
+                height: var(--size-icon-xs);
+            }
+        }
+
+
+    }
+
+}

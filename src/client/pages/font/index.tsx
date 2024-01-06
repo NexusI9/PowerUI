@@ -1,4 +1,4 @@
-import { Font } from "@components/font/font";
+import { Font } from "@components/font";
 import { Style } from "@templates/style";
 import FontPlus from '@icons/font-plus.svg';
 import { GET_TEXT_STYLES_COMMAND } from "@lib/constants";

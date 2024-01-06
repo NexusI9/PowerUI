@@ -273,3 +273,19 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
     });
 
 }
+
+export function convertUnit(unit:string):string{
+
+        switch(unit){
+            case 'PIXELS':
+                return 'px';
+            case 'PERCENT':
+                return '%';
+            case 'POINTS':
+                return 'pt';
+            case 'PICAS':
+                return 'pc';
+        }
+
+        return unit;
+}

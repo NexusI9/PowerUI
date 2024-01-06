@@ -73,6 +73,7 @@ export const Style = ({
         setHeaderOptions(optionMap);
     }, [styles, displayMode]);
 
+
     return (<>
         {!!headerOptions.length && <SectionHeader title={title} options={headerOptions} />}
         {styles ? (!!styles.length ?
