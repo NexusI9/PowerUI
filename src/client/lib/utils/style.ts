@@ -1,8 +1,8 @@
 import { ColorRGB } from "@ctypes/color";
-import { StyleColor, StyleFolder, StyleText, Styles } from "@ctypes/style";
+import { StyleColor, StyleFolder, Styles } from "@ctypes/style";
 import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
-import { clone, isNumber, lastIndexOfArray } from '@lib/utils/utils';
+import { clone } from '@lib/utils/utils';
 
 export function classifyStyle(style: Array<Styles>): Array<Styles | StyleFolder> {
 
