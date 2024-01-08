@@ -9,7 +9,8 @@ import {
   addStyle,
   get_styles_of_folder,
   sort_by_name,
-  duplicateFolder
+  duplicateFolder,
+  updateText
 } from "@lib/utils/style";
 import { createSwatch } from "@lib/utils/shade";
 import { ColorRGB } from "@ctypes/color";
@@ -62,7 +63,11 @@ figma.ui.onmessage = msg => {
       updateColor(payload);
       break;
 
-    case 'ADD_STYLE_COLOR':
+    case 'UPDATE_STYLE_TEXT': 
+      updateText(payload);
+      break;
+
+    case 'ADD_STYLE':
       addStyle(payload);
       break;
 

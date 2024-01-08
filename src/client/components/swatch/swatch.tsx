@@ -13,7 +13,7 @@ export const Swatch = (props: any) => {
 
     const swatchContextMenu: Array<ContextMenuCommand> = [
         { text: 'Edit', action: 'MODALE_EDIT_STYLE_COLOR', payload: { style: props }, receiver: 'API' },
-        { text: 'Duplicate', action: 'ADD_STYLE_COLOR', payload: { style: props.paints, name: props.name, type: 'COLOR' }, receiver: 'API' },
+        { text: 'Duplicate', action: 'ADD_STYLE', payload: { style: props.paints, name: props.name, type: 'COLOR' }, receiver: 'API' },
         { text: 'Delete', action: 'DELETE_STYLE', payload: { style: props }, receiver: 'API' },
     ];
 

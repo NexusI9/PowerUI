@@ -35,7 +35,7 @@ export default () => {
     };
 
     const handleAddItem = ({ folder, name }: { folder: string, name: string }) => {
-        send({ action: "ADD_STYLE_COLOR", payload: { folder, name, type: 'COLOR' } });
+        send({ action: "ADD_STYLE", payload: { folder, name, type: 'COLOR' } });
     };
 
     const dispatch = useDispatch();

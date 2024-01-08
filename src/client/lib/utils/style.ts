@@ -3,6 +3,7 @@ import { StyleFolder, Styles } from "@ctypes/style";
 import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { clone, shallowClone } from '@lib/utils/utils';
+import { WritablePart } from "@ctypes/global";
 
 export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
@@ -88,24 +89,41 @@ export function updateColor({ style, color }: { style: PaintStyle, color: ColorR
 
     const figmaStyle = figma.getStyleById(style.id) as PaintStyle;
     const newPaint = clone(figmaStyle.paints);
+    //check color type (can take Hex or {r,g,b})
+    color = (typeof color === 'string') ? hexToRgb(color, true) : color;
 
     try {
-        //check color type (can take Hex or {r,g,b})
-        switch (typeof color) {
-
-            case 'string':
-                color = hexToRgb(color, true);
-                break;
-        }
-
         newPaint.map((paint: any) => { paint.color = color; });
         figmaStyle.paints = newPaint;
-    } catch (_) {
-        console.warn(_);
+    } catch (e) {
+        console.warn(e);
     }
 
     return;
 
+}
+
+export function updateText({ style, newStyle }: { style: TextStyle, newStyle: Partial<WritablePart<TextStyle>> }): void {
+
+    const figmaStyle = figma.getStyleById(style.id) as any;
+    if(!figmaStyle){ return; }
+
+    let key: keyof typeof newStyle;
+    for (key in newStyle) {
+        if (!newStyle.hasOwnProperty(key)) { continue; }
+        try{
+            //concat base folder with new name
+            if(key === 'name'){
+                const { folder } = folderNameFromPath(figmaStyle[key]);
+                newStyle[key] = concatFolderName([folder, newStyle[key]]);
+            }
+            //apply relative key
+            figmaStyle[key] = newStyle[key];
+        }catch(e){
+            console.warn(e);
+        }
+
+    }
 }
 
 export function folderAtLevel(folder: string, level: number): string {
@@ -274,25 +292,25 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
 
 }
 
-export function convertUnit(unit:string):string{
-        return {
-            'PIXELS':'px',
-            'PERCENT':'%',
-            'POINTS':'pt',
-            'PICAS':'pc',
-            'AUTO':'auto'
-        }[unit] || unit;
+export function convertUnit(unit: string): string {
+    return {
+        'PIXELS': 'px',
+        'PERCENT': '%',
+        'POINTS': 'pt',
+        'PICAS': 'pc',
+        'AUTO': 'auto'
+    }[unit] || unit;
 }
 
-export function convertFont(font:string):string{
-        return{
-            'Thin':'100',
-            'Extra Light': '200',
-            'Light':'300',
-            'Regular':'400',
-            'Semi Bold':'600',
-            'Bold': '700',
-            'Extra Bold':'800',
-            'Black':'900'
-        }[font] || font
+export function convertFont(font: string): string {
+    return {
+        'Thin': '100',
+        'Extra Light': '200',
+        'Light': '300',
+        'Regular': '400',
+        'Semi Bold': '600',
+        'Bold': '700',
+        'Extra Bold': '800',
+        'Black': '900'
+    }[font] || font
 }

@@ -6,12 +6,19 @@ import { Icon } from '@components/icon';
 import { useSelector } from 'react-redux';
 import { Input } from '@components/input';
 import { BaseSyntheticEvent } from 'react';
+import { send } from '@lib/ipc';
 
 export const Font = (props: any) => {
 
     const displayMode = useSelector((state: any) => state.style.display);
-    const handleOnBlur = (e: BaseSyntheticEvent) => {
-        console.log({ event: e, props: props });
+    const updateName = (e: BaseSyntheticEvent) => {
+        send({
+            action: 'UPDATE_STYLE_TEXT',
+            payload: {
+                style: props,
+                newStyle: { name: e.target.value }
+            }
+        });
     }
 
     const style = {
@@ -26,8 +33,8 @@ export const Font = (props: any) => {
             {...(displayMode === 'list' && { style: style })}
             value={folderNameFromPath(props.name).name}
             appearance={{ minified: true, stroke: false }}
-            onBlur={handleOnBlur}
-            onChange={handleOnBlur}
+            onBlur={updateName}
+            onEnter={updateName}
         />
         <ul className="style-item-font-details flex f-col">
             <li><small>{props.fontName.family}</small></li>
