@@ -62,7 +62,8 @@ export const Style = ({
                 onClick: () => styles?.map(style => options?.header?.add?.onClick(style))
             },
         ];
-
+        
+        console.log(styles);
         setHeaderOptions(optionMap);
     }, [styles, displayMode]);
 

@@ -8,7 +8,22 @@ import { send as sendPortal } from '@lib/slices/input';
 import { Color } from './color';
 import { AmountArrows } from './amountarrows';
 
-export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'Enter a value', onChange = void 0, onBlur, onFocus, onEnter, style, range = [1, 10], step = 1, portal, appearance = { minified: false, stroke: true, label: false } }: IInput) => {
+export const Input = ({
+    type = 'DEFAULT',
+    dynamicValue,
+    value,
+    placeholder = 'Enter a value',
+    onChange = () => 0,
+    onBlur,
+    onFocus,
+    onEnter,
+    style,
+    range = [1, 10],
+    step = 1,
+    portal,
+    appearance = { minified: false, stroke: true, label: false }
+}: IInput
+) => {
 
     const [innerValue, setInnerValue] = useState(value);
     const [manualyChanged, setManualyChanged] = useState(false);
@@ -18,7 +33,6 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
     const input = useRef<any>();
 
     const handleOnChange = (e: BaseSyntheticEvent) => {
-
         //update manualy changed state (prevent portal override)
         setManualyChanged(true);
 
@@ -56,7 +70,7 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
 
 
     useEffect(() => {
-
+        
         if (input.current && innerValue) {
 
             let storeValue = innerValue || '';
@@ -68,17 +82,13 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
             }
 
             //update store target
-            if (portal?.target) {
-                updatePortal({ target: portal?.target, value: storeValue });
-            }
+            if (portal?.target) { updatePortal({ target: portal?.target, value: storeValue }); }
 
             //update ref value
             input.current.value = String(innerValue);
 
             //call external callback
-            if (onChange) { onChange({ target: input.current }); }
-
-
+            onChange({ target: input.current });
         }
 
     }, [innerValue]);

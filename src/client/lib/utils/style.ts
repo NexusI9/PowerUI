@@ -38,7 +38,7 @@ export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
                     name: folder,
                     fullpath: structure.fullpath.length && [structure.fullpath, folder].join('/') || folder,
                     level: Math.max(0, style.name.split('/').length - 2),
-                    styles: [shallowClone(style) as any],
+                    styles: [],
                     folders: []
                 };
 
