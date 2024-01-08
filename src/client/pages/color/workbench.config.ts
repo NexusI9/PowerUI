@@ -8,7 +8,7 @@ const basicSidepanelContent: Array<SidepanelInput> = [
             type: 'DEFAULT',
             value: 'blue',
             placeholder: 'Swatch name',
-            style: { label: true },
+            appearance: { label: true },
             portal: {
                 key: 'colorname',
                 override: false
@@ -22,7 +22,7 @@ const basicSidepanelContent: Array<SidepanelInput> = [
             type: 'COLOR',
             value: '#0c8ce9',
             placeholder: 'Color value',
-            style: { label: true },
+            appearance: { label: true },
             portal: {
                 target: 'colorname',
                 colorformat: 'NAME'
@@ -37,7 +37,7 @@ const basicSidepanelContent: Array<SidepanelInput> = [
             value: 10,
             placeholder: 'Swatch steps',
             range: [1, 100],
-            style: { label: true }
+            appearance: { label: true }
         },
         configKey: 'steps'
     },
@@ -51,7 +51,7 @@ const basicSidepanelContent: Array<SidepanelInput> = [
                 { text: 'lab', receiver: 'STORE' },
                 { text: 'lch', receiver: 'STORE' }
             ],
-            style: { label: true }
+            appearance: { label: true }
         },
         configKey: 'mode'
     }
@@ -72,7 +72,7 @@ const materialSidepanelContent: Array<SidepanelInput> = [
                 { text: 'neutralVariant', receiver: 'STORE' },
                 { text: 'error', receiver: 'STORE' }
             ],
-            style: { label: true }
+            appearance: { label: true }
         },
         configKey: 'palette'
     },
@@ -82,7 +82,7 @@ const materialSidepanelContent: Array<SidepanelInput> = [
             type: 'DEFAULT',
             value: 'blue',
             placeholder: 'Swatch name',
-            style: { label: true },
+            appearance: { label: true },
             portal: {
                 key: 'colorname',
                 override: false
@@ -96,7 +96,7 @@ const materialSidepanelContent: Array<SidepanelInput> = [
             type: 'COLOR',
             value: '#0c8ce9',
             placeholder: 'Color value',
-            style: { label: true },
+            appearance: { label: true },
             portal: {
                 target: 'colorname',
                 colorformat: 'NAME'
@@ -120,7 +120,7 @@ const materialSidepanelContent: Array<SidepanelInput> = [
             min: 0,
             max: 1000,
             placeholder: 'Shade keys',
-            style: { label: true }
+            appearance: { label: true }
         },
         configKey: 'keys'
     }
@@ -133,7 +133,7 @@ const antSidepanelContent: Array<SidepanelInput> = [
             type: 'DEFAULT',
             value: 'blue',
             placeholder: 'Swatch name',
-            style: { label: true },
+            appearance: { label: true },
             portal: {
                 key: 'colorname',
                 override: false
@@ -147,7 +147,7 @@ const antSidepanelContent: Array<SidepanelInput> = [
             type: 'COLOR',
             value: '#0c8ce9',
             placeholder: 'Color value',
-            style: { label: true },
+            appearance: { label: true },
             portal: {
                 target: 'colorname',
                 colorformat: 'NAME'
@@ -163,7 +163,7 @@ const antSidepanelContent: Array<SidepanelInput> = [
                 { text: 'default', receiver: 'STORE' },
                 { text: 'dark', receiver: 'STORE' },
             ],
-            style: { label: true }
+            appearance: { label: true }
         },
         configKey: 'theme'
     }
@@ -177,7 +177,7 @@ const mantineSidepanelContent: Array<SidepanelInput> = [
             type: 'DEFAULT',
             value: 'blue',
             placeholder: 'Swatch name',
-            style: { label: true },
+            appearance: { label: true },
             portal: {
                 key: 'colorname',
                 override: false
@@ -191,7 +191,7 @@ const mantineSidepanelContent: Array<SidepanelInput> = [
             type: 'COLOR',
             value: '#0c8ce9',
             placeholder: 'Color value',
-            style: { label: true },
+            appearance: { label: true },
             portal: {
                 target: 'colorname',
                 colorformat: 'NAME'
@@ -208,7 +208,7 @@ const interpolationSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             value: 'sky',
             placeholder: 'Swatch name',
-            style: { label: true },
+            appearance: { label: true },
             portal: {
                 key: 'colorname',
                 override: false
@@ -222,7 +222,7 @@ const interpolationSidepanelContent: Array<SidepanelInput> = [
             type: 'COLOR',
             value: '#0c8ce9',
             placeholder: 'Start value',
-            style: { label: true },
+            appearance: { label: true },
             portal: {
                 target: 'colorname',
                 colorformat: 'NAME'
@@ -236,7 +236,7 @@ const interpolationSidepanelContent: Array<SidepanelInput> = [
             type: 'COLOR',
             value: '#FFFFFF',
             placeholder: 'End value',
-            style: { label: true }
+            appearance: { label: true }
         },
         configKey: 'colorEnd'
     },
@@ -247,7 +247,7 @@ const interpolationSidepanelContent: Array<SidepanelInput> = [
             value: 10,
             placeholder: 'Swatch steps',
             range: [1, 100],
-            style: { label: true }
+            appearance: { label: true }
         },
         configKey: 'steps'
     },
@@ -261,7 +261,7 @@ const interpolationSidepanelContent: Array<SidepanelInput> = [
                 { text: 'lab', receiver: 'STORE' },
                 { text: 'lch', receiver: 'STORE' }
             ],
-            style: { label: true }
+            appearance: { label: true }
         },
         configKey: 'mode'
     }

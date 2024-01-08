@@ -1,59 +1,89 @@
 import { SidepanelInput, Workbench } from "@ctypes/workbench";
 import { MATERIAL_DEFAULT_KEYS } from "@lib/constants";
 
-const basicSidepanelContent: Array<SidepanelInput> = [
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'DEFAULT',
-            value: 'blue',
-            placeholder: 'Swatch name',
-            style: { label: true },
-            portal: {
-                key: 'colorname',
-                override: false
-            }
-        },
-        configKey: 'name'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'COLOR',
-            value: '#0c8ce9',
-            placeholder: 'Color value',
-            style: { label: true },
-            portal: {
-                target: 'colorname',
-                colorformat: 'NAME'
-            }
-        },
-        configKey: 'colorStart'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'AMOUNT',
-            value: 10,
-            placeholder: 'Swatch steps',
-            range: [1, 100],
-            style: { label: true }
-        },
-        configKey: 'steps'
-    },
+const scaleSidepanelContent: Array<SidepanelInput> = [
     {
         type: 'DROPDOWN',
         attributes: {
-            placeholder: 'Color mode',
+            placeholder: 'Typeface',
             list: [
                 { text: 'rgb', receiver: 'STORE' },
                 { text: 'hsl', receiver: 'STORE' },
                 { text: 'lab', receiver: 'STORE' },
                 { text: 'lch', receiver: 'STORE' }
             ],
-            style: { label: true }
+            appearance: { label: true }
         },
-        configKey: 'mode'
+        configKey: 'typeface'
+    },
+    {
+        type: 'INPUT',
+        attributes: {
+            type: 'AMOUNT',
+            value: 16,
+            placeholder: 'Base size',
+            range: [1, 1000],
+            appearance: { label: true }
+        },
+        configKey: 'baseSize'
+    },
+    {
+        type: 'DROPDOWN',
+        attributes: {
+            placeholder: 'Ascendant scale',
+            list: [
+                { text: 'rgb', receiver: 'STORE' },
+                { text: 'hsl', receiver: 'STORE' },
+                { text: 'lab', receiver: 'STORE' },
+                { text: 'lch', receiver: 'STORE' }
+            ],
+            appearance: { label: true }
+        },
+        configKey: 'ascendantScale'
+    },
+    {
+        type: 'INPUT',
+        attributes: {
+            type: 'AMOUNT',
+            value: 8,
+            placeholder: 'Ascendant steps',
+            range: [0, 100],
+            appearance: { label: true }
+        },
+        configKey: 'ascendantSteps'
+    },
+    {
+        type: 'DROPDOWN',
+        attributes: {
+            placeholder: 'Descendant scale',
+            list: [
+                { text: 'rgb', receiver: 'STORE' },
+                { text: 'hsl', receiver: 'STORE' },
+                { text: 'lab', receiver: 'STORE' },
+                { text: 'lch', receiver: 'STORE' }
+            ],
+            appearance: { label: true }
+        },
+        configKey: 'descendantScale'
+    },
+    {
+        type: 'INPUT',
+        attributes: {
+            type: 'AMOUNT',
+            value: 8,
+            placeholder: 'Descendant steps',
+            range: [0, 100],
+            appearance: { label: true }
+        },
+        configKey: 'descendantSteps'
+    },
+    {
+        type: 'CHECKBOX',
+        attributes: {
+            label: 'Round values',
+            value: true,
+        },
+        configKey: 'roundValue'
     }
 
 ];
@@ -63,207 +93,136 @@ const materialSidepanelContent: Array<SidepanelInput> = [
     {
         type: 'DROPDOWN',
         attributes: {
-            placeholder: 'Palette',
-            list: [
-                { text: 'primary', receiver: 'STORE' },
-                { text: 'secondary', receiver: 'STORE' },
-                { text: 'tertiary', receiver: 'STORE' },
-                { text: 'neutral', receiver: 'STORE' },
-                { text: 'neutralVariant', receiver: 'STORE' },
-                { text: 'error', receiver: 'STORE' }
-            ],
-            style: { label: true }
-        },
-        configKey: 'palette'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'DEFAULT',
-            value: 'blue',
-            placeholder: 'Swatch name',
-            style: { label: true },
-            portal: {
-                key: 'colorname',
-                override: false
-            }
-        },
-        configKey: 'name'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'COLOR',
-            value: '#0c8ce9',
-            placeholder: 'Color value',
-            style: { label: true },
-            portal: {
-                target: 'colorname',
-                colorformat: 'NAME'
-            }
-        },
-        configKey: 'colorStart'
-    },
-    {
-        type: 'CHECKBOX',
-        attributes: {
-            label: 'Preserve primary',
-            value: true,
-        },
-        configKey: 'preserve'
-    },
-    {
-        type: 'INPUT_ARRAY',
-        attributes: {
-            type: 'NUMBER',
-            value: MATERIAL_DEFAULT_KEYS,
-            min: 0,
-            max: 1000,
-            placeholder: 'Shade keys',
-            style: { label: true }
-        },
-        configKey: 'keys'
-    }
-];
-
-const antSidepanelContent: Array<SidepanelInput> = [
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'DEFAULT',
-            value: 'blue',
-            placeholder: 'Swatch name',
-            style: { label: true },
-            portal: {
-                key: 'colorname',
-                override: false
-            }
-        },
-        configKey: 'name'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'COLOR',
-            value: '#0c8ce9',
-            placeholder: 'Color value',
-            style: { label: true },
-            portal: {
-                target: 'colorname',
-                colorformat: 'NAME'
-            }
-        },
-        configKey: 'colorStart'
-    },
-    {
-        type: 'DROPDOWN',
-        attributes: {
-            placeholder: 'Theme',
-            list: [
-                { text: 'default', receiver: 'STORE' },
-                { text: 'dark', receiver: 'STORE' },
-            ],
-            style: { label: true }
-        },
-        configKey: 'theme'
-    }
-];
-
-
-const mantineSidepanelContent: Array<SidepanelInput> = [
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'DEFAULT',
-            value: 'blue',
-            placeholder: 'Swatch name',
-            style: { label: true },
-            portal: {
-                key: 'colorname',
-                override: false
-            }
-        },
-        configKey: 'name'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'COLOR',
-            value: '#0c8ce9',
-            placeholder: 'Color value',
-            style: { label: true },
-            portal: {
-                target: 'colorname',
-                colorformat: 'NAME'
-            }
-        },
-        configKey: 'colorStart'
-    }
-];
-
-
-const interpolationSidepanelContent: Array<SidepanelInput> = [
-    {
-        type: 'INPUT',
-        attributes: {
-            value: 'sky',
-            placeholder: 'Swatch name',
-            style: { label: true },
-            portal: {
-                key: 'colorname',
-                override: false
-            }
-        },
-        configKey: 'name'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'COLOR',
-            value: '#0c8ce9',
-            placeholder: 'Start value',
-            style: { label: true },
-            portal: {
-                target: 'colorname',
-                colorformat: 'NAME'
-            }
-        },
-        configKey: 'colorStart'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'COLOR',
-            value: '#FFFFFF',
-            placeholder: 'End value',
-            style: { label: true }
-        },
-        configKey: 'colorEnd'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'AMOUNT',
-            value: 10,
-            placeholder: 'Swatch steps',
-            range: [1, 100],
-            style: { label: true }
-        },
-        configKey: 'steps'
-    },
-    {
-        type: 'DROPDOWN',
-        attributes: {
-            placeholder: 'Color mode',
+            placeholder: 'Typeface',
             list: [
                 { text: 'rgb', receiver: 'STORE' },
                 { text: 'hsl', receiver: 'STORE' },
                 { text: 'lab', receiver: 'STORE' },
                 { text: 'lch', receiver: 'STORE' }
             ],
-            style: { label: true }
+            appearance: { label: true }
         },
-        configKey: 'mode'
+        configKey: 'typeface'
+    }
+];
+
+const appleSidepanelContent: Array<SidepanelInput> = [
+    {
+        type: 'DROPDOWN',
+        attributes: {
+            placeholder: 'Typeface',
+            list: [
+                { text: 'rgb', receiver: 'STORE' },
+                { text: 'hsl', receiver: 'STORE' },
+                { text: 'lab', receiver: 'STORE' },
+                { text: 'lch', receiver: 'STORE' }
+            ],
+            appearance: { label: true }
+        },
+        configKey: 'typeface'
+    },
+    {
+        type: 'DROPDOWN',
+        attributes: {
+            placeholder: 'Device',
+            list: [
+                { text: 'desktop', receiver: 'STORE' },
+                { text: 'mobile', receiver: 'STORE' },
+            ],
+            appearance: { label: true }
+        },
+        configKey: 'device'
+    },
+];
+
+
+const flutterSidepanelContent: Array<SidepanelInput> = [
+    {
+        type: 'INPUT',
+        attributes: {
+            type: 'DEFAULT',
+            value: 'blue',
+            placeholder: 'Swatch name',
+            appearance: { label: true },
+            portal: {
+                key: 'colorname',
+                override: false
+            }
+        },
+        configKey: 'name'
+    },
+    {
+        type: 'INPUT',
+        attributes: {
+            type: 'COLOR',
+            value: '#0c8ce9',
+            placeholder: 'Color value',
+            appearance: { label: true },
+            portal: {
+                target: 'colorname',
+                colorformat: 'NAME'
+            }
+        },
+        configKey: 'colorStart'
+    }
+];
+
+
+const carbonSidepanelContent: Array<SidepanelInput> = [
+    {
+        type: 'DROPDOWN',
+        attributes: {
+            placeholder: 'Typeface',
+            list: [
+                { text: 'rgb', receiver: 'STORE' },
+                { text: 'hsl', receiver: 'STORE' },
+                { text: 'lab', receiver: 'STORE' },
+                { text: 'lch', receiver: 'STORE' }
+            ],
+            appearance: { label: true }
+        },
+        configKey: 'typeface'
+    },
+    {
+        type: 'INPUT',
+        attributes: {
+            type: 'AMOUNT',
+            value: 16,
+            placeholder: 'Base size',
+            range: [1, 1000],
+            appearance: { label: true }
+        },
+        configKey: 'baseSize'
+    },
+    {
+        type: 'INPUT',
+        attributes: {
+            type: 'AMOUNT',
+            value: 8,
+            placeholder: 'Ascendant steps',
+            range: [0, 100],
+            appearance: { label: true }
+        },
+        configKey: 'ascendantSteps'
+    },
+    {
+        type: 'INPUT',
+        attributes: {
+            type: 'AMOUNT',
+            value: 8,
+            placeholder: 'Descendant steps',
+            range: [0, 100],
+            appearance: { label: true }
+        },
+        configKey: 'descendantSteps'
+    },
+    {
+        type: 'CHECKBOX',
+        attributes: {
+            label: 'Round values',
+            value: true,
+        },
+        configKey: 'roundValue'
     }
 ];
 
@@ -336,13 +295,13 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
     sidepanel: {
         options: [
             [
-                { text: 'Scale', content: basicSidepanelContent, action: 'SHADE', icon: "line-height", receiver: 'STORE' }
+                { text: 'Scale', content: scaleSidepanelContent, action: 'SHADE', icon: "line-height", receiver: 'STORE' }
             ],
             [
                 { text: 'Material Design', content: materialSidepanelContent, action: 'MATERIAL', icon: "material design", receiver: 'STORE' },
-                { text: 'Apple', content: antSidepanelContent, action: 'ANT', icon: "apple", receiver: 'STORE' },
-                { text: 'Flutter', content: mantineSidepanelContent, action: 'MANTINE', icon: "flutter", receiver: 'STORE' },
-                { text: 'Carbon Design', content: mantineSidepanelContent, action: 'TAILWIND', icon: "carbon", receiver: 'STORE' }
+                { text: 'Apple', content: appleSidepanelContent, action: 'ANT', icon: "apple", receiver: 'STORE' },
+                { text: 'Flutter', content: flutterSidepanelContent, action: 'MANTINE', icon: "flutter", receiver: 'STORE' },
+                { text: 'Carbon Design', content: carbonSidepanelContent, action: 'TAILWIND', icon: "carbon", receiver: 'STORE' }
             ]
         ]
     },

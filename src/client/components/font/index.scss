@@ -4,19 +4,7 @@
     flex-direction: row;
     align-items: center;
     width: 100%;
-    margin: var(--space-m) 0;
-
-    &>.input-field:first-child {
-        input {
-            color: var(--figma-color-text-secondary);
-            transition: color 0.2s linear;
-            &:focus,
-            &:hover {
-                color: var(--figma-color-text);
-            }
-        }
-
-    }
+    margin: var(--space-s) 0;
 
     ul {
         align-items: flex-end;
@@ -30,6 +18,7 @@
                 fill: var(--figma-color-icon-tertiary);
                 width: var(--size-icon-xs);
                 height: var(--size-icon-xs);
+                flex-shrink: 0;
             }
         }
 

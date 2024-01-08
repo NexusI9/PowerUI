@@ -5,7 +5,7 @@ import { BaseSyntheticEvent, useState } from 'react';
 import { ButtonIcon } from '@components/button-icon';
 import Cross from '@icons/x.svg'
 
-export const InputArray = ({ value = [], min, max, float = false, placeholder = 'Enter a value', type = 'NUMBER', onChange = () => 0, style }: IInputArray) => {
+export const InputArray = ({ value = [], min, max, float = false, placeholder = 'Enter a value', type = 'NUMBER', onChange = () => 0, appearance }: IInputArray) => {
 
     const [innerValues, setInnerValues] = useState<Array<number | string>>(value);
 
@@ -44,7 +44,7 @@ export const InputArray = ({ value = [], min, max, float = false, placeholder = 
     };
 
     return (<div className='input-array flex f-col gap-xs'>
-        {style?.label && <p className='input-array-label frozen'><small><b>{placeholder}</b></small></p>}
+        {appearance?.label && <p className='input-array-label frozen'><small><b>{placeholder}</b></small></p>}
         <div className='input-array-container flex f-col gap-m'>
             <div className='input-array-stack flex f-row f-wrap gap-s'>
                 {[...innerValues].map((val, i) =>

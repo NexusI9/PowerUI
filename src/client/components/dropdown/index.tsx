@@ -3,7 +3,6 @@ import { Dropdown as IDropdown } from "@ctypes/input";
 import Carrot from '@icons/carrot.svg';
 import { BaseSyntheticEvent, useEffect, useState, useRef } from "react";
 import { setYPos } from "./helper";
-import { itemFromIndex, traverseCallback } from "@lib/utils/utils";
 import { Label } from '@components/label';
 import { useDispatch, useSelector } from 'react-redux';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
@@ -42,7 +41,7 @@ export const Dropdown = (props: IDropdown) => {
         <div
             className="dropdown flex f-col gap-xs"
         >
-            {props.style?.label && <p className="dropdown-label frozen"><small><b>{props.placeholder}</b></small></p>}
+            {props.appearance?.label && <p className="dropdown-label frozen"><small><b>{props.placeholder}</b></small></p>}
             <label
                 className="flex f-row f-center f-between"
                 onClick={handleOnClick}

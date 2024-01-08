@@ -79,5 +79,5 @@ export interface InputArray {
     placeholder: string;
     float?: boolean;
     onChange?: any;
-    style?: { label?: boolean };
+    appearance?: { label?: boolean };
 }
