@@ -25,10 +25,10 @@
 
             &>.input-field {
                 font-weight: bold;
+            }
 
-                & &-content {
-                    padding: 0;
-                }
+            .input-field-content {
+                padding: 0;
             }
         }
     }

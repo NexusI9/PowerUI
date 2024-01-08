@@ -2,7 +2,7 @@ import { ContextMenuCommand } from '@ctypes/contextmenu';
 import { MultiArray } from './global';
 
 export interface Input {
-    type?: 'DEFAULT' | 'COLOR' | 'AMOUNT';
+    type?: 'DEFAULT' | 'COLOR' | 'AMOUNT' | 'DRAG';
     value?: string | number;
     dynamicValue?: string | number;
     placeholder?: string;

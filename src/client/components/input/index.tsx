@@ -2,14 +2,13 @@ import { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
 import colorNamer from "color-namer";
 import './index.scss';
 import { Input as IInput } from '@ctypes/input';
-import ChevronDown from '@icons/chevron-down.svg';
-import ChevronUp from '@icons/chevron-up.svg';
-import { ButtonIcon } from '@components/button-icon';
 import { clamp } from '@lib/utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { send as sendPortal } from '@lib/slices/input';
+import { Color } from './color';
+import { AmountArrows } from './amountarrows';
 
-export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'Enter a value', onChange, onBlur, onFocus, onEnter, style, range = [1, 10], step = 1, portal, appearance={minified:false, stroke:true, label:false} }: IInput) => {
+export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'Enter a value', onChange = void 0, onBlur, onFocus, onEnter, style, range = [1, 10], step = 1, portal, appearance = { minified: false, stroke: true, label: false } }: IInput) => {
 
     const [innerValue, setInnerValue] = useState(value);
     const [manualyChanged, setManualyChanged] = useState(false);
@@ -32,11 +31,19 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
         }
 
         //external callback
-        if (onChange) { onChange(e); }
+        onChange(e);
 
         //store update (portal)
         if (portal?.target) { updatePortal({ target: portal.target as string, value: e.target.value }); }
 
+    }
+
+    const handleOnKeyDown = (e: any) => {
+        if (e.code === 'Enter' && onEnter) { onEnter(e); e.target.blur(); }
+        if (type === 'AMOUNT') {
+            if (e.code === 'ArrowUp') { e.preventDefault(); setInnerValue(clamp(range[0], Number(innerValue) + step, range[1])); }
+            if (e.code === 'ArrowDown') { e.preventDefault(); setInnerValue(clamp(range[0], Number(innerValue) - step, range[1])); }
+        }
     }
 
 
@@ -73,10 +80,10 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
 
 
         }
+
     }, [innerValue]);
 
     useEffect(() => {
-
         //portal receiving
         if (
             (portal?.key && portalSelector.target === portal.key) &&
@@ -94,35 +101,22 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
             <div className='input-field-content' data-type={type}>
                 {
                     //Display color swatch square
-                    type === 'COLOR' &&
-                    <label style={{ backgroundColor: String(innerValue) }} >
-                        <input type='color' onChange={e => setInnerValue(e.target.value)} onClick={() => input.current?.focus()} />
-                    </label>
+                    type === 'COLOR' && <Color style={{ backgroundColor: String(innerValue) }} onChange={(e: any) => setInnerValue(e.target.value)} onClick={() => input.current?.focus()} />
                 }
                 <input
                     type='text'
                     ref={input}
-                    {...(style && {style:style})}
+                    {...(style && { style: style })}
                     placeholder={placeholder}
                     defaultValue={value}
-                    onChange={handleOnChange}
                     onBlur={onBlur}
                     onFocus={onFocus}
-                    onKeyDown={(e: any) => {
-                        if (e.code === 'Enter' && onEnter) { onEnter(e); e.target.blur(); }
-                        if (type === 'AMOUNT') {
-                            if (e.code === 'ArrowUp') { e.preventDefault(); setInnerValue(clamp(range[0], Number(innerValue) + step, range[1])); }
-                            if (e.code === 'ArrowDown') { e.preventDefault(); setInnerValue(clamp(range[0], Number(innerValue) - step, range[1])); }
-                        }
-                    }}
+                    onChange={handleOnChange}
+                    onKeyDown={handleOnKeyDown}
                 />
                 {
                     //Display amount arrows
-                    type === 'AMOUNT' &&
-                    <label className='input-field-amount flex f-col'>
-                        <ButtonIcon icon={ChevronUp} onClick={() => setInnerValue(clamp(range[0], Number(innerValue) + step, range[1]))} />
-                        <ButtonIcon icon={ChevronDown} onClick={() => setInnerValue(clamp(range[0], Number(innerValue) - step, range[1]))} />
-                    </label>
+                    type === 'AMOUNT' && <AmountArrows onUp={() => setInnerValue(clamp(range[0], Number(innerValue) + step, range[1]))} onDown={() => setInnerValue(clamp(range[0], Number(innerValue) - step, range[1]))} />
                 }
             </div>
         </div>
