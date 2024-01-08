@@ -10,7 +10,12 @@ export interface Input {
     onBlur?: any;
     onFocus?: any;
     onEnter?: any;
-    style?: { stroke?: boolean; label?: boolean, minified?: boolean; }
+    appearance?: {
+        stroke?: boolean;
+        label?: boolean,
+        minified?: boolean;
+    };
+    style?: any;
     range?: Array<number>;
     step?: number;
     portal?: {
@@ -62,7 +67,7 @@ export interface ButtonIcon {
     onMouseDown?: any;
     onMouseUp?: any;
     disabled?: boolean;
-    style?: { hover?: boolean };
+    appearance?: { hover?: boolean };
     className?: string;
 }
 

@@ -34,7 +34,7 @@ export const Slider = ({ placeholder, onChange = (e: BaseSyntheticEvent) => void
                 range={range}
                 onChange={handleOnChange}
                 step={step}
-                style={{ minified: true }}
+                appearance={{ minified: true }}
             />
         </div>
 

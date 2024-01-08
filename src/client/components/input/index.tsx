@@ -9,7 +9,7 @@ import { clamp } from '@lib/utils/utils';
 import { useDispatch, useSelector } from 'react-redux';
 import { send as sendPortal } from '@lib/slices/input';
 
-export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'Enter a value', onChange, onBlur, onFocus, onEnter, style, range = [1, 10], step = 1, portal }: IInput) => {
+export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'Enter a value', onChange, onBlur, onFocus, onEnter, style, range = [1, 10], step = 1, portal, appearance={minified:false, stroke:true, label:false} }: IInput) => {
 
     const [innerValue, setInnerValue] = useState(value);
     const [manualyChanged, setManualyChanged] = useState(false);
@@ -89,8 +89,8 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
 
 
     return (
-        <div className='input-field flex f-col gap-xs' data-minified={String(style?.minified)}>
-            {style?.label && <p className='input-field-label frozen'><small><b>{placeholder}</b></small></p>}
+        <div className='input-field flex f-col gap-xs' data-minified={String(appearance?.minified)} data-stroke={String(appearance?.stroke)}>
+            {appearance?.label && <p className='input-field-label frozen'><small><b>{placeholder}</b></small></p>}
             <div className='input-field-content' data-type={type}>
                 {
                     //Display color swatch square
@@ -102,6 +102,7 @@ export const Input = ({ type = 'DEFAULT', dynamicValue, value, placeholder = 'En
                 <input
                     type='text'
                     ref={input}
+                    {...(style && {style:style})}
                     placeholder={placeholder}
                     defaultValue={value}
                     onChange={handleOnChange}

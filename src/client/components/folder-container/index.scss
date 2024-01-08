@@ -23,8 +23,12 @@
                 align-items: flex-start;
             }
 
-            &>p {
+            &>.input-field {
                 font-weight: bold;
+
+                & &-content {
+                    padding: 0;
+                }
             }
         }
     }

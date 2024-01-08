@@ -65,7 +65,7 @@ export const Tooltip = () => {
                             onBlur={handleAction}
                             onEnter={handleAction}
                             value={content.value}
-                            style={{ minified: true }}
+                            appearance={{ minified: true }}
                             placeholder=''
                         />;
                         break;

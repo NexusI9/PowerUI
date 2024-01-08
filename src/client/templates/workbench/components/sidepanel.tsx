@@ -67,7 +67,7 @@ export const Sidepanel = () => {
         {
             (options?.length > 1) &&
             <>
-                <Dropdown list={options} onChange={updateOption} style={{ label: true }} placeholder="Swatch type" />
+                <Dropdown list={options} onChange={updateOption} appearance={{ label: true }} placeholder="Swatch type" />
                 <hr />
             </>
         }

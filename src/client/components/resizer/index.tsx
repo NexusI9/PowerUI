@@ -33,6 +33,6 @@ export const Resizer = () => {
             icon={ResizerIcon}
             onMouseDown={() => setActive(true)}
             className="resizer"
-            style={{ hover: false }}
+            appearance={{ hover: false }}
         />);
 }

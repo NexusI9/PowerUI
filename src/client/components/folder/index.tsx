@@ -85,7 +85,7 @@ export const Folder = ({
             {!hideHeader && <div className='folder-header flex f-row'>
                 <div className="folder-header-left flex f-row">
                     <OptionsRow options={folderIconMap} className='folder-grab' />
-                    <Input value={title} style={{ minified: true }} onBlur={handleOnBlur} onEnter={handleOnBlur} />
+                    <Input value={title} appearance={{ minified: true }} onBlur={handleOnBlur} onEnter={handleOnBlur} />
                 </div>
                 <OptionsRow options={editIconMap} />
             </div>

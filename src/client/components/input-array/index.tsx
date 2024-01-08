@@ -50,7 +50,7 @@ export const InputArray = ({ value = [], min, max, float = false, placeholder = 
                 {[...innerValues].map((val, i) =>
                     <span key={String(val) + String(i)} className='input-array-value flex f-row gap-xs f-center'>
                         <small>{val}</small>
-                        <ButtonIcon icon={Cross} onClick={() => onRemove({ value: val, index: i })} style={{ hover: false }} />
+                        <ButtonIcon icon={Cross} onClick={() => onRemove({ value: val, index: i })} appearance={{ hover: false }} />
                     </span>
                 )}
             </div>
