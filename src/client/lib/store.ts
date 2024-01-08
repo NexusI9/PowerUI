@@ -5,6 +5,7 @@ import contextMenuSlice from "./slices/contextmenu";
 import tooltipSlice from "./slices/tooltip";
 import workbenchSlice from "./slices/workbench";
 import inputSlice from './slices/input';
+import styleSlice from './slices/style';
 
 export default configureStore({
     reducer:{
@@ -13,6 +14,7 @@ export default configureStore({
         contextmenu: contextMenuSlice,
         tooltip: tooltipSlice,
         workbench: workbenchSlice,
-        input: inputSlice
+        input: inputSlice,
+        style: styleSlice
     }
 });

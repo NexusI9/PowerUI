@@ -10,10 +10,11 @@ import { ButtonPad as IButtonPad } from "@ctypes/input";
 import { FolderOptions } from '@ctypes/folder';
 import { get, listen } from '@lib/ipc';
 import { StyleFolder } from "@ctypes/style";
+import { useDispatch, useSelector } from "react-redux";
+import { switchDisplay } from "@lib/slices/style";
 
 interface StyleTemplate {
     title: string;
-    onSwitchDisplay: any;
     onAddItem: any;
     padStyle: IButtonPad;
     getStyleMethod?: string;
@@ -24,7 +25,6 @@ interface StyleTemplate {
 
 export const Style = ({
     title,
-    onSwitchDisplay,
     onAddItem,
     padStyle,
     getStyleMethod,
@@ -32,17 +32,12 @@ export const Style = ({
     options
 }: StyleTemplate) => {
 
-    const [displayMode, setDisplayMode] = useState<'grid' | 'list'>('grid');
     const [reload, setReload] = useState(0);
     const [styles, setStyles] = useState<null | Array<StyleFolder>>();
     const [headerOptions, setHeaderOptions] = useState<any>([]);
-
-
-    const handleOnMessage = (e: any) => {
-        if (e.action === 'RELOAD_PAGE') {
-            setReload(Date.now());
-        }
-    };
+    const dispatch = useDispatch();
+    const displayMode = useSelector( (state:any) => state.style.display );
+    const handleOnMessage = (e: any) => (e.action === 'RELOAD_PAGE') && setReload(Date.now());
 
     listen(handleOnMessage);
 
@@ -55,14 +50,12 @@ export const Style = ({
     }, [reload]);
 
     useEffect(() => {
+
+        //set header option;
         const optionMap = [
             {
                 icon: displayMode === 'grid' ? List : Grid,
-                onClick: () => {
-                    const newDisplayMode = displayMode == 'grid' ? 'list' : 'grid';
-                    setDisplayMode(newDisplayMode);
-                    onSwitchDisplay(newDisplayMode);
-                }
+                onClick: () => dispatch(switchDisplay())
             },
             {
                 icon: options?.header?.add?.icon || Plus,
@@ -81,7 +74,7 @@ export const Style = ({
             <FolderContainer
                 styles={styles}
                 styleItem={styleItem}
-                options={{ ...options }}
+                options={options}
                 onAddItem={onAddItem}
                 displayMode={displayMode}
             />

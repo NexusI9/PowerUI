@@ -1,10 +1,13 @@
 .style-item-font {
 
-    display: grid;
-    grid-template-columns: 120px auto;
+    justify-content: space-between;
+    flex-direction: row;
+    align-items: center;
+    width: 100%;
+    margin: var(--space-m) 0;
 
     ul {
-
+        align-items: flex-end;
         padding: 0;
         list-style: none;
 

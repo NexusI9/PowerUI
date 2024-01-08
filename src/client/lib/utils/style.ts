@@ -275,17 +275,24 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
 }
 
 export function convertUnit(unit:string):string{
+        return {
+            'PIXELS':'px',
+            'PERCENT':'%',
+            'POINTS':'pt',
+            'PICAS':'pc',
+            'AUTO':'auto'
+        }[unit] || unit;
+}
 
-        switch(unit){
-            case 'PIXELS':
-                return 'px';
-            case 'PERCENT':
-                return '%';
-            case 'POINTS':
-                return 'pt';
-            case 'PICAS':
-                return 'pc';
-        }
-
-        return unit;
+export function convertFont(font:string):string{
+        return{
+            'Thin':'100',
+            'Extra Light': '200',
+            'Light':'300',
+            'Regular':'400',
+            'Semi Bold':'600',
+            'Bold': '700',
+            'Extra Bold':'800',
+            'Black':'900'
+        }[font] || font
 }

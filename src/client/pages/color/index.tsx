@@ -44,7 +44,6 @@ export default () => {
         <Style
             title="Colors"
             onAddItem={handleAddItem}
-            onSwitchDisplay={() => 0}
             padStyle={buttonPadStyle}
             getStyleMethod={GET_PAINT_STYLES_COMMAND}
             styleItem={Swatch}

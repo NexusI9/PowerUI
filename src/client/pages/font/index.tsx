@@ -8,7 +8,6 @@ export default () => (
     <Style
         title="Fonts"
         onAddItem={() => 0}
-        onSwitchDisplay={() => 0}
         padStyle={{
             icon: FontPlus,
             text: 'Create Fonts Set',

@@ -2,8 +2,30 @@
     padding: var(--space-m) var(--space-l);
 
     &[data-display-mode="grid"] {
-        .style-item-swatch-detail {
-            display: none;
+        .style-item-swatch {
+            &-detail {
+                display: none;
+            }
+        }
+
+        .style-item-font {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            border-radius: var(--radius-s);
+            border: solid 1px var(--figma-color-border);
+            height: auto;
+            width: calc(105px * 4 / 3);
+            margin: 0;
+            padding: var(--space-m);
+
+            ul {
+                align-items: flex-start;
+            }
+
+            &>p {
+                font-weight: bold;
+            }
         }
     }
 
@@ -20,7 +42,7 @@
                     padding-left: var(--space-s);
                     display: flex;
                     flex-direction: row;
-                    gap:var(--space-s);
+                    gap: var(--space-s);
                 }
             }
         }
