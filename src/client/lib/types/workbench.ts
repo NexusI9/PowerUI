@@ -76,7 +76,7 @@ export interface FontConfig extends BaseConfig {
 
 export interface Workbench {
     active?: boolean;
-    type: 'COLOR' | 'FONT';
+    type: 'COLOR' | 'TEXT';
     folder: StyleFolder | null;
     title: string;
     sidepanel: Sidepanel;

@@ -331,21 +331,18 @@ const adjustSidepanelContent: Array<SidepanelInput> = [
 
 export const CREATE_SWATCH_CONFIG: Workbench = {
     folder: null,
-    title: 'Generate a new palette',
-    type: 'COLOR',
+    title: 'Generate a new font set',
+    type: 'TEXT',
     sidepanel: {
         options: [
             [
-                { text: 'Shades', content: basicSidepanelContent, action: 'SHADE', icon: "shade", receiver: 'STORE' },
-                { text: 'Tones', content: basicSidepanelContent, action: 'TONE', icon: "drop", receiver: 'STORE' },
-                { text: 'Tints', content: basicSidepanelContent, action: 'TINT', icon: "sun", receiver: 'STORE' },
-                { text: 'Interpolation', content: interpolationSidepanelContent, action: 'INTERPOLATION', icon: "interpolation", receiver: 'STORE' }
+                { text: 'Scale', content: basicSidepanelContent, action: 'SHADE', icon: "line-height", receiver: 'STORE' }
             ],
             [
                 { text: 'Material Design', content: materialSidepanelContent, action: 'MATERIAL', icon: "material design", receiver: 'STORE' },
-                { text: 'Ant Design', content: antSidepanelContent, action: 'ANT', icon: "ant", receiver: 'STORE' },
-                { text: 'Mantine', content: mantineSidepanelContent, action: 'MANTINE', icon: "mantine", receiver: 'STORE' },
-                { text: 'Tailwind', content: mantineSidepanelContent, action: 'TAILWIND', icon: "tailwind", receiver: 'STORE' }
+                { text: 'Apple', content: antSidepanelContent, action: 'ANT', icon: "apple", receiver: 'STORE' },
+                { text: 'Flutter', content: mantineSidepanelContent, action: 'MANTINE', icon: "flutter", receiver: 'STORE' },
+                { text: 'Carbon Design', content: mantineSidepanelContent, action: 'TAILWIND', icon: "carbon", receiver: 'STORE' }
             ]
         ]
     },
@@ -357,15 +354,15 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
 
 export const EDIT_SWATCH_CONFIG: Workbench = {
     folder: null,
-    title: 'Edit current palette',
-    type: 'COLOR',
+    title: 'Edit current font set',
+    type: 'TEXT',
     sidepanel: {
         options: [
             { text: 'Adjustments', content: adjustSidepanelContent, action: 'COLORADJUST', receiver: 'STORE' }
         ]
     },
     footer: {
-        primaryAction: { text: 'Edit', action: 'EDIT_SWATCH' }
+        primaryAction: { text: 'Edit', action: 'EDIT_FONT_SET' }
     },
     config: {}
 }

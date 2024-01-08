@@ -52,7 +52,7 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'UPDATE_STYLE_FOLDER':
-      updateFolderName({ folder: payload.folder, level: payload.level, name: payload.newName });
+      updateFolderName(payload);
       break;
 
     case 'UPDATE_STYLE_NAME':

@@ -6,6 +6,18 @@
     width: 100%;
     margin: var(--space-m) 0;
 
+    &>.input-field:first-child {
+        input {
+            color: var(--figma-color-text-secondary);
+            transition: color 0.2s linear;
+            &:focus,
+            &:hover {
+                color: var(--figma-color-text);
+            }
+        }
+
+    }
+
     ul {
         align-items: flex-end;
         padding: 0;

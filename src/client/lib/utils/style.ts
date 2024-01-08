@@ -72,9 +72,7 @@ export function updateFolderName({ folder, level, name }: { folder: StyleFolder,
 
             //update figma style name
             const figmaStyle = figma.getStyleById(style.id);
-            if (figmaStyle) {
-                figmaStyle.name = style.name;
-            }
+            if (figmaStyle) { figmaStyle.name = style.name; }
         } catch (_) {
             console.warn(`Could not update style ${style.name}`)
         }
@@ -106,20 +104,20 @@ export function updateColor({ style, color }: { style: PaintStyle, color: ColorR
 export function updateText({ style, newStyle }: { style: TextStyle, newStyle: Partial<WritablePart<TextStyle>> }): void {
 
     const figmaStyle = figma.getStyleById(style.id) as any;
-    if(!figmaStyle){ return; }
+    if (!figmaStyle) { return; }
 
     let key: keyof typeof newStyle;
     for (key in newStyle) {
         if (!newStyle.hasOwnProperty(key)) { continue; }
-        try{
+        try {
             //concat base folder with new name
-            if(key === 'name'){
+            if (key === 'name') {
                 const { folder } = folderNameFromPath(figmaStyle[key]);
                 newStyle[key] = concatFolderName([folder, newStyle[key]]);
             }
             //apply relative key
             figmaStyle[key] = newStyle[key];
-        }catch(e){
+        } catch (e) {
             console.warn(e);
         }
 

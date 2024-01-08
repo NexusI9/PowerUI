@@ -54,16 +54,15 @@ export const Style = ({
         //set header option;
         const optionMap = [
             {
-                icon: displayMode === 'grid' ? List : Grid,
-                onClick: () => dispatch(switchDisplay())
-            },
-            {
                 icon: options?.header?.add?.icon || Plus,
                 onClick: () => styles?.map(style => options?.header?.add?.onClick(style))
             },
+            {
+                icon: displayMode === 'grid' ? List : Grid,
+                onClick: () => dispatch(switchDisplay())
+            }
         ];
-        
-        console.log(styles);
+
         setHeaderOptions(optionMap);
     }, [styles, displayMode]);
 

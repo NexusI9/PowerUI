@@ -15,6 +15,31 @@ export const DEFAULT_STYLE_COLOR:Array<Paint> = [
     }
 ];
 
+export const DEFAULT_STYLE_TEXT:Partial<TextStyle>  = {
+    "name": "Body",
+    "type": "TEXT",
+    "fontSize": 16,
+    "textDecoration": "NONE",
+    "fontName": {
+        "family": "Inter",
+        "style": "Regular"
+    },
+    "letterSpacing": {
+        "unit": "PERCENT",
+        "value": 0
+    },
+    "lineHeight": {
+        "unit": "AUTO"
+    },
+    "paragraphIndent": 0,
+    "paragraphSpacing": 0,
+    "listSpacing": 0,
+    "textCase": "ORIGINAL",
+    "hangingPunctuation": false,
+    "hangingList": false,
+    "leadingTrim": "NONE"
+};
+
 export const DEFAULT_TOOLTIP = {
     content:[],
     boundingBox:{x:0, y:0, width:0, height:0}
