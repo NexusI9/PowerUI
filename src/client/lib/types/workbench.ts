@@ -84,7 +84,7 @@ export interface TextConfig extends BaseConfig {
     descendantSteps?: number;
     roundValue?: boolean;
     device?: 'mobile' | 'desktop';
-    typeface?: string;
+    typeface?: string | undefined;
 }
 
 export interface Workbench {

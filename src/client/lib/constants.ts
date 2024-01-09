@@ -40,6 +40,8 @@ export const DEFAULT_STYLE_TEXT:Partial<TextStyle>  = {
     "leadingTrim": "NONE"
 };
 
+export const DEFAULT_TYPEFACE = 'inter';
+
 export const DEFAULT_TOOLTIP = {
     content:[],
     boundingBox:{x:0, y:0, width:0, height:0}

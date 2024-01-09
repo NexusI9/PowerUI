@@ -10,9 +10,9 @@ import {
   get_styles_of_folder,
   sort_by_name,
   duplicateFolder,
-  updateText,
-  groupFont
+  updateText
 } from "@lib/utils/style";
+import { groupFont } from "@lib/utils/font";
 import { createSwatch } from "@lib/utils/shade";
 import { ColorRGB } from "@ctypes/color";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";

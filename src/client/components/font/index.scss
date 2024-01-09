@@ -6,23 +6,5 @@
     width: 100%;
     margin: var(--space-s) 0;
 
-    ul {
-        align-items: flex-end;
-        padding: 0;
-        list-style: none;
-
-        li {
-            color: var(--figma-color-text-tertiary);
-
-            svg {
-                fill: var(--figma-color-icon-tertiary);
-                width: var(--size-icon-xs);
-                height: var(--size-icon-xs);
-                flex-shrink: 0;
-            }
-        }
-
-
-    }
 
 }

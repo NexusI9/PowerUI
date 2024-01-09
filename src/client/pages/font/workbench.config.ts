@@ -1,5 +1,27 @@
+import { ContextMenuCommand } from "@ctypes/contextmenu";
 import { SidepanelInput, Workbench } from "@ctypes/workbench";
-import { MATERIAL_DEFAULT_KEYS } from "@lib/constants";
+
+
+const SCALES_COMMAND:Array<ContextMenuCommand> = [
+    { text: 'minor second (15:16)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'major second (8:9)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'minor third (5:6)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'major third (4:5)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'major third (4:5)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'perfect fourth (3:4)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'aug. fourth / dim. fifth (1:√2)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'perfect fifth (2:3)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'minor sixth (5:8)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'golden ratio (1:1.618)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'major sixth (3:5)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'minor seventh (9:16)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'major seventh (8:15)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'octave (1:2)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'major tenth (2:5)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'major eleventh (3:8)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'major twelfth (1:3)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { text: 'double octave (1:4)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+]
 
 const scaleSidepanelContent: Array<SidepanelInput> = [
     {
@@ -26,7 +48,7 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Ascendant scale',
-            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            list: SCALES_COMMAND,
             appearance: { label: true }
         },
         configKey: 'ascendantScale'
@@ -46,7 +68,7 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Descendant scale',
-            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            list: SCALES_COMMAND,
             appearance: { label: true }
         },
         configKey: 'descendantScale'
