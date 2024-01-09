@@ -78,7 +78,7 @@ const workbenchSlice = createSlice({
                 set: [...newSet]
             });
         },
-        destroy: (state) => ({ ...state, active: false }),
+        destroy: (state) => ({ ...state, active: false, set:[] }),
     }
 });
 

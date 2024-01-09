@@ -85,7 +85,7 @@ export function scale(config: TextConfig): Array<Partial<TextStyle>> {
         const REGEX_RATIO = /([\d]+)\:([\d]+)/;
         const ratio = (scaleString || '').match(REGEX_RATIO);
         const [_, q, d] = ratio || [undefined, undefined, undefined];
-        return (q && d) ? Number(q) / Number(d) : 1;
+        return (q && d) ? Number(d) / Number(q) : 1;
     }
 
     interface GenVariants {
@@ -98,11 +98,11 @@ export function scale(config: TextConfig): Array<Partial<TextStyle>> {
 
     const genVariants = ({ amount, base, ratio, method, round }: GenVariants): Array<Partial<TextStyle>> => {
         const variants = [];
-        console.log(ratio);
+
         for (let i = 1; i < Number(amount) + 1; i++) {
             const size: number =
-                method === 'MULTIPLY' ? (base.fontSize || 16) * (i * (1+ratio)) :
-                    method === 'DIVIDE' ? (base.fontSize || 16) / (i * (1+ratio)) : base.fontSize || 16;
+                method === 'MULTIPLY' ? (base.fontSize || 16) * (i * (ratio)) :
+                    method === 'DIVIDE' ? (base.fontSize || 16) / (i * (ratio)) : base.fontSize || 16;
 
             variants.push({
                 ...base,

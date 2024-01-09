@@ -211,10 +211,6 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
             rgbColor.b = mix(rgbColor.b, tempColor.b, factor);
         }
 
-
-        //console.log(rgbColor);
-
-
         return ({
             name: folderNameFromPath(style.name).name,
             color: rgbColor,
