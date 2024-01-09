@@ -22,7 +22,7 @@ export const display = createAsyncThunk(
 
         const result = await Promise.all(fetchPromises);
         return {
-            ...action, 
+            ...action,
             commands: result.map(item => item.payload ? item.payload : item)
         }
     });
@@ -36,10 +36,7 @@ const contextMenuSlice = createSlice({
         setActiveCommand: (state, { payload }) => ({ ...state, activeCommand: payload })
     },
     extraReducers: (builder) => {
-        builder.addCase(display.fulfilled, (state, { payload }) => {
-            console.log(payload);
-            return ({ ...state, ...payload, id: payload.id || performance.now() });
-        })
+        builder.addCase(display.fulfilled, (state, { payload }) => ({ ...state, ...payload, id: payload.id || performance.now() }))
     }
 });
 

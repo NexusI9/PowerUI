@@ -5,24 +5,32 @@ import { ColorRGB } from "./color";
 import { ContextMenuCommand } from "./contextmenu";
 import { MultiArray } from "./global";
 
-export type SetMethod = 'SHADE' |
+export type ColorSetMethod = 
+    'SHADE' |
     'TINT' |
     'INTERPOLATION' |
     'MATERIAL' |
-    'FONT' |
     'TONE' |
     'ANT' |
     'ORBIT' |
     'ATLASSIAN' |
     'MANTINE' |
     'COLORADJUST' |
-    'TAILWIND';
+    'TAILWIND'; 
+
+export type TextSetMethod = 
+    'SCALE' |
+    'MATERIAL' |
+    'FLUTTER' |
+    'APPLE' |
+    'CARBON';
+
 
 export type SidepanelInput =
-    { type: 'INPUT'; attributes: Input; configKey: keyof ColorConfig | keyof FontConfig; } |
-    { type: 'DROPDOWN'; attributes: Dropdown; configKey: keyof ColorConfig | keyof FontConfig; } |
-    { type: 'CHECKBOX'; attributes: Checkbox; configKey: keyof ColorConfig | keyof FontConfig; } |
-    { type: 'INPUT_ARRAY'; attributes: InputArray; configKey: keyof ColorConfig | keyof FontConfig; } |
+    { type: 'INPUT'; attributes: Input; configKey: keyof ColorConfig | keyof TextConfig; } |
+    { type: 'DROPDOWN'; attributes: Dropdown; configKey: keyof ColorConfig | keyof TextConfig; } |
+    { type: 'CHECKBOX'; attributes: Checkbox; configKey: keyof ColorConfig | keyof TextConfig; } |
+    { type: 'INPUT_ARRAY'; attributes: InputArray; configKey: keyof ColorConfig | keyof TextConfig; } |
     { type: 'SLIDER'; attributes: Slider; configKey: keyof ColorAdjustConfig; }
 
 export interface SidepanelOption extends ContextMenuCommand {
@@ -34,14 +42,14 @@ export interface Sidepanel {
     options: MultiArray<SidepanelOption>;
 }
 
-export type Set = Array<Shade>;
+export type Set = Array<Shade | TextStyle>;
 
 interface Footer {
     primaryAction: { text: string; action: string };
 }
 
 interface BaseConfig {
-    action?: SetMethod;
+    action?: ColorSetMethod | TextSetMethod;
 }
 
 export interface ColorConfig extends BaseConfig {
@@ -67,7 +75,7 @@ export interface ColorAdjustConfig extends BaseConfig {
     styles: Array<PaintStyle>;
 }
 
-export interface FontConfig extends BaseConfig {
+export interface TextConfig extends BaseConfig {
     name?: string;
     baseSize?: number;
     ascendantScale?: string;
@@ -86,7 +94,7 @@ export interface Workbench {
     title: string;
     sidepanel: Sidepanel;
     footer?: Footer;
-    config: ColorConfig | FontConfig | ColorAdjustConfig;
+    config: ColorConfig | TextConfig | ColorAdjustConfig;
     set?: Set;
 }
 

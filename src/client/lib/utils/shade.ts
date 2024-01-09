@@ -1,5 +1,5 @@
 import { ColorHSL, ColorRGB } from "@ctypes/color";
-import { ColorAdjustConfig, ColorConfig, SetMethod, Workbench } from "@ctypes/workbench";
+import { ColorAdjustConfig, ColorConfig, ColorSetMethod, Workbench } from "@ctypes/workbench";
 import { Shade } from "@ctypes/shade";
 import { concatFolderName, folderAtLevel, folderNameFromPath, get_styles_of_folder, setCopyNumber } from "./style";
 import { DEFAULT_STYLE_COLOR, MATERIAL_DEFAULT_KEYS } from "@lib/constants";
@@ -14,7 +14,7 @@ import { generateColors } from "@lib/vendor/mantine-swatch";
 /*
 ** CLASSIC INTERPOLATIONS 
 */
-export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: SetMethod, mode: string, name: string }): Array<Shade> {
+export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: ColorSetMethod, mode: string, name: string }): Array<Shade> {
 
     const colorArray: Array<Shade> = [];
 
@@ -235,7 +235,7 @@ export function createSwatch({ folder, set, config }: Workbench) {
     const { level } = folder;
     const styleFolders = (get_styles_of_folder(folder) ?? []).map(style => folderAtLevel(style.name, level));
 
-    set?.forEach(({ name, color }: Shade) => {
+    (set as Array<Shade>)?.forEach(({ name, color }: Shade) => {
         const newStyle = figma.createPaintStyle();
         const copyName = setCopyNumber(baseName, styleFolders) || '';
         newStyle.name = concatFolderName([folder.fullpath, copyName, name]);

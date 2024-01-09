@@ -246,13 +246,13 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
     sidepanel: {
         options: [
             [
-                { text: 'Scale', content: scaleSidepanelContent, action: 'SHADE', icon: "line-height", receiver: 'STORE' }
+                { text: 'Scale', content: scaleSidepanelContent, action: 'SCALE', icon: "line-height", receiver: 'STORE' }
             ],
             [
                 { text: 'Material Design', content: materialSidepanelContent, action: 'MATERIAL', icon: "material design", receiver: 'STORE' },
-                { text: 'Apple', content: appleSidepanelContent, action: 'ANT', icon: "apple", receiver: 'STORE' },
-                { text: 'Flutter', content: flutterSidepanelContent, action: 'MANTINE', icon: "flutter", receiver: 'STORE' },
-                { text: 'Carbon Design', content: carbonSidepanelContent, action: 'TAILWIND', icon: "carbon", receiver: 'STORE' }
+                { text: 'Apple', content: appleSidepanelContent, action: 'APPLE', icon: "apple", receiver: 'STORE' },
+                { text: 'Flutter', content: flutterSidepanelContent, action: 'FLUTTER', icon: "flutter", receiver: 'STORE' },
+                { text: 'Carbon Design', content: carbonSidepanelContent, action: 'CARBON', icon: "carbon", receiver: 'STORE' }
             ]
         ]
     },

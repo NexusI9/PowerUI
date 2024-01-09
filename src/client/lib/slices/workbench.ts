@@ -1,23 +1,32 @@
-import { ColorRGB } from "@ctypes/color";
-import { Workbench, ColorConfig, FontConfig, SidepanelOption, SidepanelInput, SetMethod, Set, ColorAdjustConfig } from "@ctypes/workbench";
+import { Workbench, ColorConfig, TextConfig, SidepanelOption, SidepanelInput, Set, ColorAdjustConfig } from "@ctypes/workbench";
+import { scale } from "@lib/utils/font";
 import { ant, colorAdjust, interpolate, mantine, material, tailwind } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";
 import { createSlice } from "@reduxjs/toolkit";
 
-const actionMap: { [key in SetMethod]: any; } = {
-    SHADE: interpolate,
-    TINT: interpolate,
-    TONE: interpolate,
-    INTERPOLATION: interpolate,
-    MATERIAL: material,
-    ANT: ant,
-    MANTINE: mantine,
-    COLORADJUST: colorAdjust,
-    TAILWIND: tailwind,
-    ORBIT: () => [],
-    ATLASSIAN: () => [],
-    FONT: () => []
-};
+//{ [key in ColorSetMethod]: any; }
+const actionMap: { [key in Workbench["type"]as string]: any } = {
+    'COLOR': {
+        SHADE: interpolate,
+        TINT: interpolate,
+        TONE: interpolate,
+        INTERPOLATION: interpolate,
+        MATERIAL: material,
+        ANT: ant,
+        MANTINE: mantine,
+        COLORADJUST: colorAdjust,
+        TAILWIND: tailwind,
+        ORBIT: () => [],
+        ATLASSIAN: () => []
+    },
+    'TEXT': {
+        SCALE: scale,
+        MATERIAL: () => [],
+        FLUTTER: () => [],
+        APPLE: () => [],
+        CARBON: () => []
+    }
+}
 
 
 const workbenchSlice = createSlice({
@@ -42,7 +51,7 @@ const workbenchSlice = createSlice({
 
             return ({ ...state, ...payload, config: { ...initConfig }, active: true })
         },
-        updateConfig: (state, { payload: { key, value } }: { payload: { key: keyof ColorConfig | keyof FontConfig | keyof ColorAdjustConfig; value: any } }) => {
+        updateConfig: (state, { payload: { key, value } }: { payload: { key: keyof ColorConfig | keyof TextConfig | keyof ColorAdjustConfig; value: any } }) => {
 
             //update Config 
             const newConfig = {
@@ -51,10 +60,16 @@ const workbenchSlice = createSlice({
             };
 
             //update Set from action
-            const { action } = newConfig as ColorConfig | FontConfig;
+            const { action } = newConfig as ColorConfig | TextConfig;
+            const { type } = state;
             const newSet: Set = [];
-            if (action && actionMap[action]) {
-                newSet.push(...actionMap[action](newConfig)); //caculate interpolation and assign it to NewSet
+
+            if (action && actionMap[type][action]) {
+                try{
+                    newSet.push(...actionMap[type][action](newConfig)); //call mapped function
+                }catch(_){
+                    console.log('No mapped method found, make sure to assign the right action key to the right method in action map');
+                }
             }
 
             return ({
