@@ -1,4 +1,5 @@
 import { ContextMenuCommand } from "@ctypes/contextmenu";
+import { TextArrayItem } from "@ctypes/text";
 import { TextConfig } from "@ctypes/workbench";
 import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
 import { send } from "@lib/ipc";
@@ -27,32 +28,28 @@ export function convertFontWeight(font: string): string {
 }
 
 
-export function groupFont(fonts: Array<Font>): Array<ContextMenuCommand> {
+export function groupFont(fonts: Array<Font>): { [key: string]: TextArrayItem } {
 
     //transform font to ContextMenuCommand structure
-    const fontArray: Array<ContextMenuCommand> = [];
-    const fontDico: { [key: string]: Array<string> } = {};
+    const fontDico: { [key: string]: TextArrayItem } = {};
 
     //1. Gather all fonts in dictionary along with their font (bold/reg/light...)
     fonts.forEach(font => {
         const { fontName: { family, style } } = font;
+
         if (!fontDico[family]) {
-            fontDico[family] = [style];
+            fontDico[family] = {
+                family,
+                loaded: false,
+                style: [style]
+            };
         } else {
-            fontDico[family].push(style);
+            fontDico[family].style.push(style);
         }
     });
 
-    //2. Convert dico to array compatible with context menu
-    for (let key in fontDico) {
-        fontArray.push({
-            text: key,
-            receiver: 'STORE'
-        })
-    }
 
-    return fontArray;
-
+    return fontDico;
 }
 
 function setFontFamily(style: TextStyle, family: string) {
@@ -64,7 +61,7 @@ function setFontFamily(style: TextStyle, family: string) {
 
 function loadFont(config: TextConfig) {
 
-    if (config.typeface) {
+    if (config.typeface || config.typeface !== 'Typeface') {
         send({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } });
     }
 }
@@ -82,7 +79,7 @@ export function cssTextStyle(style: TextStyle) {
 
 export function scale(config: TextConfig): Array<Partial<TextStyle>> {
 
-    //loadFont(config);
+    loadFont(config);
 
     const ratio = (scaleString: string): number => {
         const REGEX_RATIO = /([\d]+)\:([\d]+)/;
@@ -101,10 +98,11 @@ export function scale(config: TextConfig): Array<Partial<TextStyle>> {
 
     const genVariants = ({ amount, base, ratio, method, round }: GenVariants): Array<Partial<TextStyle>> => {
         const variants = [];
+        console.log(ratio);
         for (let i = 1; i < Number(amount) + 1; i++) {
             const size: number =
-                method === 'MULTIPLY' ? (base.fontSize || 16) * (i * ratio) :
-                    method === 'DIVIDE' ? (base.fontSize || 16) / (i * ratio) : base.fontSize || 16;
+                method === 'MULTIPLY' ? (base.fontSize || 16) * (i * (1+ratio)) :
+                    method === 'DIVIDE' ? (base.fontSize || 16) / (i * (1+ratio)) : base.fontSize || 16;
 
             variants.push({
                 ...base,
@@ -125,8 +123,6 @@ export function scale(config: TextConfig): Array<Partial<TextStyle>> {
             family: config.typeface || DEFAULT_TYPEFACE
         }
     };
-
-    console.log(config, baseText);
 
 
     //get ascendant/ descendant respective ratios   

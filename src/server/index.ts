@@ -16,7 +16,9 @@ import { groupFont } from "@lib/utils/font";
 import { createSwatch } from "@lib/utils/shade";
 import { ColorRGB } from "@ctypes/color";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
+import { TextArrayItem } from "@ctypes/text";
 
+let systemFonts: { [key: string]: TextArrayItem } = {};
 
 figma.showUI(__html__, { themeColors: true });
 figma.ui.resize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
@@ -115,13 +117,30 @@ figma.ui.onmessage = msg => {
     default:
 
     case 'FONT_LIST':
-      figma.listAvailableFontsAsync()
-        .then(fonts => figma.ui.postMessage({ action: action, payload: groupFont(fonts) }))
-        .catch(_ => figma.ui.postMessage({ action: action, payload: [] }));
+      if (!systemFonts.length) {
+
+        figma.listAvailableFontsAsync()
+          .then(fonts => {
+            systemFonts = groupFont(fonts);
+            figma.ui.postMessage({
+              action: action,
+              payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE' }))
+            })
+          })
+          .catch(_ => figma.ui.postMessage({ action: action, payload: [] }));
+      } else {
+        figma.ui.postMessage({ action: action, payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE' })) })
+      }
+
       break;
 
     case 'LOAD_FONT':
-      //figma.loadFontAsync(payload);
+      if (payload.fontName?.loaded === false) {
+        figma.loadFontAsync(payload)
+          .catch(_ => { payload.fontName.loaded = false });
+        payload.fontName.loaded = true;
+      }
+
       break;
   }
 
