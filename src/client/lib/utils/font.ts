@@ -1,6 +1,7 @@
 import { ContextMenuCommand } from "@ctypes/contextmenu";
 import { TextConfig } from "@ctypes/workbench";
 import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
+import { send } from "@lib/ipc";
 
 export function convertUnit(unit: string): string {
     return {
@@ -12,7 +13,7 @@ export function convertUnit(unit: string): string {
     }[unit] || unit;
 }
 
-export function convertFont(font: string): string {
+export function convertFontWeight(font: string): string {
     return {
         'Thin': '100',
         'Extra Light': '200',
@@ -54,17 +55,34 @@ export function groupFont(fonts: Array<Font>): Array<ContextMenuCommand> {
 
 }
 
+function setFontFamily(style: TextStyle, family: string) {
+    return {
+        ...style,
+        fontName: { family, style: style.fontName.style || 'Regular' }
+    }
+}
+
+function loadFont(config: TextConfig) {
+
+    if (config.typeface) {
+        send({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } });
+    }
+}
+
 export function cssTextStyle(style: TextStyle) {
 
     return {
-        fontWeight: convertFont(style.fontName.style),
+        fontWeight: convertFontWeight(style.fontName.style),
         fontSize: style.fontSize + 'px',
         letterSpacing: String((style.letterSpacing.value || 0) + convertUnit(style.letterSpacing.unit)),
         lineHeight: String(((style.lineHeight as any).value || '') + convertUnit(style.lineHeight.unit)),
+        fontFamily: style.fontName.family
     };
 }
 
 export function scale(config: TextConfig): Array<Partial<TextStyle>> {
+
+    //loadFont(config);
 
     const ratio = (scaleString: string): number => {
         const REGEX_RATIO = /([\d]+)\:([\d]+)/;
@@ -73,20 +91,34 @@ export function scale(config: TextConfig): Array<Partial<TextStyle>> {
         return (q && d) ? Number(q) / Number(d) : 1;
     }
 
-    const genVariants = (amount: number, base: Partial<TextStyle>, ratio: number): Array<Partial<TextStyle>> => {
+    interface GenVariants {
+        amount: number;
+        base: Partial<TextStyle>;
+        ratio: number;
+        method: 'MULTIPLY' | 'DIVIDE';
+        round: boolean | undefined;
+    }
+
+    const genVariants = ({ amount, base, ratio, method, round }: GenVariants): Array<Partial<TextStyle>> => {
         const variants = [];
         for (let i = 1; i < Number(amount) + 1; i++) {
+            const size: number =
+                method === 'MULTIPLY' ? (base.fontSize || 16) * (i * ratio) :
+                    method === 'DIVIDE' ? (base.fontSize || 16) / (i * ratio) : base.fontSize || 16;
+
             variants.push({
                 ...base,
-                fontSize: (base.fontSize || 16) * i * ratio
+                fontSize: round ? Math.floor(size) : Number(size.toFixed(2))
             });
         }
+
         return variants;
     }
 
     //set default style (font, )
     const baseText = {
         ...DEFAULT_STYLE_TEXT,
+        name: config.name || DEFAULT_STYLE_TEXT.name,
         fontSize: config.baseSize || 16,
         fontName: {
             style: DEFAULT_STYLE_TEXT.fontName?.style || 'Regular',
@@ -94,16 +126,18 @@ export function scale(config: TextConfig): Array<Partial<TextStyle>> {
         }
     };
 
+    console.log(config, baseText);
+
 
     //get ascendant/ descendant respective ratios   
     const ascRatio = ratio(config.ascendantScale || '');
     const descRatio = ratio(config.descendantScale || '');
 
     //generate ascendant font
-    const ascFont: Array<Partial<TextStyle>> = genVariants(config.ascendantSteps || 8, baseText, ascRatio).reverse();
+    const ascFont: Array<Partial<TextStyle>> = genVariants({ amount: config.ascendantSteps || 8, base: baseText, ratio: ascRatio, method: 'MULTIPLY', round: config.roundValue }).reverse();
 
     //generate descendant font
-    const descFont: Array<Partial<TextStyle>> = genVariants(config.descendantSteps || 4, baseText, descRatio);
+    const descFont: Array<Partial<TextStyle>> = genVariants({ amount: config.descendantSteps || 4, base: baseText, ratio: descRatio, method: 'DIVIDE', round: config.roundValue });
 
     //generate descendant font
     return [...ascFont, baseText, ...descFont];

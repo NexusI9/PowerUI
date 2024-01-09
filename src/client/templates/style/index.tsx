@@ -18,7 +18,7 @@ interface StyleTemplate {
     onAddItem: any;
     padStyle: IButtonPad;
     getStyleMethod?: string;
-    styleItem: React.FunctionComponent;
+    styleItem:any;
     options?: FolderOptions;
 };
 
@@ -59,7 +59,7 @@ export const Style = ({
             },
             {
                 icon: displayMode === 'grid' ? List : Grid,
-                onClick: () => dispatch(switchDisplay())
+                onClick: () => dispatch(switchDisplay(null))
             }
         ];
 

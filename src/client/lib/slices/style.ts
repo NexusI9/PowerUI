@@ -6,7 +6,7 @@ const styleSlice = createSlice({
         display: 'grid'
     },
     reducers: {
-        switchDisplay: (state) => ({ ...state, display: (state.display === 'grid' ? 'list' : 'grid') })
+        switchDisplay: (state, {payload}) => ({ ...state, display: (payload ? payload : (state.display === 'grid' ? 'list' : 'grid')) })
     }
 });
 

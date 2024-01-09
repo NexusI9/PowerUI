@@ -4,7 +4,7 @@ import * as React from 'react';
 import { ButtonIcon } from "@components/button-icon";
 import Add from '@icons/add.svg';
 
-export function generateFolder(folder: Array<StyleFolder>, styleItem: React.FunctionComponent, onAddItem: any, options?: {}): any {
+export function generateFolder(folder: Array<StyleFolder>, styleItem: React.FunctionComponent<PaintStyle | TextStyle>, onAddItem: any, options?: {}): any {
     return folder.map((item: StyleFolder, i: number) => {
 
         const isRoot = !item.name.length;

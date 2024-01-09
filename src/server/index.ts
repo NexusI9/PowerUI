@@ -120,6 +120,9 @@ figma.ui.onmessage = msg => {
         .catch(_ => figma.ui.postMessage({ action: action, payload: [] }));
       break;
 
+    case 'LOAD_FONT':
+      //figma.loadFontAsync(payload);
+      break;
   }
 
 };

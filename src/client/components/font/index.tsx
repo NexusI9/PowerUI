@@ -4,13 +4,12 @@ import { useSelector } from 'react-redux';
 import { Input } from '@components/input';
 import { BaseSyntheticEvent } from 'react';
 import { send } from '@lib/ipc';
-import { cssTextStyle } from '@lib/utils/font';
 import { FontOptions } from '@components/font-options';
+import { cssTextStyle } from '@lib/utils/font';
 
-export const Font = (props: any) => {
+export const Font = (props:TextStyle) => {
 
     const displayMode = useSelector((state: any) => state.style.display);
-    const style = cssTextStyle(props);
 
     const updateName = (e: BaseSyntheticEvent) => {
         send({
@@ -22,10 +21,9 @@ export const Font = (props: any) => {
         });
     }
 
-
     return (<div className="style-item-font flex">
         <Input
-            {...(displayMode === 'list' && { style: style })}
+            {...(displayMode === 'list' && { style: cssTextStyle(props) })}
             value={folderNameFromPath(props.name).name}
             appearance={{ minified: true, stroke: false }}
             onBlur={updateName}

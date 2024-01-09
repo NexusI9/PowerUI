@@ -6,7 +6,7 @@ import { generateFolder } from "./helper";
 
 interface FolderContainer {
     styles: Array<StyleFolder>;
-    styleItem: React.FunctionComponent;
+    styleItem: React.FunctionComponent<PaintStyle | TextStyle>;
     onAddItem: any;
     displayMode: DisplayMode;
     options?: FolderOptions

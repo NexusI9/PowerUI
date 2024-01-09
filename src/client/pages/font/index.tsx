@@ -8,17 +8,22 @@ import { useDispatch } from "react-redux";
 import { spawn } from "@lib/slices/workbench";
 import { CREATE_SWATCH_CONFIG, EDIT_SWATCH_CONFIG } from "./workbench.config";
 import SetIcon from '@icons/font-set.svg';
+import { switchDisplay } from "@lib/slices/style";
 
 export default () => {
 
     const dispatch = useDispatch();
+    const onCreateSet = (folder: StyleFolder) => {
+        dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: folder }));
+        dispatch(switchDisplay('list'));
+    }
 
     const options: FolderOptions = {
         header: {
-            add: { icon: SetIcon, onClick: (folder: StyleFolder) => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: folder })) }
+            add: { icon: SetIcon, onClick: onCreateSet  }
         },
         folder: {
-            add: { icon: SetIcon, onClick: (folder: StyleFolder) => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: folder })) },
+            add: { icon: SetIcon, onClick: onCreateSet },
             kebab: [
                 { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {}, receiver: 'API' },
                 { text: 'Sort by brightness', action: 'SORT_STYLE_COLOR_BRIGHTNESS', payload: {}, receiver: 'API' },

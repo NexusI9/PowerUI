@@ -7,7 +7,6 @@ const SCALES_COMMAND:Array<ContextMenuCommand> = [
     { text: 'major second (8:9)', action: 'UPDATE_SCALE', receiver: 'STORE' },
     { text: 'minor third (5:6)', action: 'UPDATE_SCALE', receiver: 'STORE' },
     { text: 'major third (4:5)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'major third (4:5)', action: 'UPDATE_SCALE', receiver: 'STORE' },
     { text: 'perfect fourth (3:4)', action: 'UPDATE_SCALE', receiver: 'STORE' },
     { text: 'aug. fourth / dim. fifth (1:√2)', action: 'UPDATE_SCALE', receiver: 'STORE' },
     { text: 'perfect fifth (2:3)', action: 'UPDATE_SCALE', receiver: 'STORE' },
@@ -77,7 +76,7 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
         type: 'INPUT',
         attributes: {
             type: 'AMOUNT',
-            value: 8,
+            value: 3,
             placeholder: 'Descendant steps',
             range: [0, 100],
             appearance: { label: true }
