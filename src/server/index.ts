@@ -10,7 +10,8 @@ import {
   get_styles_of_folder,
   sort_by_name,
   duplicateFolder,
-  updateText
+  updateText,
+  groupFont
 } from "@lib/utils/style";
 import { createSwatch } from "@lib/utils/shade";
 import { ColorRGB } from "@ctypes/color";
@@ -63,7 +64,7 @@ figma.ui.onmessage = msg => {
       updateColor(payload);
       break;
 
-    case 'UPDATE_STYLE_TEXT': 
+    case 'UPDATE_STYLE_TEXT':
       updateText(payload);
       break;
 
@@ -112,6 +113,12 @@ figma.ui.onmessage = msg => {
       figma.ui.resize(Math.max(payload.width, 540) || DEFAULT_WINDOW_WIDTH, Math.max(payload.height, 320) || DEFAULT_WINDOW_HEIGHT);
       break;
     default:
+
+    case 'FONT_LIST':
+      figma.listAvailableFontsAsync()
+        .then(fonts => figma.ui.postMessage({ action: action, payload: groupFont(fonts) }))
+        .catch(_ => figma.ui.postMessage({ action: action, payload: [] }));
+      break;
 
   }
 

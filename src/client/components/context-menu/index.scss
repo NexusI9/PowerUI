@@ -9,6 +9,9 @@
     display: block;
     z-index: 5;
 
+    max-height: 400px;
+    overflow: scroll;
+
     hr {
         margin: var(--space-s) auto;
         width: 90%;

@@ -4,6 +4,7 @@ import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { clone, shallowClone } from '@lib/utils/utils';
 import { WritablePart } from "@ctypes/global";
+import { ContextMenuCommand } from "@ctypes/contextmenu";
 
 export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
@@ -311,4 +312,34 @@ export function convertFont(font: string): string {
         'Extra Bold': '800',
         'Black': '900'
     }[font] || font
+}
+
+
+export function groupFont(fonts: Array<Font>): Array<ContextMenuCommand> {
+
+    //transform font to ContextMenuCommand structure
+    const fontArray: Array<ContextMenuCommand> = [];
+    const checkedFont: Array<string> = [];
+    const fontDico:{[key:string]:Array<string>} = {};
+
+    //1. Gather all fonts in dictionary along with their font (bold/reg/light...)
+    fonts.forEach(font => {
+        const { fontName: {family, style}} = font;
+        if(!fontDico[family]){
+            fontDico[family] = [style];
+        }else{
+            fontDico[family].push(style);
+        }
+    });
+
+    //2. Convert dico to array compatible with context menu
+    for(let key in fontDico){
+        fontArray.push({
+            text:key,
+            receiver:'STORE'
+        })
+    }
+
+    return fontArray;
+
 }

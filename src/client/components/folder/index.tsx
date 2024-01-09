@@ -66,7 +66,7 @@ export const Folder = ({
         },
         {
             icon: Kebab,
-            onClick: (e: any) => dispatch(displayContextMenu({ commands: contextMenuItems, position: { x: e.clientX, y: e.clientY } }))
+            onClick: (e: any) => dispatch<any>(displayContextMenu({ commands: contextMenuItems, position: { x: e.clientX, y: e.clientY } }))
         }
     ];
 

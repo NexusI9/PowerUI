@@ -50,7 +50,7 @@ export const ContextMenu = () => {
 
     }, [id]);
 
-
+    console.log({commands, position, id});
     return (
         <ul
             className={`context-menu panel ${!display && 'hide' || ''} pop`}

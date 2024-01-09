@@ -6,12 +6,7 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [
-                { text: 'rgb', receiver: 'STORE' },
-                { text: 'hsl', receiver: 'STORE' },
-                { text: 'lab', receiver: 'STORE' },
-                { text: 'lch', receiver: 'STORE' }
-            ],
+            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true }
         },
         configKey: 'typeface'
@@ -31,12 +26,7 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Ascendant scale',
-            list: [
-                { text: 'rgb', receiver: 'STORE' },
-                { text: 'hsl', receiver: 'STORE' },
-                { text: 'lab', receiver: 'STORE' },
-                { text: 'lch', receiver: 'STORE' }
-            ],
+            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true }
         },
         configKey: 'ascendantScale'
@@ -56,12 +46,7 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Descendant scale',
-            list: [
-                { text: 'rgb', receiver: 'STORE' },
-                { text: 'hsl', receiver: 'STORE' },
-                { text: 'lab', receiver: 'STORE' },
-                { text: 'lch', receiver: 'STORE' }
-            ],
+            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true }
         },
         configKey: 'descendantScale'
@@ -94,12 +79,7 @@ const materialSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [
-                { text: 'rgb', receiver: 'STORE' },
-                { text: 'hsl', receiver: 'STORE' },
-                { text: 'lab', receiver: 'STORE' },
-                { text: 'lch', receiver: 'STORE' }
-            ],
+            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true }
         },
         configKey: 'typeface'
@@ -111,12 +91,7 @@ const appleSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [
-                { text: 'rgb', receiver: 'STORE' },
-                { text: 'hsl', receiver: 'STORE' },
-                { text: 'lab', receiver: 'STORE' },
-                { text: 'lch', receiver: 'STORE' }
-            ],
+            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true }
         },
         configKey: 'typeface'
@@ -138,32 +113,13 @@ const appleSidepanelContent: Array<SidepanelInput> = [
 
 const flutterSidepanelContent: Array<SidepanelInput> = [
     {
-        type: 'INPUT',
+        type: 'DROPDOWN',
         attributes: {
-            type: 'DEFAULT',
-            value: 'blue',
-            placeholder: 'Swatch name',
-            appearance: { label: true },
-            portal: {
-                key: 'colorname',
-                override: false
-            }
+            placeholder: 'Typeface',
+            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            appearance: { label: true }
         },
-        configKey: 'name'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'COLOR',
-            value: '#0c8ce9',
-            placeholder: 'Color value',
-            appearance: { label: true },
-            portal: {
-                target: 'colorname',
-                colorformat: 'NAME'
-            }
-        },
-        configKey: 'colorStart'
+        configKey: 'typeface'
     }
 ];
 
@@ -173,12 +129,7 @@ const carbonSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [
-                { text: 'rgb', receiver: 'STORE' },
-                { text: 'hsl', receiver: 'STORE' },
-                { text: 'lab', receiver: 'STORE' },
-                { text: 'lch', receiver: 'STORE' }
-            ],
+            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true }
         },
         configKey: 'typeface'

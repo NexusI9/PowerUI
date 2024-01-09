@@ -23,7 +23,7 @@ export const Swatch = (props: any) => {
     const handleOnBlur = (e: any) => send({ action: "UPDATE_STYLE_NAME", payload: { style: props, name: e.target.value } });
 
     const handleContextMenu = (e: any) => {
-        dispatch(displayContextMenu({
+        dispatch<any>(displayContextMenu({
             commands: swatchContextMenu,
             position: { x: e.clientX, y: e.clientY }
         }));
