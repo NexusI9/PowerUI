@@ -9,11 +9,11 @@
     display: block;
     z-index: 5;
 
-    hr{
+    hr {
         margin: var(--space-s) auto;
         width: 90%;
     }
-   
+
 
     &.hide {
         display: none;
@@ -25,9 +25,13 @@
         margin: var(--space-s) 0;
         padding: 0 var(--space-m);
         text-transform: capitalize;
-        
+
         &:hover {
             background-color: var(--figma-color-bg-brand);
+        }
+
+        svg {
+            width: var(--size-icon-s);
         }
     }
 
