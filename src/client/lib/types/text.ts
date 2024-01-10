@@ -5,3 +5,5 @@ export interface TextArrayItem{
 }
 
 export type FontSet = Partial<TextStyle>;
+
+export type TextDico = { [key: string]: TextArrayItem };

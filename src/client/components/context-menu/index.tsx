@@ -52,7 +52,7 @@ export const ContextMenu = () => {
 
     return (
         <ul
-            className={`context-menu panel ${!display && 'hide' || ''} pop`}
+            className={`context-menu panel ${!display && 'hide' || ''}`}
             style={{ top: `${position.y}px`, left: `${clamp(0, position.x, window.innerWidth - 1.1 * MENU_WIDTH) || position.x}px` }}
         >
             {commands?.map((command, i) => {

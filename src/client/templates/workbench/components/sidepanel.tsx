@@ -15,7 +15,7 @@ export const Sidepanel = () => {
     const [activeOption, setActiveOption] = useState<SidepanelOption>();
     const { sidepanel: { options } } = useSelector((state: any) => state.workbench);
 
-    const dispatch = useDispatch();
+    const dispatch = useDispatch<any>();
 
     const updateOption = (option: SidepanelOption) => {
         setActiveOption(option);

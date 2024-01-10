@@ -12,13 +12,13 @@ import {
   duplicateFolder,
   updateText
 } from "@lib/utils/style";
-import { groupFont } from "@lib/utils/font";
+import { fontLoader, groupFont } from "@lib/utils/font";
 import { createSwatch } from "@lib/utils/shade";
 import { ColorRGB } from "@ctypes/color";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
-import { TextArrayItem } from "@ctypes/text";
+import { TextDico } from "@ctypes/text";
 
-let systemFonts: { [key: string]: TextArrayItem } = {};
+let systemFonts: TextDico = {};
 
 figma.showUI(__html__, { themeColors: true });
 figma.ui.resize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
@@ -117,30 +117,24 @@ figma.ui.onmessage = msg => {
     default:
 
     case 'FONT_LIST':
-      if (!systemFonts.length) {
-
+      if (!Object.keys(systemFonts).length) {
         figma.listAvailableFontsAsync()
           .then(fonts => {
             systemFonts = groupFont(fonts);
             figma.ui.postMessage({
               action: action,
-              payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE' }))
+              payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE' })) //map dico font to be contextMenu compatible
             })
           })
           .catch(_ => figma.ui.postMessage({ action: action, payload: [] }));
       } else {
-        figma.ui.postMessage({ action: action, payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE' })) })
+        figma.ui.postMessage({ action: action, payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE' })) })  //map dico font to be contextMenu compatible
       }
 
       break;
 
     case 'LOAD_FONT':
-      if (payload.fontName?.loaded === false) {
-        figma.loadFontAsync(payload)
-          .catch(_ => { payload.fontName.loaded = false });
-        payload.fontName.loaded = true;
-      }
-
+      fontLoader(msg, systemFonts);
       break;
   }
 

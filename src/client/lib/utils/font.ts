@@ -1,8 +1,8 @@
 import { ContextMenuCommand } from "@ctypes/contextmenu";
-import { FontSet, TextArrayItem } from "@ctypes/text";
+import { FontSet, TextArrayItem, TextDico } from "@ctypes/text";
 import { TextConfig, WorkbenchComponent } from "@ctypes/workbench";
 import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
-import { send } from "@lib/ipc";
+import { get } from "@lib/ipc";
 import { Set } from "@ctypes/workbench";
 
 export function convertUnit(unit: string): string {
@@ -53,10 +53,45 @@ export function groupFont(fonts: Array<Font>): { [key: string]: TextArrayItem } 
     return fontDico;
 }
 
-function loadFont(config: TextConfig) {
+async function loadFont(config: TextConfig) {
 
-    if (config.typeface || config.typeface !== 'Typeface') {
-        send({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } });
+    if (config.typeface !== undefined && config.typeface !== 'Typeface') {
+        let result = await get({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } },);
+        console.log(result);
+        return result
+    }
+
+    return config;
+}
+
+export function fontLoader(msg: any, systemFonts: TextDico) {
+
+    const { payload } = msg;
+    
+    const dicoFont = systemFonts[payload.family];
+    if (payload.family && dicoFont?.loaded === false) {
+        console.log(payload, dicoFont);
+        //load all styles by mapping each style in promise
+        Promise.all(
+            dicoFont.style.map(style => new Promise((resolve, reject) => {
+                figma.loadFontAsync({ ...payload, style: style })
+                    .then(() => resolve(style))
+                    .catch(() => {
+                        systemFonts[payload.family].loaded = false;
+                        reject(`Could not load ${payload.family}, ${style}`);
+                    })
+            }))
+        )
+            .then((e) => {
+                console.log(e);
+                figma.ui.postMessage(msg);
+            })
+            .catch((e) => console.warn(e));
+
+        //set font as loaded
+        systemFonts[payload.family].loaded = true;
+    } else {
+        figma.ui.postMessage(msg);
     }
 }
 
@@ -71,10 +106,10 @@ export function cssTextStyle(style: TextStyle) {
     };
 }
 
-function convertTemplate(template: Array<FontSet>, config: TextConfig): Set<FontSet> {
+async function convertTemplate(template: Array<FontSet>, config: TextConfig): Promise<Set<FontSet>> {
 
     const typeface = config.typeface || DEFAULT_TYPEFACE;
-    loadFont(config);
+    await loadFont(config);
 
     return template.map((style, i) => ({
         style: {
@@ -135,9 +170,9 @@ function configToBase(config: TextConfig): FontSet {
 /**
 ** SCALE METHOD
 **/
-export function scale(config: TextConfig): Set<FontSet> {
+export async function scale(config: TextConfig): Promise<Set<FontSet>> {
 
-    loadFont(config);
+    await loadFont(config);
 
     const ratio = (scaleString: string): number => {
         const REGEX_RATIO = /([\d]+)\:([\d]+)/;
@@ -182,7 +217,7 @@ export function scale(config: TextConfig): Set<FontSet> {
 /**
 ** MATERIAL METHOD
 **/
-export function material(config: TextConfig): Set<FontSet> {
+export async function material(config: TextConfig): Promise<Set<FontSet>> {
 
     const fontTemplate: Array<FontSet> = [
         //Heading
@@ -276,7 +311,7 @@ export function material(config: TextConfig): Set<FontSet> {
 /**
 ** FLUTTER METHOD
 **/
-export function flutter(config: TextConfig): Set<FontSet> {
+export async function flutter(config: TextConfig): Promise<Set<FontSet>> {
 
     const fontTemplate: Array<FontSet> = [
         //Display
@@ -383,7 +418,7 @@ export function flutter(config: TextConfig): Set<FontSet> {
 /**
 ** APPLE METHOD
 **/
-export function apple(config: TextConfig): Set<FontSet> {
+export async function apple(config: TextConfig): Promise<Set<FontSet>> {
 
     const fontTemplate: { [key: string]: Array<FontSet> } = {
         //DESKTOP
@@ -509,7 +544,9 @@ export function apple(config: TextConfig): Set<FontSet> {
 /**
 ** CARBON METHOD
 **/
-export function carbon(config: TextConfig): Set<FontSet> {
+export async function carbon(config: TextConfig): Promise<Set<FontSet>> {
+
+    await loadFont(config);
 
     const baseText = configToBase(config);
 
@@ -533,3 +570,6 @@ export function carbon(config: TextConfig): Set<FontSet> {
         ...descendant
     ];
 }
+
+
+
