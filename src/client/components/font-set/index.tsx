@@ -13,8 +13,8 @@ export const FontSet = (props: TextStyle) => {
                 <Input
                     type='DEFAULT'
                     appearance={{ minified: true }}
-                    placeholder={'Class (heading, body...)'}
-                    value={folder}
+                    placeholder={'Style name'}
+                    value={props.name}
                 />
             </div>
             <div className='flex f-row f-between'>

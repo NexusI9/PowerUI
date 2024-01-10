@@ -46,7 +46,7 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
     {
         type: 'DROPDOWN',
         attributes: {
-            placeholder: 'Ascendant scale',
+            placeholder: '↑ Ascendant scale',
             list: SCALES_COMMAND,
             appearance: { label: true }
         },
@@ -57,7 +57,7 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             type: 'AMOUNT',
             value: 8,
-            placeholder: 'Ascendant steps',
+            placeholder: '↑ Ascendant steps',
             range: [0, 100],
             appearance: { label: true }
         },
@@ -66,7 +66,7 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
     {
         type: 'DROPDOWN',
         attributes: {
-            placeholder: 'Descendant scale',
+            placeholder: '↓ Descendant scale',
             list: SCALES_COMMAND,
             appearance: { label: true }
         },
@@ -77,7 +77,7 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             type: 'AMOUNT',
             value: 3,
-            placeholder: 'Descendant steps',
+            placeholder: '↓ Descendant steps',
             range: [0, 100],
             appearance: { label: true }
         },
@@ -171,7 +171,7 @@ const carbonSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             type: 'AMOUNT',
             value: 8,
-            placeholder: 'Ascendant steps',
+            placeholder: '↑ Ascendant steps',
             range: [0, 100],
             appearance: { label: true }
         },
@@ -182,19 +182,11 @@ const carbonSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             type: 'AMOUNT',
             value: 8,
-            placeholder: 'Descendant steps',
+            placeholder: '↓ Descendant steps',
             range: [0, 100],
             appearance: { label: true }
         },
         configKey: 'descendantSteps'
-    },
-    {
-        type: 'CHECKBOX',
-        attributes: {
-            label: 'Round values',
-            value: true,
-        },
-        configKey: 'roundValue'
     }
 ];
 

@@ -1,6 +1,6 @@
 import { Workbench, ColorConfig, TextConfig, SidepanelOption, SidepanelInput, Set, ColorAdjustConfig } from "@ctypes/workbench";
-import { scale } from "@lib/utils/font";
-import { ant, colorAdjust, interpolate, mantine, material, tailwind } from "@lib/utils/shade";
+import { apple, carbon, flutter, scale, material as textMaterial } from "@lib/utils/font";
+import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";
 import { createSlice } from "@reduxjs/toolkit";
 
@@ -11,7 +11,7 @@ const actionMap: { [key in Workbench["type"]as string]: any } = {
         TINT: interpolate,
         TONE: interpolate,
         INTERPOLATION: interpolate,
-        MATERIAL: material,
+        MATERIAL: colorMaterial,
         ANT: ant,
         MANTINE: mantine,
         COLORADJUST: colorAdjust,
@@ -21,10 +21,10 @@ const actionMap: { [key in Workbench["type"]as string]: any } = {
     },
     'TEXT': {
         SCALE: scale,
-        MATERIAL: () => [],
-        FLUTTER: () => [],
-        APPLE: () => [],
-        CARBON: () => []
+        MATERIAL: textMaterial,
+        FLUTTER: flutter,
+        APPLE: apple,
+        CARBON: carbon
     }
 }
 
