@@ -3,3 +3,5 @@ export interface TextArrayItem{
     loaded:boolean;
     style:Array<String>;
 }
+
+export type FontSet = Partial<TextStyle>;

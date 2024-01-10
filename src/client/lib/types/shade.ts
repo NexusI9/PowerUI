@@ -11,7 +11,7 @@ export interface Contrast{
     white:ContrastPropreties;
 }
 
-export interface Shade{
+export interface ShadeSet{
     color:ColorRGB;
     name:string;
     contrast:Contrast;

@@ -1,11 +1,11 @@
 import { Dropdown, Input, InputArray, Slider, Checkbox } from "@ctypes/input";
 import { StyleFolder } from "@ctypes/style";
-import { Shade } from "./shade";
+import { ShadeSet } from "./shade";
 import { ColorRGB } from "./color";
 import { ContextMenuCommand } from "./contextmenu";
 import { MultiArray } from "./global";
 
-export type ColorSetMethod = 
+export type ColorSetMethod =
     'SHADE' |
     'TINT' |
     'INTERPOLATION' |
@@ -16,9 +16,9 @@ export type ColorSetMethod =
     'ATLASSIAN' |
     'MANTINE' |
     'COLORADJUST' |
-    'TAILWIND'; 
+    'TAILWIND';
 
-export type TextSetMethod = 
+export type TextSetMethod =
     'SCALE' |
     'MATERIAL' |
     'FLUTTER' |
@@ -42,7 +42,6 @@ export interface Sidepanel {
     options: MultiArray<SidepanelOption>;
 }
 
-export type Set = Array<Shade | TextStyle>;
 
 interface Footer {
     primaryAction: { text: string; action: string };
@@ -95,6 +94,13 @@ export interface Workbench {
     sidepanel: Sidepanel;
     footer?: Footer;
     config: ColorConfig | TextConfig | ColorAdjustConfig;
-    set?: Set;
+    set?: Set<ShadeSet | TextStyle>;
 }
+
+export interface WorkbenchComponent<T> {
+    style: T;
+    index?: number;
+}
+
+export type Set<T> = Array<WorkbenchComponent<T>>;
 

@@ -1,13 +1,14 @@
-import { Shade as IShade } from "@ctypes/shade";
+import { ShadeSet as IShadeSet } from "@ctypes/shade";
 import { rgbToHsl, rgb, rgbToHex } from "@lib/utils/color";
 import './index.scss';
 import { ContrastLabel } from "./contrast";
 import Lock from '@icons/lock-locked.svg';
 import { Icon } from "@components/icon";
+import { WorkbenchComponent } from "@ctypes/workbench";
 
-export const ShadeSet = (props: IShade) => {
+export const ShadeSet = ({style}:WorkbenchComponent<IShadeSet>) => {
 
-    const { color, name, contrast } = props;
+    const { color, name, contrast, primary } = style;
 
     const colorValue = {
         hex: rgbToHex(color),
@@ -22,7 +23,7 @@ export const ShadeSet = (props: IShade) => {
                     <ContrastLabel {...contrast.white} />
                     <ContrastLabel {...contrast.black} />
                 </div>
-                {props.primary && <Icon icon={Lock} />}
+                {primary && <Icon icon={Lock} />}
             </span>
             <div className='flex f-col'>
                 <p>{name}</p>

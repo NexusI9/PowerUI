@@ -2,23 +2,28 @@ import { Input } from '@components/input';
 import './index.scss';
 import { folderNameFromPath } from '@lib/utils/style';
 import { Font } from '@components/font';
+import { Icon } from '@components/icon';
+import Lock from '@icons/lock-locked.svg'
+import { WorkbenchComponent } from '@ctypes/workbench';
 
-export const FontSet = (props: TextStyle) => {
-    
-    const {folder, name} = folderNameFromPath(props.name);
+export const FontSet = ({ style, index }: WorkbenchComponent<TextStyle>) => {
+
+    const { name } = folderNameFromPath(style.name);
 
     return (
-        <div className='font-set flex f-col'>
-            <div className='flex f-row'>
+        <div className='font-set flex f-row gap-m f-center-h' data-base={!!(index === 0)}>
+            {
+                (index === 0) && <Icon icon={Lock} /> ||
+                (index && index > 0) && <p className='font-set-index'><small>{index}</small></p>
+            }
+            <div className='font-set-content flex f-col'>
                 <Input
                     type='DEFAULT'
                     appearance={{ minified: true }}
                     placeholder={'Style name'}
-                    value={props.name}
+                    value={style.name}
                 />
-            </div>
-            <div className='flex f-row f-between'>
-                <Font {...{...props, name:name}} />
+                <Font {...{ ...style, name: name }} />
             </div>
         </div>
     );

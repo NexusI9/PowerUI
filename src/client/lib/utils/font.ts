@@ -1,8 +1,9 @@
 import { ContextMenuCommand } from "@ctypes/contextmenu";
-import { TextArrayItem } from "@ctypes/text";
-import { TextConfig } from "@ctypes/workbench";
+import { FontSet, TextArrayItem } from "@ctypes/text";
+import { TextConfig, WorkbenchComponent } from "@ctypes/workbench";
 import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
 import { send } from "@lib/ipc";
+import { Set } from "@ctypes/workbench";
 
 export function convertUnit(unit: string): string {
     return {
@@ -52,13 +53,6 @@ export function groupFont(fonts: Array<Font>): { [key: string]: TextArrayItem } 
     return fontDico;
 }
 
-function setFontFamily(style: TextStyle, family: string) {
-    return {
-        ...style,
-        fontName: { family, style: style.fontName.style || 'Regular' }
-    }
-}
-
 function loadFont(config: TextConfig) {
 
     if (config.typeface || config.typeface !== 'Typeface') {
@@ -77,17 +71,19 @@ export function cssTextStyle(style: TextStyle) {
     };
 }
 
-function convertTemplate(template: Array<Partial<TextStyle>>, config: TextConfig): Array<Partial<TextStyle>> {
+function convertTemplate(template: Array<FontSet>, config: TextConfig): Set<FontSet> {
 
     const typeface = config.typeface || DEFAULT_TYPEFACE;
     loadFont(config);
 
-    return template.map(style => ({
-        ...DEFAULT_STYLE_TEXT,
-        ...style,
-        fontName: {
-            family: typeface,
-            style: style.fontName?.style || 'Regular'
+    return template.map((style, i) => ({
+        style: {
+            ...DEFAULT_STYLE_TEXT,
+            ...style,
+            fontName: {
+                family: typeface,
+                style: style.fontName?.style || 'Regular'
+            }
         }
     }));
 
@@ -95,21 +91,26 @@ function convertTemplate(template: Array<Partial<TextStyle>>, config: TextConfig
 
 interface GenVariants {
     amount: number;
-    base: Partial<TextStyle>;
+    base: FontSet;
     method(base: number, index: number): number;
     round: boolean | undefined;
 }
 
-const genVariants = ({ amount, base, method, round }: GenVariants): Array<Partial<TextStyle>> => {
-    const variants = [];
+const genVariants = ({ amount, base, method, round }: GenVariants): Set<FontSet> => {
+    const variants: Set<FontSet> = [];
     let lastSize: number = Number(base.fontSize) || 16;
+    let realIndex: number = 0;
 
     for (let i = 2; i < Number(amount) + 2; i++) {
         lastSize = method(lastSize, i);
+        realIndex++;
         if (lastSize > 0) {
             variants.push({
-                ...base,
-                fontSize: round ? Math.floor(lastSize) : Number(lastSize.toFixed(2))
+                style: {
+                    ...base,
+                    fontSize: round ? Math.floor(lastSize) : Number(lastSize.toFixed(2))
+                },
+                index: realIndex
             });
         }
 
@@ -118,11 +119,11 @@ const genVariants = ({ amount, base, method, round }: GenVariants): Array<Partia
     return variants;
 }
 
-function configToBase(config: TextConfig): Partial<TextStyle> {
+function configToBase(config: TextConfig): FontSet {
     //Assign config custom values to Default style text, and set default value if no values in config
     return {
         ...DEFAULT_STYLE_TEXT,
-        name: config.name || DEFAULT_STYLE_TEXT.name,
+        name: config.name || DEFAULT_STYLE_TEXT.name as string,
         fontSize: config.baseSize || 16,
         fontName: {
             style: DEFAULT_STYLE_TEXT.fontName?.style || 'Regular',
@@ -134,9 +135,7 @@ function configToBase(config: TextConfig): Partial<TextStyle> {
 /**
 ** SCALE METHOD
 **/
-export function scale(config: TextConfig): Array<Partial<TextStyle>> {
-
-
+export function scale(config: TextConfig): Set<FontSet> {
 
     loadFont(config);
 
@@ -157,7 +156,7 @@ export function scale(config: TextConfig): Array<Partial<TextStyle>> {
     const descRatio = ratio(config.descendantScale || '');
 
     //generate ascendant font
-    const ascFont: Array<Partial<TextStyle>> = genVariants({
+    const ascFont: Set<FontSet> = genVariants({
         amount: config.ascendantSteps || 8,
         base: baseText,
         method: (size) => size * ascRatio,
@@ -165,7 +164,7 @@ export function scale(config: TextConfig): Array<Partial<TextStyle>> {
     }).reverse();
 
     //generate descendant font
-    const descFont: Array<Partial<TextStyle>> = genVariants({
+    const descFont: Set<FontSet> = genVariants({
         amount: config.descendantSteps || 4,
         base: baseText,
         method: (size) => size / descRatio,
@@ -173,15 +172,19 @@ export function scale(config: TextConfig): Array<Partial<TextStyle>> {
     });
 
     //generate descendant font
-    return [...ascFont, baseText, ...descFont];
+    return [
+        ...ascFont,
+        { style: baseText, index: 0 },
+        ...descFont
+    ];
 }
 
 /**
 ** MATERIAL METHOD
 **/
-export function material(config: TextConfig): Array<Partial<TextStyle>> {
+export function material(config: TextConfig): Set<FontSet> {
 
-    const fontTemplate: Array<Partial<TextStyle>> = [
+    const fontTemplate: Array<FontSet> = [
         //Heading
         {
             name: 'Heading/Heading 1',
@@ -273,9 +276,9 @@ export function material(config: TextConfig): Array<Partial<TextStyle>> {
 /**
 ** FLUTTER METHOD
 **/
-export function flutter(config: TextConfig): Array<Partial<TextStyle>> {
+export function flutter(config: TextConfig): Set<FontSet> {
 
-    const fontTemplate: Array<Partial<TextStyle>> = [
+    const fontTemplate: Array<FontSet> = [
         //Display
         {
             name: 'Display/Display Large',
@@ -380,9 +383,9 @@ export function flutter(config: TextConfig): Array<Partial<TextStyle>> {
 /**
 ** APPLE METHOD
 **/
-export function apple(config: TextConfig): Array<Partial<TextStyle>> {
+export function apple(config: TextConfig): Set<FontSet> {
 
-    const fontTemplate: { [key: string]: Array<Partial<TextStyle>> } = {
+    const fontTemplate: { [key: string]: Array<FontSet> } = {
         //DESKTOP
         'desktop': [
             //Title
@@ -506,7 +509,7 @@ export function apple(config: TextConfig): Array<Partial<TextStyle>> {
 /**
 ** CARBON METHOD
 **/
-export function carbon(config: TextConfig): Array<Partial<TextStyle>> {
+export function carbon(config: TextConfig): Set<FontSet> {
 
     const baseText = configToBase(config);
 
@@ -524,13 +527,9 @@ export function carbon(config: TextConfig): Array<Partial<TextStyle>> {
         round: true
     });
 
-    //generate ascendant
-    /*for (let i = 2; i < (config.ascendantSteps || 8) + 2; i++) {
-        lastSize = lastSize + (Math.floor((i - 2) / 4) + 1) * 2;
-        console.log({ i, lastSize });
-    }*/
-
-    //generate descendant;
-
-    return [...ascendant, baseText, ...descendant];
+    return [
+        ...ascendant,
+        { style: baseText, index: 0 },
+        ...descendant
+    ];
 }

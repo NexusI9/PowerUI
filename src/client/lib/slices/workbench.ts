@@ -3,6 +3,8 @@ import { apple, carbon, flutter, scale, material as textMaterial } from "@lib/ut
 import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";
 import { createSlice } from "@reduxjs/toolkit";
+import { ShadeSet } from "@ctypes/shade";
+import { FontSet } from "@ctypes/text";
 
 //{ [key in ColorSetMethod]: any; }
 const actionMap: { [key in Workbench["type"]as string]: any } = {
@@ -62,7 +64,7 @@ const workbenchSlice = createSlice({
             //update Set from action
             const { action } = newConfig as ColorConfig | TextConfig;
             const { type } = state;
-            const newSet: Set = [];
+            const newSet: Set<ShadeSet | FontSet> = [];
 
             if (action && actionMap[type][action]) {
                 try{

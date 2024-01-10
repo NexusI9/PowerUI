@@ -1,6 +1,6 @@
 import { ColorHSL, ColorRGB } from "@ctypes/color";
-import { ColorAdjustConfig, ColorConfig, ColorSetMethod, Workbench } from "@ctypes/workbench";
-import { Shade } from "@ctypes/shade";
+import { ColorAdjustConfig, ColorConfig, ColorSetMethod, Workbench, WorkbenchComponent, Set } from "@ctypes/workbench";
+import { ShadeSet } from "@ctypes/shade";
 import { concatFolderName, folderAtLevel, folderNameFromPath, get_styles_of_folder, setCopyNumber } from "./style";
 import { DEFAULT_STYLE_COLOR, MATERIAL_DEFAULT_KEYS } from "@lib/constants";
 import chroma, { InterpolationMode } from 'chroma-js';
@@ -14,9 +14,9 @@ import { generateColors } from "@lib/vendor/mantine-swatch";
 /*
 ** CLASSIC INTERPOLATIONS 
 */
-export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: ColorSetMethod, mode: string, name: string }): Array<Shade> {
+export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: ColorSetMethod, mode: string, name: string }): Set<ShadeSet> {
 
-    const colorArray: Array<Shade> = [];
+    const colorArray: Set<ShadeSet> = [];
 
     //Set color end depending
     switch (action) {
@@ -40,10 +40,13 @@ export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, na
             const hex = value.hex();
 
             colorArray.push({
-                name: `${name}-${s}`,
-                color: { r: rgb[0] / 255, g: rgb[1] / 255, b: rgb[2] / 255 },
-                contrast: checkContrast(hex),
-                primary: hex.toLowerCase() === colorStart.toLowerCase() || (action === 'INTERPOLATION' && hex.toLowerCase() === colorEnd.toLowerCase())
+                style: {
+                    name: `${name}-${s}`,
+                    color: { r: rgb[0] / 255, g: rgb[1] / 255, b: rgb[2] / 255 },
+                    contrast: checkContrast(hex),
+                    primary: hex.toLowerCase() === colorStart.toLowerCase() || (action === 'INTERPOLATION' && hex.toLowerCase() === colorEnd.toLowerCase())
+                },
+                index: s
             });
         }
     }
@@ -53,8 +56,8 @@ export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, na
 /*
 ** MATERIAL DESIGN 
 */
-export function material({ colorStart, steps = 10, name, palette, keys, preserve }: ColorConfig): Array<Shade> {
-    const colorArray: Array<Shade> = [];
+export function material({ colorStart, steps = 10, name, palette, keys, preserve }: ColorConfig): Set<ShadeSet> {
+    const colorArray: Set<ShadeSet> = [];
     const argbColorStart = argbFromHex(colorStart as string);
     const materialTheme = themeFromSourceColor(argbColorStart, []);
     const materialPalette = materialTheme.palettes[palette || 'primary'];
@@ -63,7 +66,7 @@ export function material({ colorStart, steps = 10, name, palette, keys, preserve
     keys = (keys && keys.length) ? keys : MATERIAL_DEFAULT_KEYS;
     const tones = keys.map(key => materialPalette.tone(key / 10));
 
- 
+
     //find closest tone to primary (colorStart) depending on light intensity
     const closestKeyToPrimary = preserve && tones.reduce((curr, prev) => {
         const primaryL = chroma(colorStart as string).get('hsl.l');
@@ -81,10 +84,13 @@ export function material({ colorStart, steps = 10, name, palette, keys, preserve
         const rgb = hexToRgb(hex, true, 'OBJECT') as ColorRGB;
 
         colorArray.push({
-            name: `${name}-${(keys || MATERIAL_DEFAULT_KEYS)[i]}`,
-            color: rgb,
-            contrast: checkContrast(hex),
-            primary: isPrimary
+            style: {
+                name: `${name}-${(keys || MATERIAL_DEFAULT_KEYS)[i]}`,
+                color: rgb,
+                contrast: checkContrast(hex),
+                primary: isPrimary
+            },
+            index: i
         });
     });
 
@@ -96,25 +102,31 @@ export function material({ colorStart, steps = 10, name, palette, keys, preserve
 /*
 ** MANTINE DESIGN 
 */
-export function mantine({ colorStart, name, theme }: ColorConfig): Array<Shade> {
+export function mantine({ colorStart, name, theme }: ColorConfig): Set<ShadeSet> {
     return generateColors(colorStart as string).map((color, i) => ({
-        name: `${name}-${i + 1}`,
-        color: hexToRgb(color, true, 'OBJECT') as ColorRGB,
-        contrast: checkContrast(color),
-        primary: (colorStart as string).toLowerCase() === color.toLowerCase()
+        style: {
+            name: `${name}-${i + 1}`,
+            color: hexToRgb(color, true, 'OBJECT') as ColorRGB,
+            contrast: checkContrast(color),
+            primary: (colorStart as string).toLowerCase() === color.toLowerCase()
+        },
+        index: i
     }));
 }
 
 /*
 ** ANT DESIGN 
 */
-export function ant({ colorStart, name, theme }: ColorConfig): Array<Shade> {
+export function ant({ colorStart, name, theme }: ColorConfig): Set<ShadeSet> {
     const palette = generate(colorStart as string, { theme: theme || 'default' });
     return palette.map((color, i) => ({
-        name: `${name}-${i + 1}`,
-        color: hexToRgb(color, true, 'OBJECT') as ColorRGB,
-        contrast: checkContrast(color),
-        primary: (colorStart as string).toLowerCase() === color.toLowerCase()
+        style: {
+            name: `${name}-${i + 1}`,
+            color: hexToRgb(color, true, 'OBJECT') as ColorRGB,
+            contrast: checkContrast(color),
+            primary: (colorStart as string).toLowerCase() === color.toLowerCase()
+        },
+        index: i
     }));
 }
 
@@ -122,21 +134,24 @@ export function ant({ colorStart, name, theme }: ColorConfig): Array<Shade> {
 /*
 ** TAILWIND SWATCH
 */
-export function tailwind({ colorStart, name }: ColorConfig): Array<Shade> {
+export function tailwind({ colorStart, name }: ColorConfig): Set<ShadeSet> {
 
     const { colors } = TailwindPalette(colorStart as string) as Palette;
 
-    const result: Array<Shade> = [];
+    const result: Set<ShadeSet> = [];
     if (colors) {
-        Object.keys(colors).forEach((key) => {
+        Object.keys(colors).forEach((key, i) => {
             const nkey = Number(key);
             const hex = colors[nkey as keyof typeof colors];
             const rgb = hexToRgb(hex, true, 'OBJECT') as ColorRGB;
             result.push({
-                name: `${name}-${key}`,
-                color: rgb,
-                contrast: checkContrast(hex),
-                primary: (colorStart as string).toLowerCase() === hex.toLowerCase()
+                style: {
+                    name: `${name}-${key}`,
+                    color: rgb,
+                    contrast: checkContrast(hex),
+                    primary: (colorStart as string).toLowerCase() === hex.toLowerCase()
+                },
+                index: i
             })
         });
     }
@@ -149,7 +164,7 @@ export function tailwind({ colorStart, name }: ColorConfig): Array<Shade> {
 /*
 ** COLOR ADJUSTMENTS 
 */
-export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
+export function colorAdjust(props: ColorAdjustConfig): Set<ShadeSet> {
 
 
     return props.styles.map((style: PaintStyle, i: number) => {
@@ -212,9 +227,12 @@ export function colorAdjust(props: ColorAdjustConfig): Array<Shade> {
         }
 
         return ({
-            name: folderNameFromPath(style.name).name,
-            color: rgbColor,
-            contrast: checkContrast(rgbToHex(rgbColor))
+            style: {
+                name: folderNameFromPath(style.name).name,
+                color: rgbColor,
+                contrast: checkContrast(rgbToHex(rgbColor))
+            },
+            index: i
         });
     });
 
@@ -231,11 +249,11 @@ export function createSwatch({ folder, set, config }: Workbench) {
     const { level } = folder;
     const styleFolders = (get_styles_of_folder(folder) ?? []).map(style => folderAtLevel(style.name, level));
 
-    (set as Array<Shade>)?.forEach(({ name, color }: Shade) => {
+    (set as Set<ShadeSet>)?.forEach(({ style }) => {
         const newStyle = figma.createPaintStyle();
         const copyName = setCopyNumber(baseName, styleFolders) || '';
-        newStyle.name = concatFolderName([folder.fullpath, copyName, name]);
-        newStyle.paints = DEFAULT_STYLE_COLOR.map(paint => ({ ...paint, color: color }));
+        newStyle.name = concatFolderName([folder.fullpath, copyName, style.name]);
+        newStyle.paints = DEFAULT_STYLE_COLOR.map(paint => ({ ...paint, color: style.color }));
     })
 }
 

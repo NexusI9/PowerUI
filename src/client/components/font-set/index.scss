@@ -1,4 +1,17 @@
 .font-set{
-    padding: var(--space-m) var(--space-l);
+    padding: var(--space-m) var(--space-m);
     border-bottom: solid 1px var(--figma-color-border);
+
+    &[data-base='true']{
+        background: var(--powerui-color-bg-brand-tertiary);
+    }
+
+    &-index{
+        color: var(--figma-color-text-tertiary);
+    }
+
+    &-content{
+        width: 100%;
+    }
+
 }
