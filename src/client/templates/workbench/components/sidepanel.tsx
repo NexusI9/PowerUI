@@ -1,7 +1,7 @@
 import { Dropdown } from "@components/dropdown";
 import { SidepanelInput, SidepanelOption } from "src/types/workbench";
 import { BaseSyntheticEvent, Fragment, useEffect, useState } from "react";
-import { itemFromIndex, traverseCallback } from "@lib/utils/utils";
+import { traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
 import { useDispatch, useSelector } from "react-redux";
 import { updateAction, updateSet } from "@lib/slices/workbench";
@@ -25,10 +25,7 @@ export const Sidepanel = () => {
     const generateInput = (input: SidepanelInput): React.JSX.Element => {
 
         let dynamicComp;
-        //Init update config
-    
-        console.log(input);
-        
+        //Init update config        
         switch (input.type) {
             case 'INPUT':
                 dynamicComp = <Input {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.value }))} />;

@@ -23,7 +23,6 @@ export const Dropdown = (props: IDropdown) => {
     }
 
     useEffect(() => {
-        console.log('check');
         setActiveItem(Array.isArray(props.list[0]) ? props.list[0][0] : props.list[0]);
     }, []);
 

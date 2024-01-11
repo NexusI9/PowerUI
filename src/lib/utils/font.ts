@@ -36,23 +36,29 @@ async function loadFont(config: TextConfig) {
         if (config.typeface !== undefined && config.typeface !== 'Typeface') {
             //Google Font Loading
             //console.log(load);
-            WebFont.load({
-                google: {
-                    families: [config.typeface]
-                },
-                fontloading: () => void 0,
-                fontinactive: () => {
-                    //Load Local Font from server
-                    console.log('get local')
-                    get({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } }).then(e => resolve(e));
-                },
-                fontactive: () => { 
-                    console.log('active');
-                    resolve(config.typeface) 
-                }
-            });
+            try{
+                WebFont.load({
+                    google: {
+                        families: [config.typeface]
+                    },
+                    fontloading: () => void 0,
+                    fontinactive: () => {
+                        //Load Local Font from server
+                        console.log('get local')
+                        get({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } }).then(e => resolve(e));
+                    },
+                    fontactive: () => { 
+                        console.log('active');
+                        resolve(config.typeface) 
+                    }
+                });
+            }catch(_){
+                console.log(`Coudln\'t load ${config.typeface}`);
+                resolve(config);
+            }
+
         }else{
-            return resolve(config);
+            resolve(config);
         }
 
     });

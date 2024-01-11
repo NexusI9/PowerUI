@@ -45,8 +45,6 @@ export const updateSet = createAsyncThunk(
             ...newKey
         };
 
-        //console.log({key, value, config});
-
         //update Set from action
         const { action } = newConfig as ColorConfig | TextConfig;
         const { type } = workbench;
