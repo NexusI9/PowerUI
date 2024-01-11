@@ -40,7 +40,7 @@ export const DEFAULT_STYLE_TEXT:Partial<TextStyle> = {
     "leadingTrim": "NONE"
 };
 
-export const DEFAULT_TYPEFACE = 'inter';
+export const DEFAULT_TYPEFACE = 'Inter';
 
 export const DEFAULT_TOOLTIP = {
     content:[],

@@ -3,7 +3,7 @@ import { MousePosition, MultiArray } from "src/types/global";
 
 export interface ContextMenuCommand {
     icon?: string;
-    text: string;
+    text: string | undefined;
     action?: string;
     payload?: any;
     receiver: 'API' | 'STORE';

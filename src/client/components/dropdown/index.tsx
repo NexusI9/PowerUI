@@ -11,6 +11,7 @@ import { ContextMenuCommand } from 'src/types/contextmenu';
 export const Dropdown = (props: IDropdown) => {
 
     const [activeItem, setActiveItem] = useState<ContextMenuCommand | undefined>();
+    const [value, setValue] = useState<string>(String(props.value));
     const id = useRef<number>(performance.now());
     const lastState = useSelector((state: any) => state.contextmenu);
     const dispatch = useDispatch();
@@ -27,10 +28,20 @@ export const Dropdown = (props: IDropdown) => {
     }, []);
 
     useEffect(() => {
+
         if (props.onChange && activeItem) {
+
+            //set value priority (if no props value then...)
+            const activeValue: string = (props.value && String(props.value))
+                || activeItem.text
+                || (activeItem.fetch && activeItem.fetch.placeholder)
+                || '';
+
+            setValue(activeValue);
+            //external callback
             props.onChange(activeItem);
         }
-    }, [activeItem]);
+    }, [activeItem, props.value]);
 
     useEffect(() => {
         if (lastState.activeCommand && lastState.id === id.current) setActiveItem(lastState.activeCommand);
@@ -46,7 +57,7 @@ export const Dropdown = (props: IDropdown) => {
                 className="flex f-row f-center f-between"
                 onClick={handleOnClick}
             >
-                {activeItem && <Label iconLeft={activeItem.icon}>{activeItem.fetch && activeItem.fetch.placeholder || activeItem.text}</Label> || <p>Undefined</p>}
+                {activeItem && <Label iconLeft={activeItem.icon}>{String(value)}</Label> || <p>Undefined</p>}
                 <Carrot />
             </label>
         </div>

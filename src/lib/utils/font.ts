@@ -30,10 +30,10 @@ export function convertFontWeight(font: string): string {
 
 
 
-async function loadFont(config: TextConfig) {
+async function loadFont(config: TextConfig):Promise<string> {
 
     return new Promise((resolve, reject) => {
-        if (config.typeface !== undefined && config.typeface !== 'Typeface') {
+        if (config.typeface !== undefined) {
             //Google Font Loading
             //console.log(load);
             try{
@@ -44,21 +44,19 @@ async function loadFont(config: TextConfig) {
                     fontloading: () => void 0,
                     fontinactive: () => {
                         //Load Local Font from server
-                        console.log('get local')
                         get({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } }).then(e => resolve(e));
                     },
                     fontactive: () => { 
-                        console.log('active');
-                        resolve(config.typeface) 
+                        resolve(config.typeface || DEFAULT_TYPEFACE) 
                     }
                 });
             }catch(_){
                 console.log(`Coudln\'t load ${config.typeface}`);
-                resolve(config);
+                resolve(config.typeface || DEFAULT_TYPEFACE);
             }
 
         }else{
-            resolve(config);
+            resolve(DEFAULT_TYPEFACE);
         }
 
     });
@@ -77,8 +75,7 @@ export function cssTextStyle(style: TextStyle) {
 
 async function convertTemplate(template: Array<FontSet>, config: TextConfig): Promise<Set<FontSet>> {
 
-    const typeface = config.typeface || DEFAULT_TYPEFACE;
-    await loadFont(config);
+    const typeface = await loadFont(config);
 
     return template.map((style, i) => ({
         style: {
