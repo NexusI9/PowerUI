@@ -2,11 +2,11 @@ import { ColorRGB } from "@ctypes/color";
 import { StyleFolder, Styles, } from "@ctypes/style";
 import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
-import { clone, shallowClone } from '@lib/utils/utils';
+import { clone, mapKeys, shallowClone } from '@lib/utils/utils';
 import { WritablePart } from "@ctypes/global";
-import { Workbench, Set, ColorConfig, TextConfig } from "@ctypes/workbench";
-import { FontSet } from '@ctypes/text';
+import { Workbench, ColorConfig, TextConfig, Set } from "@ctypes/workbench";
 import { ShadeSet } from '@ctypes/shade';
+import { FontSet } from "@ctypes/text";
 
 export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
@@ -304,14 +304,29 @@ export function createSet({ folder, set, config, type }: Workbench) {
     const { level } = folder;
     const styleFolders = (get_styles_of_folder(folder) ?? []).map(style => folderAtLevel(style.name, level));
 
-    set?.forEach(({ style }) => {
+    set?.forEach(async ({ style }) => {
         const copyName = setCopyNumber(baseName, styleFolders) || '';
         const styleName = concatFolderName([folder.fullpath, copyName, style.name]);
 
         switch (type) {
             case 'TEXT':
-                const textStyle = figma.createPaintStyle();
+                const textStyle = figma.createTextStyle();
+
+                //Load font for Figma Canvas
+                await figma.loadFontAsync(textStyle.fontName);
+
+                const { fontName } = style as FontSet;
+                //Map relative value to styles;
+                fontName && figma.loadFontAsync(fontName)
+                    .then(() => mapKeys(style, textStyle))
+                    .catch(() => {
+                        //Try to load Regular Style
+                        const regStyle = { ...style, fontName: { ...fontName, style: 'Regular' } };
+                        figma.loadFontAsync(regStyle.fontName).then(() => mapKeys(regStyle, textStyle))
+                    });
+                //Override name with copy number name
                 textStyle.name = styleName;
+
                 break;
 
             case 'COLOR':

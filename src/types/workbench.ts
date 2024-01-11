@@ -4,6 +4,7 @@ import { ShadeSet } from "./shade";
 import { ColorRGB } from "./color";
 import { ContextMenuCommand } from "./contextmenu";
 import { MultiArray } from "./global";
+import { FontSet } from "./text";
 
 export type ColorSetMethod =
     'SHADE' |
@@ -94,7 +95,7 @@ export interface Workbench {
     sidepanel: Sidepanel;
     footer?: Footer;
     config: ColorConfig | TextConfig | ColorAdjustConfig;
-    set?: Set<ShadeSet | TextStyle>;
+    set?: Set<ShadeSet | FontSet>;
 }
 
 export interface WorkbenchComponent<T> {

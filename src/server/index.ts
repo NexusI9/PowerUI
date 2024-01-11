@@ -14,12 +14,12 @@ import {
   createSet
 } from "@lib/utils/style";
 
-import { loadLocalFont, groupFont, storeAllFont } from "@lib/utils/font.back";
-import { ColorRGB } from "src/types/color";
+import { loadLocalFont, storeFonts } from "@lib/utils/font.back";
+import { ColorRGB } from "@ctypes/color";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
-import { TextDico } from "src/types/text";
+import { TextDico } from "@ctypes/text";
 
-let systemFonts: TextDico = {};
+let systemFonts: TextDico;
 
 figma.showUI(__html__, { themeColors: true });
 figma.ui.resize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
@@ -118,11 +118,18 @@ figma.ui.onmessage = msg => {
     default:
 
     case 'FONT_LIST':
-      storeAllFont(msg, systemFonts).then(list => { if (list) systemFonts = list });
+      storeFonts(msg, systemFonts)
+        .then(({ fonts, action }: { fonts: TextDico, action: string }) => {
+          if (fonts && !systemFonts) { systemFonts = fonts }
+          figma.ui.postMessage({ action: action, payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE' })) }); //map dico font to be contextMenu compatible
+        })
+        .catch(() => figma.ui.postMessage({ action: action, payload: [] }));
       break;
 
     case 'LOAD_FONT':
-      loadLocalFont(msg, systemFonts);
+      loadLocalFont(msg, systemFonts)
+        .then(msg => figma.ui.postMessage(msg))
+        .catch(e => console.warn(e));
       break;
   }
 

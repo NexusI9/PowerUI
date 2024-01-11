@@ -43,3 +43,15 @@ export const itemFromIndex = (active: number | Array<number>, list: Array<any> |
 export const envelop = (min: number, value: number, max: number = 1): number => min + (max - min) * value;
 
 export const mix = (valueA: number, valueB: number, factor: number) => ((1 - factor) * valueA) + factor * ((valueA + valueB) / 2);
+
+
+export const mapKeys = (reference: any, mutable: any) => {
+
+    Object.keys(reference).forEach(key => {
+        try {
+            mutable[key as keyof typeof reference] = reference[key as keyof typeof mutable] as any;
+        } catch {
+            console.warn(`Couldn't assign attribute for ${key}`);
+        }
+    });
+}

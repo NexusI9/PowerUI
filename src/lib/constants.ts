@@ -17,7 +17,6 @@ export const DEFAULT_STYLE_COLOR:Array<Paint> = [
 
 export const DEFAULT_STYLE_TEXT:Partial<TextStyle> = {
     "name": "Style name",
-    "type": "TEXT",
     "fontSize": 16,
     "textDecoration": "NONE",
     "fontName": {
