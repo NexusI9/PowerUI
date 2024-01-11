@@ -1,4 +1,4 @@
-import { ContextMenuCommand } from '@ctypes/contextmenu';
+import { ContextMenuCommand } from 'src/types/contextmenu';
 import { MultiArray } from './global';
 
 export interface Input {

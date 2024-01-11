@@ -1,10 +1,10 @@
-import { ShadeSet as IShadeSet } from "@ctypes/shade";
+import { ShadeSet as IShadeSet } from "src/types/shade";
 import { rgbToHsl, rgb, rgbToHex } from "@lib/utils/color";
 import './index.scss';
 import { ContrastLabel } from "./contrast";
 import Lock from '@icons/lock-locked.svg';
 import { Icon } from "@components/icon";
-import { WorkbenchComponent } from "@ctypes/workbench";
+import { WorkbenchComponent } from "src/types/workbench";
 
 export const ShadeSet = ({style}:WorkbenchComponent<IShadeSet>) => {
 

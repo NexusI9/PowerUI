@@ -1,5 +1,5 @@
 import './index.scss';
-import { Input as IInput } from '@ctypes/input';
+import { Input as IInput } from 'src/types/input';
 import ArrowHorizontal from '@icons/horizontal.svg';
 import ArrowVertical from '@icons/vertical.svg';
 import { Icon } from '@components/icon';

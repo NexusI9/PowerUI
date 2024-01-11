@@ -1,7 +1,7 @@
 import * as React from "react";
 import './index.scss';
-import { FolderOptions } from "@ctypes/folder";
-import { DisplayMode, StyleFolder } from "@ctypes/style";
+import { FolderOptions } from "src/types/folder";
+import { DisplayMode, StyleFolder } from "src/types/style";
 import { generateFolder } from "./helper";
 
 interface FolderContainer {

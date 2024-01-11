@@ -1,6 +1,6 @@
 import './index.scss';
-import { ContextMenuCommand } from '@ctypes/contextmenu';
-import { Folder as IFolder, Option as IOption } from '@ctypes/folder';
+import { ContextMenuCommand } from 'src/types/contextmenu';
+import { Folder as IFolder, Option as IOption } from 'src/types/folder';
 import { OptionsRow } from '@components/options-row';
 import Move from '@icons/move.svg';
 import Carrot from '@icons/carrot.svg';
@@ -12,7 +12,7 @@ import { Input } from '@components/input';
 import { send } from '@lib/ipc';
 import { useDispatch } from 'react-redux';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
-import { MultiArray } from '@ctypes/global';
+import { MultiArray } from 'src/types/global';
 import { traverseCallback } from '@lib/utils/utils';
 
 export const Folder = ({

@@ -1,6 +1,6 @@
 import './index.scss';
 import { useSelector } from 'react-redux';
-import { ToolTipItem } from '@ctypes/tooltip';
+import { ToolTipItem } from 'src/types/tooltip';
 import { convertPayload } from './helper';
 import { Input } from '@components/input';
 import { send } from '@lib/ipc';

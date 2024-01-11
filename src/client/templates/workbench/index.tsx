@@ -1,4 +1,4 @@
-import { Workbench } from "@ctypes/workbench";
+import { Workbench } from "src/types/workbench";
 import { useSelector } from "react-redux";
 import Close from '@icons/x.svg';
 import { ButtonIcon } from "@components/button-icon";

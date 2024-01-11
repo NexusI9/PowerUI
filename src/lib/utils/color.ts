@@ -1,4 +1,4 @@
-import { ColorRGB, ColorOutput, ColorHSL } from '@ctypes/color';
+import { ColorRGB, ColorOutput, ColorHSL } from 'src/types/color';
 import { replaceStyle } from './style';
 
 function to255(color: ColorRGB) {

@@ -1,5 +1,5 @@
-import { StyleFolder } from "@ctypes/style";
-import { ContextMenuCommand } from "@ctypes/contextmenu";
+import { StyleFolder } from "src/types/style";
+import { ContextMenuCommand } from "src/types/contextmenu";
 
 
 export interface Option {

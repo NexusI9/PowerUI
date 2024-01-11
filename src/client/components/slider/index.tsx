@@ -1,4 +1,4 @@
-import { Slider as ISlider } from "@ctypes/input";
+import { Slider as ISlider } from "src/types/input";
 import './index.scss';
 import { BaseSyntheticEvent, useEffect, useRef, useState } from "react";
 import { Input } from "@components/input";

@@ -2,9 +2,9 @@ import { useSelector } from "react-redux";
 import { FontSet } from "@components/font-set";
 import { Fragment, createElement } from "react";
 import { ShadeSet } from "@components/shade-set";
-import { WorkbenchComponent } from "@ctypes/workbench";
-import { ShadeSet as IShadeSet } from "@ctypes/shade";
-import { FontSet as IFontSet } from "@ctypes/text";
+import { WorkbenchComponent } from "src/types/workbench";
+import { ShadeSet as IShadeSet } from "src/types/shade";
+import { FontSet as IFontSet } from "src/types/text";
 
 export const Content = () => {
     

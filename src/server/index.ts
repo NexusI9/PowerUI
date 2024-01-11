@@ -12,11 +12,12 @@ import {
   duplicateFolder,
   updateText
 } from "@lib/utils/style";
-import { fontLoader, groupFont } from "@lib/utils/font";
+
+import { loadLocalFont, groupFont } from "@lib/utils/font.back";
 import { createSwatch } from "@lib/utils/shade";
-import { ColorRGB } from "@ctypes/color";
+import { ColorRGB } from "src/types/color";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
-import { TextDico } from "@ctypes/text";
+import { TextDico } from "src/types/text";
 
 let systemFonts: TextDico = {};
 
@@ -134,7 +135,7 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'LOAD_FONT':
-      fontLoader(msg, systemFonts);
+      loadLocalFont(msg, systemFonts);
       break;
   }
 

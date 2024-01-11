@@ -1,5 +1,5 @@
-import { ContextMenuCommand } from "@ctypes/contextmenu";
-import { MultiArray } from "@ctypes/global";
+import { ContextMenuCommand } from "src/types/contextmenu";
+import { MultiArray } from "src/types/global";
 import { traverseCallback } from "@lib/utils/utils";
 
 export function setYPos(

@@ -1,10 +1,10 @@
-import { ColorRGB } from "@ctypes/color";
-import { StyleFolder, Styles } from "@ctypes/style";
+import { ColorRGB } from "src/types/color";
+import { StyleFolder, Styles } from "src/types/style";
 import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { clone, shallowClone } from '@lib/utils/utils';
-import { WritablePart } from "@ctypes/global";
-import { ContextMenuCommand } from "@ctypes/contextmenu";
+import { WritablePart } from "src/types/global";
+import { ContextMenuCommand } from "src/types/contextmenu";
 
 export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 

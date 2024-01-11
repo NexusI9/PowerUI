@@ -52,8 +52,8 @@ module.exports = (env, argv) => ({
       "@components": path.resolve(__dirname, "src/client/components/"),
       "@icons": path.resolve(__dirname, "src/client/assets/icons/"),
       "@styles": path.resolve(__dirname, "src/client/styles/"),
-      "@lib": path.resolve(__dirname, "src/client/lib/"),
-      "@ctypes": path.resolve(__dirname, "src/client/lib/types/"),
+      "@lib": path.resolve(__dirname, "src/lib/"),
+      "@ctypes": path.resolve(__dirname, "src/types/"),
       "@templates": path.resolve(__dirname, "src/client/templates/")
     }
   },

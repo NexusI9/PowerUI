@@ -16,6 +16,7 @@
     "@types/chroma-js": "^2.4.3",
     "@types/react": "^18.2.25",
     "@types/react-dom": "^18.2.11",
+    "@types/webfontloader": "^1.6.38",
     "css-loader": "^6.8.1",
     "html-webpack-plugin": "^5.5.3",
     "react-dev-utils": "^12.0.1",
@@ -40,6 +41,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^9.0.4",
     "sass": "^1.69.5",
-    "wcag-color": "^1.1.1"
+    "wcag-color": "^1.1.1",
+    "webfontloader": "^1.6.28"
   }
 }

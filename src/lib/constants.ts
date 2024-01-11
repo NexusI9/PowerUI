@@ -1,4 +1,4 @@
-import { ContextMenu } from "@ctypes/contextmenu";
+import { ContextMenu } from "src/types/contextmenu";
 
 export const DEFAULT_STYLE_COLOR:Array<Paint> = [
     {

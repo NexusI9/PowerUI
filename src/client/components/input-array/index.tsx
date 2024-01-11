@@ -1,5 +1,5 @@
 import './index.scss';
-import { InputArray as IInputArray } from '@ctypes/input';
+import { InputArray as IInputArray } from 'src/types/input';
 import { Input } from '@components/input';
 import { BaseSyntheticEvent, useState } from 'react';
 import { ButtonIcon } from '@components/button-icon';

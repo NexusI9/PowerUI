@@ -1,6 +1,6 @@
-import { ColorHSL, ColorRGB } from "@ctypes/color";
-import { ColorAdjustConfig, ColorConfig, ColorSetMethod, Workbench, WorkbenchComponent, Set } from "@ctypes/workbench";
-import { ShadeSet } from "@ctypes/shade";
+import { ColorHSL, ColorRGB } from "src/types/color";
+import { ColorAdjustConfig, ColorConfig, ColorSetMethod, Workbench, WorkbenchComponent, Set } from "src/types/workbench";
+import { ShadeSet } from "src/types/shade";
 import { concatFolderName, folderAtLevel, folderNameFromPath, get_styles_of_folder, setCopyNumber } from "./style";
 import { DEFAULT_STYLE_COLOR, MATERIAL_DEFAULT_KEYS } from "@lib/constants";
 import chroma, { InterpolationMode } from 'chroma-js';

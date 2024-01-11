@@ -1,9 +1,9 @@
-import { ContextMenuCommand } from "@ctypes/contextmenu";
 import { FontSet, TextArrayItem, TextDico } from "@ctypes/text";
-import { TextConfig, WorkbenchComponent } from "@ctypes/workbench";
+import { TextConfig } from "src/types/workbench";
 import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
 import { get } from "@lib/ipc";
-import { Set } from "@ctypes/workbench";
+import { Set } from "src/types/workbench";
+import WebFont from "webfontloader";
 
 export function convertUnit(unit: string): string {
     return {
@@ -29,70 +29,34 @@ export function convertFontWeight(font: string): string {
 }
 
 
-export function groupFont(fonts: Array<Font>): { [key: string]: TextArrayItem } {
-
-    //transform font to ContextMenuCommand structure
-    const fontDico: { [key: string]: TextArrayItem } = {};
-
-    //1. Gather all fonts in dictionary along with their font (bold/reg/light...)
-    fonts.forEach(font => {
-        const { fontName: { family, style } } = font;
-
-        if (!fontDico[family]) {
-            fontDico[family] = {
-                family,
-                loaded: false,
-                style: [style]
-            };
-        } else {
-            fontDico[family].style.push(style);
-        }
-    });
-
-
-    return fontDico;
-}
 
 async function loadFont(config: TextConfig) {
 
-    if (config.typeface !== undefined && config.typeface !== 'Typeface') {
-        let result = await get({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } },);
-        console.log(result);
-        return result
-    }
+    return new Promise((resolve, reject) => {
 
-    return config;
-}
 
-export function fontLoader(msg: any, systemFonts: TextDico) {
+        if (config.typeface !== undefined && config.typeface !== 'Typeface') {
+            //Google Font Loading
+            //console.log(load);
+            WebFont.load({
+                google: {
+                    families: [config.typeface]
+                },
+                fontloading: (name, fvd) => console.log(`importing ${name}...`),
+                fontinactive: () => {
+                    //Load Local Font from server
+                    get({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } }).then(e => resolve(e));
+                },
+                fontactive: (nm,f) => {
+                    console.log(nm,f);
+                    resolve(config.typeface);
+                }
+            });
+        }
 
-    const { payload } = msg;
-    
-    const dicoFont = systemFonts[payload.family];
-    if (payload.family && dicoFont?.loaded === false) {
-        console.log(payload, dicoFont);
-        //load all styles by mapping each style in promise
-        Promise.all(
-            dicoFont.style.map(style => new Promise((resolve, reject) => {
-                figma.loadFontAsync({ ...payload, style: style })
-                    .then(() => resolve(style))
-                    .catch(() => {
-                        systemFonts[payload.family].loaded = false;
-                        reject(`Could not load ${payload.family}, ${style}`);
-                    })
-            }))
-        )
-            .then((e) => {
-                console.log(e);
-                figma.ui.postMessage(msg);
-            })
-            .catch((e) => console.warn(e));
+        return resolve(config);
 
-        //set font as loaded
-        systemFonts[payload.family].loaded = true;
-    } else {
-        figma.ui.postMessage(msg);
-    }
+    });
 }
 
 export function cssTextStyle(style: TextStyle) {

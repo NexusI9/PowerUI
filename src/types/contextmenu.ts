@@ -1,4 +1,4 @@
-import { MousePosition, MultiArray } from "@ctypes/global";
+import { MousePosition, MultiArray } from "src/types/global";
 
 
 export interface ContextMenuCommand {

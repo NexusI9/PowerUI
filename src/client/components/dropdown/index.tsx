@@ -1,12 +1,12 @@
 import './index.scss';
-import { Dropdown as IDropdown } from "@ctypes/input";
+import { Dropdown as IDropdown } from "src/types/input";
 import Carrot from '@icons/carrot.svg';
 import { BaseSyntheticEvent, useEffect, useState, useRef } from "react";
 import { setYPos } from "./helper";
 import { Label } from '@components/label';
 import { useDispatch, useSelector } from 'react-redux';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
-import { ContextMenuCommand } from '@ctypes/contextmenu';
+import { ContextMenuCommand } from 'src/types/contextmenu';
 import { AsyncThunkAction } from '@reduxjs/toolkit';
 
 export const Dropdown = (props: IDropdown) => {

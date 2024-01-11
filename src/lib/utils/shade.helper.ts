@@ -1,7 +1,7 @@
-import { Contrast, ContrastPropreties } from "@ctypes/shade";
+import { Contrast, ContrastPropreties } from "src/types/shade";
 import { ratio } from "wcag-color";
 import { wcagContrastChecker } from "@mdhnpm/wcag-contrast-checker";
-import { ColorRGB } from "@ctypes/color";
+import { ColorRGB } from "src/types/color";
 import { clamp } from "./utils";
 
 

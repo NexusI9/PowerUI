@@ -17,8 +17,8 @@
         "@components/*": ["src/client/components/*"],
         "@icons/*": ["src/client/assets/icons/*"],
         "@styles/*": ["src/client/styles/*"],
-        "@ctypes/*": ["src/client/lib/types/*"],
-        "@lib/*": ["src/client/lib/*"],
+        "@ctypes/*": ["src/types/*"],
+        "@lib/*": ["src/lib/*"],
         "@templates/*":["src/client/templates/*"]
     }
   },

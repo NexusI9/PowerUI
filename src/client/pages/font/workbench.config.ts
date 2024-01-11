@@ -1,5 +1,5 @@
-import { ContextMenuCommand } from "@ctypes/contextmenu";
-import { SidepanelInput, Workbench } from "@ctypes/workbench";
+import { ContextMenuCommand } from "src/types/contextmenu";
+import { SidepanelInput, Workbench } from "src/types/workbench";
 
 
 const SCALES_COMMAND:Array<ContextMenuCommand> = [

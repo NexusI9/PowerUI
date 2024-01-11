@@ -1,4 +1,4 @@
-import { StyleFolder } from "@ctypes/style";
+import { StyleFolder } from "src/types/style";
 import { Folder } from "@components/folder";
 import * as React from 'react';
 import { ButtonIcon } from "@components/button-icon";

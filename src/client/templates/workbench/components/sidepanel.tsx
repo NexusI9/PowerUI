@@ -1,11 +1,11 @@
 import { Dropdown } from "@components/dropdown";
-import { SidepanelInput, SidepanelOption } from "@lib/types/workbench";
+import { SidepanelInput, SidepanelOption } from "src/types/workbench";
 import { BaseSyntheticEvent, Fragment, useEffect, useState } from "react";
 import { itemFromIndex, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
 import { useDispatch, useSelector } from "react-redux";
 import { updateConfig } from "@lib/slices/workbench";
-import { ContextMenuCommand } from "@ctypes/contextmenu";
+import { ContextMenuCommand } from "src/types/contextmenu";
 import { Slider } from "@components/slider";
 import { InputArray } from "@components/input-array";
 import { Checkbox } from "@components/checkbox";

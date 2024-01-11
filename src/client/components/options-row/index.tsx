@@ -1,5 +1,5 @@
 import { ButtonIcon } from '@components/button-icon';
-import { Option } from "@ctypes/folder";
+import { Option } from "src/types/folder";
 import './index.scss';
 
 export const OptionsRow = ({ options, className }:{options:Array<Option>, className?:string}) => (

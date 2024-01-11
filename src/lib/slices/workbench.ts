@@ -1,10 +1,10 @@
-import { Workbench, ColorConfig, TextConfig, SidepanelOption, SidepanelInput, Set, ColorAdjustConfig } from "@ctypes/workbench";
+import { Workbench, ColorConfig, TextConfig, SidepanelOption, SidepanelInput, Set, ColorAdjustConfig } from "src/types/workbench";
 import { apple, carbon, flutter, scale, material as textMaterial } from "@lib/utils/font";
 import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ShadeSet as IShadeSet } from "@ctypes/shade";
-import { FontSet } from "@ctypes/text";
+import { ShadeSet as IShadeSet } from "src/types/shade";
+import { FontSet } from "src/types/text";
 
 
 //{ [key in ColorSetMethod]: any; }
@@ -53,7 +53,7 @@ export const updateConfig = createAsyncThunk(
             try {
                 newSet = await actionMap[type][action](newConfig); //call mapped function
             } catch (_) {
-                console.log('No mapped method found, make sure to assign the right action key to the right method in action map');
+                console.log(_);
             }
         }
 

@@ -1,4 +1,4 @@
-import { ButtonIcon as IButtonIcon } from '@ctypes/input';
+import { ButtonIcon as IButtonIcon } from 'src/types/input';
 import './index.scss';
 import { Icon } from '@components/icon';
 

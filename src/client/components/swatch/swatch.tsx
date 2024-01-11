@@ -5,7 +5,7 @@ import { send } from '@lib/ipc';
 import { folderNameFromPath } from '@lib/utils/style';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
 import { useDispatch } from 'react-redux';
-import { ContextMenuCommand } from '@ctypes/contextmenu';
+import { ContextMenuCommand } from 'src/types/contextmenu';
 import { display as displayTooltip, destroy as destroyTooltip } from '@lib/slices/tooltip';
 import { display as displaySnackBar } from '@lib/slices/snackbar';
 

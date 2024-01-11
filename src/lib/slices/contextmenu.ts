@@ -1,4 +1,4 @@
-import { ContextMenu, ContextMenuCommand } from "@ctypes/contextmenu";
+import { ContextMenu, ContextMenuCommand } from "src/types/contextmenu";
 import { DEFAULT_CONTEXT_MENU } from "@lib/constants";
 import { get } from "@lib/ipc";
 import { traverseCallback } from "@lib/utils/utils";

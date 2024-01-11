@@ -1,15 +1,15 @@
 import { Swatch } from "@components/swatch/swatch";
 import { Style } from "@templates/style";
 import PaintPlus from '@icons/paint-plus.svg';
-import { ButtonPad } from "@ctypes/input";
+import { ButtonPad } from "src/types/input";
 import { send } from "@lib/ipc";
 import SwatchIcon from '@icons/swatch.svg';
 import { useDispatch } from "react-redux";
 import { spawn } from "@lib/slices/workbench";
 import { CREATE_SWATCH_CONFIG, EDIT_SWATCH_CONFIG } from "./workbench.config";
-import { StyleFolder } from "@lib/types/style";
+import { StyleFolder } from "src/types/style";
 import { GET_PAINT_STYLES_COMMAND } from "@lib/constants";
-import { FolderOptions } from "@ctypes/folder";
+import { FolderOptions } from "src/types/folder";
 
 export default () => {
 

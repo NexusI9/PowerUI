@@ -1,4 +1,4 @@
-import { SidepanelInput, Workbench } from "@ctypes/workbench";
+import { SidepanelInput, Workbench } from "src/types/workbench";
 import { MATERIAL_DEFAULT_KEYS } from "@lib/constants";
 
 const basicSidepanelContent: Array<SidepanelInput> = [

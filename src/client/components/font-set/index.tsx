@@ -4,7 +4,7 @@ import { folderNameFromPath } from '@lib/utils/style';
 import { Font } from '@components/font';
 import { Icon } from '@components/icon';
 import Lock from '@icons/lock-locked.svg'
-import { WorkbenchComponent } from '@ctypes/workbench';
+import { WorkbenchComponent } from 'src/types/workbench';
 
 export const FontSet = ({ style, index }: WorkbenchComponent<TextStyle>) => {
 

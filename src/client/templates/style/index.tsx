@@ -6,10 +6,10 @@ import Plus from '@icons/add.svg';
 import Grid from '@icons/table.svg';
 import { ButtonPad } from "@components/button-pad";
 import { FolderContainer } from "@components/folder-container";
-import { ButtonPad as IButtonPad } from "@ctypes/input";
-import { FolderOptions } from '@ctypes/folder';
+import { ButtonPad as IButtonPad } from "src/types/input";
+import { FolderOptions } from 'src/types/folder';
 import { get, listen } from '@lib/ipc';
-import { StyleFolder } from "@ctypes/style";
+import { StyleFolder } from "src/types/style";
 import { useDispatch, useSelector } from "react-redux";
 import { switchDisplay } from "@lib/slices/style";
 

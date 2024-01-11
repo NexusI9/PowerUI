@@ -11,7 +11,7 @@
   "ui": "./dist/index.html",
   "networkAccess": {
     "allowedDomains": [
-      "https://static.figma.com"
+      "https://static.figma.com", "https://fonts.googleapis.com"
     ]
   }
 }

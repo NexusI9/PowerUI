@@ -1,4 +1,4 @@
-import { ContrastPropreties } from '@ctypes/shade';
+import { ContrastPropreties } from 'src/types/shade';
 
 export const ContrastLabel = ({ratio, large, regular}:ContrastPropreties) => {
 

@@ -1,4 +1,4 @@
-import { Button as IButton } from '@ctypes/input';
+import { Button as IButton } from 'src/types/input';
 import './index.scss';
 
 
