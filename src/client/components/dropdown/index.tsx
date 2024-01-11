@@ -7,7 +7,6 @@ import { Label } from '@components/label';
 import { useDispatch, useSelector } from 'react-redux';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
 import { ContextMenuCommand } from 'src/types/contextmenu';
-import { AsyncThunkAction } from '@reduxjs/toolkit';
 
 export const Dropdown = (props: IDropdown) => {
 
@@ -17,13 +16,14 @@ export const Dropdown = (props: IDropdown) => {
     const dispatch = useDispatch();
 
     const handleOnClick = (e: BaseSyntheticEvent) => {
-        if(!activeItem){ return; }
+        if (!activeItem) { return; }
         const { x, y } = e.target.getBoundingClientRect() || 0;
         const offset = Math.max(0, setYPos(activeItem, 20, props.list));
         dispatch<any>(displayContextMenu({ commands: props.list, position: { x: x, y: y + offset }, id: id.current }));
     }
 
     useEffect(() => {
+        console.log('check');
         setActiveItem(Array.isArray(props.list[0]) ? props.list[0][0] : props.list[0]);
     }, []);
 

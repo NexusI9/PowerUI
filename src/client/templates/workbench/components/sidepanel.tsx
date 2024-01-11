@@ -4,7 +4,7 @@ import { BaseSyntheticEvent, Fragment, useEffect, useState } from "react";
 import { itemFromIndex, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
 import { useDispatch, useSelector } from "react-redux";
-import { updateConfig } from "@lib/slices/workbench";
+import { updateAction, updateSet } from "@lib/slices/workbench";
 import { ContextMenuCommand } from "src/types/contextmenu";
 import { Slider } from "@components/slider";
 import { InputArray } from "@components/input-array";
@@ -19,38 +19,42 @@ export const Sidepanel = () => {
 
     const updateOption = (option: SidepanelOption) => {
         setActiveOption(option);
-        dispatch(updateConfig({ key: 'action', value: option.action })); //store initial config
+        dispatch(updateAction({ key: 'action', value: option.action })); //store initial config
     }
 
     const generateInput = (input: SidepanelInput): React.JSX.Element => {
 
         let dynamicComp;
+        //Init update config
+    
+        console.log(input);
+        
         switch (input.type) {
             case 'INPUT':
-                dynamicComp = <Input {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateConfig({ key: input.configKey, value: e.target.value }))} />;
+                dynamicComp = <Input {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.value }))} />;
                 break;
 
             case 'INPUT_ARRAY':
-                dynamicComp = <InputArray {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateConfig({ key: input.configKey, value: e.target.value }))} />;
+                dynamicComp = <InputArray {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.value }))} />;
                 break;
 
             case 'SLIDER':
-                dynamicComp = <Slider {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateConfig({ key: input.configKey, value: e.target.value }))} />
+                dynamicComp = <Slider {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.value }))} />
                 break;
 
             case 'CHECKBOX':
-                dynamicComp = <Checkbox {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateConfig({ key: input.configKey, value: e.target.checked }))} />;
+                dynamicComp = <Checkbox {...input.attributes} onChange={(e: BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.checked }))} />;
                 break;
 
             case 'DROPDOWN':
-                dynamicComp = <Dropdown {...input.attributes} onChange={(e: ContextMenuCommand) => dispatch(updateConfig({ key: input.configKey, value: e.text }))} />;
+                dynamicComp = <Dropdown {...input.attributes} onChange={(e: ContextMenuCommand) => dispatch(updateSet({ key: input.configKey, value: e.text }))} />;
                 break;
 
             default:
                 dynamicComp = <></>;
         }
 
-        return <Fragment key={JSON.stringify(input)}>{dynamicComp}</Fragment>;
+        return <Fragment key={JSON.stringify(activeOption)+JSON.stringify(input)}>{dynamicComp}</Fragment>;
 
     }
 

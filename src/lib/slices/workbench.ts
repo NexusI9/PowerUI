@@ -30,19 +30,22 @@ const actionMap: { [key in Workbench["type"]as string]: any } = {
         CARBON: carbon
     }
 }
-//  { payload: { key: keyof ColorConfig | keyof TextConfig | keyof ColorAdjustConfig; value: any } },
-export const updateConfig = createAsyncThunk(
-    'workbench/updateConfig',
-    async ({ key, value }: any, { getState }) => {
-        
-        //get state
-        const { workbench }: any = getState();
-        
+export const updateSet = createAsyncThunk(
+    'workbench/updateSet',
+    /** 
+     * Accepts either a specific key and value or a whole config to generate Set
+     * **/
+    async ({ key, value, config }: any, { getState }) => {
+
         //update Config 
+        const { workbench }: any = getState();
+        const newKey = (key && value) ? { [key]: value } : {};
         const newConfig = {
-            ...workbench.config,
-            [key]: value
+            ...(config || workbench.config),
+            ...newKey
         };
+
+        //console.log({key, value, config});
 
         //update Set from action
         const { action } = newConfig as ColorConfig | TextConfig;
@@ -59,7 +62,7 @@ export const updateConfig = createAsyncThunk(
 
         return ({
             ...workbench,
-            config: { ...newConfig },
+            config: { ...newConfig, },
             set: [...newSet]
         });
     }
@@ -88,13 +91,17 @@ const workbenchSlice = createSlice({
 
             return ({ ...state, ...payload, config: { ...initConfig }, active: true })
         },
+        updateAction: (state, { payload }: { payload: any }) => {
+            const newConfig = { ...state.config, action: payload.value };
+            return ({ ...state, config: newConfig })
+        },
         destroy: (state) => ({ ...state, active: false, set: [] }),
     },
     extraReducers: (builder) => {
-        builder.addCase(updateConfig.fulfilled, (state, { payload }) => ({ ...state, ...payload }))
+        builder.addCase(updateSet.fulfilled, (state, { payload }) => ({ ...state, ...payload }))
     }
 });
 
-export const { spawn, destroy } = workbenchSlice.actions;
+export const { spawn, destroy, updateAction } = workbenchSlice.actions;
 export default workbenchSlice.reducer;
 

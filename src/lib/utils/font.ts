@@ -43,13 +43,17 @@ async function loadFont(config: TextConfig) {
                 fontloading: () => void 0,
                 fontinactive: () => {
                     //Load Local Font from server
+                    console.log('get local')
                     get({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } }).then(e => resolve(e));
                 },
-                fontactive: () =>  resolve(config.typeface)
+                fontactive: () => { 
+                    console.log('active');
+                    resolve(config.typeface) 
+                }
             });
+        }else{
+            return resolve(config);
         }
-
-        return resolve(config);
 
     });
 }
