@@ -1,4 +1,4 @@
-import { FontSet, TextArrayItem, TextDico } from "@ctypes/text";
+import { FontSet } from "@ctypes/text";
 import { TextConfig } from "src/types/workbench";
 import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
 import { get } from "@lib/ipc";
@@ -33,8 +33,6 @@ export function convertFontWeight(font: string): string {
 async function loadFont(config: TextConfig) {
 
     return new Promise((resolve, reject) => {
-
-
         if (config.typeface !== undefined && config.typeface !== 'Typeface') {
             //Google Font Loading
             //console.log(load);
@@ -42,15 +40,12 @@ async function loadFont(config: TextConfig) {
                 google: {
                     families: [config.typeface]
                 },
-                fontloading: (name, fvd) => console.log(`importing ${name}...`),
+                fontloading: () => void 0,
                 fontinactive: () => {
                     //Load Local Font from server
                     get({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } }).then(e => resolve(e));
                 },
-                fontactive: (nm,f) => {
-                    console.log(nm,f);
-                    resolve(config.typeface);
-                }
+                fontactive: () =>  resolve(config.typeface)
             });
         }
 
@@ -269,7 +264,7 @@ export async function material(config: TextConfig): Promise<Set<FontSet>> {
 
     ]
 
-    return convertTemplate(fontTemplate, config);
+    return await convertTemplate(fontTemplate, config);
 }
 
 /**
@@ -374,7 +369,7 @@ export async function flutter(config: TextConfig): Promise<Set<FontSet>> {
         }
     ]
 
-    return convertTemplate(fontTemplate, config);
+    return await convertTemplate(fontTemplate, config);
 
 }
 
@@ -500,7 +495,7 @@ export async function apple(config: TextConfig): Promise<Set<FontSet>> {
 
     }
 
-    return convertTemplate(fontTemplate[config.device || 'desktop'], config);
+    return await convertTemplate(fontTemplate[config.device || 'desktop'], config);
 
 }
 

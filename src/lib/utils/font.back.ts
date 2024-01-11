@@ -3,7 +3,7 @@ import { TextArrayItem, TextDico } from "src/types/text";
 export function loadLocalFont(msg: any, systemFonts: TextDico) {
 
     const { payload } = msg;
-    console.log('load local font', msg);
+
     const dicoFont = systemFonts[payload.family];
     if (payload.family && dicoFont?.loaded === false) {
 
@@ -19,10 +19,7 @@ export function loadLocalFont(msg: any, systemFonts: TextDico) {
                     })
             }))
         )
-            .then((e) => {
-                console.log(e);
-                figma.ui.postMessage(msg);
-            })
+            .then((e) => figma.ui.postMessage(msg) )
             .catch((e) => console.warn(e));
 
         //set font as loaded
