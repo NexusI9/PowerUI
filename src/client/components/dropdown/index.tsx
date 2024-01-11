@@ -46,7 +46,7 @@ export const Dropdown = (props: IDropdown) => {
                 className="flex f-row f-center f-between"
                 onClick={handleOnClick}
             >
-                {activeItem && <Label iconLeft={activeItem.icon}>{activeItem.text}</Label> || <p>Undefined</p>}
+                {activeItem && <Label iconLeft={activeItem.icon}>{activeItem.fetch && activeItem.fetch.placeholder || activeItem.text}</Label> || <p>Undefined</p>}
                 <Carrot />
             </label>
         </div>

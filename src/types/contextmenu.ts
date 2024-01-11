@@ -7,7 +7,7 @@ export interface ContextMenuCommand {
     action?: string;
     payload?: any;
     receiver: 'API' | 'STORE';
-    fetch?: { action: string; payload?: any; };
+    fetch?: { action: string; payload?: any; placeholder: string; };
 }
 
 

@@ -2,7 +2,7 @@ import { ContextMenuCommand } from "src/types/contextmenu";
 import { SidepanelInput, Workbench } from "src/types/workbench";
 
 
-const SCALES_COMMAND:Array<ContextMenuCommand> = [
+const SCALES_COMMAND: Array<ContextMenuCommand> = [
     { text: 'minor second (15:16)', action: 'UPDATE_SCALE', receiver: 'STORE' },
     { text: 'major second (8:9)', action: 'UPDATE_SCALE', receiver: 'STORE' },
     { text: 'minor third (5:6)', action: 'UPDATE_SCALE', receiver: 'STORE' },
@@ -27,7 +27,7 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST', placeholder: 'Inter' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true }
         },
         configKey: 'typeface'
@@ -100,7 +100,7 @@ const materialSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST', placeholder: 'Inter' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true }
         },
         configKey: 'typeface'
@@ -112,7 +112,7 @@ const appleSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST', placeholder: 'Inter' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true }
         },
         configKey: 'typeface'
@@ -137,7 +137,7 @@ const flutterSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST', placeholder: 'Inter' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true }
         },
         configKey: 'typeface'
@@ -150,7 +150,7 @@ const carbonSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            list: [{ text: 'Typeface', fetch: { action: 'FONT_LIST', placeholder: 'Inter' }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true }
         },
         configKey: 'typeface'
