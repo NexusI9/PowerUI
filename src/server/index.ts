@@ -10,11 +10,11 @@ import {
   get_styles_of_folder,
   sort_by_name,
   duplicateFolder,
-  updateText
+  updateText,
+  createSet
 } from "@lib/utils/style";
 
-import { loadLocalFont, groupFont } from "@lib/utils/font.back";
-import { createSwatch } from "@lib/utils/shade";
+import { loadLocalFont, groupFont, storeAllFont } from "@lib/utils/font.back";
 import { ColorRGB } from "src/types/color";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 import { TextDico } from "src/types/text";
@@ -101,8 +101,8 @@ figma.ui.onmessage = msg => {
       sort_by_hsl(payload.folder.styles, 'SATURATION');
       break;
 
-    case 'CREATE_SWATCH':
-      createSwatch(payload);
+    case 'CREATE_SET':
+      createSet(payload);
       break;
 
     case 'EDIT_SWATCH':
@@ -118,20 +118,7 @@ figma.ui.onmessage = msg => {
     default:
 
     case 'FONT_LIST':
-      if (!Object.keys(systemFonts).length) {
-        figma.listAvailableFontsAsync()
-          .then(fonts => {
-            systemFonts = groupFont(fonts);
-            figma.ui.postMessage({
-              action: action,
-              payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE' })) //map dico font to be contextMenu compatible
-            })
-          })
-          .catch(_ => figma.ui.postMessage({ action: action, payload: [] }));
-      } else {
-        figma.ui.postMessage({ action: action, payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE' })) })  //map dico font to be contextMenu compatible
-      }
-
+      storeAllFont(msg, systemFonts).then(list => { if (list) systemFonts = list });
       break;
 
     case 'LOAD_FONT':

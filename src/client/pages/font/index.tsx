@@ -6,7 +6,7 @@ import { FolderOptions } from "src/types/folder";
 import { StyleFolder } from "src/types/style";
 import { useDispatch } from "react-redux";
 import { spawn } from "@lib/slices/workbench";
-import { CREATE_SWATCH_CONFIG, EDIT_SWATCH_CONFIG } from "./workbench.config";
+import { CREATE_FONT_SET_CONFIG, EDIT_SWATCH_CONFIG } from "./workbench.config";
 import SetIcon from '@icons/font-set.svg';
 import { switchDisplay } from "@lib/slices/style";
 
@@ -14,7 +14,7 @@ export default () => {
 
     const dispatch = useDispatch();
     const onCreateSet = (folder: StyleFolder) => {
-        dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: folder }));
+        dispatch(spawn({ ...CREATE_FONT_SET_CONFIG, folder: folder }));
         dispatch(switchDisplay('list'));
     }
 

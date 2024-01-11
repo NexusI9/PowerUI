@@ -1,10 +1,12 @@
-import { ColorRGB } from "src/types/color";
-import { StyleFolder, Styles } from "src/types/style";
+import { ColorRGB } from "@ctypes/color";
+import { StyleFolder, Styles, } from "@ctypes/style";
 import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { clone, shallowClone } from '@lib/utils/utils';
-import { WritablePart } from "src/types/global";
-import { ContextMenuCommand } from "src/types/contextmenu";
+import { WritablePart } from "@ctypes/global";
+import { Workbench, Set, ColorConfig, TextConfig } from "@ctypes/workbench";
+import { FontSet } from '@ctypes/text';
+import { ShadeSet } from '@ctypes/shade';
 
 export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
@@ -289,4 +291,36 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
         });
     });
 
+}
+
+
+
+/*
+** CREATE FIGMA PALELTTE FROM SET 
+*/
+export function createSet({ folder, set, config, type }: Workbench) {
+    if (!folder) { return; }
+    const baseName = (config as ColorConfig | TextConfig).name || '';
+    const { level } = folder;
+    const styleFolders = (get_styles_of_folder(folder) ?? []).map(style => folderAtLevel(style.name, level));
+
+    set?.forEach(({ style }) => {
+        const copyName = setCopyNumber(baseName, styleFolders) || '';
+        const styleName = concatFolderName([folder.fullpath, copyName, style.name]);
+
+        switch (type) {
+            case 'TEXT':
+                const textStyle = figma.createPaintStyle();
+                textStyle.name = styleName;
+                break;
+
+            case 'COLOR':
+                const paintStyle = figma.createPaintStyle();
+                paintStyle.name = styleName;
+                paintStyle.paints = DEFAULT_STYLE_COLOR.map(paint => ({ ...paint, color: (style as ShadeSet).color }));
+                break;
+        }
+
+
+    })
 }

@@ -253,7 +253,7 @@ const adjustSidepanelContent: Array<SidepanelInput> = [
 ];
 
 
-export const CREATE_SWATCH_CONFIG: Workbench = {
+export const CREATE_FONT_SET_CONFIG: Workbench = {
     folder: null,
     title: 'Generate a new font set',
     type: 'TEXT',
@@ -271,7 +271,7 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
         ]
     },
     footer: {
-        primaryAction: { text: 'Add', action: 'CREATE_SWATCH' }
+        primaryAction: { text: 'Add', action: 'CREATE_SET' }
     },
     config: {}
 }

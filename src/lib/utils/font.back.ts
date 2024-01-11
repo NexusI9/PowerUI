@@ -1,4 +1,6 @@
-import { TextArrayItem, TextDico } from "src/types/text";
+import { StyleFolder } from "@ctypes/style";
+import { Set, Workbench } from "@ctypes/workbench";
+import { FontSet, TextArrayItem, TextDico } from "src/types/text";
 
 export function loadLocalFont(msg: any, systemFonts: TextDico) {
 
@@ -19,7 +21,7 @@ export function loadLocalFont(msg: any, systemFonts: TextDico) {
                     })
             }))
         )
-            .then((e) => figma.ui.postMessage(msg) )
+            .then((e) => figma.ui.postMessage(msg))
             .catch((e) => console.warn(e));
 
         //set font as loaded
@@ -52,4 +54,33 @@ export function groupFont(fonts: Array<Font>): { [key: string]: TextArrayItem } 
 
 
     return fontDico;
+}
+
+
+export function storeAllFont({ action }: any, systemFonts: TextDico):Promise<TextDico> {
+
+    return new Promise((resolve, reject) => {
+
+        if (!Object.keys(systemFonts).length) {
+            figma.listAvailableFontsAsync()
+                .then(fonts => {
+                    systemFonts = groupFont(fonts);
+                    figma.ui.postMessage({
+                        action: action,
+                        payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE' })) //map dico font to be contextMenu compatible
+                    });
+                    resolve(systemFonts);
+                })
+                .catch(_ => {
+                    figma.ui.postMessage({ action: action, payload: [] })
+                    reject({});
+                });
+        } else {
+            reject({});
+            figma.ui.postMessage({ action: action, payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE' })) })  //map dico font to be contextMenu compatible
+        }
+
+    });
+
+
 }

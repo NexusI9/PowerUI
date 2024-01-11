@@ -240,20 +240,5 @@ export function colorAdjust(props: ColorAdjustConfig): Set<ShadeSet> {
 
 
 
-/*
-** CREATE FIGMA PALELTTE FROM SET 
-*/
-export function createSwatch({ folder, set, config }: Workbench) {
-    if (!folder) { return; }
-    const baseName = (config as ColorConfig).name || '';
-    const { level } = folder;
-    const styleFolders = (get_styles_of_folder(folder) ?? []).map(style => folderAtLevel(style.name, level));
 
-    (set as Set<ShadeSet>)?.forEach(({ style }) => {
-        const newStyle = figma.createPaintStyle();
-        const copyName = setCopyNumber(baseName, styleFolders) || '';
-        newStyle.name = concatFolderName([folder.fullpath, copyName, style.name]);
-        newStyle.paints = DEFAULT_STYLE_COLOR.map(paint => ({ ...paint, color: style.color }));
-    })
-}
 
