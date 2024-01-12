@@ -185,15 +185,21 @@ export async function addStyle({ name, style, type }: { name: string, style?: St
 
             //Load new font and Map relative value to styles;
             fontName && figma.loadFontAsync(fontName as FontName)
-                .then(() => mapKeys(style, textStyle))
+                .then(() => { 
+                    mapKeys(style, textStyle);
+                    textStyle.name = name;
+                })
                 .catch(() => {
                     //Try to load Regular Style
                     const regStyle = { ...style, fontName: { ...fontName, style: 'Regular' } } as FontSet;
-                    regStyle.fontName && figma.loadFontAsync(regStyle.fontName).then(() => mapKeys(regStyle, textStyle))
+                    regStyle.fontName && figma.loadFontAsync(regStyle.fontName).then(() => {
+                        mapKeys(regStyle, textStyle);
+                        textStyle.name = name;
+                    })
                 });
 
             //Override name with copy number name
-            textStyle.name = name;
+
             break;
     }
 
@@ -313,16 +319,15 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
 /*
 ** CREATE FIGMA PALELTTE FROM SET 
 */
-export function createSet({ folder, set, config, type }: Workbench) {
-
+export function createSet({ folder, set, config }: Workbench) {
+    console.log(config);
     if (!folder) { return; }
-    const baseName = (config as ColorConfig | TextConfig).name || '';
+    const baseName = (config as ColorConfig | TextConfig).name || 'New style set';
     const { level } = folder;
-    const styleFolders = (get_styles_of_folder(folder) ?? []).map(style => folderAtLevel(style.name, level));
-
+    const stylesOfFolders = (get_styles_of_folder(folder) ?? []).map(style => folderAtLevel(style.name, level));
     //Create new style for each style in the Set
     set?.forEach(async (style) => {
-        const copyName = setCopyNumber(baseName, styleFolders) || '';
+        const copyName = setCopyNumber(baseName, stylesOfFolders) || baseName;
         const styleName = concatFolderName([folder.fullpath, copyName, style.name]);
         addStyle({ style, name: styleName });
     });
