@@ -1,7 +1,7 @@
 import { Workbench, ColorConfig, TextConfig, SidepanelOption, SidepanelInput, Set, ColorAdjustConfig } from "src/types/workbench";
 import { apple, carbon, flutter, scale, material as textMaterial } from "@lib/utils/font";
 import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade";
-import { traverseCallback } from "@lib/utils/utils";
+import { clone, traverseCallback } from "@lib/utils/utils";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ShadeSet as IShadeSet } from "src/types/shade";
 import { FontSet } from "src/types/text";
@@ -39,12 +39,19 @@ export const updateSet = createAsyncThunk(
 
         //update Config 
         const { workbench }: any = getState();
-        const newKey = (key && value) ? { [key]: value } : {};
+
+        //remove undefined values from old config
+        const newKey = (key && (value !== undefined)) ? { [key]: value } : {};
         const newConfig = {
             ...(config || workbench.config),
             ...newKey
         };
 
+        /*console.log({ key, value });
+        console.log(workbench.config);
+        console.log(newConfig);
+        console.log(new Date().getTime() );
+        console.log('\n');*/
         //update Set from action
         const { action } = newConfig as ColorConfig | TextConfig;
         const { type } = workbench;
@@ -82,7 +89,7 @@ const workbenchSlice = createSlice({
                 traverseCallback(payload.sidepanel, ({ options }: { options: SidepanelOption }) =>
                     traverseCallback(options, ({ content }: { content: SidepanelInput }) =>
                         traverseCallback(content, (input: SidepanelInput) => {
-                            try { initConfig[input.configKey] = input.attributes.value; } catch (_) { }
+                            try { initConfig[input.configKey] = input.attributes.value; } catch (_) { console.log(_); }
                         }
                         )));
             }

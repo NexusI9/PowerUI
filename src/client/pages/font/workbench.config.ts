@@ -28,8 +28,9 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [{text: undefined, fetch: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
-            appearance: { label: true }
+            list: [{ text: undefined, fetch: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            appearance: { label: true },
+            value: DEFAULT_TYPEFACE
         },
         configKey: 'typeface'
     },
@@ -49,7 +50,8 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             placeholder: '↑ Ascendant scale',
             list: SCALES_COMMAND,
-            appearance: { label: true }
+            appearance: { label: true },
+            value: DEFAULT_TYPEFACE
         },
         configKey: 'ascendantScale'
     },
@@ -69,7 +71,8 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             placeholder: '↓ Descendant scale',
             list: SCALES_COMMAND,
-            appearance: { label: true }
+            appearance: { label: true },
+            value: DEFAULT_TYPEFACE
         },
         configKey: 'descendantScale'
     },
@@ -102,7 +105,8 @@ const materialSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             placeholder: 'Typeface',
             list: [{ text: undefined, fetch: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
-            appearance: { label: true }
+            appearance: { label: true },
+            value: DEFAULT_TYPEFACE
         },
         configKey: 'typeface'
     }
@@ -114,7 +118,8 @@ const appleSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             placeholder: 'Typeface',
             list: [{ text: undefined, fetch: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
-            appearance: { label: true }
+            appearance: { label: true },
+            value: DEFAULT_TYPEFACE
         },
         configKey: 'typeface'
     },
@@ -126,7 +131,8 @@ const appleSidepanelContent: Array<SidepanelInput> = [
                 { text: 'desktop', receiver: 'STORE' },
                 { text: 'mobile', receiver: 'STORE' },
             ],
-            appearance: { label: true }
+            appearance: { label: true },
+            value: 'desktop'
         },
         configKey: 'device'
     },
@@ -139,7 +145,8 @@ const flutterSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             placeholder: 'Typeface',
             list: [{ text: undefined, fetch: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
-            appearance: { label: true }
+            appearance: { label: true },
+            value: DEFAULT_TYPEFACE
         },
         configKey: 'typeface'
     }
@@ -152,7 +159,8 @@ const carbonSidepanelContent: Array<SidepanelInput> = [
         attributes: {
             placeholder: 'Typeface',
             list: [{ text: undefined, fetch: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
-            appearance: { label: true }
+            appearance: { label: true },
+            value: DEFAULT_TYPEFACE
         },
         configKey: 'typeface'
     },

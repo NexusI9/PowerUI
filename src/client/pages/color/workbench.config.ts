@@ -51,7 +51,8 @@ const basicSidepanelContent: Array<SidepanelInput> = [
                 { text: 'lab', receiver: 'STORE' },
                 { text: 'lch', receiver: 'STORE' }
             ],
-            appearance: { label: true }
+            appearance: { label: true },
+            value:'rgb'
         },
         configKey: 'mode'
     }
@@ -72,7 +73,8 @@ const materialSidepanelContent: Array<SidepanelInput> = [
                 { text: 'neutralVariant', receiver: 'STORE' },
                 { text: 'error', receiver: 'STORE' }
             ],
-            appearance: { label: true }
+            appearance: { label: true },
+            value:'primary'
         },
         configKey: 'palette'
     },
@@ -163,7 +165,8 @@ const antSidepanelContent: Array<SidepanelInput> = [
                 { text: 'default', receiver: 'STORE' },
                 { text: 'dark', receiver: 'STORE' },
             ],
-            appearance: { label: true }
+            appearance: { label: true },
+            value:'default'
         },
         configKey: 'theme'
     }
@@ -261,7 +264,8 @@ const interpolationSidepanelContent: Array<SidepanelInput> = [
                 { text: 'lab', receiver: 'STORE' },
                 { text: 'lch', receiver: 'STORE' }
             ],
-            appearance: { label: true }
+            appearance: { label: true },
+            value:'rgb'
         },
         configKey: 'mode'
     }
