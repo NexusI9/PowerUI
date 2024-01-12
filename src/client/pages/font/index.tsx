@@ -18,9 +18,16 @@ export default () => {
         dispatch(switchDisplay('list'));
     }
 
+    const padConfig = {
+        icon: FontPlus,
+        text: 'Create Fonts Set',
+        onClick: onCreateSet
+    };
+
+
     const options: FolderOptions = {
         header: {
-            add: { icon: SetIcon, onClick: onCreateSet  }
+            add: { icon: SetIcon, onClick: onCreateSet }
         },
         folder: {
             add: { icon: SetIcon, onClick: onCreateSet },
@@ -33,15 +40,11 @@ export default () => {
         }
     };
 
-    return(
+    return (
         <Style
             title="Fonts"
             onAddItem={() => 0}
-            padStyle={{
-                icon: FontPlus,
-                text: 'Create Fonts Set',
-                onClick: () => 0
-            }}
+            padStyle={padConfig}
             getStyleMethod={GET_TEXT_STYLES_COMMAND}
             styleItem={Font}
             options={options}

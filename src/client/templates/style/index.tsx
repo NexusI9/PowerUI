@@ -17,7 +17,7 @@ interface StyleTemplate {
     onAddItem: any;
     padStyle: IButtonPad;
     getStyleMethod?: string;
-    styleItem:any;
+    styleItem: any;
     options?: FolderOptions;
 };
 
@@ -35,7 +35,7 @@ export const Style = ({
     const [styles, setStyles] = useState<null | Array<StyleFolder>>();
     const [headerOptions, setHeaderOptions] = useState<any>([]);
     const dispatch = useDispatch();
-    const displayMode = useSelector( (state:any) => state.style.display );
+    const displayMode = useSelector((state: any) => state.style.display);
     const handleOnMessage = (e: any) => (e.action === 'RELOAD_PAGE') && setReload(Date.now());
 
     listen(handleOnMessage);
@@ -68,7 +68,7 @@ export const Style = ({
 
     return (<>
         {!!headerOptions.length && <SectionHeader title={title} options={headerOptions} />}
-        {styles ? (!!styles.length ?
+        {styles ? (styles.length > 1 ?
             //styles view
             <FolderContainer
                 styles={styles}
