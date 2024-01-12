@@ -68,9 +68,9 @@ export function updateFolderName({ folder, level, name }: { folder: StyleFolder,
     const update = (style: Styles) => {
         try {
             //split and replace folder name in styles
-            const split: Array<string> = style.name.split('/');
+            const split = style.name.split('/');
             split.splice(level, 1, name);
-            style.name = split.join('/');
+            style.name = concatFolderName(split);   
 
             //update figma style name
             const figmaStyle = figma.getStyleById(style.id);
