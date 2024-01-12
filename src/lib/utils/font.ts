@@ -39,13 +39,10 @@ async function loadFont(config: TextConfig): Promise<string> {
                     google: {
                         families: [config.typeface]
                     },
-                    fontloading: () => void 0,
-                    fontinactive: () => {
+                    active: () => resolve(config.typeface || DEFAULT_TYPEFACE),
+                    inactive: () => {
                         //Load Local Font from server
                         get({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } }).then(e => resolve(e));
-                    },
-                    fontactive: () => {
-                        resolve(config.typeface || DEFAULT_TYPEFACE)
                     }
                 });
             } catch (_) {
