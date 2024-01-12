@@ -11,9 +11,7 @@ export interface Contrast{
     white:ContrastPropreties;
 }
 
-export interface ShadeSet{
-    color:ColorRGB;
-    name:string;
+export interface ShadeSet extends Partial<PaintStyle>{
     contrast:Contrast;
     primary?:boolean;
 }

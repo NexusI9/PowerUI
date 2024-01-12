@@ -42,7 +42,7 @@ export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, na
             colorArray.push({
                 style: {
                     name: `${name}-${s}`,
-                    color: { r: rgb[0] / 255, g: rgb[1] / 255, b: rgb[2] / 255 },
+                    paints: [{ ...DEFAULT_STYLE_COLOR, color: { r: rgb[0] / 255, g: rgb[1] / 255, b: rgb[2] / 255 } }],
                     contrast: checkContrast(hex),
                     primary: hex.toLowerCase() === colorStart.toLowerCase() || (action === 'INTERPOLATION' && hex.toLowerCase() === colorEnd.toLowerCase())
                 },
@@ -84,12 +84,12 @@ export function material({ colorStart, name, palette, keys, preserve }: ColorCon
         value = isPrimary ? closestKeyToPrimary : value;
 
         const hex = isPrimary ? (colorStart as string) : hexFromArgb(value);
-        const rgb = hexToRgb(hex, true, 'OBJECT') as ColorRGB;
+        const rgb = hexToRgb(hex, true, 'OBJECT') as RGB;
 
         colorArray.push({
             style: {
                 name: `${name}-${(keys || MATERIAL_DEFAULT_KEYS)[i]}`,
-                color: rgb,
+                paints: [{ ...DEFAULT_STYLE_COLOR, color: rgb }],
                 contrast: checkContrast(hex),
                 primary: isPrimary
             },
@@ -146,11 +146,12 @@ export function tailwind({ colorStart, name }: ColorConfig): Set<ShadeSet> {
         Object.keys(colors).forEach((key, i) => {
             const nkey = Number(key);
             const hex = colors[nkey as keyof typeof colors];
-            const rgb = hexToRgb(hex, true, 'OBJECT') as ColorRGB;
+            const rgb = hexToRgb(hex, true, 'OBJECT') as RGB;
+
             result.push({
                 style: {
                     name: `${name}-${key}`,
-                    color: rgb,
+                    paints: [{ ...DEFAULT_STYLE_COLOR, color: rgb }],
                     contrast: checkContrast(hex),
                     primary: (colorStart as string).toLowerCase() === hex.toLowerCase()
                 },

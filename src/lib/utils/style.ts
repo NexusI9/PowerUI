@@ -165,19 +165,40 @@ export function folderNameFromPath(path: string) {
     };
 }
 
-export function addStyle({ folder, name, style, type }: { folder?: string, name: string, style: any, type: 'TEXT' | 'PAINT' }) {
+export async function addStyle({ name, style, type }: { name: string, style: Styles | ShadeSet | FontSet, type: 'TEXT' | 'PAINT' }) {
+    console.log(style);
+    return;
     switch (type) {
-
         case 'PAINT':
-            const newPaintStyle = figma.createPaintStyle();
-            newPaintStyle.name = concatFolderName([folder, name]);
-            newPaintStyle.paints = style || DEFAULT_STYLE_COLOR;
+            /*          
+                paintStyle.paints = DEFAULT_STYLE_COLOR.map(paint => ({ ...paint, color: (style as ShadeSet).color }));
+            */
+            const paintStyle = figma.createPaintStyle();
+            paintStyle.name = name;
+            /*paintStyle.paints = [
+                ...(style as ShadeSet).paints,
+            ];*/
             break;
 
         case 'TEXT':
-            const newTextStyle = figma.createTextStyle();
-            newTextStyle.name = concatFolderName([folder, name]);
-            newTextStyle.textCase = style || DEFAULT_STYLE_COLOR;
+            const textStyle = figma.createTextStyle();
+
+            //Load font for Figma Canvas
+            await figma.loadFontAsync(textStyle.fontName);
+
+            const { fontName } = style as FontSet;
+
+            //Load new font and Map relative value to styles;
+            fontName && figma.loadFontAsync(fontName as FontName)
+                .then(() => mapKeys(style, textStyle))
+                .catch(() => {
+                    //Try to load Regular Style
+                    const regStyle = { ...style, fontName: { ...fontName, style: 'Regular' } } as FontSet;
+                    regStyle.fontName && figma.loadFontAsync(regStyle.fontName).then(() => mapKeys(regStyle, textStyle))
+                });
+
+            //Override name with copy number name
+            textStyle.name = name;
             break;
     }
 
@@ -202,7 +223,7 @@ export function replaceStyle(list: Array<Styles>) {
             style.remove();
             addStyle({
                 name: item.name,
-                style: (item.type === 'PAINT' && item.paints) || (item.type === 'TEXT' && item),
+                style: item,
                 type: item.type
             });
         }
@@ -287,7 +308,7 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
 
         addStyle({
             name: concatFolderName([...convertedName, name]),
-            style: (item.type === 'PAINT' && item.paints) || (item.type === 'TEXT' && item),
+            style: item,
             type: item.type
         });
     });
@@ -309,36 +330,6 @@ export function createSet({ folder, set, config, type }: Workbench) {
     set?.forEach(async ({ style }) => {
         const copyName = setCopyNumber(baseName, styleFolders) || '';
         const styleName = concatFolderName([folder.fullpath, copyName, style.name]);
-
-        switch (type) {
-            case 'TEXT':
-                const textStyle = figma.createTextStyle();
-                
-                //Load font for Figma Canvas
-                await figma.loadFontAsync(textStyle.fontName);
-
-                const { fontName } = style as FontSet;
-
-                //Load new font and Map relative value to styles;
-                fontName && figma.loadFontAsync(fontName)
-                    .then(() => mapKeys(style, textStyle))
-                    .catch(() => {
-                        //Try to load Regular Style
-                        const regStyle = { ...style, fontName: { ...fontName, style: 'Regular' } };
-                        figma.loadFontAsync(regStyle.fontName).then(() => mapKeys(regStyle, textStyle))
-                    });
-                //Override name with copy number name
-                textStyle.name = styleName;
-
-                break;
-
-            case 'COLOR':
-                const paintStyle = figma.createPaintStyle();
-                paintStyle.name = styleName;
-                paintStyle.paints = DEFAULT_STYLE_COLOR.map(paint => ({ ...paint, color: (style as ShadeSet).color }));
-                break;
-        }
-
-
-    })
+        addStyle({ style, name: styleName, type });
+    });
 }

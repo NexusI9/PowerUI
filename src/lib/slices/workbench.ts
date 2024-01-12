@@ -1,7 +1,7 @@
-import { Workbench, ColorConfig, TextConfig, SidepanelOption, SidepanelInput, Set, ColorAdjustConfig } from "src/types/workbench";
+import { Workbench, ColorConfig, TextConfig, SidepanelOption, SidepanelInput, Set } from "src/types/workbench";
 import { apple, carbon, flutter, scale, material as textMaterial } from "@lib/utils/font";
 import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade";
-import { clone, traverseCallback } from "@lib/utils/utils";
+import { traverseCallback } from "@lib/utils/utils";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { ShadeSet as IShadeSet } from "src/types/shade";
 import { FontSet } from "src/types/text";
@@ -9,7 +9,7 @@ import { FontSet } from "src/types/text";
 
 //{ [key in ColorSetMethod]: any; }
 const actionMap: { [key in Workbench["type"]as string]: any } = {
-    'COLOR': {
+    'PAINT': {
         SHADE: interpolate,
         TINT: interpolate,
         TONE: interpolate,
@@ -47,11 +47,7 @@ export const updateSet = createAsyncThunk(
             ...newKey
         };
 
-        /*console.log({ key, value });
-        console.log(workbench.config);
-        console.log(newConfig);
-        console.log(new Date().getTime() );
-        console.log('\n');*/
+
         //update Set from action
         const { action } = newConfig as ColorConfig | TextConfig;
         const { type } = workbench;
@@ -64,6 +60,7 @@ export const updateSet = createAsyncThunk(
                 console.log(_);
             }
         }
+        
 
         return ({
             ...workbench,

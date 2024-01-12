@@ -89,7 +89,7 @@ export interface TextConfig extends BaseConfig {
 
 export interface Workbench {
     active?: boolean;
-    type: 'COLOR' | 'TEXT';
+    type: 'PAINT' | 'TEXT';
     folder: StyleFolder | null;
     title: string;
     sidepanel: Sidepanel;

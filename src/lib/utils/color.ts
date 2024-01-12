@@ -1,12 +1,12 @@
-import { ColorRGB, ColorOutput, ColorHSL } from 'src/types/color';
+import { ColorOutput, ColorHSL } from 'src/types/color';
 import { replaceStyle } from './style';
 
-function to255(color: ColorRGB) {
-    const newColor: ColorRGB = { r: 0, g: 0, b: 0 };
-    Object.keys(newColor).map((key) => {
-        newColor[key as keyof typeof newColor] = Math.floor(color[key as keyof typeof color] * 255);
-    });
-    return newColor;
+function to255(color: RGB): RGB {
+    return {
+        r: Math.floor(color.r * 255) || 0,
+        g: Math.floor(color.g * 255) || 0,
+        b: Math.floor(color.b * 255) || 0,
+    };
 }
 
 function componentToHex(c: number) {
@@ -14,7 +14,7 @@ function componentToHex(c: number) {
     return hex.length == 1 ? "0" + hex : hex;
 }
 
-export function rgb(color: ColorRGB, output: ColorOutput = 'STRING'): string | ColorRGB {
+export function rgb(color: RGB, output: ColorOutput = 'STRING'): string | RGB {
     const newColor = to255(color);
     switch (output) {
         case 'OBJECT':
@@ -26,13 +26,13 @@ export function rgb(color: ColorRGB, output: ColorOutput = 'STRING'): string | C
 }
 
 
-export function rgbToHex(color: ColorRGB): string {
+export function rgbToHex(color: RGB): string {
     const newColor = to255(color);
     return "#" + componentToHex(newColor.r) + componentToHex(newColor.g) + componentToHex(newColor.b);
 }
 
 
-export function hexToRgb(hex: string, normalize: boolean = false, output: ColorOutput = 'OBJECT'): ColorRGB | string {
+export function hexToRgb(hex: string, normalize: boolean = false, output: ColorOutput = 'OBJECT'): RGB | string {
     var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
 
     let rgb = result ? {
@@ -90,7 +90,7 @@ export function rgbToHsl({ r, g, b }: { r: number, g: number, b: number }, outpu
 
 
 
-export function hslToRgb(hsl: ColorHSL, normalize: boolean = false, ouput: 'STRING' | 'OBJECT' = 'OBJECT'): ColorRGB | string {
+export function hslToRgb(hsl: ColorHSL, normalize: boolean = false, ouput: 'STRING' | 'OBJECT' = 'OBJECT'): RGB | string {
 
     function hueToRgb(p: number, q: number, t: number) {
         if (t < 0) t += 1;

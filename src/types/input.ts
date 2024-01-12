@@ -3,7 +3,7 @@ import { MultiArray } from './global';
 
 export interface Input {
     type?: 'DEFAULT' | 'COLOR' | 'AMOUNT' | 'DRAG';
-    value: string | number;
+    value?: string | number;
     dynamicValue?: string | number;
     placeholder?: string;
     onChange?: any;

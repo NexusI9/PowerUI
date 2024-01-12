@@ -11,14 +11,14 @@ export const Content = () => {
     const { type, set } = useSelector((state: any) => state.workbench);
 
     const mapComponent: any = {
-        'COLOR': ShadeSet as React.FC<WorkbenchComponent<IShadeSet>>,
+        'PAINT': ShadeSet as React.FC<WorkbenchComponent<IShadeSet>>,
         'TEXT': FontSet as React.FC<WorkbenchComponent<IFontSet>>
     };
 
     return (<div className="workbench-content flex f-col ">
         {set?.map((item: WorkbenchComponent<IShadeSet | IFontSet>, i: number) =>
             <Fragment key={JSON.stringify(item) + i}>
-                {createElement(mapComponent[type], item)}
+                {createElement(mapComponent[type] || <></>, item)}
             </Fragment>)
         }
     </div>);

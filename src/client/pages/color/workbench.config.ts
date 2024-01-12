@@ -336,7 +336,7 @@ const adjustSidepanelContent: Array<SidepanelInput> = [
 export const CREATE_SWATCH_CONFIG: Workbench = {
     folder: null,
     title: 'Generate a new palette',
-    type: 'COLOR',
+    type: 'PAINT',
     sidepanel: {
         options: [
             [
@@ -362,7 +362,7 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
 export const EDIT_SWATCH_CONFIG: Workbench = {
     folder: null,
     title: 'Edit current palette',
-    type: 'COLOR',
+    type: 'PAINT',
     sidepanel: {
         options: [
             { text: 'Adjustments', content: adjustSidepanelContent, action: 'COLORADJUST', receiver: 'STORE' }
