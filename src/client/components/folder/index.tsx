@@ -75,8 +75,9 @@ export const Folder = ({
 
         const newName = e.target.value;
         const oldName = attributes.name;
+
         if (newName !== oldName) {
-            send({ action: 'UPDATE_STYLE_FOLDER', payload: { level, newName, folder: attributes } });
+            send({ action: 'UPDATE_STYLE_FOLDER', payload: { level, name:newName, folder: attributes } });
         }
     }
 

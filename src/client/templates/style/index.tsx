@@ -36,11 +36,7 @@ export const Style = ({
     const [headerOptions, setHeaderOptions] = useState<any>([]);
     const dispatch = useDispatch();
     const displayMode = useSelector((state: any) => state.style.display);
-    const handleOnMessage = (e: any) => {
-        console.log(e);
-
-        (e.action === 'RELOAD_PAGE' || e.action === 'CREATE_SET') && setReload(performance.now())
-    };
+    const handleOnMessage = (e: any) => (e.action === 'RELOAD_PAGE') && setReload(performance.now());
 
     listen(handleOnMessage);
 

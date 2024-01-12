@@ -90,11 +90,9 @@ figma.ui.onmessage = msg => {
       sort_by_name(payload.folder.styles);
       break;
 
-
     case 'SORT_STYLE_COLOR_BRIGHTNESS':
       sort_by_hsl(payload.folder.styles, 'BRIGHTNESS');
       break;
-
 
     case 'SORT_STYLE_COLOR_SATURATION':
       sort_by_hsl(payload.folder.styles, 'SATURATION');
