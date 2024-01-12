@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { SectionHeader } from "@components/section-header";
 import List from '@icons/list-bulleted.svg';
 import Plus from '@icons/add.svg';
@@ -32,18 +32,22 @@ export const Style = ({
 }: StyleTemplate) => {
 
     const [reload, setReload] = useState(0);
-    const [styles, setStyles] = useState<null | Array<StyleFolder>>();
+    const [folder, setFolder] = useState<null | Array<StyleFolder>>();
     const [headerOptions, setHeaderOptions] = useState<any>([]);
     const dispatch = useDispatch();
     const displayMode = useSelector((state: any) => state.style.display);
-    const handleOnMessage = (e: any) => (e.action === 'RELOAD_PAGE') && setReload(Date.now());
+    const handleOnMessage = (e: any) => {
+        console.log(e);
+
+        (e.action === 'RELOAD_PAGE' || e.action === 'CREATE_SET') && setReload(performance.now())
+    };
 
     listen(handleOnMessage);
 
     useEffect(() => {
 
         if (getStyleMethod) {
-            get({ action: getStyleMethod }).then(({ styles }: { styles: Array<never> }) => setStyles(styles));
+            get({ action: getStyleMethod }).then(({ styles }: { styles: Array<never> }) => setFolder(styles));
         }
 
     }, [reload]);
@@ -54,7 +58,7 @@ export const Style = ({
         const optionMap = [
             {
                 icon: options?.header?.add?.icon || Plus,
-                onClick: () => styles?.map(style => options?.header?.add?.onClick(style))
+                onClick: () => folder?.map(folder => options?.header?.add?.onClick(folder))
             },
             {
                 icon: displayMode === 'grid' ? List : Grid,
@@ -63,15 +67,14 @@ export const Style = ({
         ];
 
         setHeaderOptions(optionMap);
-    }, [styles, displayMode]);
-
+    }, [folder, displayMode]);
 
     return (<>
         {!!headerOptions.length && <SectionHeader title={title} options={headerOptions} />}
-        {styles ? (styles.length > 1 ?
+        {folder ? (folder[0].styles.length || folder[0].folders.length ?
             //styles view
             <FolderContainer
-                styles={styles}
+                styles={folder}
                 styleItem={styleItem}
                 options={options}
                 onAddItem={onAddItem}
@@ -80,7 +83,7 @@ export const Style = ({
             :
             //default view
             <div className="full-height full-width flex f-center">
-                <ButtonPad icon={padStyle.icon} text={padStyle.text} onClick={padStyle.onClick} />
+                <ButtonPad icon={padStyle.icon} text={padStyle.text} onClick={() => folder?.map(folder => padStyle.onClick(folder))} />
             </div>) : <></>
         }
     </>);

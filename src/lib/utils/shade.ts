@@ -103,14 +103,11 @@ export function material({ colorStart, name, palette, keys, preserve }: ColorCon
 */
 export function mantine({ colorStart, name, theme }: ColorConfig): Set {
     return generateColors(colorStart as string).map((color, i) => ({
-        style: {
-            type: 'PAINT',
-            name: `${name}-${i + 1}`,
-            paints: colorToPaint(hexToRgb(color, true, 'OBJECT') as RGB),
-            contrast: checkContrast(color),
-            primary: (colorStart as string).toLowerCase() === color.toLowerCase()
-        },
-        index: i
+        type: 'PAINT',
+        name: `${name}-${i + 1}`,
+        paints: colorToPaint(hexToRgb(color, true, 'OBJECT') as RGB),
+        contrast: checkContrast(color),
+        primary: (colorStart as string).toLowerCase() === color.toLowerCase()
     }));
 }
 
@@ -120,14 +117,11 @@ export function mantine({ colorStart, name, theme }: ColorConfig): Set {
 export function ant({ colorStart, name, theme }: ColorConfig): Set {
     const palette = generate(colorStart as string, { theme: theme || 'default' });
     return palette.map((color, i) => ({
-        style: {
-            type: 'PAINT',
-            name: `${name}-${i + 1}`,
-            paints: colorToPaint(hexToRgb(color, true, 'OBJECT') as RGB),
-            contrast: checkContrast(color),
-            primary: (colorStart as string).toLowerCase() === color.toLowerCase()
-        },
-        index: i
+        type: 'PAINT',
+        name: `${name}-${i + 1}`,
+        paints: colorToPaint(hexToRgb(color, true, 'OBJECT') as RGB),
+        contrast: checkContrast(color),
+        primary: (colorStart as string).toLowerCase() === color.toLowerCase()
     }));
 }
 

@@ -6,7 +6,7 @@ import { ShadeSet as IShadeSet } from "src/types/shade";
 import { FontSet as IFontSet } from "src/types/text";
 
 export const Content = () => {
-    
+
     const { type, set } = useSelector((state: any) => state.workbench);
 
     const mapComponent: any = {
