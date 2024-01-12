@@ -100,7 +100,7 @@ export interface Workbench {
 
 export interface WorkbenchComponent<T> {
     style: T;
-    index?: number;
+    index?: number | string;
 }
 
 export type Set<T> = Array<WorkbenchComponent<T>>;

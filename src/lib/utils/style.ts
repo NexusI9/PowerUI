@@ -2,7 +2,7 @@ import { ColorRGB } from "@ctypes/color";
 import { StyleFolder, Styles, } from "@ctypes/style";
 import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
-import { clone, mapKeys, shallowClone } from '@lib/utils/utils';
+import { clone, mapKeys, roundDecimal, shallowClone } from '@lib/utils/utils';
 import { WritablePart } from "@ctypes/global";
 import { Workbench, ColorConfig, TextConfig, Set } from "@ctypes/workbench";
 import { ShadeSet } from '@ctypes/shade';
@@ -155,6 +155,7 @@ export function updateStyleName({ style, name }: { style: PaintStyle, name: stri
 
 export function folderNameFromPath(path: string) {
     const name = path;
+    if (!name) { return { folder: '', name: String(name) } }
     const parts = name.split('/');
     const folderPath = parts.slice(0, -1).join('/');
     const lastSegment = parts[parts.length - 1];
@@ -304,6 +305,7 @@ export function createSet({ folder, set, config, type }: Workbench) {
     const { level } = folder;
     const styleFolders = (get_styles_of_folder(folder) ?? []).map(style => folderAtLevel(style.name, level));
 
+    //Create new style for each style in the Set
     set?.forEach(async ({ style }) => {
         const copyName = setCopyNumber(baseName, styleFolders) || '';
         const styleName = concatFolderName([folder.fullpath, copyName, style.name]);
@@ -311,12 +313,13 @@ export function createSet({ folder, set, config, type }: Workbench) {
         switch (type) {
             case 'TEXT':
                 const textStyle = figma.createTextStyle();
-
+                
                 //Load font for Figma Canvas
                 await figma.loadFontAsync(textStyle.fontName);
 
                 const { fontName } = style as FontSet;
-                //Map relative value to styles;
+
+                //Load new font and Map relative value to styles;
                 fontName && figma.loadFontAsync(fontName)
                     .then(() => mapKeys(style, textStyle))
                     .catch(() => {

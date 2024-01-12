@@ -44,14 +44,40 @@ export const envelop = (min: number, value: number, max: number = 1): number => 
 
 export const mix = (valueA: number, valueB: number, factor: number) => ((1 - factor) * valueA) + factor * ((valueA + valueB) / 2);
 
+export function roundObjectFloat(object: any): any {
+
+    /* 
+    Round Floats of objects
+    */
+    for (let key in object) {
+        if (object[key].constructor.name === 'Object') {
+            roundObjectFloat(object[key]);
+        }
+        if (typeof object[key] === 'number' && object[key] % 1 != 0) {
+
+            object = {
+                ...object,
+                [key]: Number(Number(object[key]).toFixed(2))
+            };
+        }
+    }
+
+    return object;
+}
 
 export const mapKeys = (reference: any, mutable: any) => {
 
     Object.keys(reference).forEach(key => {
         try {
-            mutable[key as keyof typeof reference] = reference[key as keyof typeof mutable] as any;
+            //round potential floats
+            mutable[key as keyof typeof reference] = reference[key as keyof typeof mutable];
         } catch {
             console.warn(`Couldn't assign attribute for ${key}`);
         }
     });
+}
+
+
+export const roundDecimal = (value: number): number => {
+    return (value > -1 && value < 1) ? Number(Number(value).toFixed(2)) : value;
 }

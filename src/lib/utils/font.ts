@@ -4,6 +4,7 @@ import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
 import { get } from "@lib/ipc";
 import { Set } from "src/types/workbench";
 import WebFont from "webfontloader";
+import { roundObjectFloat } from "./utils";
 
 export function convertUnit(unit: string): string {
     return {
@@ -28,15 +29,12 @@ export function convertFontWeight(font: string): string {
     }[font] || font
 }
 
-
-
-async function loadFont(config: TextConfig):Promise<string> {
+async function loadFont(config: TextConfig): Promise<string> {
 
     return new Promise((resolve, reject) => {
         if (config.typeface !== undefined) {
             //Google Font Loading
-            //console.log(load);
-            try{
+            try {
                 WebFont.load({
                     google: {
                         families: [config.typeface]
@@ -46,16 +44,16 @@ async function loadFont(config: TextConfig):Promise<string> {
                         //Load Local Font from server
                         get({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } }).then(e => resolve(e));
                     },
-                    fontactive: () => { 
-                        resolve(config.typeface || DEFAULT_TYPEFACE) 
+                    fontactive: () => {
+                        resolve(config.typeface || DEFAULT_TYPEFACE)
                     }
                 });
-            }catch(_){
+            } catch (_) {
                 console.log(`Coudln\'t load ${config.typeface}`);
-                resolve(config.typeface || DEFAULT_TYPEFACE);
+                resolve(config.typeface || DEFAULT_TYPEFACE);
             }
 
-        }else{
+        } else {
             resolve(DEFAULT_TYPEFACE);
         }
 
@@ -64,11 +62,14 @@ async function loadFont(config: TextConfig):Promise<string> {
 
 export function cssTextStyle(style: TextStyle) {
 
+    const lineHeight = roundObjectFloat((style.lineHeight as any)).value;
+    const letterSpacing = roundObjectFloat((style.letterSpacing as any)).value;
+
     return {
         fontWeight: convertFontWeight(style.fontName.style),
         fontSize: style.fontSize + 'px',
-        letterSpacing: String((style.letterSpacing.value || 0) + convertUnit(style.letterSpacing.unit)),
-        lineHeight: String(((style.lineHeight as any).value || '') + convertUnit(style.lineHeight.unit)),
+        letterSpacing: String((letterSpacing || 0) + convertUnit(style.letterSpacing.unit)),
+        lineHeight: String((lineHeight || '') + convertUnit(style.lineHeight.unit)),
         fontFamily: style.fontName.family
     };
 }
@@ -95,9 +96,10 @@ interface GenVariants {
     base: FontSet;
     method(base: number, index: number): number;
     round: boolean | undefined;
+    indexSuffix?: string;
 }
 
-const genVariants = ({ amount, base, method, round }: GenVariants): Set<FontSet> => {
+const genVariants = ({ amount, base, method, round, indexSuffix = '' }: GenVariants): Set<FontSet> => {
     const variants: Set<FontSet> = [];
     let lastSize: number = Number(base.fontSize) || 16;
     let realIndex: number = 0;
@@ -111,7 +113,7 @@ const genVariants = ({ amount, base, method, round }: GenVariants): Set<FontSet>
                     ...base,
                     fontSize: round ? Math.floor(lastSize) : Number(lastSize.toFixed(2))
                 },
-                index: realIndex
+                index: indexSuffix + realIndex
             });
         }
 
@@ -161,7 +163,8 @@ export async function scale(config: TextConfig): Promise<Set<FontSet>> {
         amount: config.ascendantSteps || 8,
         base: baseText,
         method: (size) => size * ascRatio,
-        round: config.roundValue
+        round: config.roundValue,
+        indexSuffix: '+'
     }).reverse();
 
     //generate descendant font
@@ -169,7 +172,8 @@ export async function scale(config: TextConfig): Promise<Set<FontSet>> {
         amount: config.descendantSteps || 4,
         base: baseText,
         method: (size) => size / descRatio,
-        round: config.roundValue
+        round: config.roundValue,
+        indexSuffix: '-'
     });
 
     //generate descendant font
@@ -233,14 +237,14 @@ export async function material(config: TextConfig): Promise<Set<FontSet>> {
             name: 'Heading/Subtitle 2',
             fontName: { family: '', style: 'Medium' },
             fontSize: 14,
-            letterSpacing: { value: 0.1, unit: 'PIXELS' }
+            letterSpacing: { value: 0.10, unit: 'PIXELS' }
         },
         //Body
         {
             name: 'Body/Body 1',
             fontName: { family: '', style: 'Regular' },
             fontSize: 16,
-            letterSpacing: { value: 0.5, unit: 'PIXELS' }
+            letterSpacing: { value: 0.50, unit: 'PIXELS' }
         },
         {
             name: 'Body/Body 2',
@@ -259,7 +263,7 @@ export async function material(config: TextConfig): Promise<Set<FontSet>> {
             name: 'Body/Caption',
             fontName: { family: '', style: 'Medium' },
             fontSize: 12,
-            letterSpacing: { value: 0.4, unit: 'PIXELS' },
+            letterSpacing: { value: 0.40, unit: 'PIXELS' },
         },
         {
             name: 'Body/Overline',

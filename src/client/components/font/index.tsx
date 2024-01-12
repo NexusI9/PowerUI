@@ -2,7 +2,7 @@ import { folderNameFromPath } from '@lib/utils/style';
 import './index.scss';
 import { useSelector } from 'react-redux';
 import { Input } from '@components/input';
-import { BaseSyntheticEvent } from 'react';
+import { BaseSyntheticEvent, useState } from 'react';
 import { send } from '@lib/ipc';
 import { FontOptions } from '@components/font-options';
 import { cssTextStyle } from '@lib/utils/font';

@@ -1,17 +1,24 @@
-.font-set{
+.font-set {
     padding: var(--space-m) var(--space-m);
     border-bottom: solid 1px var(--figma-color-border);
 
-    &[data-base='true']{
+    &[data-base='true'] {
         background: var(--powerui-color-bg-brand-tertiary);
     }
 
-    &-index{
+    &-index {
         color: var(--figma-color-text-tertiary);
     }
 
-    &-content{
+    &-content {
         width: 100%;
     }
+
+    .style-item-font {
+        .input-field:first-child {
+            pointer-events: none;
+        }
+    }
+
 
 }

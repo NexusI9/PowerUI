@@ -104,6 +104,7 @@ export const Input = ({
     }, [portalSelector]);
 
 
+    useEffect(() => { setInnerValue(value) },[value])
 
     return (
         <div className='input-field flex f-col gap-xs' data-minified={String(appearance?.minified)} data-stroke={String(appearance?.stroke)}>
