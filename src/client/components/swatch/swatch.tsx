@@ -2,20 +2,14 @@ import { Input } from '@components/input';
 import { rgb, rgbToHex, hexToRgb, rgbToHsl } from '@lib/utils/color';
 import './swatch.scss';
 import { send } from '@lib/ipc';
-import { folderNameFromPath } from '@lib/utils/style';
+import { folderNameFromPath, styleContextMenu } from '@lib/utils/style';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
 import { useDispatch } from 'react-redux';
-import { ContextMenuCommand } from 'src/types/contextmenu';
 import { display as displayTooltip, destroy as destroyTooltip } from '@lib/slices/tooltip';
 import { display as displaySnackBar } from '@lib/slices/snackbar';
 
 export const Swatch = (props: any) => {
 
-    const swatchContextMenu: Array<ContextMenuCommand> = [
-        { text: 'Edit', action: 'MODALE_EDIT_STYLE_COLOR', payload: { style: props }, receiver: 'API' },
-        { text: 'Duplicate', action: 'ADD_STYLE', payload: { style: props, name: props.name, type: 'PAINT' }, receiver: 'API' },
-        { text: 'Delete', action: 'DELETE_STYLE', payload: { style: props }, receiver: 'API' },
-    ];
 
     const dispatch = useDispatch();
 
@@ -24,7 +18,7 @@ export const Swatch = (props: any) => {
 
     const handleContextMenu = (e: any) => {
         dispatch<any>(displayContextMenu({
-            commands: swatchContextMenu,
+            commands: styleContextMenu({style:props, editCommand:'MODALE_EDIT_STYLE_COLOR'}),
             position: { x: e.clientX, y: e.clientY }
         }));
     }

@@ -3,9 +3,10 @@ import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { clone, mapKeys, shallowClone } from '@lib/utils/utils';
 import { WritablePart } from "@ctypes/global";
-import { Workbench, ColorConfig, TextConfig, Set } from "@ctypes/workbench";
+import { Workbench, ColorConfig, TextConfig } from "@ctypes/workbench";
 import { ShadeSet } from '@ctypes/shade';
 import { FontSet } from "@ctypes/text";
+import { ContextMenuCommand } from '@ctypes/contextmenu';
 
 export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
@@ -70,7 +71,7 @@ export function updateFolderName({ folder, level, name }: { folder: StyleFolder,
             //split and replace folder name in styles
             const split = style.name.split('/');
             split.splice(level, 1, name);
-            style.name = concatFolderName(split);   
+            style.name = concatFolderName(split);
 
             //update figma style name
             const figmaStyle = figma.getStyleById(style.id);
@@ -325,4 +326,14 @@ export function createSet({ folder, set, config, type }: Workbench) {
         const styleName = concatFolderName([folder.fullpath, copyName, style.name]);
         addStyle({ style, name: styleName });
     });
+}
+
+
+
+export const styleContextMenu = ({ style, editCommand }: { style: FontSet | ShadeSet, editCommand: string }): Array<ContextMenuCommand> => {
+    return [
+        { text: 'Edit', action: editCommand, payload: { style: style }, receiver: 'API' },
+        { text: 'Duplicate', action: 'ADD_STYLE', payload: { style: style, name: style.name }, receiver: 'API' },
+        { text: 'Delete', action: 'DELETE_STYLE', payload: { style: style }, receiver: 'API' },
+    ];
 }

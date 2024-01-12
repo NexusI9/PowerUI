@@ -1,16 +1,18 @@
-import { folderNameFromPath } from '@lib/utils/style';
+import { folderNameFromPath, styleContextMenu } from '@lib/utils/style';
 import './index.scss';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Input } from '@components/input';
-import { BaseSyntheticEvent, useState } from 'react';
+import { BaseSyntheticEvent } from 'react';
 import { send } from '@lib/ipc';
 import { FontOptions } from '@components/font-options';
 import { cssTextStyle } from '@lib/utils/font';
 import { FontSet } from '@ctypes/text';
+import { display as displayContextMenu } from '@lib/slices/contextmenu';
 
 export const Font = (props: FontSet) => {
 
     const displayMode = useSelector((state: any) => state.style.display);
+    const dispatch = useDispatch();
 
     const updateName = (e: BaseSyntheticEvent) => {
         send({
@@ -22,7 +24,15 @@ export const Font = (props: FontSet) => {
         });
     }
 
-    return (<div className="style-item-font flex">
+    return (<div
+        className="style-item-font flex"
+        onContextMenu={(e: any) => {
+            displayMode === 'grid' && dispatch<any>(displayContextMenu({
+                commands: styleContextMenu({ style: props, editCommand: 'MODALE_EDIT_STYLE_COLOR' }),
+                position: { x: e.clientX, y: e.clientY }
+            }))
+        }}
+    >
         <Input
             {...(displayMode === 'list' && { style: cssTextStyle(props) })}
             value={folderNameFromPath(String(props?.name)).name}
