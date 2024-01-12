@@ -46,7 +46,7 @@ export const Slider = ({ placeholder, onChange = (e: BaseSyntheticEvent) => void
             step={step}
             defaultValue={value}
             onChange={handleOnChange}
-            onDoubleClick={(e) => { setInnerValue(value); }}
+            onDoubleClick={(e) => { setInnerValue(0); }}
             style={{ background: background }}
         />
     </div>);

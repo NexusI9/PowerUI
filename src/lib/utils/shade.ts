@@ -170,7 +170,7 @@ export function colorAdjust(props: ColorAdjustConfig): Set {
         const hslColor = rgbToHsl(color, 'OBJECT') as ColorHSL;
         //apply correction for basic adjustments
         if (hue) {
-            hslColor.h += Math.abs(Number(hue)) * 0.4;
+            hslColor.h += Math.abs(Number(hue)) * 0.5;
             hslColor.h = clamp(0, hslColor.h, 1);
         }
         if (saturation) {
@@ -229,7 +229,7 @@ export function colorAdjust(props: ColorAdjustConfig): Set {
         return {
             type: 'PAINT',
             name: folderNameFromPath(style.name).name,
-            paint: colorToPaint(rgbColor),
+            paints: colorToPaint(rgbColor),
             contrast: checkContrast(rgbToHex(rgbColor))
         };
     });
