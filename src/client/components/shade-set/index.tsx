@@ -4,9 +4,9 @@ import './index.scss';
 import { ContrastLabel } from "./contrast";
 import Lock from '@icons/lock-locked.svg';
 import { Icon } from "@components/icon";
-import { WorkbenchComponent } from "src/types/workbench";
 
-export const ShadeSet = ({ style }: WorkbenchComponent<IShadeSet>) => {
+
+export const ShadeSet = (style: IShadeSet) => {
 
     const { paints, name, contrast, primary } = style;
     const { color } = paints && (paints[0] as SolidPaint) || { color: { r: 0, g: 0, b: 0 } };

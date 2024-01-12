@@ -51,7 +51,7 @@ export const updateSet = createAsyncThunk(
         //update Set from action
         const { action } = newConfig as ColorConfig | TextConfig;
         const { type } = workbench;
-        let newSet: Set<IShadeSet | FontSet> = [];
+        let newSet: Set = [];
 
         if (action && actionMap[type][action]) {
             try {

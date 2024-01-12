@@ -167,7 +167,7 @@ export function folderNameFromPath(path: string) {
 export async function addStyle({ name, style, type }: { name: string, style?: Styles | ShadeSet | FontSet, type?: 'PAINT' | 'TEXT' }) {
 
     switch (type || style?.type) {
-        
+
         case 'PAINT':
             const paintStyle = figma.createPaintStyle();
             paintStyle.name = name;
@@ -319,7 +319,7 @@ export function createSet({ folder, set, config, type }: Workbench) {
     const styleFolders = (get_styles_of_folder(folder) ?? []).map(style => folderAtLevel(style.name, level));
 
     //Create new style for each style in the Set
-    set?.forEach(async ({ style }) => {
+    set?.forEach(async (style) => {
         const copyName = setCopyNumber(baseName, styleFolders) || '';
         const styleName = concatFolderName([folder.fullpath, copyName, style.name]);
         addStyle({ style, name: styleName });

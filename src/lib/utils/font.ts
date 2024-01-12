@@ -60,32 +60,30 @@ async function loadFont(config: TextConfig): Promise<string> {
     });
 }
 
-export function cssTextStyle(style: TextStyle) {
+export function cssTextStyle(style: FontSet) {
 
     const lineHeight = roundObjectFloat((style.lineHeight as any)).value;
     const letterSpacing = roundObjectFloat((style.letterSpacing as any)).value;
 
     return {
-        fontWeight: convertFontWeight(style.fontName.style),
+        fontWeight: convertFontWeight(style.fontName?.style || 'Regular'),
         fontSize: style.fontSize + 'px',
-        letterSpacing: String((letterSpacing || 0) + convertUnit(style.letterSpacing.unit)),
-        lineHeight: String((lineHeight || '') + convertUnit(style.lineHeight.unit)),
-        fontFamily: style.fontName.family
+        letterSpacing: String((letterSpacing || 0) + convertUnit(style.letterSpacing?.unit || "PERCENT")),
+        lineHeight: String((lineHeight || '') + convertUnit(style.lineHeight?.unit || "PERCENT")),
+        fontFamily: style.fontName?.family || { family: 'Inter', style: 'Regular' }
     };
 }
 
-async function convertTemplate(template: Array<FontSet>, config: TextConfig): Promise<Set<FontSet>> {
+async function convertTemplate(template: Array<FontSet>, config: TextConfig): Promise<Set> {
 
     const typeface = await loadFont(config);
 
     return template.map((style, i) => ({
-        style: {
-            ...DEFAULT_STYLE_TEXT,
-            ...style,
-            fontName: {
-                family: typeface,
-                style: style.fontName?.style || 'Regular'
-            }
+        ...DEFAULT_STYLE_TEXT,
+        ...style,
+        fontName: {
+            family: typeface,
+            style: style.fontName?.style || 'Regular'
         }
     }));
 
@@ -99,8 +97,8 @@ interface GenVariants {
     indexSuffix?: string;
 }
 
-const genVariants = ({ amount, base, method, round, indexSuffix = '' }: GenVariants): Set<FontSet> => {
-    const variants: Set<FontSet> = [];
+const genVariants = ({ amount, base, method, round, indexSuffix = '' }: GenVariants): Set => {
+    const variants: Set = [];
     let lastSize: number = Number(base.fontSize) || 16;
     let realIndex: number = 0;
 
@@ -109,10 +107,8 @@ const genVariants = ({ amount, base, method, round, indexSuffix = '' }: GenVaria
         realIndex++;
         if (lastSize > 0) {
             variants.push({
-                style: {
-                    ...base,
-                    fontSize: round ? Math.floor(lastSize) : Number(lastSize.toFixed(2))
-                },
+                ...base,
+                fontSize: round ? Math.floor(lastSize) : Number(lastSize.toFixed(2)),
                 index: indexSuffix + realIndex
             });
         }
@@ -138,7 +134,7 @@ function configToBase(config: TextConfig): FontSet {
 /**
 ** SCALE METHOD
 **/
-export async function scale(config: TextConfig): Promise<Set<FontSet>> {
+export async function scale(config: TextConfig): Promise<Set> {
 
     await loadFont(config);
 
@@ -159,7 +155,7 @@ export async function scale(config: TextConfig): Promise<Set<FontSet>> {
     const descRatio = ratio(config.descendantScale || '');
 
     //generate ascendant font
-    const ascFont: Set<FontSet> = genVariants({
+    const ascFont: Set = genVariants({
         amount: config.ascendantSteps || 8,
         base: baseText,
         method: (size) => size * ascRatio,
@@ -168,7 +164,7 @@ export async function scale(config: TextConfig): Promise<Set<FontSet>> {
     }).reverse();
 
     //generate descendant font
-    const descFont: Set<FontSet> = genVariants({
+    const descFont: Set = genVariants({
         amount: config.descendantSteps || 4,
         base: baseText,
         method: (size) => size / descRatio,
@@ -179,7 +175,7 @@ export async function scale(config: TextConfig): Promise<Set<FontSet>> {
     //generate descendant font
     return [
         ...ascFont,
-        { style: baseText, index: 0 },
+        { ...baseText, index: 0 },
         ...descFont
     ];
 }
@@ -187,7 +183,7 @@ export async function scale(config: TextConfig): Promise<Set<FontSet>> {
 /**
 ** MATERIAL METHOD
 **/
-export async function material(config: TextConfig): Promise<Set<FontSet>> {
+export async function material(config: TextConfig): Promise<Set> {
 
     const fontTemplate: Array<FontSet> = [
         //Heading
@@ -281,7 +277,7 @@ export async function material(config: TextConfig): Promise<Set<FontSet>> {
 /**
 ** FLUTTER METHOD
 **/
-export async function flutter(config: TextConfig): Promise<Set<FontSet>> {
+export async function flutter(config: TextConfig): Promise<Set> {
 
     const fontTemplate: Array<FontSet> = [
         //Display
@@ -388,7 +384,7 @@ export async function flutter(config: TextConfig): Promise<Set<FontSet>> {
 /**
 ** APPLE METHOD
 **/
-export async function apple(config: TextConfig): Promise<Set<FontSet>> {
+export async function apple(config: TextConfig): Promise<Set> {
 
     const fontTemplate: { [key: string]: Array<FontSet> } = {
         //DESKTOP
@@ -514,7 +510,7 @@ export async function apple(config: TextConfig): Promise<Set<FontSet>> {
 /**
 ** CARBON METHOD
 **/
-export async function carbon(config: TextConfig): Promise<Set<FontSet>> {
+export async function carbon(config: TextConfig): Promise<Set> {
 
     await loadFont(config);
 
@@ -536,7 +532,7 @@ export async function carbon(config: TextConfig): Promise<Set<FontSet>> {
 
     return [
         ...ascendant,
-        { style: baseText, index: 0 },
+        { ...baseText, index: 0 },
         ...descendant
     ];
 }

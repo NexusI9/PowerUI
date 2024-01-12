@@ -94,13 +94,8 @@ export interface Workbench {
     sidepanel: Sidepanel;
     footer?: Footer;
     config: ColorConfig | TextConfig | ColorAdjustConfig;
-    set?: Set<ShadeSet | FontSet>;
+    set?: Set;
 }
 
-export interface WorkbenchComponent<T> {
-    style: T;
-    index?: number | string;
-}
-
-export type Set<T> = Array<WorkbenchComponent<T>>;
+export type Set = Array<FontSet | ShadeSet>;
 

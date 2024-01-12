@@ -6,8 +6,9 @@ import { BaseSyntheticEvent, useState } from 'react';
 import { send } from '@lib/ipc';
 import { FontOptions } from '@components/font-options';
 import { cssTextStyle } from '@lib/utils/font';
+import { FontSet } from '@ctypes/text';
 
-export const Font = (props:TextStyle) => {
+export const Font = (props: FontSet) => {
 
     const displayMode = useSelector((state: any) => state.style.display);
 
@@ -24,7 +25,7 @@ export const Font = (props:TextStyle) => {
     return (<div className="style-item-font flex">
         <Input
             {...(displayMode === 'list' && { style: cssTextStyle(props) })}
-            value={folderNameFromPath(props.name).name}
+            value={folderNameFromPath(String(props?.name)).name}
             appearance={{ minified: true, stroke: false }}
             onBlur={updateName}
             onEnter={updateName}

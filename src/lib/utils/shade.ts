@@ -14,9 +14,9 @@ import { generateColors } from "@lib/vendor/mantine-swatch";
 /*
 ** CLASSIC INTERPOLATIONS 
 */
-export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: ColorSetMethod, mode: string, name: string }): Set<ShadeSet> {
+export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: ColorSetMethod, mode: string, name: string }): Set {
 
-    const colorArray: Set<ShadeSet> = [];
+    const colorArray: Set = [];
 
     //Set color end depending
     switch (action) {
@@ -40,14 +40,11 @@ export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, na
             const hex = value.hex();
 
             colorArray.push({
-                style: {
-                    type: 'PAINT',
-                    name: `${name}-${s}`,
-                    paints: colorToPaint({ r: rgb[0] / 255, g: rgb[1] / 255, b: rgb[2] / 255 }),
-                    contrast: checkContrast(hex),
-                    primary: hex.toLowerCase() === colorStart.toLowerCase() || (action === 'INTERPOLATION' && hex.toLowerCase() === colorEnd.toLowerCase())
-                },
-                index: s
+                type: 'PAINT',
+                name: `${name}-${s}`,
+                paints: colorToPaint({ r: rgb[0] / 255, g: rgb[1] / 255, b: rgb[2] / 255 }),
+                contrast: checkContrast(hex),
+                primary: hex.toLowerCase() === colorStart.toLowerCase() || (action === 'INTERPOLATION' && hex.toLowerCase() === colorEnd.toLowerCase())
             });
         }
     }
@@ -57,9 +54,9 @@ export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, na
 /*
 ** MATERIAL DESIGN 
 */
-export function material({ colorStart, name, palette, keys, preserve }: ColorConfig): Set<ShadeSet> {
+export function material({ colorStart, name, palette, keys, preserve }: ColorConfig): Set {
 
-    const colorArray: Set<ShadeSet> = [];
+    const colorArray: Set = [];
     const argbColorStart = argbFromHex(colorStart as string);
     const materialTheme = themeFromSourceColor(argbColorStart, []);
     const materialPalette = materialTheme.palettes[palette || 'primary'];
@@ -88,14 +85,11 @@ export function material({ colorStart, name, palette, keys, preserve }: ColorCon
         const rgb = hexToRgb(hex, true, 'OBJECT') as RGB;
 
         colorArray.push({
-            style: {
-                type: 'PAINT',
-                name: `${name}-${(keys || MATERIAL_DEFAULT_KEYS)[i]}`,
-                paints: colorToPaint(rgb),
-                contrast: checkContrast(hex),
-                primary: isPrimary
-            },
-            index: i
+            type: 'PAINT',
+            name: `${name}-${(keys || MATERIAL_DEFAULT_KEYS)[i]}`,
+            paints: colorToPaint(rgb),
+            contrast: checkContrast(hex),
+            primary: isPrimary
         });
     });
 
@@ -107,7 +101,7 @@ export function material({ colorStart, name, palette, keys, preserve }: ColorCon
 /*
 ** MANTINE DESIGN 
 */
-export function mantine({ colorStart, name, theme }: ColorConfig): Set<ShadeSet> {
+export function mantine({ colorStart, name, theme }: ColorConfig): Set {
     return generateColors(colorStart as string).map((color, i) => ({
         style: {
             type: 'PAINT',
@@ -123,7 +117,7 @@ export function mantine({ colorStart, name, theme }: ColorConfig): Set<ShadeSet>
 /*
 ** ANT DESIGN 
 */
-export function ant({ colorStart, name, theme }: ColorConfig): Set<ShadeSet> {
+export function ant({ colorStart, name, theme }: ColorConfig): Set {
     const palette = generate(colorStart as string, { theme: theme || 'default' });
     return palette.map((color, i) => ({
         style: {
@@ -141,11 +135,11 @@ export function ant({ colorStart, name, theme }: ColorConfig): Set<ShadeSet> {
 /*
 ** TAILWIND SWATCH
 */
-export function tailwind({ colorStart, name }: ColorConfig): Set<ShadeSet> {
+export function tailwind({ colorStart, name }: ColorConfig): Set {
 
     const { colors } = TailwindPalette(colorStart as string) as Palette;
 
-    const result: Set<ShadeSet> = [];
+    const result: Set = [];
     if (colors) {
         Object.keys(colors).forEach((key, i) => {
             const nkey = Number(key);
@@ -153,14 +147,11 @@ export function tailwind({ colorStart, name }: ColorConfig): Set<ShadeSet> {
             const rgb = hexToRgb(hex, true, 'OBJECT') as RGB;
 
             result.push({
-                style: {
-                    type: 'PAINT',
-                    name: `${name}-${key}`,
-                    paints: colorToPaint(rgb),
-                    contrast: checkContrast(hex),
-                    primary: (colorStart as string).toLowerCase() === hex.toLowerCase()
-                },
-                index: i
+                type: 'PAINT',
+                name: `${name}-${key}`,
+                paints: colorToPaint(rgb),
+                contrast: checkContrast(hex),
+                primary: (colorStart as string).toLowerCase() === hex.toLowerCase()
             })
         });
     }
@@ -173,7 +164,7 @@ export function tailwind({ colorStart, name }: ColorConfig): Set<ShadeSet> {
 /*
 ** COLOR ADJUSTMENTS 
 */
-export function colorAdjust(props: ColorAdjustConfig): Set<ShadeSet> {
+export function colorAdjust(props: ColorAdjustConfig): Set {
 
 
     return props.styles.map((style: PaintStyle, i: number) => {
@@ -241,20 +232,12 @@ export function colorAdjust(props: ColorAdjustConfig): Set<ShadeSet> {
 
         }
 
-        return ({
-            style: {
-                type: 'PAINT',
-                name: folderNameFromPath(style.name).name,
-                paint: colorToPaint(rgbColor),
-                contrast: checkContrast(rgbToHex(rgbColor))
-            },
-            index: i
-        });
+        return {
+            type: 'PAINT',
+            name: folderNameFromPath(style.name).name,
+            paint: colorToPaint(rgbColor),
+            contrast: checkContrast(rgbToHex(rgbColor))
+        };
     });
 
 }
-
-
-
-
-

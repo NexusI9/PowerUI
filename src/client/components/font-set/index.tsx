@@ -1,16 +1,15 @@
 import { Input } from '@components/input';
 import './index.scss';
-import { folderNameFromPath } from '@lib/utils/style';
 import { Font } from '@components/font';
 import { Icon } from '@components/icon';
 import Lock from '@icons/lock-locked.svg'
-import { WorkbenchComponent } from 'src/types/workbench';
 import { BaseSyntheticEvent, useState } from 'react';
+import { FontSet as IFontSet } from '@ctypes/text';
 
-export const FontSet = ({ style, index }: WorkbenchComponent<TextStyle>) => {
+export const FontSet = (style: IFontSet) => {
 
-    const [innerStyle, setInnerStyle] = useState<TextStyle>(style);
-
+    const [innerStyle, setInnerStyle] = useState<IFontSet>(style);
+    const { index } = style;
     const updateStyleName = (e: BaseSyntheticEvent) => {
         setInnerStyle({ ...innerStyle, name: e.target.value })
     }
