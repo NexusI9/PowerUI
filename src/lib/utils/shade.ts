@@ -1,11 +1,11 @@
-import { ColorHSL, ColorRGB } from "src/types/color";
-import { ColorAdjustConfig, ColorConfig, ColorSetMethod, Workbench, WorkbenchComponent, Set } from "src/types/workbench";
+import { ColorHSL } from "src/types/color";
+import { ColorAdjustConfig, ColorConfig, ColorSetMethod, Set } from "src/types/workbench";
 import { ShadeSet } from "src/types/shade";
-import { concatFolderName, folderAtLevel, folderNameFromPath, get_styles_of_folder, setCopyNumber } from "./style";
-import { DEFAULT_STYLE_COLOR, MATERIAL_DEFAULT_KEYS } from "@lib/constants";
+import { folderNameFromPath } from "./style";
+import { MATERIAL_DEFAULT_KEYS } from "@lib/constants";
 import chroma, { InterpolationMode } from 'chroma-js';
 import { argbFromHex, themeFromSourceColor, hexFromArgb } from '@material/material-color-utilities';
-import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, rgb } from "./color";
+import { hexToRgb, rgbToHex, rgbToHsl, hslToRgb, colorToPaint } from "./color";
 import { generate } from '@ant-design/colors';
 import { clamp, envelop, mix } from "./utils";
 import { checkContrast, convertTemperature } from "./shade.helper";
@@ -41,8 +41,9 @@ export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, na
 
             colorArray.push({
                 style: {
+                    type: 'PAINT',
                     name: `${name}-${s}`,
-                    paints: [{ ...DEFAULT_STYLE_COLOR, color: { r: rgb[0] / 255, g: rgb[1] / 255, b: rgb[2] / 255 } }],
+                    paints: colorToPaint({ r: rgb[0] / 255, g: rgb[1] / 255, b: rgb[2] / 255 }),
                     contrast: checkContrast(hex),
                     primary: hex.toLowerCase() === colorStart.toLowerCase() || (action === 'INTERPOLATION' && hex.toLowerCase() === colorEnd.toLowerCase())
                 },
@@ -88,8 +89,9 @@ export function material({ colorStart, name, palette, keys, preserve }: ColorCon
 
         colorArray.push({
             style: {
+                type: 'PAINT',
                 name: `${name}-${(keys || MATERIAL_DEFAULT_KEYS)[i]}`,
-                paints: [{ ...DEFAULT_STYLE_COLOR, color: rgb }],
+                paints: colorToPaint(rgb),
                 contrast: checkContrast(hex),
                 primary: isPrimary
             },
@@ -108,8 +110,9 @@ export function material({ colorStart, name, palette, keys, preserve }: ColorCon
 export function mantine({ colorStart, name, theme }: ColorConfig): Set<ShadeSet> {
     return generateColors(colorStart as string).map((color, i) => ({
         style: {
+            type: 'PAINT',
             name: `${name}-${i + 1}`,
-            color: hexToRgb(color, true, 'OBJECT') as ColorRGB,
+            paints: colorToPaint(hexToRgb(color, true, 'OBJECT') as RGB),
             contrast: checkContrast(color),
             primary: (colorStart as string).toLowerCase() === color.toLowerCase()
         },
@@ -124,8 +127,9 @@ export function ant({ colorStart, name, theme }: ColorConfig): Set<ShadeSet> {
     const palette = generate(colorStart as string, { theme: theme || 'default' });
     return palette.map((color, i) => ({
         style: {
+            type: 'PAINT',
             name: `${name}-${i + 1}`,
-            color: hexToRgb(color, true, 'OBJECT') as ColorRGB,
+            paints: colorToPaint(hexToRgb(color, true, 'OBJECT') as RGB),
             contrast: checkContrast(color),
             primary: (colorStart as string).toLowerCase() === color.toLowerCase()
         },
@@ -150,8 +154,9 @@ export function tailwind({ colorStart, name }: ColorConfig): Set<ShadeSet> {
 
             result.push({
                 style: {
+                    type: 'PAINT',
                     name: `${name}-${key}`,
-                    paints: [{ ...DEFAULT_STYLE_COLOR, color: rgb }],
+                    paints: colorToPaint(rgb),
                     contrast: checkContrast(hex),
                     primary: (colorStart as string).toLowerCase() === hex.toLowerCase()
                 },
@@ -193,7 +198,7 @@ export function colorAdjust(props: ColorAdjustConfig): Set<ShadeSet> {
         }
 
         //convert back to RGB for more complex adjustments
-        const rgbColor = hslToRgb(hslColor, true, 'OBJECT') as ColorRGB;
+        let rgbColor = hslToRgb(hslColor, true, 'OBJECT') as RGB;
 
         if (contrast) {
 
@@ -217,23 +222,30 @@ export function colorAdjust(props: ColorAdjustConfig): Set<ShadeSet> {
                 factor = 0.1;
             }
 
-            rgbColor.r = clamp(0, f(rgbColor.r, factor, bright, dark), 1) || rgbColor.r;
-            rgbColor.g = clamp(0, f(rgbColor.g, factor, bright, dark), 1) || rgbColor.g;
-            rgbColor.b = clamp(0, f(rgbColor.b, factor, bright, dark), 1) || rgbColor.b;
+            rgbColor = {
+                r: clamp(0, f(rgbColor.r, factor, bright, dark), 1) || rgbColor.r,
+                g: clamp(0, f(rgbColor.g, factor, bright, dark), 1) || rgbColor.g,
+                b: clamp(0, f(rgbColor.b, factor, bright, dark), 1) || rgbColor.b
+            };
         }
         if (temperature) {
             const tempColor = convertTemperature(envelop(40000, temperature, 1000));
             const factor = Math.abs(Number(temperature));
 
-            rgbColor.r = mix(rgbColor.r, tempColor.r, factor);
-            rgbColor.g = mix(rgbColor.g, tempColor.g, factor);
-            rgbColor.b = mix(rgbColor.b, tempColor.b, factor);
+
+            rgbColor = {
+                r: mix(rgbColor.r, tempColor.r, factor),
+                g: mix(rgbColor.g, tempColor.g, factor),
+                b: mix(rgbColor.b, tempColor.b, factor)
+            };
+
         }
 
         return ({
             style: {
+                type: 'PAINT',
                 name: folderNameFromPath(style.name).name,
-                color: rgbColor,
+                paint: colorToPaint(rgbColor),
                 contrast: checkContrast(rgbToHex(rgbColor))
             },
             index: i

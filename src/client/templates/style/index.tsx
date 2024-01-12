@@ -1,4 +1,3 @@
-import * as React from "react";
 import { useState, useEffect } from "react";
 import { SectionHeader } from "@components/section-header";
 import List from '@icons/list-bulleted.svg';

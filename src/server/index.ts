@@ -15,7 +15,6 @@ import {
 } from "@lib/utils/style";
 
 import { loadLocalFont, storeFonts } from "@lib/utils/font.back";
-import { ColorRGB } from "@ctypes/color";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 import { TextDico } from "@ctypes/text";
 
@@ -107,7 +106,7 @@ figma.ui.onmessage = msg => {
 
     case 'EDIT_SWATCH':
       payload.config?.styles?.forEach((style: PaintStyle, i: number) => {
-        try { updateColor({ style, color: payload.set[i].color as ColorRGB }); }
+        try { updateColor({ style, color: payload.set[i].color as RGB }); }
         catch (_) { }
       });
       break;
@@ -120,10 +119,11 @@ figma.ui.onmessage = msg => {
     case 'FONT_LIST':
       storeFonts(msg, systemFonts)
         .then(({ fonts, action }: { fonts: TextDico, action: string }) => {
+          //Store fonts in global variable
           if (fonts && !systemFonts) { systemFonts = fonts }
-          figma.ui.postMessage({ action: action, payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE' })) }); //map dico font to be contextMenu compatible
+          figma.ui.postMessage({ ...msg, payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE', ...msg })) }); //map dico font to be contextMenu compatible
         })
-        .catch(() => figma.ui.postMessage({ action: action, payload: [] }));
+        .catch(() => figma.ui.postMessage({ ...msg, payload: [] }));
       break;
 
     case 'LOAD_FONT':

@@ -8,23 +8,21 @@ import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 export const display = createAsyncThunk(
     'contextmenu/display',
     async (action: any) => {
+
         //check if commands have fetch propreties to replace content with fetch results
-        const fetchPromises: Array<any> = action.commands.map(
-            (command: ContextMenuCommand) =>
-                traverseCallback(
-                    command,
-                    (cm: ContextMenuCommand) => {
-                        if (cm.fetch) { return get(cm.fetch) }
-                        else { return cm; }
-                    }
-                )
+        const fetchPromises: Array<any> = action.commands.map((command: ContextMenuCommand) =>
+            traverseCallback(
+                command,
+                (cm: ContextMenuCommand) => {
+                    if (cm.fetch) { return get(cm.fetch).then(e => e.payload) }
+                    else { return cm; }
+                }
+            )
         );
 
         const result = await Promise.all(fetchPromises);
-        return {
-            ...action,
-            commands: result.map(item => item.payload ? item.payload : item)
-        }
+
+        return { ...action, commands: result };
     });
 
 

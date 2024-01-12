@@ -15,6 +15,7 @@ export const DEFAULT_STYLE_COLOR: SolidPaint = {
 };
 
 export const DEFAULT_STYLE_TEXT: FontSet = {
+    "type":"TEXT",
     "name": "Style name",
     "fontSize": 16,
     "textDecoration": "NONE",

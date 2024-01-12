@@ -1,7 +1,6 @@
 import { Dropdown, Input, InputArray, Slider, Checkbox } from "src/types/input";
 import { StyleFolder } from "src/types/style";
 import { ShadeSet } from "./shade";
-import { ColorRGB } from "./color";
 import { ContextMenuCommand } from "./contextmenu";
 import { MultiArray } from "./global";
 import { FontSet } from "./text";
@@ -54,8 +53,8 @@ interface BaseConfig {
 
 export interface ColorConfig extends BaseConfig {
     name?: string;
-    colorStart?: string | ColorRGB;
-    colorEnd?: string | ColorRGB;
+    colorStart?: string | RGB;
+    colorEnd?: string | RGB;
     mode?: 'rgb' | 'hsl' | 'lab' | 'lch';
     steps?: number;
     palette?: 'primary' | 'secondary' | 'tertiary' | 'error' | 'neutral' | 'neutralVariant';

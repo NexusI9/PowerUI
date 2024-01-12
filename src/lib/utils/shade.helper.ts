@@ -1,7 +1,6 @@
 import { Contrast, ContrastPropreties } from "src/types/shade";
 import { ratio } from "wcag-color";
 import { wcagContrastChecker } from "@mdhnpm/wcag-contrast-checker";
-import { ColorRGB } from "src/types/color";
 import { clamp } from "./utils";
 
 
@@ -26,7 +25,7 @@ export function checkContrast(target: string): Contrast {
 
 
 
-export function convertTemperature(tmpKelvin: number): ColorRGB {
+export function convertTemperature(tmpKelvin: number): RGB {
     //src: https://tannerhelland.com/2012/09/18/convert-temperature-rgb-algorithm-code.html
     // All calculations require tmpKelvin \ 100, so only do the conversion once
     tmpKelvin = clamp(1000, tmpKelvin, 40000) / 100;

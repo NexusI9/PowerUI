@@ -1,8 +1,7 @@
-import { ColorRGB } from "@ctypes/color";
 import { StyleFolder, Styles, } from "@ctypes/style";
 import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_COLOR } from "@lib/constants";
-import { clone, mapKeys, roundDecimal, shallowClone } from '@lib/utils/utils';
+import { clone, mapKeys, shallowClone } from '@lib/utils/utils';
 import { WritablePart } from "@ctypes/global";
 import { Workbench, ColorConfig, TextConfig, Set } from "@ctypes/workbench";
 import { ShadeSet } from '@ctypes/shade';
@@ -86,7 +85,7 @@ export function updateFolderName({ folder, level, name }: { folder: StyleFolder,
 
 }
 
-export function updateColor({ style, color }: { style: PaintStyle, color: ColorRGB | string }): void {
+export function updateColor({ style, color }: { style: PaintStyle, color: RGB | string }): void {
 
     const figmaStyle = figma.getStyleById(style.id) as PaintStyle;
     const newPaint = clone(figmaStyle.paints);
@@ -165,19 +164,14 @@ export function folderNameFromPath(path: string) {
     };
 }
 
-export async function addStyle({ name, style, type }: { name: string, style: Styles | ShadeSet | FontSet, type: 'TEXT' | 'PAINT' }) {
-    console.log(style);
-    return;
-    switch (type) {
+export async function addStyle({ name, style, type }: { name: string, style?: Styles | ShadeSet | FontSet, type?: 'PAINT' | 'TEXT' }) {
+
+    switch (type || style?.type) {
+        
         case 'PAINT':
-            /*          
-                paintStyle.paints = DEFAULT_STYLE_COLOR.map(paint => ({ ...paint, color: (style as ShadeSet).color }));
-            */
             const paintStyle = figma.createPaintStyle();
             paintStyle.name = name;
-            /*paintStyle.paints = [
-                ...(style as ShadeSet).paints,
-            ];*/
+            paintStyle.paints = (style?.type === 'PAINT' && style.paints) && [...style.paints] || [DEFAULT_STYLE_COLOR];
             break;
 
         case 'TEXT':
@@ -223,8 +217,7 @@ export function replaceStyle(list: Array<Styles>) {
             style.remove();
             addStyle({
                 name: item.name,
-                style: item,
-                type: item.type
+                style: item
             });
         }
     });
@@ -308,8 +301,7 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
 
         addStyle({
             name: concatFolderName([...convertedName, name]),
-            style: item,
-            type: item.type
+            style: item
         });
     });
 
@@ -330,6 +322,6 @@ export function createSet({ folder, set, config, type }: Workbench) {
     set?.forEach(async ({ style }) => {
         const copyName = setCopyNumber(baseName, styleFolders) || '';
         const styleName = concatFolderName([folder.fullpath, copyName, style.name]);
-        addStyle({ style, name: styleName, type });
+        addStyle({ style, name: styleName });
     });
 }

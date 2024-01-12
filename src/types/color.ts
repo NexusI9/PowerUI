@@ -1,9 +1,3 @@
-export interface ColorRGB{
-    r:number;
-    g:number;
-    b:number;
-}
-
 export interface ColorHSL{
     h:number;
     s:number;

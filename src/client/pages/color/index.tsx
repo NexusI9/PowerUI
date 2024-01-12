@@ -16,7 +16,7 @@ export default () => {
     const buttonPadStyle: ButtonPad = {
         icon: PaintPlus,
         text: 'Create Swatch',
-        onClick: () => 0
+        onClick: (folder: StyleFolder) => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: folder }))
     };
 
     const options: FolderOptions = {
@@ -34,8 +34,8 @@ export default () => {
         }
     };
 
-    const handleAddItem = ({ folder, name }: { folder: string, name: string }) => {
-        send({ action: "ADD_STYLE", payload: { folder, name, type: 'COLOR' } });
+    const handleAddItem = ({ name }: { name: string }) => {
+        send({ action: "ADD_STYLE", payload: { name, type: 'PAINT' } });
     };
 
     const dispatch = useDispatch();

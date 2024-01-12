@@ -1,5 +1,3 @@
-import { ColorRGB } from "./color";
-
 export interface ContrastPropreties{
     ratio:number;
     large:'AAA' | 'AA' | undefined;
@@ -12,6 +10,7 @@ export interface Contrast{
 }
 
 export interface ShadeSet extends Partial<PaintStyle>{
+    type:'PAINT';
     contrast:Contrast;
     primary?:boolean;
 }
