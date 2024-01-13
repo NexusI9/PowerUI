@@ -4,7 +4,7 @@ export interface TextArrayItem {
     style: Array<String>;
 }
 
-export interface FontSet extends Partial<TextStyle> {
+export interface TextSet extends Partial<TextStyle> {
     index?: number | string;
 }
 

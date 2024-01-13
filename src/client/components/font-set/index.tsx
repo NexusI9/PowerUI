@@ -4,11 +4,11 @@ import { Font } from '@components/font';
 import { Icon } from '@components/icon';
 import Lock from '@icons/lock-locked.svg'
 import { BaseSyntheticEvent, useState } from 'react';
-import { FontSet as IFontSet } from '@ctypes/text';
+import { TextSet as ITextSet } from '@ctypes/text';
 
-export const FontSet = (style: IFontSet) => {
+export const TextSet = (style: ITextSet) => {
 
-    const [innerStyle, setInnerStyle] = useState<IFontSet>(style);
+    const [innerStyle, setInnerStyle] = useState<ITextSet>(style);
     const { index } = style;
     const updateStyleName = (e: BaseSyntheticEvent) => {
         setInnerStyle({ ...innerStyle, name: e.target.value })

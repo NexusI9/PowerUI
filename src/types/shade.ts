@@ -9,7 +9,7 @@ export interface Contrast {
     white: ContrastPropreties;
 }
 
-export interface ShadeSet extends Partial<PaintStyle> {
+export interface PaintSet extends Partial<PaintStyle> {
     type: 'PAINT';
     contrast: Contrast;
     primary?: boolean;

@@ -1,4 +1,4 @@
-import { FontSet } from "@ctypes/text";
+import { TextSet } from "@ctypes/text";
 import { ContextMenu } from "src/types/contextmenu";
 
 export const DEFAULT_STYLE_COLOR: SolidPaint = {
@@ -14,7 +14,7 @@ export const DEFAULT_STYLE_COLOR: SolidPaint = {
     "boundVariables": {}
 };
 
-export const DEFAULT_STYLE_TEXT: FontSet = {
+export const DEFAULT_STYLE_TEXT: TextSet = {
     "type":"TEXT",
     "name": "Style name",
     "fontSize": 16,

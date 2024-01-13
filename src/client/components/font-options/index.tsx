@@ -4,10 +4,10 @@ import ArrowHorizontal from '@icons/horizontal.svg';
 import ArrowVertical from '@icons/vertical.svg';
 import { Icon } from '@components/icon';
 import { cssTextStyle } from '@lib/utils/font';
-import { FontSet } from '@ctypes/text';
+import { TextSet } from '@ctypes/text';
 
 interface FontOptions {
-    style:FontSet;
+    style:TextSet;
     config?: { fontFamily:boolean; style:boolean;  }
 }
 

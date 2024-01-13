@@ -1,9 +1,9 @@
 import { Dropdown, Input, InputArray, Slider, Checkbox } from "src/types/input";
 import { StyleFolder } from "src/types/style";
-import { ShadeSet } from "./shade";
+import { PaintSet } from "./shade";
 import { ContextMenuCommand } from "./contextmenu";
 import { MultiArray } from "./global";
-import { FontSet } from "./text";
+import { TextSet } from "./text";
 
 export type ColorSetMethod =
     'SHADE' |
@@ -97,5 +97,5 @@ export interface Workbench {
     set?: Set;
 }
 
-export type Set = Array<FontSet | ShadeSet>;
+export type Set = Array<TextSet | PaintSet>;
 

@@ -4,8 +4,8 @@ import { DEFAULT_STYLE_COLOR } from "@lib/constants";
 import { clone, mapKeys, shallowClone } from '@lib/utils/utils';
 import { WritablePart } from "@ctypes/global";
 import { Workbench, ColorConfig, TextConfig } from "@ctypes/workbench";
-import { ShadeSet } from '@ctypes/shade';
-import { FontSet } from "@ctypes/text";
+import { PaintSet } from '@ctypes/shade';
+import { TextSet } from "@ctypes/text";
 import { ContextMenuCommand } from '@ctypes/contextmenu';
 
 export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
@@ -165,7 +165,7 @@ export function folderNameFromPath(path: string) {
     };
 }
 
-export async function addStyle({ name, style, type }: { name: string, style?: Styles | ShadeSet | FontSet, type?: 'PAINT' | 'TEXT' }) {
+export async function addStyle({ name, style, type }: { name: string, style?: Styles | PaintSet | TextSet, type?: 'PAINT' | 'TEXT' }) {
 
     switch (type || style?.type) {
 
@@ -181,7 +181,7 @@ export async function addStyle({ name, style, type }: { name: string, style?: St
             //Load font for Figma Canvas
             await figma.loadFontAsync(textStyle.fontName);
 
-            const { fontName } = style as FontSet;
+            const { fontName } = style as TextSet;
 
             //Load new font and Map relative value to styles;
             fontName && figma.loadFontAsync(fontName as FontName)
@@ -191,7 +191,7 @@ export async function addStyle({ name, style, type }: { name: string, style?: St
                 })
                 .catch(() => {
                     //Try to load Regular Style
-                    const regStyle = { ...style, fontName: { ...fontName, style: 'Regular' } } as FontSet;
+                    const regStyle = { ...style, fontName: { ...fontName, style: 'Regular' } } as TextSet;
                     regStyle.fontName && figma.loadFontAsync(regStyle.fontName).then(() => {
                         mapKeys(regStyle, textStyle);
                         textStyle.name = name;
@@ -335,7 +335,7 @@ export function createSet({ folder, set, config }: Workbench) {
 
 
 
-export const styleContextMenu = ({ style, editCommand }: { style: FontSet | ShadeSet, editCommand: string }): Array<ContextMenuCommand> => {
+export const styleContextMenu = ({ style, editCommand }: { style: TextSet | PaintSet, editCommand: string }): Array<ContextMenuCommand> => {
     return [
         { text: 'Edit', action: editCommand, payload: { style: style }, receiver: 'API' },
         { text: 'Duplicate', action: 'ADD_STYLE', payload: { style: style, name: style.name }, receiver: 'API' },

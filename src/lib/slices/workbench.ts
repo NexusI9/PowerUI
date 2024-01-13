@@ -3,8 +3,8 @@ import { apple, carbon, flutter, scale, material as textMaterial } from "@lib/ut
 import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { ShadeSet as IShadeSet } from "src/types/shade";
-import { FontSet } from "src/types/text";
+import { PaintSet as IPaintSet } from "src/types/shade";
+import { TextSet } from "src/types/text";
 
 
 //{ [key in ColorSetMethod]: any; }

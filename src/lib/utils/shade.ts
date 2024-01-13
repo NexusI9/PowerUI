@@ -1,6 +1,6 @@
 import { ColorHSL } from "src/types/color";
 import { ColorAdjustConfig, ColorConfig, ColorSetMethod, Set } from "src/types/workbench";
-import { ShadeSet } from "src/types/shade";
+import { PaintSet } from "src/types/shade";
 import { folderNameFromPath } from "./style";
 import { MATERIAL_DEFAULT_KEYS } from "@lib/constants";
 import chroma, { InterpolationMode } from 'chroma-js';

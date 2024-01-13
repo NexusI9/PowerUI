@@ -1,4 +1,4 @@
-import { FontSet } from "@ctypes/text";
+import { TextSet } from "@ctypes/text";
 import { TextConfig } from "src/types/workbench";
 import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
 import { get } from "@lib/ipc";
@@ -57,7 +57,7 @@ async function loadFont(config: TextConfig): Promise<string> {
     });
 }
 
-export function cssTextStyle(style: FontSet) {
+export function cssTextStyle(style: TextSet) {
 
     const lineHeight = roundObjectFloat((style.lineHeight as any)).value;
     const letterSpacing = roundObjectFloat((style.letterSpacing as any)).value;
@@ -71,7 +71,7 @@ export function cssTextStyle(style: FontSet) {
     };
 }
 
-async function convertTemplate(template: Array<FontSet>, config: TextConfig): Promise<Set> {
+async function convertTemplate(template: Array<TextSet>, config: TextConfig): Promise<Set> {
 
     const typeface = await loadFont(config);
 
@@ -88,7 +88,7 @@ async function convertTemplate(template: Array<FontSet>, config: TextConfig): Pr
 
 interface GenVariants {
     amount: number;
-    base: FontSet;
+    base: TextSet;
     method(base: number, index: number): number;
     round: boolean | undefined;
     indexSuffix?: string;
@@ -115,7 +115,7 @@ const genVariants = ({ amount, base, method, round, indexSuffix = '' }: GenVaria
     return variants;
 }
 
-function configToBase(config: TextConfig): FontSet {
+function configToBase(config: TextConfig): TextSet {
     //Assign config custom values to Default style text, and set default value if no values in config
     return {
         ...DEFAULT_STYLE_TEXT,
@@ -182,7 +182,7 @@ export async function scale(config: TextConfig): Promise<Set> {
 **/
 export async function material(config: TextConfig): Promise<Set> {
 
-    const fontTemplate: Array<FontSet> = [
+    const fontTemplate: Array<TextSet> = [
         //Heading
         {
             name: 'Heading/Heading 1',
@@ -276,7 +276,7 @@ export async function material(config: TextConfig): Promise<Set> {
 **/
 export async function flutter(config: TextConfig): Promise<Set> {
 
-    const fontTemplate: Array<FontSet> = [
+    const fontTemplate: Array<TextSet> = [
         //Display
         {
             name: 'Display/Display Large',
@@ -383,7 +383,7 @@ export async function flutter(config: TextConfig): Promise<Set> {
 **/
 export async function apple(config: TextConfig): Promise<Set> {
 
-    const fontTemplate: { [key: string]: Array<FontSet> } = {
+    const fontTemplate: { [key: string]: Array<TextSet> } = {
         //DESKTOP
         'desktop': [
             //Title

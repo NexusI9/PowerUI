@@ -6,10 +6,10 @@ import { BaseSyntheticEvent } from 'react';
 import { send } from '@lib/ipc';
 import { FontOptions } from '@components/font-options';
 import { cssTextStyle } from '@lib/utils/font';
-import { FontSet } from '@ctypes/text';
+import { TextSet } from '@ctypes/text';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
 
-export const Font = (props: FontSet) => {
+export const Font = (props: TextSet) => {
 
     const displayMode = useSelector((state: any) => state.style.display);
     const dispatch = useDispatch();
