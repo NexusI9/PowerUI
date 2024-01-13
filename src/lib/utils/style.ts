@@ -319,7 +319,7 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
 ** CREATE FIGMA PALELTTE FROM SET 
 */
 export function createSet({ folder, set, config }: Workbench) {
-    console.log(config);
+
     if (!folder) { return; }
     const baseName = (config as ColorConfig | TextConfig).name || 'New style set';
     const { level } = folder;
