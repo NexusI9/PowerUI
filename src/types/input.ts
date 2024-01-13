@@ -14,6 +14,7 @@ export interface Input {
         stroke?: boolean;
         label?: boolean,
         minified?: boolean;
+        arrow?:boolean;
     };
     style?: any;
     range?: Array<number>;

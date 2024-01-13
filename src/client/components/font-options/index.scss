@@ -11,6 +11,12 @@
     li {
         color: var(--figma-color-text-tertiary);
 
+        .input-field {
+            input {
+                color: var(--figma-color-text-tertiary);
+            }
+        }
+
         svg {
             fill: var(--figma-color-icon-tertiary);
             width: var(--size-icon-xs);
@@ -18,6 +24,7 @@
             flex-shrink: 0;
         }
     }
+
 
 
 
