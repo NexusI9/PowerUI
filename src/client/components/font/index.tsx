@@ -5,7 +5,7 @@ import { Input } from '@components/input';
 import { BaseSyntheticEvent } from 'react';
 import { send } from '@lib/ipc';
 import { FontOptions } from '@components/font-options';
-import { cssTextStyle } from '@lib/utils/font';
+import { cssTextStyle, loadFont } from '@lib/utils/font';
 import { TextSet } from '@ctypes/text';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
 
@@ -13,6 +13,8 @@ export const Font = (props: TextSet) => {
 
     const displayMode = useSelector((state: any) => state.style.display);
     const dispatch = useDispatch();
+
+    loadFont(props.fontName);
 
     const updateName = (e: BaseSyntheticEvent) => {
         send({

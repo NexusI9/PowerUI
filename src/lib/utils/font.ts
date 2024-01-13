@@ -29,7 +29,7 @@ export function convertFontWeight(font: string): string {
     }[font] || font
 }
 
-async function loadFont(typeface: FontName | undefined): Promise<string> {
+export async function loadFont(typeface: FontName | undefined): Promise<string> {
 
     return new Promise((resolve, reject) => {
         if (typeface !== undefined) {
