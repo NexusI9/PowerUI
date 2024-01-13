@@ -29,25 +29,25 @@ export function convertFontWeight(font: string): string {
     }[font] || font
 }
 
-async function loadFont(config: TextConfig): Promise<string> {
+async function loadFont(typeface: FontName | undefined): Promise<string> {
 
     return new Promise((resolve, reject) => {
-        if (config.typeface !== undefined) {
+        if (typeface !== undefined) {
             //Google Font Loading
             try {
                 WebFont.load({
                     google: {
-                        families: [config.typeface]
+                        families: [typeface.family]
                     },
-                    active: () => resolve(config.typeface || DEFAULT_TYPEFACE),
+                    active: () => resolve(typeface.family || DEFAULT_TYPEFACE),
                     inactive: () => {
                         //Load Local Font from server
-                        get({ action: 'LOAD_FONT', payload: { family: config.typeface, style: 'Regular' } }).then(e => resolve(e));
+                        get({ action: 'LOAD_FONT', payload: typeface }).then(e => resolve(e));
                     }
                 });
             } catch (_) {
-                console.log(`Coudln\'t load ${config.typeface}`);
-                resolve(config.typeface || DEFAULT_TYPEFACE);
+                console.log(`Coudln\'t load ${typeface.family} (${typeface.style})`);
+                resolve(typeface.family || DEFAULT_TYPEFACE);
             }
 
         } else {
@@ -73,7 +73,7 @@ export function cssTextStyle(style: TextSet) {
 
 async function convertTemplate(template: Array<TextSet>, config: TextConfig): Promise<Set> {
 
-    const typeface = await loadFont(config);
+    const typeface = await loadFont({ family: config.typeface || DEFAULT_TYPEFACE, style: 'Regular' });
 
     return template.map((style, i) => ({
         ...DEFAULT_STYLE_TEXT,
@@ -133,7 +133,7 @@ function configToBase(config: TextConfig): TextSet {
 **/
 export async function scale(config: TextConfig): Promise<Set> {
 
-    await loadFont(config);
+    await loadFont({ family: config.typeface || DEFAULT_TYPEFACE, style: 'Regular' });
 
     const ratio = (scaleString: string): number => {
         const REGEX_RATIO = /([\d]+)\:([\d]+)/;
@@ -509,7 +509,7 @@ export async function apple(config: TextConfig): Promise<Set> {
 **/
 export async function carbon(config: TextConfig): Promise<Set> {
 
-    await loadFont(config);
+    await loadFont({ family: config.typeface || DEFAULT_TYPEFACE, style: 'Regular' });
 
     const baseText = configToBase(config);
 

@@ -1,6 +1,6 @@
 import { StyleFolder, Styles, } from "@ctypes/style";
 import { hexToRgb } from "./color";
-import { DEFAULT_STYLE_COLOR } from "@lib/constants";
+import { DEFAULT_STYLE_PAINT, DEFAULT_STYLE_TEXT } from "@lib/constants";
 import { clone, mapKeys, shallowClone } from '@lib/utils/utils';
 import { WritablePart } from "@ctypes/global";
 import { Workbench, ColorConfig, TextConfig } from "@ctypes/workbench";
@@ -172,7 +172,7 @@ export async function addStyle({ name, style, type }: { name: string, style?: St
         case 'PAINT':
             const paintStyle = figma.createPaintStyle();
             paintStyle.name = name;
-            paintStyle.paints = (style?.type === 'PAINT' && style.paints) && [...style.paints] || [DEFAULT_STYLE_COLOR];
+            paintStyle.paints = (style?.type === 'PAINT' && style.paints) && [...style.paints] || [DEFAULT_STYLE_PAINT];
             break;
 
         case 'TEXT':
@@ -180,12 +180,11 @@ export async function addStyle({ name, style, type }: { name: string, style?: St
 
             //Load font for Figma Canvas
             await figma.loadFontAsync(textStyle.fontName);
-
             const { fontName } = style as TextSet;
 
             //Load new font and Map relative value to styles;
             fontName && figma.loadFontAsync(fontName as FontName)
-                .then(() => { 
+                .then(() => {
                     mapKeys(style, textStyle);
                     textStyle.name = name;
                 })

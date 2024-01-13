@@ -1,7 +1,7 @@
 import { TextSet } from "@ctypes/text";
 import { ContextMenu } from "src/types/contextmenu";
 
-export const DEFAULT_STYLE_COLOR: SolidPaint = {
+export const DEFAULT_STYLE_PAINT: SolidPaint = {
     "type": "SOLID",
     "visible": true,
     "opacity": 1,

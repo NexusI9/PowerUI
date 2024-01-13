@@ -1,6 +1,6 @@
 import { ColorOutput, ColorHSL } from 'src/types/color';
 import { replaceStyle } from './style';
-import { DEFAULT_STYLE_COLOR } from '@lib/constants';
+import { DEFAULT_STYLE_PAINT } from '@lib/constants';
 
 function to255(color: RGB): RGB {
     return {
@@ -161,5 +161,5 @@ export function sort_by_hsl(styles: Array<PaintStyle>, proprety: 'HUE' | 'BRIGHT
 
 
 export function colorToPaint(color:RGB):Array<SolidPaint>{
-    return [{ ...DEFAULT_STYLE_COLOR, color:color }];
+    return [{ ...DEFAULT_STYLE_PAINT, color:color }];
 }

@@ -19,10 +19,9 @@
             margin: 0;
             padding: var(--space-m);
             input{ font-size: initial;}
-            transition: border 0.05s linear;
 
             &:hover{
-                border-color: var(--figma-color-border-hover);
+                box-shadow: 0 0 0 1px var(--figma-color-border-brand);
             }
 
             ul {
