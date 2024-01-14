@@ -17,8 +17,8 @@ export const Input = ({
     onBlur,
     onFocus,
     onEnter,
+    range,
     style,
-    range = [1, 10],
     step = 1,
     portal,
     appearance = { minified: false, stroke: true, label: false }
@@ -39,7 +39,12 @@ export const Input = ({
         //handle amount clamping
         switch (type) {
             case 'AMOUNT':
-                if (e.target.value.length) { e.target.value = clamp(range[0], Number(e.target.value), range[1]) || range[0]; }
+
+                //clamp 
+                if (e.target.value.length && range) {
+                    e.target.value = clamp(range[0], Number(e.target.value), range[1]) || range[0];
+                }
+
                 setInnerValue(String(e.target.value));
                 break;
         }
@@ -55,8 +60,8 @@ export const Input = ({
     const handleOnKeyDown = (e: any) => {
         if (e.code === 'Enter' && onEnter) { onEnter(e); e.target.blur(); }
         if (type === 'AMOUNT') {
-            if (e.code === 'ArrowUp') { e.preventDefault(); setInnerValue(clamp(range[0], Number(innerValue) + step, range[1])); }
-            if (e.code === 'ArrowDown') { e.preventDefault(); setInnerValue(clamp(range[0], Number(innerValue) - step, range[1])); }
+            if (e.code === 'ArrowUp') { e.preventDefault(); setInnerValue(range ? clamp(range[0], Number(innerValue) + step, range[1]) : Number(innerValue)); }
+            if (e.code === 'ArrowDown') { e.preventDefault(); setInnerValue(range ? clamp(range[0], Number(innerValue) - step, range[1]) : Number(innerValue)); }
         }
     }
 
@@ -70,7 +75,7 @@ export const Input = ({
 
 
     useEffect(() => {
-        
+
         if (input.current && innerValue) {
 
             let storeValue = innerValue || '';
@@ -104,7 +109,7 @@ export const Input = ({
     }, [portalSelector]);
 
 
-    useEffect(() => { setInnerValue(value) },[value])
+    useEffect(() => { setInnerValue(value) }, [value])
 
     return (
         <div className='input-field flex f-col gap-xs' data-minified={String(appearance?.minified)} data-stroke={String(appearance?.stroke)}>
@@ -112,7 +117,12 @@ export const Input = ({
             <div className='input-field-content' data-type={type}>
                 {
                     //Display color swatch square
-                    type === 'COLOR' && <Color style={{ backgroundColor: String(innerValue) }} onChange={(e: any) => setInnerValue(e.target.value)} onClick={() => input.current?.focus()} />
+                    type === 'COLOR' &&
+                    <Color
+                        style={{ backgroundColor: String(innerValue) }}
+                        onChange={(e: BaseSyntheticEvent) => setInnerValue(e.target.value)}
+                        onClick={() => input.current?.focus()}
+                    />
                 }
                 <input
                     type='text'
@@ -127,7 +137,11 @@ export const Input = ({
                 />
                 {
                     //Display amount arrows
-                    type === 'AMOUNT' && <AmountArrows onUp={() => setInnerValue(clamp(range[0], Number(innerValue) + step, range[1]))} onDown={() => setInnerValue(clamp(range[0], Number(innerValue) - step, range[1]))} />
+                    type === 'AMOUNT' &&
+                    <AmountArrows
+                        onUp={() => setInnerValue(range ? clamp(range[0], Number(innerValue) + step, range[1]) : Number(innerValue))}
+                        onDown={() => setInnerValue(range ? clamp(range[0], Number(innerValue) - step, range[1]) : Number(innerValue))}
+                    />
                 }
             </div>
         </div>

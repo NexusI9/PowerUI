@@ -104,14 +104,15 @@ export function updateColor({ style, color }: { style: PaintStyle, color: RGB | 
 
 }
 
-export function updateText({ style, newStyle }: { style: TextStyle, newStyle: Partial<WritablePart<TextStyle>> }): void {
+export async function updateText({ style, newStyle }: { style: TextStyle, newStyle: Partial<WritablePart<TextStyle>> }): Promise<void> {
 
     const figmaStyle = figma.getStyleById(style.id) as any;
     if (!figmaStyle) { return; }
 
+    await figma.loadFontAsync(style.fontName);
+
     let key: keyof typeof newStyle;
     for (key in newStyle) {
-        if (!newStyle.hasOwnProperty(key)) { continue; }
         try {
             //concat base folder with new name
             if (key === 'name') {

@@ -3,9 +3,11 @@ import { Input as IInput } from 'src/types/input';
 import ArrowHorizontal from '@icons/horizontal.svg';
 import ArrowVertical from '@icons/vertical.svg';
 import { Icon } from '@components/icon';
-import { cssTextStyle } from '@lib/utils/font';
+import { cssTextStyle, valueUnitFrom } from '@lib/utils/font';
 import { TextSet } from '@ctypes/text';
 import { Input } from '@components/input';
+import { BaseSyntheticEvent } from 'react';
+import { updateAttribute } from './helper';
 
 interface FontOptions {
     style: TextSet;
@@ -20,10 +22,30 @@ export const FontOptions = ({ style, config }: FontOptions) => {
         stroke: false,
         arrow: false
     }
+
+
     const dragInputs: { [key: string]: IInput } = {
-        fontSize: { type: 'AMOUNT', value: style.fontSize, range: [0, 1000], step: 1, appearance: inputStyle },
-        letterSpacing: { type: 'AMOUNT', value: cssStyle.letterSpacing, range: [-100, 100], step: 1, appearance: inputStyle },
-        lineHeight: { type: 'AMOUNT', value: cssStyle.lineHeight, range: [0, 100], step: 1, appearance: inputStyle },
+        fontSize: {
+            type: 'AMOUNT',
+            value: cssStyle.fontSize,
+            appearance: inputStyle,
+            onBlur: (e: BaseSyntheticEvent) => updateAttribute(style, 'fontSize', Math.max(1, valueUnitFrom(e.target.value).value)),
+            onEnter: (e: BaseSyntheticEvent) => updateAttribute(style, 'fontSize', Math.max(1, valueUnitFrom(e.target.value).value))
+        },  
+        letterSpacing: {
+            type: 'AMOUNT',
+            value: cssStyle.letterSpacing,
+            appearance: inputStyle,
+            onBlur: (e: BaseSyntheticEvent) => updateAttribute(style, 'letterSpacing', valueUnitFrom(e.target.value)),
+            onEnter: (e: BaseSyntheticEvent) => updateAttribute(style, 'letterSpacing', valueUnitFrom(e.target.value))
+        },
+        lineHeight: {
+            type: 'AMOUNT',
+            value: cssStyle.lineHeight,
+            appearance: inputStyle,
+            onBlur: (e: BaseSyntheticEvent) => updateAttribute(style, 'lineHeight', valueUnitFrom(e.target.value)),
+            onEnter: (e: BaseSyntheticEvent) => updateAttribute(style, 'lineHeight', valueUnitFrom(e.target.value)),
+        },
     }
 
     return (

@@ -535,4 +535,23 @@ export async function carbon(config: TextConfig): Promise<Set> {
 }
 
 
+export function valueUnitFrom(value: string): { value: number; unit: string; } {
+    const split = value.match(/^([\-|\+]?\d+\.?\d*)(\D*|\%)$/);
+    console.log(value);
+
+    const val = split && split[1] || 0;
+    const unit = split && split[2] || 'px';
+
+    const converUnit = {
+        '%':'PERCENT',
+        'px':'PIXELS'
+    }[unit] || 'PIXELS';
+
+    return {
+        value: Number(val),
+        unit: converUnit
+    };
+}
+
+
 
