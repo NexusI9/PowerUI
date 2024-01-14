@@ -82,3 +82,9 @@ export function sortByScale(styles: Array<TextStyle>) {
     styles.sort((a: TextStyle, b: TextStyle) => a.fontSize > b.fontSize ? -1 : 1);
     replaceStyle(styles);
 }
+
+export function sortByFont(styles: Array<TextStyle>) {
+    const fontOrder = ['Thin', 'Extra Light', 'Light', 'Regular', 'Semi Bold', 'Bold', 'Extra Bold', 'Black'];
+    styles.sort((a: TextStyle, b: TextStyle) => fontOrder.indexOf(a.fontName.style) > fontOrder.indexOf(b.fontName.style) ? -1 : 1);
+    replaceStyle(styles);
+}

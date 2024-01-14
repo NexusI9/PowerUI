@@ -14,7 +14,7 @@ import {
   createSet
 } from "@lib/utils/style";
 
-import { loadLocalFont, sortByScale, storeFonts } from "@lib/utils/font.back";
+import { loadLocalFont, sortByFont, sortByScale, storeFonts } from "@lib/utils/font.back";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 import { TextDico } from "@ctypes/text";
 
@@ -103,6 +103,7 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'SORT_STYLE_TEXT_FONT':
+      sortByFont(payload.folder.styles);
       break;
 
     case 'CREATE_SET':
