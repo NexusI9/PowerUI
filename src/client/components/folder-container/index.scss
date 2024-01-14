@@ -20,6 +20,12 @@
             padding: var(--space-m);
             input{ font-size: initial;}
 
+            .font-options{
+                input{
+                    font-size: small;
+                }
+            }
+
             &:hover{
                 box-shadow: 0 0 0 1px var(--figma-color-border-brand);
             }

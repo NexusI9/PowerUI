@@ -13,6 +13,8 @@
 
         .input-field {
             input {
+                font-size: small;
+                max-width: 40px;
                 color: var(--figma-color-text-tertiary);
             }
         }

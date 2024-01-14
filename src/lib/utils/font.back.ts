@@ -1,4 +1,5 @@
-import {  TextArrayItem, TextDico } from "src/types/text";
+import { TextArrayItem, TextDico, TextSet } from "src/types/text";
+import { replaceStyle } from "./style";
 
 export function loadLocalFont(msg: any, systemFonts: TextDico) {
 
@@ -74,4 +75,10 @@ export function storeFonts({ action }: any, systemFonts: TextDico): Promise<any>
     });
 
 
+}
+
+
+export function sortByScale(styles: Array<TextStyle>) {
+    styles.sort((a: TextStyle, b: TextStyle) => a.fontSize > b.fontSize ? -1 : 1);
+    replaceStyle(styles);
 }

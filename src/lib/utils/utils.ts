@@ -72,7 +72,7 @@ export const mapKeys = (reference: any, mutable: any) => {
             //round potential floats
             mutable[key as keyof typeof reference] = reference[key as keyof typeof mutable];
         } catch {
-            console.warn(`Couldn't assign attribute for ${key}`);
+            //console.warn(`Couldn't assign attribute for ${key}`);
         }
     });
 }

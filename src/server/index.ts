@@ -14,7 +14,7 @@ import {
   createSet
 } from "@lib/utils/style";
 
-import { loadLocalFont, storeFonts } from "@lib/utils/font.back";
+import { loadLocalFont, sortByScale, storeFonts } from "@lib/utils/font.back";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 import { TextDico } from "@ctypes/text";
 
@@ -96,6 +96,13 @@ figma.ui.onmessage = msg => {
 
     case 'SORT_STYLE_COLOR_SATURATION':
       sort_by_hsl(payload.folder.styles, 'SATURATION');
+      break;
+
+    case 'SORT_STYLE_TEXT_SCALE':
+      sortByScale(payload.folder.styles);
+      break;
+
+    case 'SORT_STYLE_TEXT_FONT':
       break;
 
     case 'CREATE_SET':
