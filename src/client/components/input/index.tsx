@@ -7,6 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { send as sendPortal } from '@lib/slices/input';
 import { Color } from './color';
 import { AmountArrows } from './amountarrows';
+import { convertUnit, valueUnitFrom } from '@lib/utils/font';
 
 export const Input = ({
     type = 'DEFAULT',
@@ -31,6 +32,7 @@ export const Input = ({
     const dispatch = useDispatch();
     const updatePortal = ({ target, value }: { target: string; value: string | number; }) => dispatch(sendPortal({ target: target, value: value }));
     const input = useRef<any>();
+    const valueUnit = valueUnitFrom(String(innerValue));
 
     const handleOnChange = (e: BaseSyntheticEvent) => {
         //update manualy changed state (prevent portal override)
@@ -57,11 +59,15 @@ export const Input = ({
 
     }
 
+    const convertAmount = (val: number): string => {
+        return (range ? clamp(range[0], val, range[1]) : val) + convertUnit(valueUnit.unit);
+    }
+
     const handleOnKeyDown = (e: any) => {
         if (e.code === 'Enter' && onEnter) { onEnter(e); e.target.blur(); }
         if (type === 'AMOUNT') {
-            if (e.code === 'ArrowUp') { e.preventDefault(); setInnerValue(range ? clamp(range[0], Number(innerValue) + step, range[1]) : Number(innerValue)); }
-            if (e.code === 'ArrowDown') { e.preventDefault(); setInnerValue(range ? clamp(range[0], Number(innerValue) - step, range[1]) : Number(innerValue)); }
+            if (e.code === 'ArrowUp') { e.preventDefault(); setInnerValue(convertAmount(valueUnit.value + step)); }
+            if (e.code === 'ArrowDown') { e.preventDefault(); setInnerValue(convertAmount(valueUnit.value - step)); }
         }
     }
 
@@ -139,8 +145,8 @@ export const Input = ({
                     //Display amount arrows
                     type === 'AMOUNT' &&
                     <AmountArrows
-                        onUp={() => setInnerValue(range ? clamp(range[0], Number(innerValue) + step, range[1]) : Number(innerValue))}
-                        onDown={() => setInnerValue(range ? clamp(range[0], Number(innerValue) - step, range[1]) : Number(innerValue))}
+                        onUp={() => setInnerValue(convertAmount(valueUnit.value + step))}
+                        onDown={() => setInnerValue(convertAmount(valueUnit.value - step))}
                     />
                 }
             </div>
