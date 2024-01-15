@@ -4,6 +4,7 @@ import { Fragment, createElement } from "react";
 import { PaintSet } from "@components/shade-set";
 import { PaintSet as IPaintSet } from "src/types/shade";
 import { TextSet as ITextSet } from "src/types/text";
+import './index.scss';
 
 export const Content = () => {
 
