@@ -3,8 +3,8 @@ import { useSelector } from "react-redux";
 import Close from '@icons/x.svg';
 import { ButtonIcon } from "@components/button-icon";
 import { Button } from "@components/button";
-import { Content } from "./components/content";
-import { Sidepanel } from "./components/sidepanel";
+import { Content } from "@components/workbench-content";
+import { Sidepanel } from "@components/sidepanel/sidepanel";
 import { useDispatch } from "react-redux";
 import { destroy } from "@lib/slices/workbench";
 import { send } from "@lib/ipc";
@@ -28,8 +28,8 @@ export const WorkBench = () => {
                     <Content />
                 </div>
                 <footer className="workbench-footer flex f-row f-end gap-s">
-                    <Button text='Cancel' onClick={() => dispatch(destroy()) } role='SECONDARY' />
-                    <Button text={footer?.primaryAction.text || 'ADD'} onClick={() => { send({action:footer?.primaryAction.action || '', payload:{...workbenchPayload}}); dispatch(destroy()); }} role='PRIMARY' />
+                    <Button value='Cancel' onClick={() => dispatch(destroy()) } role='SECONDARY' />
+                    <Button value={footer?.primaryAction.text || 'ADD'} onClick={() => { send({action:footer?.primaryAction.action || '', payload:{...workbenchPayload}}); dispatch(destroy()); }} role='PRIMARY' />
                 </footer>
             </div>
         </div>}

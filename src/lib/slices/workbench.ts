@@ -1,10 +1,10 @@
-import { Workbench, ColorConfig, TextConfig, SidepanelOption, SidepanelInput, Set } from "src/types/workbench";
+import { Workbench, ColorConfig, TextConfig, SidepanelOption, Set } from "src/types/workbench";
 import { apple, carbon, flutter, scale, material as textMaterial } from "@lib/utils/font";
 import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { PaintSet as IPaintSet } from "src/types/shade";
-import { TextSet } from "src/types/text";
+import { TemplateInput } from '@ctypes/templates';
+
 
 
 //{ [key in ColorSetMethod]: any; }
@@ -84,8 +84,8 @@ const workbenchSlice = createSlice({
             const initConfig: { [key: string]: any } = { ...payload.config };
             if (payload.sidepanel) {
                 traverseCallback(payload.sidepanel, ({ options }: { options: SidepanelOption }) =>
-                    traverseCallback(options, ({ content }: { content: SidepanelInput }) =>
-                        traverseCallback(content, (input: SidepanelInput) => {
+                    traverseCallback(options, ({ content }: { content: TemplateInput }) =>
+                        traverseCallback(content, (input: TemplateInput) => {
                             try { initConfig[input.configKey] = input.attributes.value; } catch (_) { console.log(_); }
                         }
                         )));

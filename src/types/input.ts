@@ -1,5 +1,5 @@
 import { ContextMenuCommand } from 'src/types/contextmenu';
-import { MultiArray } from './global';
+import { Label, MultiArray } from './global';
 
 export interface Input {
     type?: 'DEFAULT' | 'COLOR' | 'AMOUNT' | 'DRAG';
@@ -51,14 +51,14 @@ export interface Slider {
 
 
 export interface Button {
-    text: string;
+    value: string;
     onClick: any;
     role: 'PRIMARY' | 'SECONDARY' | 'TERTIARY';
 }
 
 export interface ButtonPad {
     icon: string;
-    text: string;
+    value: string;
     onClick: any;
 }
 
@@ -81,4 +81,14 @@ export interface InputArray {
     float?: boolean;
     onChange?: any;
     appearance?: { label?: boolean };
+}
+
+export interface Tab extends Label{
+    value:string;
+    active?:boolean;
+    onClick?(props:Tab):any;
+}
+
+export interface TextArea{
+    value?:string;
 }

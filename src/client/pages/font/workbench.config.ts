@@ -1,7 +1,7 @@
 import { DEFAULT_TYPEFACE } from "@lib/constants";
 import { ContextMenuCommand } from "src/types/contextmenu";
-import { SidepanelInput, Workbench } from "src/types/workbench";
-
+import { Workbench } from "src/types/workbench";
+import { TemplateInput } from '@ctypes/templates';
 
 const SCALES_COMMAND: Array<ContextMenuCommand> = [
     { text: 'minor second (15:16)', action: 'UPDATE_SCALE', receiver: 'STORE' },
@@ -23,7 +23,7 @@ const SCALES_COMMAND: Array<ContextMenuCommand> = [
     { text: 'double octave (1:4)', action: 'UPDATE_SCALE', receiver: 'STORE' },
 ]
 
-const scaleSidepanelContent: Array<SidepanelInput> = [
+const scaleSidepanelContent: Array<TemplateInput> = [
     {
         type: 'DROPDOWN',
         attributes: {
@@ -99,7 +99,7 @@ const scaleSidepanelContent: Array<SidepanelInput> = [
 ];
 
 
-const materialSidepanelContent: Array<SidepanelInput> = [
+const materialSidepanelContent: Array<TemplateInput> = [
     {
         type: 'DROPDOWN',
         attributes: {
@@ -112,7 +112,7 @@ const materialSidepanelContent: Array<SidepanelInput> = [
     }
 ];
 
-const appleSidepanelContent: Array<SidepanelInput> = [
+const appleSidepanelContent: Array<TemplateInput> = [
     {
         type: 'DROPDOWN',
         attributes: {
@@ -139,7 +139,7 @@ const appleSidepanelContent: Array<SidepanelInput> = [
 ];
 
 
-const flutterSidepanelContent: Array<SidepanelInput> = [
+const flutterSidepanelContent: Array<TemplateInput> = [
     {
         type: 'DROPDOWN',
         attributes: {
@@ -153,7 +153,7 @@ const flutterSidepanelContent: Array<SidepanelInput> = [
 ];
 
 
-const carbonSidepanelContent: Array<SidepanelInput> = [
+const carbonSidepanelContent: Array<TemplateInput> = [
     {
         type: 'DROPDOWN',
         attributes: {
@@ -199,7 +199,7 @@ const carbonSidepanelContent: Array<SidepanelInput> = [
     }
 ];
 
-const adjustSidepanelContent: Array<SidepanelInput> = [
+const adjustSidepanelContent: Array<TemplateInput> = [
     {
         type: 'SLIDER',
         attributes: {

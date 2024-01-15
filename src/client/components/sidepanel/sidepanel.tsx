@@ -1,5 +1,5 @@
 import { Dropdown } from "@components/dropdown";
-import { SidepanelInput, SidepanelOption, Workbench } from "src/types/workbench";
+import { SidepanelOption, Workbench } from "src/types/workbench";
 import { BaseSyntheticEvent, Fragment, useEffect, useState } from "react";
 import { clone, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
@@ -9,7 +9,9 @@ import { ContextMenuCommand } from "src/types/contextmenu";
 import { Slider } from "@components/slider";
 import { InputArray } from "@components/input-array";
 import { Checkbox } from "@components/checkbox";
+import { TemplateInput } from '@ctypes/templates';
 import { Input as IInput, InputArray as IInputArray, Dropdown as IDropdown, Slider as ISlider, Checkbox as ICheckbox } from "@ctypes/input";
+import './index.scss';
 
 export const Sidepanel = () => {
 
@@ -23,7 +25,7 @@ export const Sidepanel = () => {
         dispatch(updateAction({ key: 'action', value: option.action })); //store initial config
     }
 
-    const inheritConfig = (input: SidepanelInput): SidepanelInput => {
+    const inheritConfig = (input: TemplateInput): TemplateInput => {
         const inputClone = clone(input);
 
         //Map exising config attributes to relative input keys to inherit previous config value (preventing user to have to look for font or to retype all values again if change action)
@@ -36,7 +38,7 @@ export const Sidepanel = () => {
         return inputClone;
     }
 
-    const generateInput = (input: SidepanelInput): React.JSX.Element => {
+    const generateInput = (input: TemplateInput): React.JSX.Element => {
 
         let dynamicComp;
         const inheritInput = inheritConfig(input);
@@ -80,7 +82,7 @@ export const Sidepanel = () => {
 
     }, [options]);
 
-    return (<div className="workbench-sidepanel flex f-col">
+    return (<div className="template-sidepanel flex f-col">
         {
             (options?.length > 1) &&
             <>

@@ -1,40 +1,36 @@
-import { Dropdown, Input, InputArray, Slider, Checkbox } from "src/types/input";
 import { StyleFolder } from "src/types/style";
 import { PaintSet } from "./shade";
 import { ContextMenuCommand } from "./contextmenu";
 import { MultiArray } from "./global";
 import { TextSet } from "./text";
+import { TemplateInput } from '@ctypes/templates';
+
 
 export type ColorSetMethod =
-    'SHADE' |
-    'TINT' |
-    'INTERPOLATION' |
-    'MATERIAL' |
-    'TONE' |
-    'ANT' |
-    'ORBIT' |
-    'ATLASSIAN' |
-    'MANTINE' |
-    'COLORADJUST' |
-    'TAILWIND';
+    'SHADE'
+    | 'TINT'
+    | 'INTERPOLATION'
+    | 'MATERIAL'
+    | 'TONE'
+    | 'ANT'
+    | 'ORBIT'
+    | 'ATLASSIAN'
+    | 'MANTINE'
+    | 'COLORADJUST'
+    | 'TAILWIND';
 
 export type TextSetMethod =
-    'SCALE' |
-    'MATERIAL' |
-    'FLUTTER' |
-    'APPLE' |
-    'CARBON';
+    'SCALE' 
+    | 'MATERIAL'
+    |'FLUTTER'
+    | 'APPLE'
+    | 'CARBON';
 
 
-export type SidepanelInput =
-    { type: 'INPUT'; attributes: Input; configKey: keyof ColorConfig | keyof TextConfig; } |
-    { type: 'DROPDOWN'; attributes: Dropdown; configKey: keyof ColorConfig | keyof TextConfig; } |
-    { type: 'CHECKBOX'; attributes: Checkbox; configKey: keyof ColorConfig | keyof TextConfig; } |
-    { type: 'INPUT_ARRAY'; attributes: InputArray; configKey: keyof ColorConfig | keyof TextConfig; } |
-    { type: 'SLIDER'; attributes: Slider; configKey: keyof ColorAdjustConfig; }
+
 
 export interface SidepanelOption extends ContextMenuCommand {
-    content: MultiArray<SidepanelInput>;
+    content: MultiArray<TemplateInput>;
 };
 
 export interface Sidepanel {

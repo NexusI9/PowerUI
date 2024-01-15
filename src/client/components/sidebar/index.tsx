@@ -2,6 +2,7 @@ import "./index.scss";
 import { ButtonSquare } from '@components/button-square';
 import Paint from "@icons/paint.svg";
 import Font from "@icons/font.svg";
+import Upload from "@icons/upload.svg";
 import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from 'react-redux';
 import { setPage } from '@lib/slices/page';
@@ -17,8 +18,8 @@ export default () => {
     const activePage: string = useSelector((state: { page: string }) => state.page);
 
     return (
-        <nav className="sidebar flex f-col f-center">
-
+        <nav className="sidebar flex f-col f-center f-between">
+            <span></span>
             <div className="flex f-col f-center full-width">
                 {pageMap.map((item, index) =>
                     <ButtonSquare
@@ -30,6 +31,11 @@ export default () => {
                     />
                 )}
             </div>
+            <ButtonSquare
+                icon={Upload}
+                onClick={() => dispatch(setPage('export'))}
+                defaultActive={'export' === activePage}
+            />
         </nav>
     );
 };

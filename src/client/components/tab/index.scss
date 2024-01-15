@@ -1,0 +1,24 @@
+.tab {
+
+    height: calc(var(--input-height) + 10px);
+    padding: var(--space-s) var(--space-m);
+
+    &,
+    * {
+        cursor: default
+    }
+
+    ;
+
+    &[data-active='true'] {
+        background-color: var(--figma-color-bg-brand);
+
+        &:hover {
+            background-color: var(--figma-color-bg-brand);
+        }
+    }
+
+    &:hover {
+        background-color: var(--figma-color-bg-hover);
+    }
+}

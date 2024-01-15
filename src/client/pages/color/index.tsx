@@ -15,7 +15,7 @@ export default () => {
 
     const buttonPadStyle: ButtonPad = {
         icon: PaintPlus,
-        text: 'Create Swatch',
+        value: 'Create Swatch',
         onClick: (folder: StyleFolder) => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: folder }))
     };
 

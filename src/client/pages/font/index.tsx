@@ -21,7 +21,7 @@ export default () => {
 
     const padConfig = {
         icon: FontPlus,
-        text: 'Create Fonts Set',
+        value: 'Create Fonts Set',
         onClick: onCreateSet
     };
 

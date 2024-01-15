@@ -27,27 +27,6 @@
         overflow: hidden;
     }
 
-    &-sidepanel{
-        border-right: solid 1px var(--figma-color-border);
-        width: 300px;
-        flex-grow: 1;
-        gap:16px;
-        padding: var(--space-m) var(--space-m);
-        overflow: auto;
-
-        & > hr{
-            margin: var(--space-s) 0;
-        }
-    }
-
-    &-content{
-        padding: var(--space-m);
-        overflow: auto;
-        height: inherit;
-        width: 100%;
-        
-    }
-
     &-footer{
         border-top: solid 1px var(--figma-color-border);
         padding: var(--space-s) var(--space-m);

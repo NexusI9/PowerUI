@@ -79,7 +79,7 @@ export const Style = ({
             :
             //default view
             <div className="full-height full-width flex f-center">
-                <ButtonPad icon={padStyle.icon} text={padStyle.text} onClick={() => folder?.map(folder => padStyle.onClick(folder))} />
+                <ButtonPad icon={padStyle.icon} text={padStyle.value} onClick={() => folder?.map(folder => padStyle.onClick(folder))} />
             </div>) : <></>
         }
     </>);
