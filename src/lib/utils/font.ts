@@ -539,12 +539,12 @@ export function valueUnitFrom(value: string): { value: number; unit: string; } {
     const split = value.match(/^([\-|\+]?\d+\.?\d*)(\D*|\%)$/);
 
     const val = split && split[1] || 0;
-    const unit = split && split[2] || 'px';
+    const unit = split && split[2] || '';
 
     const converUnit = {
         '%':'PERCENT',
         'px':'PIXELS'
-    }[unit] || 'PIXELS';
+    }[unit] || '';
 
     return {
         value: Number(val),
