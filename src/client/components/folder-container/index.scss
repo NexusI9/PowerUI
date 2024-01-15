@@ -11,6 +11,7 @@
         .style-item-font {
             display: flex;
             flex-direction: column;
+            gap: var(--space-s);
             align-items: flex-start;
             border-radius: var(--radius-s);
             border: solid 1px var(--figma-color-border);

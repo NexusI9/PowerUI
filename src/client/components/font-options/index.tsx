@@ -49,7 +49,7 @@ export const FontOptions = ({ style, config }: FontOptions) => {
     }
 
     return (
-        <ul className="font-options flex f-col">
+        <ul className="font-options flex f-col gap-s">
             {config?.fontFamily && <li><small>{String(style.fontName?.family)}</small></li>}
             <li><Input {...dragInputs.fontSize} /></li>
             <ul className="flex f-row gap-s">
