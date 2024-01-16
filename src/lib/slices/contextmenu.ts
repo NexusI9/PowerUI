@@ -14,14 +14,13 @@ export const display = createAsyncThunk(
             traverseCallback(
                 command,
                 (cm: ContextMenuCommand) => {
-                    if (cm.fetch) { return get(cm.fetch).then(e => e.payload) }
+                    if (cm.value && typeof cm.value === 'object') { return get(cm.value).then(e => e.payload); }
                     else { return cm; }
                 }
             )
         );
 
         const result = await Promise.all(fetchPromises);
-
         return { ...action, commands: result };
     });
 

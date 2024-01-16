@@ -29,7 +29,7 @@ export const WorkBench = () => {
                 </div>
                 <footer className="workbench-footer flex f-row f-end gap-s">
                     <Button value='Cancel' onClick={() => dispatch(destroy()) } role='SECONDARY' />
-                    <Button value={footer?.primaryAction.text || 'ADD'} onClick={() => { send({action:footer?.primaryAction.action || '', payload:{...workbenchPayload}}); dispatch(destroy()); }} role='PRIMARY' />
+                    <Button value={footer?.primaryAction.value || 'ADD'} onClick={() => { send({action:footer?.primaryAction.action || '', payload:{...workbenchPayload}}); dispatch(destroy()); }} role='PRIMARY' />
                 </footer>
             </div>
         </div>}

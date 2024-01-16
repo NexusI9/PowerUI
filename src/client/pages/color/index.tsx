@@ -26,9 +26,9 @@ export default () => {
         folder: {
             add: { icon: SwatchIcon, onClick: (folder: StyleFolder) => dispatch(spawn({ ...CREATE_SWATCH_CONFIG, folder: folder })) },
             kebab: [
-                { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {}, receiver: 'API' },
-                { text: 'Sort by brightness', action: 'SORT_STYLE_COLOR_BRIGHTNESS', payload: {}, receiver: 'API' },
-                { text: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', payload: {}, receiver: 'API' }
+                { value: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {}, receiver: 'API' },
+                { value: 'Sort by brightness', action: 'SORT_STYLE_COLOR_BRIGHTNESS', payload: {}, receiver: 'API' },
+                { value: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', payload: {}, receiver: 'API' }
             ],
             edit: { onClick: (folder: StyleFolder) => dispatch(spawn({ ...EDIT_SWATCH_CONFIG, folder: folder, config: { styles: [...folder.styles as Array<PaintStyle>] } })) }
         }

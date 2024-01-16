@@ -62,7 +62,7 @@ export const Sidepanel = () => {
                 break;
 
             case 'DROPDOWN':
-                dynamicComp = <Dropdown {...(inheritInput.attributes as IDropdown)} onChange={(e: ContextMenuCommand) => dispatch(updateSet({ key: input.configKey, value: e.text }))} />;
+                dynamicComp = <Dropdown {...(inheritInput.attributes as IDropdown)} onChange={(e: ContextMenuCommand) => dispatch(updateSet({ key: input.configKey, value: e.value }))} />;
                 break;
 
             default:

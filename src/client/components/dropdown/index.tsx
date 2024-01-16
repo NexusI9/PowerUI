@@ -32,9 +32,10 @@ export const Dropdown = (props: IDropdown) => {
         if (props.onChange && activeItem) {
 
             //set value priority (if no props value then...)
-            const activeValue: string = (props.value && String(props.value))
-                || activeItem.text
-                || (activeItem.fetch && activeItem.fetch.placeholder)
+            const activeValue: string = 
+                typeof props.value === 'string' && String(props.value)
+                || typeof activeItem.value === 'string' && activeItem.value
+                || typeof activeItem.value === 'object' && activeItem.value.placeholder
                 || '';
 
             setValue(activeValue);
@@ -48,6 +49,7 @@ export const Dropdown = (props: IDropdown) => {
     }, [lastState.activeCommand]);
 
 
+
     return (
         <div
             className="dropdown flex f-col gap-xs"
@@ -56,7 +58,7 @@ export const Dropdown = (props: IDropdown) => {
             <label
                 className="flex f-row f-center f-between"
                 onClick={handleOnClick}
-            >
+            >   
                 {activeItem && <Label iconLeft={activeItem.icon}>{String(value)}</Label> || <p>Undefined</p>}
                 <Carrot />
             </label>

@@ -21,7 +21,7 @@ export const ContextMenu = () => {
     const routeDispatch = (command: ContextMenuCommand) => {
         switch (command.receiver) {
             case 'API':
-                return send({ action: command.action || '', payload: {...command.payload} });
+                return send({ action: command.action || '', payload: { ...command.payload } });
             case 'STORE':
                 return dispatch(setActiveCommand(command));
         }
@@ -59,14 +59,14 @@ export const ContextMenu = () => {
                 if (Array.isArray(command)) {
                     return <Fragment key={JSON.stringify(command) + i}>
                         {
-                            command.map(cm => <li key={JSON.stringify(cm) + i} onClick={() => routeDispatch(cm)}><Label iconLeft={cm.icon}>{cm.text}</Label></li>)
+                            command.map(cm => <li key={JSON.stringify(cm) + i} onClick={() => routeDispatch(cm)}><Label iconLeft={cm.icon}>{String(cm.value)}</Label></li>)
                         }
                         {
                             i < commands.length - 1 && <hr />
                         }
                     </Fragment>
                 } else {
-                    return (<li key={JSON.stringify(command) + i} onClick={() => routeDispatch(command)}><Label iconLeft={command.icon}>{command.text}</Label></li>)
+                    return (<li key={JSON.stringify(command) + i} onClick={() => routeDispatch(command)}><Label iconLeft={command.icon}>{String(command.value)}</Label></li>)
                 }
             })}
         </ul>

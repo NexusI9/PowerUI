@@ -127,7 +127,7 @@ figma.ui.onmessage = msg => {
         .then(({ fonts, action }: { fonts: TextDico, action: string }) => {
           //Store fonts in global variable
           if (fonts && !systemFonts) { systemFonts = fonts }
-          figma.ui.postMessage({ ...msg, payload: Object.keys(systemFonts).map(item => ({ text: item, receiver: 'STORE', ...msg })) }); //map dico font to be contextMenu compatible
+          figma.ui.postMessage({ ...msg, payload: Object.keys(systemFonts).map(item => ({ value: item, receiver: 'STORE', ...msg })) }); //map dico font to be contextMenu compatible
         })
         .catch(() => figma.ui.postMessage({ ...msg, payload: [] }));
       break;

@@ -33,9 +33,9 @@ export default () => {
         folder: {
             add: { icon: SetIcon, onClick: onCreateSet },
             kebab: [
-                { text: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {}, receiver: 'API' },
-                { text: 'Sort by scale', action: 'SORT_STYLE_TEXT_SCALE', payload: {}, receiver: 'API' },
-                { text: 'Sort by font', action: 'SORT_STYLE_TEXT_FONT', payload: {}, receiver: 'API' }
+                { value: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {}, receiver: 'API' },
+                { value: 'Sort by scale', action: 'SORT_STYLE_TEXT_SCALE', payload: {}, receiver: 'API' },
+                { value: 'Sort by font', action: 'SORT_STYLE_TEXT_FONT', payload: {}, receiver: 'API' }
             ],
             edit: { onClick: (folder: StyleFolder) => dispatch(spawn({ ...EDIT_SWATCH_CONFIG, folder: folder, config: { styles: [...folder.styles as Array<PaintStyle>] } })) }
         }

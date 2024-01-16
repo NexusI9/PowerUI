@@ -4,23 +4,23 @@ import { Workbench } from "src/types/workbench";
 import { TemplateInput } from '@ctypes/templates';
 
 const SCALES_COMMAND: Array<ContextMenuCommand> = [
-    { text: 'minor second (15:16)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'major second (8:9)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'minor third (5:6)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'major third (4:5)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'perfect fourth (3:4)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'aug. fourth / dim. fifth (1:√2)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'perfect fifth (2:3)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'minor sixth (5:8)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'golden ratio (1:1.618)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'major sixth (3:5)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'minor seventh (9:16)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'major seventh (8:15)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'octave (1:2)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'major tenth (2:5)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'major eleventh (3:8)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'major twelfth (1:3)', action: 'UPDATE_SCALE', receiver: 'STORE' },
-    { text: 'double octave (1:4)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'minor second (15:16)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'major second (8:9)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'minor third (5:6)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'major third (4:5)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'perfect fourth (3:4)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'aug. fourth / dim. fifth (1:√2)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'perfect fifth (2:3)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'minor sixth (5:8)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'golden ratio (1:1.618)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'major sixth (3:5)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'minor seventh (9:16)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'major seventh (8:15)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'octave (1:2)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'major tenth (2:5)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'major eleventh (3:8)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'major twelfth (1:3)', action: 'UPDATE_SCALE', receiver: 'STORE' },
+    { value: 'double octave (1:4)', action: 'UPDATE_SCALE', receiver: 'STORE' },
 ]
 
 const scaleSidepanelContent: Array<TemplateInput> = [
@@ -28,7 +28,9 @@ const scaleSidepanelContent: Array<TemplateInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [{ text: undefined, fetch: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            list: [
+                { value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }
+            ],
             appearance: { label: true },
             value: DEFAULT_TYPEFACE
         },
@@ -104,7 +106,7 @@ const materialSidepanelContent: Array<TemplateInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [{ text: undefined, fetch: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true },
             value: DEFAULT_TYPEFACE
         },
@@ -117,7 +119,7 @@ const appleSidepanelContent: Array<TemplateInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [{ text: undefined, fetch: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true },
             value: DEFAULT_TYPEFACE
         },
@@ -128,8 +130,8 @@ const appleSidepanelContent: Array<TemplateInput> = [
         attributes: {
             placeholder: 'Device',
             list: [
-                { text: 'desktop', receiver: 'STORE' },
-                { text: 'mobile', receiver: 'STORE' },
+                { value: 'desktop', receiver: 'STORE' },
+                { value: 'mobile', receiver: 'STORE' },
             ],
             appearance: { label: true },
             value: 'desktop'
@@ -144,7 +146,7 @@ const flutterSidepanelContent: Array<TemplateInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [{ text: undefined, fetch: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true },
             value: DEFAULT_TYPEFACE
         },
@@ -158,7 +160,7 @@ const carbonSidepanelContent: Array<TemplateInput> = [
         type: 'DROPDOWN',
         attributes: {
             placeholder: 'Typeface',
-            list: [{ text: undefined, fetch: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+            list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
             appearance: { label: true },
             value: DEFAULT_TYPEFACE
         },
@@ -268,18 +270,18 @@ export const CREATE_FONT_SET_CONFIG: Workbench = {
     sidepanel: {
         options: [
             [
-                { text: 'Scale', content: scaleSidepanelContent, action: 'SCALE', icon: "line-height", receiver: 'STORE' }
+                { value: 'Scale', content: scaleSidepanelContent, action: 'SCALE', icon: "line-height", receiver: 'STORE' }
             ],
             [
-                { text: 'Material Design', content: materialSidepanelContent, action: 'MATERIAL', icon: "material design", receiver: 'STORE' },
-                { text: 'Apple', content: appleSidepanelContent, action: 'APPLE', icon: "apple", receiver: 'STORE' },
-                { text: 'Flutter', content: flutterSidepanelContent, action: 'FLUTTER', icon: "flutter", receiver: 'STORE' },
-                { text: 'Carbon Design', content: carbonSidepanelContent, action: 'CARBON', icon: "carbon", receiver: 'STORE' }
+                { value: 'Material Design', content: materialSidepanelContent, action: 'MATERIAL', icon: "material design", receiver: 'STORE' },
+                { value: 'Apple', content: appleSidepanelContent, action: 'APPLE', icon: "apple", receiver: 'STORE' },
+                { value: 'Flutter', content: flutterSidepanelContent, action: 'FLUTTER', icon: "flutter", receiver: 'STORE' },
+                { value: 'Carbon Design', content: carbonSidepanelContent, action: 'CARBON', icon: "carbon", receiver: 'STORE' }
             ]
         ]
     },
     footer: {
-        primaryAction: { text: 'Add', action: 'CREATE_SET' }
+        primaryAction: { value: 'Add', action: 'CREATE_SET' }
     },
     config: {}
 }
@@ -290,11 +292,11 @@ export const EDIT_SWATCH_CONFIG: Workbench = {
     type: 'TEXT',
     sidepanel: {
         options: [
-            { text: 'Adjustments', content: adjustSidepanelContent, action: 'COLORADJUST', receiver: 'STORE' }
+            { value: 'Adjustments', content: adjustSidepanelContent, action: 'COLORADJUST', receiver: 'STORE' }
         ]
     },
     footer: {
-        primaryAction: { text: 'Edit', action: 'EDIT_FONT_SET' }
+        primaryAction: { value: 'Edit', action: 'EDIT_FONT_SET' }
     },
     config: {}
 }

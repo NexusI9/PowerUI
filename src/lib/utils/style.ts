@@ -337,8 +337,8 @@ export function createSet({ folder, set, config }: Workbench) {
 
 export const styleContextMenu = ({ style, editCommand }: { style: TextSet | PaintSet, editCommand: string }): Array<ContextMenuCommand> => {
     return [
-        { text: 'Edit', action: editCommand, payload: { style: style }, receiver: 'API' },
-        { text: 'Duplicate', action: 'ADD_STYLE', payload: { style: style, name: style.name }, receiver: 'API' },
-        { text: 'Delete', action: 'DELETE_STYLE', payload: { style: style }, receiver: 'API' },
+        { value: 'Edit', action: editCommand, payload: { style: style }, receiver: 'API' },
+        { value: 'Duplicate', action: 'ADD_STYLE', payload: { style: style, name: style.name }, receiver: 'API' },
+        { value: 'Delete', action: 'DELETE_STYLE', payload: { style: style }, receiver: 'API' },
     ];
 }

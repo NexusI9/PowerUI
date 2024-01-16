@@ -46,7 +46,7 @@ export async function loadFont(typeface: FontName | undefined): Promise<string> 
                     }
                 });
             } catch (_) {
-                console.log(`Coudln\'t load ${typeface.family} (${typeface.style})`);
+                //console.log(`Coudln\'t load ${typeface.family} (${typeface.style})`);
                 resolve(typeface.family || DEFAULT_TYPEFACE);
             }
 

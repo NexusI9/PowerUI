@@ -30,8 +30,8 @@ export const Folder = ({
     const dispatch = useDispatch();
     const [display, setDisplay] = useState(true);
     const DEFAULT_COMMANDS: Array<ContextMenuCommand> = [
-        { text: 'Duplicate folder', action: 'DUPLICATE_FOLDER', payload: {}, receiver: 'API' },
-        { text: 'Delete folder', action: 'DELETE_FOLDER', payload: {}, receiver: 'API' }
+        { value: 'Duplicate folder', action: 'DUPLICATE_FOLDER', payload: {}, receiver: 'API' },
+        { value: 'Delete folder', action: 'DELETE_FOLDER', payload: {}, receiver: 'API' }
     ];
 
     const contextMenuItems = useMemo(() => {

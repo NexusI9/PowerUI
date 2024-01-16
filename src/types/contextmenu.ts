@@ -4,11 +4,10 @@ import { FetchAction } from "./global";
 
 export interface ContextMenuCommand {
     icon?: string;
-    text: string | undefined;
+    value: string | FetchAction | undefined;
     action?: string;
     payload?: any;
     receiver: 'API' | 'STORE';
-    fetch?: FetchAction;
 }
 
 

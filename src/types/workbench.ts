@@ -40,7 +40,7 @@ export interface Sidepanel {
 
 
 interface Footer {
-    primaryAction: { text: string; action: string };
+    primaryAction: { value: string; action: string };
 }
 
 interface BaseConfig {

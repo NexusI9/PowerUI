@@ -17,7 +17,7 @@ export const COLOR_TEMPLATE: Export = {
             type: 'DROPDOWN',
             attributes: {
                 placeholder: 'Typeface',
-                list: [{ text: undefined, fetch: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+                list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
                 appearance: { label: true },
                 value: DEFAULT_TYPEFACE
             },
@@ -87,10 +87,10 @@ export const COLOR_TEMPLATE: Export = {
             type: 'BUTTON',
             attributes: {
                 value: 'Generate palette',
-                onClick:false,
-                role:'PRIMARY'
+                onClick: false,
+                role: 'PRIMARY'
             },
-            configKey:undefined
+            configKey: undefined
         }
     ]
 }
