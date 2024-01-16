@@ -1,6 +1,6 @@
 import { Dropdown } from "@components/dropdown";
 import { BaseTemplate, SidepanelOption } from "@ctypes/templates";
-import { BaseSyntheticEvent, Fragment, useEffect, useState } from "react";
+import { BaseSyntheticEvent, Fragment, createElement, useEffect, useState } from "react";
 import { clone, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
 import { useDispatch } from "react-redux";
@@ -26,8 +26,8 @@ export const Sidepanel = (template: BaseTemplate) => {
 
     const inheritConfig = (input: TemplateInput): TemplateInput => {
         const inputClone = clone(input);
-        if(!config){ return inputClone; }
-        
+        if (!config) { return inputClone; }
+
         //Map exising config attributes to relative input keys to inherit previous config value (preventing user to have to look for font or to retype all values again if change action)
         let key: keyof typeof config;
         for (key in config) {
@@ -43,33 +43,25 @@ export const Sidepanel = (template: BaseTemplate) => {
         let dynamicComp;
         const inheritInput = inheritConfig(input);
 
-        //Init update config        
-        switch (input.type) {
-            case 'INPUT':
-                dynamicComp = <Input {...(inheritInput.attributes as IInput)} onChange={(e: BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.value }))} />;
-                break;
+        const mapInput = {
+            'INPUT': Input,
+            'INPUT_ARRAY': InputArray,
+            'SLIDER': Slider,
+            'CHECKBOX': Checkbox,
+            'DROPDOWN': Dropdown
+        }[input.type as string] || <></>;
 
-            case 'INPUT_ARRAY':
-                dynamicComp = <InputArray {...(inheritInput.attributes as IInputArray)} onChange={(e: BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.value }))} />;
-                break;
+        const defaultCallback = (e:BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.value }));
+        const customCallback = {
+            'CHECKBOX': (e:BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.checked })),
+            'DROPDOWN': (e: ContextMenuCommand) => dispatch(updateSet({ key: input.configKey, value: e.value })),
+        }[input.type as string];
 
-            case 'SLIDER':
-                dynamicComp = <Slider {...(inheritInput.attributes as ISlider)} onChange={(e: BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.value }))} />
-                break;
-
-            case 'CHECKBOX':
-                dynamicComp = <Checkbox {...(inheritInput.attributes as ICheckbox)} onChange={(e: BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.checked }))} />;
-                break;
-
-            case 'DROPDOWN':
-                dynamicComp = <Dropdown {...(inheritInput.attributes as IDropdown)} onChange={(e: ContextMenuCommand) => dispatch(updateSet({ key: input.configKey, value: e.value }))} />;
-                break;
-
-            default:
-                dynamicComp = <></>;
-        }
-
-        return <Fragment key={JSON.stringify(activeOption) + JSON.stringify(input)}>{dynamicComp}</Fragment>;
+        return <Fragment key={JSON.stringify(activeOption) + JSON.stringify(input)}>
+            {
+                createElement(mapInput as any, { ...inheritInput.attributes, onChange: customCallback || defaultCallback })
+            }
+        </Fragment>;
 
     }
 
