@@ -1,4 +1,5 @@
-import { Workbench, ColorConfig, TextConfig, SidepanelOption, Set } from "src/types/workbench";
+import { Workbench, ColorConfig, TextConfig, Set } from "src/types/workbench";
+import { SidepanelOption } from "@ctypes/templates";
 import { apple, carbon, flutter, scale, material as textMaterial } from "@lib/utils/font";
 import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade";
 import { traverseCallback } from "@lib/utils/utils";

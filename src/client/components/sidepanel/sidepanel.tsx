@@ -1,9 +1,9 @@
 import { Dropdown } from "@components/dropdown";
-import { SidepanelOption, Workbench } from "src/types/workbench";
+import { BaseTemplate, SidepanelOption } from "@ctypes/templates";
 import { BaseSyntheticEvent, Fragment, useEffect, useState } from "react";
 import { clone, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateAction, updateSet } from "@lib/slices/workbench";
 import { ContextMenuCommand } from "src/types/contextmenu";
 import { Slider } from "@components/slider";
@@ -13,11 +13,10 @@ import { TemplateInput } from '@ctypes/templates';
 import { Input as IInput, InputArray as IInputArray, Dropdown as IDropdown, Slider as ISlider, Checkbox as ICheckbox } from "@ctypes/input";
 import './index.scss';
 
-export const Sidepanel = () => {
+export const Sidepanel = (template: BaseTemplate) => {
 
     const [activeOption, setActiveOption] = useState<SidepanelOption>();
-    const { sidepanel: { options }, config }: Workbench = useSelector((state: any) => state.workbench);
-
+    const { sidepanel: { options }, config } = template;
     const dispatch = useDispatch<any>();
 
     const updateOption = (option: SidepanelOption) => {
@@ -27,7 +26,8 @@ export const Sidepanel = () => {
 
     const inheritConfig = (input: TemplateInput): TemplateInput => {
         const inputClone = clone(input);
-
+        if(!config){ return inputClone; }
+        
         //Map exising config attributes to relative input keys to inherit previous config value (preventing user to have to look for font or to retype all values again if change action)
         let key: keyof typeof config;
         for (key in config) {

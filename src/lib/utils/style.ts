@@ -322,7 +322,7 @@ export function duplicateFolder({ folder }: { folder: StyleFolder }): void {
 export function createSet({ folder, set, config }: Workbench) {
 
     if (!folder) { return; }
-    const baseName = (config as ColorConfig | TextConfig).name || 'New style set';
+    const baseName = config && config.name || 'New style set';
     const { level } = folder;
     const stylesOfFolders = (get_styles_of_folder(folder) ?? []).map(style => folderAtLevel(style.name, level));
     //Create new style for each style in the Set

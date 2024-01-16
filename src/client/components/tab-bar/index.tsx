@@ -10,7 +10,7 @@ export const TabBar = ({ list, onClick }: { list: Array<ITab>, onClick?: any }) 
     return (<div className="tab-bar flex f-row">
         {
             list.map((tab, index) =>
-                <Tab {...
+                <Tab key={JSON.stringify(tab)+index} {...
                     {
                         ...tab,
                         active: !!(active === index),

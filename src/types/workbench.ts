@@ -1,10 +1,7 @@
-import { StyleFolder } from "src/types/style";
+import { StyleFolder } from "@ctypes/style";
 import { PaintSet } from "./shade";
-import { ContextMenuCommand } from "./contextmenu";
-import { MultiArray } from "./global";
 import { TextSet } from "./text";
-import { TemplateInput } from '@ctypes/templates';
-
+import { BaseTemplate, Sidepanel } from "@ctypes/templates";
 
 export type ColorSetMethod =
     'SHADE'
@@ -27,16 +24,6 @@ export type TextSetMethod =
     | 'CARBON';
 
 
-
-
-export interface SidepanelOption extends ContextMenuCommand {
-    content: MultiArray<TemplateInput>;
-};
-
-export interface Sidepanel {
-    active?: string;
-    options: MultiArray<SidepanelOption>;
-}
 
 
 interface Footer {
@@ -82,14 +69,11 @@ export interface TextConfig extends BaseConfig {
     typeface?: string | undefined;
 }
 
-export interface Workbench {
+export interface Workbench extends BaseTemplate{
     active?: boolean;
-    type: 'PAINT' | 'TEXT';
     folder: StyleFolder | null;
     title: string;
-    sidepanel: Sidepanel;
     footer?: Footer;
-    config: ColorConfig | TextConfig | ColorAdjustConfig;
     set?: Set;
 }
 

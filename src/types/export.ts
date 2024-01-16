@@ -1,5 +1,5 @@
 import { MultiArray } from "./global";
-import { TemplateInput, TemplateText } from "./templates";
+import { Sidepanel, TemplateInput, TemplateText } from "./templates";
 
 export interface BaseConfig {
     typeface: string;
@@ -14,7 +14,7 @@ export interface ExportPaintConfig extends BaseConfig {
     cmyk: boolean;
     pantone: boolean;
     hsl: boolean;
-    contrast: boolean;
+    contrastRatio: boolean;
 }
 
 
@@ -27,7 +27,7 @@ export interface ExportTextConfig extends BaseConfig {
 
 export interface Export {
     active: boolean;
-    sidepanel: MultiArray<TemplateInput | TemplateText>
+    sidepanel: Sidepanel;
     type: 'TEXT' | 'PAINT' | 'DEV';
     config?: ExportPaintConfig | ExportTextConfig;
 

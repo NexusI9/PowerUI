@@ -282,8 +282,7 @@ export const CREATE_FONT_SET_CONFIG: Workbench = {
     },
     footer: {
         primaryAction: { value: 'Add', action: 'CREATE_SET' }
-    },
-    config: {}
+    }
 }
 
 export const EDIT_SWATCH_CONFIG: Workbench = {
@@ -297,6 +296,5 @@ export const EDIT_SWATCH_CONFIG: Workbench = {
     },
     footer: {
         primaryAction: { value: 'Edit', action: 'EDIT_FONT_SET' }
-    },
-    config: {}
+    }
 }

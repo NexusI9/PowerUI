@@ -8,6 +8,6 @@ export const Tab = (props: ITab) => (
         data-active={props.active}
         onClick={() => props.onClick && props.onClick(props) || void 0}
     >
-        <Label {...props}>{<p>{props.value}</p>}</Label>
+        <Label {...props}>{props.value}</Label>
     </div>
 );
