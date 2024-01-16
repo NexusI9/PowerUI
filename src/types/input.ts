@@ -1,5 +1,5 @@
 import { ContextMenuCommand } from 'src/types/contextmenu';
-import { Label, MultiArray } from './global';
+import { FetchAction, Label, MultiArray } from './global';
 
 export interface Input {
     type?: 'DEFAULT' | 'COLOR' | 'AMOUNT' | 'DRAG';
@@ -14,7 +14,7 @@ export interface Input {
         stroke?: boolean;
         label?: boolean,
         minified?: boolean;
-        arrow?:boolean;
+        arrow?: boolean;
     };
     style?: any;
     range?: Array<number>;
@@ -83,12 +83,13 @@ export interface InputArray {
     appearance?: { label?: boolean };
 }
 
-export interface Tab extends Label{
-    value:string;
-    active?:boolean;
-    onClick?(props:Tab):any;
+export interface Tab extends Label {
+    value: string;
+    active?: boolean;
+    onClick?(props: Tab): any;
 }
 
-export interface TextArea{
-    value?:string;
+export interface TextArea {
+    value?: string | FetchAction;
 }
+

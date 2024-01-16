@@ -74,7 +74,7 @@ export const updateSet = createAsyncThunk(
 const workbenchSlice = createSlice({
     name: 'workbench',
     initialState: {
-        type: 'COLOR',
+        type: 'PAINT',
         config: {}
     },
     reducers: {
@@ -86,7 +86,13 @@ const workbenchSlice = createSlice({
                 traverseCallback(payload.sidepanel, ({ options }: { options: SidepanelOption }) =>
                     traverseCallback(options, ({ content }: { content: TemplateInput }) =>
                         traverseCallback(content, (input: TemplateInput) => {
-                            try { initConfig[input.configKey] = input.attributes.value; } catch (_) { console.log(_); }
+                            if(input.configKey){
+                                try { 
+                                    initConfig[input.configKey as string] = input.attributes.value; 
+                                } catch (e) { 
+                                    console.log(e); 
+                                }
+                            }
                         }
                         )));
             }

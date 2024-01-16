@@ -22,3 +22,10 @@ type WritableKeysOf<T> = {
 }[keyof T];
 
 export type WritablePart<T> = Pick<T, WritableKeysOf<T>>;
+
+
+export interface FetchAction {
+    action: string;
+    payload?: any;
+    placeholder: string;
+}

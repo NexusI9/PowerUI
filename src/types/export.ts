@@ -1,11 +1,10 @@
 import { MultiArray } from "./global";
-import { TemplateInput } from "./templates";
+import { TemplateInput, TemplateText } from "./templates";
 
 export interface BaseConfig {
     typeface: string;
     frameBorderRadius: string;
 }
-
 
 export interface ExportPaintConfig extends BaseConfig {
     swatchBorderRadius: string;
@@ -15,7 +14,7 @@ export interface ExportPaintConfig extends BaseConfig {
     cmyk: boolean;
     pantone: boolean;
     hsl: boolean;
-    contrastRation: boolean;
+    contrast: boolean;
 }
 
 
@@ -27,9 +26,9 @@ export interface ExportTextConfig extends BaseConfig {
 
 
 export interface Export {
-    active: string;
-    sidepanel: MultiArray<TemplateInput>
-    preview?: any;
+    active: boolean;
+    sidepanel: MultiArray<TemplateInput | TemplateText>
+    type: 'TEXT' | 'PAINT' | 'DEV';
     config?: ExportPaintConfig | ExportTextConfig;
 
 }

@@ -1,4 +1,5 @@
 import { MousePosition, MultiArray } from "src/types/global";
+import { FetchAction } from "./global";
 
 
 export interface ContextMenuCommand {
@@ -7,7 +8,7 @@ export interface ContextMenuCommand {
     action?: string;
     payload?: any;
     receiver: 'API' | 'STORE';
-    fetch?: { action: string; payload?: any; placeholder: string; };
+    fetch?: FetchAction;
 }
 
 
