@@ -1,27 +1,24 @@
 import { useSelector } from "react-redux";
-import Close from '@icons/x.svg';
-import { ButtonIcon } from "@components/button-icon";
-import { Button } from "@components/button";
-import { Content } from "@components/workbench-content";
+import { WorkbenchContent } from "@components/workbench-content";
 import { Sidepanel } from "@components/sidepanel";
 import { useDispatch } from "react-redux";
 import { destroy } from "@lib/slices/workbench.template";
-import './index.scss';
 import { FloatingWindow } from "@components/floating-window";
 
+import './index.scss';
 
 export const WorkBench = () => {
 
     const dispatch = useDispatch();
-    const workbenchPayload = useSelector((state: any) => state.workbench);
+    const template = useSelector((state: any) => state.workbench);
 
     return (
         <FloatingWindow
             onDestroy={() => dispatch(destroy())}
-            template={workbenchPayload}
+            template={template}
         >
-            <Sidepanel {...workbenchPayload} />
-            <Content />
+            <Sidepanel {...template} />
+            <WorkbenchContent {...template} />
         </FloatingWindow>
     );
 

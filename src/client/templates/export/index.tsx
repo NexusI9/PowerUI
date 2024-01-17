@@ -1,24 +1,24 @@
-
+import { useSelector } from "react-redux";
 import { Sidepanel } from "@components/sidepanel";
-import { Export as IExport } from "@ctypes/export";
-import { init } from "@lib/slices/export.template";
-import { Attributes, createElement, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { destroy } from "@lib/slices/export.template";
+import { FloatingWindow } from "@components/floating-window";
+
 import './index.scss';
 
-export const Export = ({ template, component }: { template: IExport, component: React.FC }) => {
+export const Export = () => {
 
-    const exportTemplate = useSelector((state: any) => state.export);
     const dispatch = useDispatch();
+    const exportTemplate = useSelector((state: any) => state.export);
 
-    useEffect(() => {
-        dispatch(init(template));
-    }, [template]);
+    return (
+        <FloatingWindow
+            onDestroy={() => dispatch(destroy())}
+            template={exportTemplate}
+        >
+            <Sidepanel {...exportTemplate} />
 
-    return (<div className="export-template full-height flex f-row">
-        {exportTemplate.sidepanel && <Sidepanel {...exportTemplate} />}
-        <div className="export-content flex f-center">
-            {createElement(component, exportTemplate.config as Attributes)}
-        </div>
-    </div>);
+        </FloatingWindow>
+    );
+
 }

@@ -20,14 +20,15 @@ const exportSlice = createSlice({
                 ...initConfig(payload.sidepanel)
             };
 
-            return ({ ...state, ...payload, config })
-        }
+            return ({ ...state, ...payload, config, active:true })
+        },
+        destroy: (state) => ({...state, active:false})
     },
     extraReducers: (builder) => {
         builder.addCase(updateLayout.fulfilled, (state, { payload }) => ({ ...state, ...payload }))
     }
 });
 
-export const { init } = exportSlice.actions;
+export const { init, destroy } = exportSlice.actions;
 export default exportSlice.reducer;
 

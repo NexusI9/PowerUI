@@ -16,7 +16,6 @@ import { Tooltip } from "@components/tooltip";
 import Color from './pages/color';
 import Home from './pages/home';
 import Font from './pages/font';
-import Export from "./pages/export";
 
 //other
 import { Snackbar } from "@components/snackbar";
@@ -26,13 +25,13 @@ import { get } from "@lib/ipc";
 import { GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 import { setPage } from "@lib/slices/page";
 import { Resizer } from "@components/resizer";
+import { Export } from "@templates/export";
 
 
 const router = {
     home: <Home />,
     color: <Color />,
-    font: <Font />,
-    export: <Export />
+    font: <Font />
 };
 
 export default () => {
@@ -64,6 +63,7 @@ export default () => {
             <Snackbar />
 
             <WorkBench />
+            <Export />
             <Resizer />
         </>
     );
