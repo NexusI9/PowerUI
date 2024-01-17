@@ -1,0 +1,35 @@
+.floating-window{
+
+    &-wrapper{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-color: rgba(0,0,0,0.6);
+        z-index: 3;
+    }
+
+    &-window{
+        width: 90%;
+        height: 90%;
+        background-color: var(--figma-color-bg);
+    }
+
+    &-header{
+        border-bottom: solid 1px var(--figma-color-border);
+        padding: var(--space-s);
+        padding-left: var(--space-m);
+    }
+
+    &-container{
+        flex-grow: 1;
+        overflow: hidden;
+    }
+
+    &-footer{
+        border-top: solid 1px var(--figma-color-border);
+        padding: var(--space-s) var(--space-m);
+    }
+
+}
