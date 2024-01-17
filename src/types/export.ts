@@ -1,4 +1,5 @@
 import { MultiArray } from "./global";
+import { StyleFolder } from "./style";
 import { BaseTemplate, Sidepanel, TemplateInput, TemplateText } from "./templates";
 
 export interface BaseConfig {
@@ -31,6 +32,7 @@ export interface ExportDevConfig extends BaseConfig {
 
 
 export interface Export extends BaseTemplate {
+    folder?: StyleFolder; 
     sidepanel: Sidepanel;
     type: 'TEXT' | 'PAINT' | 'DEV';
     config?: ExportPaintConfig | ExportTextConfig;

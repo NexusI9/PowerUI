@@ -6,14 +6,17 @@ import { ButtonPad } from "src/types/input";
 import { send } from "@lib/ipc";
 import { useDispatch } from "react-redux";
 import { init as initWorkbench } from "@lib/slices/workbench.template";
+import { init as initExport } from '@lib/slices/export.template'
 import { CREATE_SWATCH_CONFIG, EDIT_SWATCH_CONFIG } from "./workbench.config";
 import { StyleFolder } from "src/types/style";
 import { GET_PAINT_STYLES_COMMAND } from "@lib/constants";
 import { FolderOptions } from "src/types/folder";
+import { COLOR_EXPORT_TEMPLATE } from "./export.config";
 
 export default () => {
 
     const createSwatch = (folder: StyleFolder) => dispatch(initWorkbench({ ...CREATE_SWATCH_CONFIG, folder: folder }));
+    const exportSwatch = (folder: StyleFolder) => dispatch(initExport({ ...COLOR_EXPORT_TEMPLATE, folder: folder }))
 
     const buttonPadStyle: ButtonPad = {
         icon: PaintPlus,
@@ -24,7 +27,7 @@ export default () => {
     const options: FolderOptions = {
         header: {
             add: { icon: SwatchIcon, onClick: createSwatch },
-            export: { onClick: () => 0 },
+            export: { onClick: exportSwatch },
             dev: { onClick: () => 0 }
         },
         folder: {

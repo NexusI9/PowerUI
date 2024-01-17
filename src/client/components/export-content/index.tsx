@@ -11,7 +11,7 @@ const TAB_MAP: Record<string, any> = {
 
 export const ExportContent = (props: BaseTemplate) => {
 
-    return (<div className="export-content">
-        {createElement(TAB_MAP[props.reducer] || <></>, props)}
+    return (<div className="export-content flex f-center-w">
+        {createElement(TAB_MAP[props.type] || 'span', props.config)}
     </div>)
 }

@@ -47,20 +47,10 @@ export const FONT_EXPORT_TEMPLATE: Export = {
                             attributes: { label: 'Font size', value: true },
                             configKey: 'fontSize'
                         }
-                    ],
-                    [
-                        {
-                            type: 'BUTTON',
-                            attributes: {
-                                value: 'Generate palette',
-                                onClick: false,
-                                role: 'PRIMARY'
-                            },
-                            configKey: undefined
-                        }
                     ]
                 ]
             }
         ]
-    }
+    },
+    footer: { primaryAction: { value: 'Generate' } }
 }

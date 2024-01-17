@@ -36,7 +36,7 @@ export interface Sidepanel {
 }
 
 interface Footer {
-    primaryAction: { value: string; action: string };
+    primaryAction: { value?: string; action?: string };
 }
 
 export interface BaseTemplate {

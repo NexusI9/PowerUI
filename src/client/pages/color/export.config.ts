@@ -2,7 +2,7 @@ import { Export } from "@ctypes/export";
 import { DEFAULT_TYPEFACE } from "@lib/constants";
 
 export const COLOR_EXPORT_TEMPLATE: Export = {
-    title:'Generate color palettes',
+    title: 'Generate color palettes',
     reducer: 'export',
     type: 'PAINT',
     sidepanel: {
@@ -115,20 +115,10 @@ export const COLOR_EXPORT_TEMPLATE: Export = {
                             attributes: { label: 'Ratios', value: true },
                             configKey: 'contrastRatio'
                         }
-                    ],
-                    [
-                        {
-                            type: 'BUTTON',
-                            attributes: {
-                                value: 'Generate palette',
-                                onClick: false,
-                                role: 'PRIMARY'
-                            }
-                        }
                     ]
-
                 ]
             }
         ]
-    }
+    },
+    footer: { primaryAction: { value: 'Generate' } }
 }

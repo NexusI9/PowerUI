@@ -9,14 +9,14 @@ const mapComponent: any = {
     'TEXT': TextSet
 };
 
-export const WorkbenchContent = (template:Workbench) => {
+export const WorkbenchContent = (template: Workbench) => {
 
     const { type, set } = template;
 
     return (<div className="workbench-content flex f-col ">
         {set?.map((item, i) =>
             <Fragment key={JSON.stringify(item) + i}>
-                {createElement(mapComponent[type] || <></>, item)}
+                {createElement(mapComponent[type] || 'span', item)}
             </Fragment>)
         }
     </div>);
