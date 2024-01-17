@@ -24,18 +24,7 @@ export const FONT_EXPORT_TEMPLATE: Export = {
                                 value: DEFAULT_TYPEFACE
                             },
                             configKey: 'typeface'
-                        },
-                        {
-                            type: 'INPUT',
-                            attributes: {
-                                type: 'AMOUNT',
-                                value: 2,
-                                placeholder: 'Frame border radius',
-                                range: [0, 1000],
-                                appearance: { label: true }
-                            },
-                            configKey: 'frameBorderRadius'
-                        },
+                        }
                     ],
                     [
                         {
