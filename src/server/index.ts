@@ -14,7 +14,7 @@ import {
   createSet
 } from "@lib/utils/style";
 
-import { loadLocalFont, sortByFont, sortByScale, storeFonts } from "@lib/utils/font.back";
+import { loadLocalFont, paintStylesToCSS, sortByFont, sortByScale, storeFonts } from "@lib/utils/font.back";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 import { TextDico } from "@ctypes/text";
 
@@ -120,7 +120,6 @@ figma.ui.onmessage = msg => {
     case 'RESIZE_WINDOW':
       figma.ui.resize(Math.max(payload.width, 540) || DEFAULT_WINDOW_WIDTH, Math.max(payload.height, 320) || DEFAULT_WINDOW_HEIGHT);
       break;
-    default:
 
     case 'FONT_LIST':
       storeFonts(msg, systemFonts)
@@ -136,6 +135,11 @@ figma.ui.onmessage = msg => {
       loadLocalFont(msg, systemFonts)
         .then(msg => figma.ui.postMessage(msg))
         .catch(e => console.warn(e));
+      break;
+
+    case 'CSS_STYLES':
+      paintStylesToCSS(msg);
+      figma.ui.postMessage(msg);
       break;
   }
 

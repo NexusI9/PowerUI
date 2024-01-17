@@ -1,11 +1,7 @@
 import { Workbench, ColorConfig, TextConfig, Set } from "src/types/workbench";
-import { SidepanelOption } from "@ctypes/templates";
 import { apple, carbon, flutter, scale, material as textMaterial } from "@lib/utils/font";
 import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade";
-import { traverseCallback } from "@lib/utils/utils";
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { TemplateInput } from '@ctypes/templates';
-
+import { createAsyncThunk } from "@reduxjs/toolkit";
 
 
 //{ [key in ColorSetMethod]: any; }
@@ -31,6 +27,7 @@ const actionMap: { [key in Workbench["type"]as string]: any } = {
         CARBON: carbon
     }
 }
+
 export const updateSet = createAsyncThunk(
     'workbench/updateSet',
     /** 
@@ -61,7 +58,7 @@ export const updateSet = createAsyncThunk(
                 console.log(_);
             }
         }
-        
+
 
         return ({
             ...workbench,
@@ -71,46 +68,4 @@ export const updateSet = createAsyncThunk(
     }
 );
 
-
-const workbenchSlice = createSlice({
-    name: 'workbench',
-    initialState: {
-        type: 'PAINT',
-        config: {}
-    },
-    reducers: {
-        spawn: (state, { payload }: { payload: Workbench }) => {
-
-            //setup initial config from sidepanel
-            const initConfig: { [key: string]: any } = { ...payload.config };
-            if (payload.sidepanel) {
-                traverseCallback(payload.sidepanel, ({ options }: { options: SidepanelOption }) =>
-                    traverseCallback(options, ({ content }: { content: TemplateInput }) =>
-                        traverseCallback(content, (input: TemplateInput) => {
-                            if(input.configKey){
-                                try { 
-                                    initConfig[input.configKey as string] = input.attributes.value; 
-                                } catch (e) { 
-                                    console.log(e); 
-                                }
-                            }
-                        }
-                        )));
-            }
-
-            return ({ ...state, ...payload, config: { ...initConfig }, active: true })
-        },
-        updateAction: (state, { payload }: { payload: any }) => {
-            const newConfig = { ...state.config, action: payload.value };
-            return ({ ...state, config: newConfig })
-        },
-        destroy: (state) => ({ ...state, active: false, set: [] }),
-    },
-    extraReducers: (builder) => {
-        builder.addCase(updateSet.fulfilled, (state, { payload }) => ({ ...state, ...payload }))
-    }
-});
-
-export const { spawn, destroy, updateAction } = workbenchSlice.actions;
-export default workbenchSlice.reducer;
 

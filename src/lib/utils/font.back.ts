@@ -88,3 +88,13 @@ export function sortByFont(styles: Array<TextStyle>) {
     styles.sort((a: TextStyle, b: TextStyle) => fontOrder.indexOf(a.fontName.style) > fontOrder.indexOf(b.fontName.style) ? -1 : 1);
     replaceStyle(styles);
 }
+
+
+export function paintStylesToCSS({format}:{format:'HEX'|'RGB'|'HSL'}):string{
+
+    figma.getLocalPaintStyles().forEach( style => {
+
+    });
+
+    return '';
+}

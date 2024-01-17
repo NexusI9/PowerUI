@@ -91,5 +91,7 @@ export interface Tab extends Label {
 
 export interface TextArea {
     value?: string | FetchAction;
+    readonly?: boolean;
+    resize?: boolean;
 }
 

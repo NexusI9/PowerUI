@@ -24,6 +24,11 @@ export interface ExportTextConfig extends BaseConfig {
     fontSize: boolean;
 }
 
+export interface ExportDevConfig extends BaseConfig {
+    language: string;
+    format: 'RGB' | 'HEX' | 'HSL';
+}
+
 
 export interface Export {
     active: boolean;

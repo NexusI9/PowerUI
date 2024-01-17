@@ -3,9 +3,10 @@ import pageSlice from "./slices/page";
 import snackbarSlice from "./slices/snackbar";
 import contextMenuSlice from "./slices/contextmenu";
 import tooltipSlice from "./slices/tooltip";
-import workbenchSlice from "./slices/workbench";
+import templateSlice from "./slices/workbench.template";
 import inputSlice from './slices/input';
 import styleSlice from './slices/style';
+import exportSlice from './slices/export.template';
 
 export default configureStore({
     reducer:{
@@ -13,8 +14,9 @@ export default configureStore({
         snackbar: snackbarSlice,
         contextmenu: contextMenuSlice,
         tooltip: tooltipSlice,
-        workbench: workbenchSlice,
         input: inputSlice,
-        style: styleSlice
+        style: styleSlice,
+        workbench: templateSlice,
+        export: exportSlice,
     }
 });

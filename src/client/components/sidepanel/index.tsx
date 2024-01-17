@@ -1,17 +1,20 @@
+import './index.scss';
 import { Dropdown } from "@components/dropdown";
-import { BaseTemplate, SidepanelOption } from "@ctypes/templates";
+import { BaseTemplate, SidepanelOption, TemplateText } from "@ctypes/templates";
 import { BaseSyntheticEvent, Fragment, createElement, useEffect, useState } from "react";
 import { clone, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
 import { useDispatch } from "react-redux";
-import { updateAction, updateSet } from "@lib/slices/workbench";
+import { updateSet } from "@lib/slices/workbench.actions";
 import { ContextMenuCommand } from "src/types/contextmenu";
 import { Slider } from "@components/slider";
 import { InputArray } from "@components/input-array";
 import { Checkbox } from "@components/checkbox";
 import { TemplateInput } from '@ctypes/templates';
-import { Input as IInput, InputArray as IInputArray, Dropdown as IDropdown, Slider as ISlider, Checkbox as ICheckbox } from "@ctypes/input";
-import './index.scss';
+import { updateAction } from "@lib/slices/workbench.template";
+import { SidepanelHeading } from '@components/sidepanel-heading';
+import { Button } from '@components/button';
+import { TextArea } from '@components/text-area';
 
 export const Sidepanel = (template: BaseTemplate) => {
 
@@ -19,16 +22,21 @@ export const Sidepanel = (template: BaseTemplate) => {
     const { sidepanel: { options }, config } = template;
     const dispatch = useDispatch<any>();
 
+
     const updateOption = (option: SidepanelOption) => {
         setActiveOption(option);
         dispatch(updateAction({ key: 'action', value: option.action })); //store initial config
     }
 
     const inheritConfig = (input: TemplateInput): TemplateInput => {
+        /**
+        ** Map exising config attributes to relative input keys to inherit previous config value 
+        ** (preventing user to have to look for font or to retype all values again if change action)
+        **/
+
         const inputClone = clone(input);
         if (!config) { return inputClone; }
 
-        //Map exising config attributes to relative input keys to inherit previous config value (preventing user to have to look for font or to retype all values again if change action)
         let key: keyof typeof config;
         for (key in config) {
             if (config[key] && key === inputClone.configKey) {
@@ -40,28 +48,33 @@ export const Sidepanel = (template: BaseTemplate) => {
 
     const generateInput = (input: TemplateInput): React.JSX.Element => {
 
-        let dynamicComp;
+        //Update values from store config
         const inheritInput = inheritConfig(input);
 
-        const mapInput = {
+        //Map inputs
+        const mapInput: { [key in TemplateInput['type'] & TemplateText['type']]: React.JSX.Element } = {
             'INPUT': Input,
             'INPUT_ARRAY': InputArray,
             'SLIDER': Slider,
             'CHECKBOX': Checkbox,
-            'DROPDOWN': Dropdown
-        }[input.type as string] || <></>;
+            'DROPDOWN': Dropdown,
+            'HEADING': SidepanelHeading,
+            'BUTTON': Button,
+            'TEXT_AREA': TextArea
+        }[input.type as string] || 'span';
 
-        const defaultCallback = (e:BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.value }));
+        //Map callback to update config on input value changed
+        const defaultCallback = (e: BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.value }));
         const customCallback = {
-            'CHECKBOX': (e:BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.checked })),
+            'CHECKBOX': (e: BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.checked })),
             'DROPDOWN': (e: ContextMenuCommand) => dispatch(updateSet({ key: input.configKey, value: e.value })),
         }[input.type as string];
 
-        return <Fragment key={JSON.stringify(activeOption) + JSON.stringify(input)}>
-            {
-                createElement(mapInput as any, { ...inheritInput.attributes, onChange: customCallback || defaultCallback })
-            }
-        </Fragment>;
+        return (
+            <Fragment key={JSON.stringify(activeOption) + JSON.stringify(input)}>
+                {createElement(mapInput as any, { ...inheritInput.attributes, onChange: customCallback || defaultCallback })}
+            </Fragment>
+        );
 
     }
 
@@ -76,12 +89,12 @@ export const Sidepanel = (template: BaseTemplate) => {
 
     return (<div className="template-sidepanel flex f-col">
         {
-            (options?.length > 1) &&
+            (options && options?.length > 1) &&
             <>
                 <Dropdown list={options} onChange={updateOption} appearance={{ label: true }} placeholder="Swatch type" />
                 <hr />
             </>
         }
-        {activeOption?.content.map(input => traverseCallback(input, generateInput))}
+        {activeOption?.content.map( (input,i) =>  <div key={JSON.stringify(input)+i} className='flex f-col gap-s'>{traverseCallback(input, generateInput)}</div>)}
     </div>);
 }

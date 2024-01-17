@@ -1,6 +1,6 @@
 import { Dropdown, Input, InputArray, Slider, Checkbox, TextArea, Button } from "src/types/input";
 import { ColorAdjustConfig, ColorConfig, TextConfig } from "./workbench";
-import { ExportPaintConfig, ExportTextConfig } from "./export";
+import { ExportDevConfig, ExportPaintConfig, ExportTextConfig } from "./export";
 import { ContextMenuCommand } from "./contextmenu";
 import { MultiArray } from "./global";
 
@@ -8,7 +8,9 @@ export type TemplateConfig = ColorConfig
     & TextConfig
     & ColorAdjustConfig
     & ExportPaintConfig
-    & ExportTextConfig;
+    & ExportTextConfig
+    & ExportDevConfig;
+
 
 export type TemplateInput =
     { type: 'INPUT'; attributes: Input; configKey?: keyof TemplateConfig; }
@@ -20,7 +22,7 @@ export type TemplateInput =
     | { type: 'BUTTON'; attributes: Button; configKey?: keyof TemplateConfig; }
 
 export type TemplateText =
-    { type: 'HEADER'; attributes: { value: string; } };
+    { type: 'HEADING'; attributes: { value: string; } };
 
 
 export interface SidepanelOption extends ContextMenuCommand {
@@ -36,4 +38,9 @@ export interface BaseTemplate {
     sidepanel: Sidepanel;
     type: 'PAINT' | 'TEXT' | 'DEV';
     config?: Partial<TemplateConfig>;
+}
+
+export interface TemplateSlice<T> {
+    onUpdate(e: T): any;
+    onDestroy(e: T): any;
 }
