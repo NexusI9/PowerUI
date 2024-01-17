@@ -2,7 +2,7 @@ import { Export } from "@ctypes/export";
 import { DEFAULT_TYPEFACE } from "@lib/constants";
 
 export const COLOR_EXPORT_TEMPLATE: Export = {
-    reducer:'export',
+    reducer: 'export',
     type: 'PAINT',
     sidepanel: {
         options: [
@@ -45,15 +45,21 @@ export const COLOR_EXPORT_TEMPLATE: Export = {
                             configKey: 'typeface'
                         },
                         {
-                            type: 'INPUT',
+                            type: 'DROPDOWN',
                             attributes: {
-                                type: 'AMOUNT',
-                                value: 2,
-                                placeholder: 'Frame border radius',
-                                range: [0, 1000],
-                                appearance: { label: true }
+                                placeholder: 'Color synthax',
+                                list: [
+                                    { value: 'Separator •', receiver: 'STORE' },
+                                    { value: 'Separator -', receiver: 'STORE' },
+                                    { value: 'Separator |', receiver: 'STORE' },
+                                    { value: 'Separator /', receiver: 'STORE' },
+                                    { value: 'White Space', receiver: 'STORE' },
+                                    { value: 'Development', receiver: 'STORE' }
+                                ],
+                                appearance: { label: true },
+                                value: 'Separator •'
                             },
-                            configKey: 'frameBorderRadius'
+                            configKey: 'colorSynthax'
                         },
                         {
                             type: 'INPUT',

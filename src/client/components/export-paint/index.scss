@@ -19,8 +19,8 @@
     &[data-direction='Row'] {
 
         &>div {
-            flex-direction: row;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
 
             .export-paint-swatch {
                 flex-direction: column;
@@ -66,6 +66,7 @@
 
     &-color {
         min-width: 150px;
+        min-height: 95px;
         background-color: #0c8ce9;
         padding: var(--space-s) var(--space-s);
     }

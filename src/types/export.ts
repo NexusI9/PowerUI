@@ -3,7 +3,6 @@ import { BaseTemplate, Sidepanel, TemplateInput, TemplateText } from "./template
 
 export interface BaseConfig {
     typeface: string;
-    frameBorderRadius: string;
 }
 
 export interface ExportPaintConfig extends BaseConfig {
@@ -15,6 +14,7 @@ export interface ExportPaintConfig extends BaseConfig {
     pantone: boolean;
     hsl: boolean;
     contrastRatio: boolean;
+    colorSynthax:string;
 }
 
 
