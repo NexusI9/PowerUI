@@ -1,7 +1,7 @@
 import { DEFAULT_TYPEFACE } from "@lib/constants";
 import { ContextMenuCommand } from "src/types/contextmenu";
 import { Workbench } from "src/types/workbench";
-import { TemplateInput } from '@ctypes/templates';
+import { SidepanelOption, TemplateInput } from '@ctypes/templates';
 
 const SCALES_COMMAND: Array<ContextMenuCommand> = [
     { value: 'minor second (15:16)', action: 'UPDATE_SCALE', receiver: 'STORE' },
@@ -23,7 +23,11 @@ const SCALES_COMMAND: Array<ContextMenuCommand> = [
     { value: 'double octave (1:4)', action: 'UPDATE_SCALE', receiver: 'STORE' },
 ]
 
-const scaleSidepanelContent: Array<TemplateInput> = [
+const scaleSidepanelContent: SidepanelOption['content'] = [
+    {
+        type: 'HEADING',
+        attributes: { value: 'Settings' }
+    },
     {
         type: 'DROPDOWN',
         attributes: {
@@ -270,13 +274,13 @@ export const CREATE_FONT_SET_CONFIG: Workbench = {
     sidepanel: {
         options: [
             [
-                { value: 'Scale', content: scaleSidepanelContent, action: 'SCALE', icon: "line-height", receiver: 'STORE' }
+                { value: 'Scale', content: [scaleSidepanelContent], action: 'SCALE', icon: "line-height", receiver: 'STORE', heading: 'Template type' }
             ],
             [
-                { value: 'Material Design', content: materialSidepanelContent, action: 'MATERIAL', icon: "material design", receiver: 'STORE' },
-                { value: 'Apple', content: appleSidepanelContent, action: 'APPLE', icon: "apple", receiver: 'STORE' },
-                { value: 'Flutter', content: flutterSidepanelContent, action: 'FLUTTER', icon: "flutter", receiver: 'STORE' },
-                { value: 'Carbon Design', content: carbonSidepanelContent, action: 'CARBON', icon: "carbon", receiver: 'STORE' }
+                { value: 'Material Design', content: [materialSidepanelContent], action: 'MATERIAL', icon: "material design", receiver: 'STORE', heading: 'Template type' },
+                { value: 'Apple', content: [appleSidepanelContent], action: 'APPLE', icon: "apple", receiver: 'STORE', heading: 'Template type' },
+                { value: 'Flutter', content: [flutterSidepanelContent], action: 'FLUTTER', icon: "flutter", receiver: 'STORE', heading: 'Template type' },
+                { value: 'Carbon Design', content: [carbonSidepanelContent], action: 'CARBON', icon: "carbon", receiver: 'STORE', heading: 'Template type' }
             ]
         ]
     },

@@ -26,6 +26,7 @@ export type TemplateText =
 
 
 export interface SidepanelOption extends ContextMenuCommand {
+    heading?: string;
     content: MultiArray<TemplateInput | TemplateText>;
 };
 

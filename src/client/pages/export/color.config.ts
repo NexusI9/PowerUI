@@ -106,7 +106,7 @@ export const COLOR_EXPORT_TEMPLATE: Export = {
                         {
                             type: 'CHECKBOX',
                             attributes: { label: 'Ratios', value: true },
-                            configKey: 'contrast'
+                            configKey: 'contrastRatio'
                         }
                     ],
                     [
@@ -116,8 +116,7 @@ export const COLOR_EXPORT_TEMPLATE: Export = {
                                 value: 'Generate palette',
                                 onClick: false,
                                 role: 'PRIMARY'
-                            },
-                            configKey: undefined
+                            }
                         }
                     ]
 

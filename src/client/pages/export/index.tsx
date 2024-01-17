@@ -10,19 +10,25 @@ import { Export as IExport } from '@ctypes/export';
 import { DEV_EXPORT_TEMPLATE } from "./dev.config";
 import { FONT_EXPORT_TEMPLATE } from "./font.config";
 import './index.scss';
+import { ExportPaint } from "@components/export-paint";
+import { ExportText } from "@components/export-text";
+import { TextArea } from "@components/text-area";
 
-const TAB_MAP: Record<string, Record<'tab', ITab> & Record<'config', IExport>> = {
+const TAB_MAP: Record<string, Record<'tab', ITab> & Record<'template', IExport> & Record<'component', any>> = {
     Colors: {
         tab: { value: 'Colors', iconLeft: Paint },
-        config: COLOR_EXPORT_TEMPLATE
+        template: COLOR_EXPORT_TEMPLATE,
+        component: ExportPaint
     },
     Fonts: {
         tab: { value: 'Fonts', iconLeft: Font },
-        config: FONT_EXPORT_TEMPLATE
+        template: FONT_EXPORT_TEMPLATE,
+        component: ExportText
     },
     Code: {
         tab: { value: 'Code', iconLeft: Dev },
-        config: DEV_EXPORT_TEMPLATE
+        template: DEV_EXPORT_TEMPLATE,
+        component: TextArea
     }
 };
 
@@ -33,6 +39,6 @@ export default () => {
 
     return (<section className="page export">
         <TabBar list={Object.keys(TAB_MAP).map(key => TAB_MAP[key].tab)} onClick={setActiveTab} />
-        <Export {...TAB_MAP[activeTab.value].config} />
+        <Export {...TAB_MAP[activeTab.value]} />
     </section>);
 }

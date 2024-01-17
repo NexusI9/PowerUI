@@ -1,8 +1,12 @@
 import { Workbench } from "src/types/workbench";
-import { TemplateInput } from '@ctypes/templates';
+import { SidepanelOption, TemplateInput, TemplateText } from '@ctypes/templates';
 import { MATERIAL_DEFAULT_KEYS } from "@lib/constants";
 
-const basicSidepanelContent: Array<TemplateInput> = [
+const basicSidepanelContent: SidepanelOption['content'] = [
+    {
+        type: 'HEADING',
+        attributes: { value: 'Settings' }
+    },
     {
         type: 'INPUT',
         attributes: {
@@ -53,7 +57,7 @@ const basicSidepanelContent: Array<TemplateInput> = [
                 { value: 'lch', receiver: 'STORE' }
             ],
             appearance: { label: true },
-            value:'rgb'
+            value: 'rgb'
         },
         configKey: 'mode'
     }
@@ -61,7 +65,11 @@ const basicSidepanelContent: Array<TemplateInput> = [
 ];
 
 
-const materialSidepanelContent: Array<TemplateInput> = [
+const materialSidepanelContent: SidepanelOption['content'] = [
+    {
+        type: 'HEADING',
+        attributes: { value: 'Settings' }
+    },
     {
         type: 'DROPDOWN',
         attributes: {
@@ -75,7 +83,7 @@ const materialSidepanelContent: Array<TemplateInput> = [
                 { value: 'error', receiver: 'STORE' }
             ],
             appearance: { label: true },
-            value:'primary'
+            value: 'primary'
         },
         configKey: 'palette'
     },
@@ -129,7 +137,11 @@ const materialSidepanelContent: Array<TemplateInput> = [
     }
 ];
 
-const antSidepanelContent: Array<TemplateInput> = [
+const antSidepanelContent: SidepanelOption['content'] = [
+    {
+        type: 'HEADING',
+        attributes: { value: 'Settings' }
+    },
     {
         type: 'INPUT',
         attributes: {
@@ -167,14 +179,18 @@ const antSidepanelContent: Array<TemplateInput> = [
                 { value: 'dark', receiver: 'STORE' },
             ],
             appearance: { label: true },
-            value:'default'
+            value: 'default'
         },
         configKey: 'theme'
     }
 ];
 
 
-const mantineSidepanelContent: Array<TemplateInput> = [
+const mantineSidepanelContent: SidepanelOption['content'] = [
+    {
+        type: 'HEADING',
+        attributes: { value: 'Settings' }
+    },
     {
         type: 'INPUT',
         attributes: {
@@ -206,7 +222,11 @@ const mantineSidepanelContent: Array<TemplateInput> = [
 ];
 
 
-const interpolationSidepanelContent: Array<TemplateInput> = [
+const interpolationSidepanelContent: SidepanelOption['content'] = [
+    {
+        type: 'HEADING',
+        attributes: { value: 'Settings' }
+    },
     {
         type: 'INPUT',
         attributes: {
@@ -266,13 +286,17 @@ const interpolationSidepanelContent: Array<TemplateInput> = [
                 { value: 'lch', receiver: 'STORE' }
             ],
             appearance: { label: true },
-            value:'rgb'
+            value: 'rgb'
         },
         configKey: 'mode'
     }
 ];
 
-const adjustSidepanelContent: Array<TemplateInput> = [
+const adjustSidepanelContent: SidepanelOption['content'] = [
+    {
+        type: 'HEADING',
+        attributes: { value: 'Adjustments' }
+    },
     {
         type: 'SLIDER',
         attributes: {
@@ -341,16 +365,16 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
     sidepanel: {
         options: [
             [
-                { value: 'Shades', content: basicSidepanelContent, action: 'SHADE', icon: "shade", receiver: 'STORE' },
-                { value: 'Tones', content: basicSidepanelContent, action: 'TONE', icon: "drop", receiver: 'STORE' },
-                { value: 'Tints', content: basicSidepanelContent, action: 'TINT', icon: "sun", receiver: 'STORE' },
-                { value: 'Interpolation', content: interpolationSidepanelContent, action: 'INTERPOLATION', icon: "interpolation", receiver: 'STORE' }
+                { value: 'Shades', content: [basicSidepanelContent], action: 'SHADE', icon: "shade", receiver: 'STORE', heading: 'Swatch type' },
+                { value: 'Tones', content: [basicSidepanelContent], action: 'TONE', icon: "drop", receiver: 'STORE', heading: 'Swatch type' },
+                { value: 'Tints', content: [basicSidepanelContent], action: 'TINT', icon: "sun", receiver: 'STORE', heading: 'Swatch type' },
+                { value: 'Interpolation', content: [interpolationSidepanelContent], action: 'INTERPOLATION', icon: "interpolation", receiver: 'STORE', heading: 'Swatch type' }
             ],
             [
-                { value: 'Material Design', content: materialSidepanelContent, action: 'MATERIAL', icon: "material design", receiver: 'STORE' },
-                { value: 'Ant Design', content: antSidepanelContent, action: 'ANT', icon: "ant", receiver: 'STORE' },
-                { value: 'Mantine', content: mantineSidepanelContent, action: 'MANTINE', icon: "mantine", receiver: 'STORE' },
-                { value: 'Tailwind', content: mantineSidepanelContent, action: 'TAILWIND', icon: "tailwind", receiver: 'STORE' }
+                { value: 'Material Design', content: [materialSidepanelContent], action: 'MATERIAL', icon: "material design", receiver: 'STORE', heading: 'Swatch type' },
+                { value: 'Ant Design', content: [antSidepanelContent], action: 'ANT', icon: "ant", receiver: 'STORE', heading: 'Swatch type' },
+                { value: 'Mantine', content: [mantineSidepanelContent], action: 'MANTINE', icon: "mantine", receiver: 'STORE', heading: 'Swatch type' },
+                { value: 'Tailwind', content: [mantineSidepanelContent], action: 'TAILWIND', icon: "tailwind", receiver: 'STORE', heading: 'Swatch type' }
             ]
         ]
     },
@@ -365,7 +389,7 @@ export const EDIT_SWATCH_CONFIG: Workbench = {
     type: 'PAINT',
     sidepanel: {
         options: [
-            { value: 'Adjustments', content: adjustSidepanelContent, action: 'COLORADJUST', receiver: 'STORE' }
+            { value: 'Adjustments', content: [adjustSidepanelContent], action: 'COLORADJUST', receiver: 'STORE', heading: 'Adjustments' }
         ]
     },
     footer: {

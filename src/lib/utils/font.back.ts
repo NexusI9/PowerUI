@@ -91,7 +91,7 @@ export function sortByFont(styles: Array<TextStyle>) {
 
 
 export function paintStylesToCSS({format}:{format:'HEX'|'RGB'|'HSL'}):string{
-
+    console.log(format);
     figma.getLocalPaintStyles().forEach( style => {
 
     });
