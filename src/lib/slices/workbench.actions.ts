@@ -34,6 +34,8 @@ export const updateSet = createAsyncThunk(
      * Accepts either a specific key and value or a whole config to generate Set
      * **/
     async ({ key, value, config }: any, { getState }) => {
+        console.log({key, value});
+        console.log('update set');
 
         //update Config 
         const { workbench }: any = getState();

@@ -31,6 +31,7 @@ export interface SidepanelOption extends ContextMenuCommand {
 };
 
 export interface Sidepanel {
+    slice?:string;
     active?: string;
     options: MultiArray<SidepanelOption>;
 }
@@ -41,7 +42,9 @@ export interface BaseTemplate {
     config?: Partial<TemplateConfig>;
 }
 
-export interface TemplateSlice<T> {
-    onUpdate(e: T): any;
-    onDestroy(e: T): any;
+export interface TemplateSlice {
+    dispatch:{
+        onUpdate(): any;
+        onUpdateAction?():any;
+    }
 }

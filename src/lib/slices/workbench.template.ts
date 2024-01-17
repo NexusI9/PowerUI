@@ -24,6 +24,7 @@ const workbenchSlice = createSlice({
             return ({ ...state, ...payload, config, active: true })
         },
         updateAction: (state, { payload }: { payload: any }) => {
+            console.log('update actions');
             return ({
                 ...state,
                 config: { ...state.config, action: payload.value }

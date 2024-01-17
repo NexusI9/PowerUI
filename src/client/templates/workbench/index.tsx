@@ -9,6 +9,7 @@ import { useDispatch } from "react-redux";
 import { destroy } from "@lib/slices/workbench.template";
 import { send } from "@lib/ipc";
 import './index.scss';
+import { TemplateSlice } from "@ctypes/templates";
 
 export const WorkBench = () => {
 
