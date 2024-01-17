@@ -5,7 +5,7 @@ import { DEFAULT_STYLE_TEXT, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 import { FolderOptions } from "src/types/folder";
 import { StyleFolder } from "src/types/style";
 import { useDispatch } from "react-redux";
-import { init } from "@lib/slices/workbench.template";
+import { init as initWorkbench } from "@lib/slices/workbench.template";
 import { CREATE_FONT_SET_CONFIG, EDIT_SWATCH_CONFIG } from "./workbench.config";
 import SetIcon from '@icons/font-set.svg';
 import { switchDisplay } from "@lib/slices/style";
@@ -15,7 +15,7 @@ export default () => {
 
     const dispatch = useDispatch();
     const onCreateSet = (folder: StyleFolder) => {
-        dispatch(init({ ...CREATE_FONT_SET_CONFIG, folder: folder }));
+        dispatch(initWorkbench({ ...CREATE_FONT_SET_CONFIG, folder: folder }));
         dispatch(switchDisplay('list'));
     }
 
@@ -28,7 +28,9 @@ export default () => {
 
     const options: FolderOptions = {
         header: {
-            add: { icon: SetIcon, onClick: onCreateSet }
+            add: { icon: SetIcon, onClick: onCreateSet },
+            export: { onClick: () => 0 },
+            dev: { onClick: () => 0 }
         },
         folder: {
             add: { icon: SetIcon, onClick: onCreateSet },
@@ -37,7 +39,7 @@ export default () => {
                 { value: 'Sort by scale', action: 'SORT_STYLE_TEXT_SCALE', payload: {}, receiver: 'API' },
                 { value: 'Sort by font', action: 'SORT_STYLE_TEXT_FONT', payload: {}, receiver: 'API' }
             ],
-            edit: { onClick: (folder: StyleFolder) => dispatch(init({ ...EDIT_SWATCH_CONFIG, folder: folder, config: { styles: [...folder.styles as Array<PaintStyle>] } })) }
+            edit: { onClick: (folder: StyleFolder) => dispatch(initWorkbench({ ...EDIT_SWATCH_CONFIG, folder: folder, config: { styles: [...folder.styles as Array<PaintStyle>] } })) }
         }
     };
 

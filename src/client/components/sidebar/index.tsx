@@ -18,8 +18,7 @@ export default () => {
     const activePage: string = useSelector((state: { page: string }) => state.page);
 
     return (
-        <nav className="sidebar flex f-col f-center f-between">
-            <span></span>
+        <nav className="sidebar flex f-col f-center">
             <div className="flex f-col f-center full-width">
                 {pageMap.map((item, index) =>
                     <ButtonSquare
@@ -31,11 +30,6 @@ export default () => {
                     />
                 )}
             </div>
-            <ButtonSquare
-                icon={Upload}
-                onClick={() => dispatch(setPage('export'))}
-                defaultActive={'export' === activePage}
-            />
         </nav>
     );
 };

@@ -23,6 +23,8 @@ export interface Folder {
 export interface FolderOptions {
     header?:{
             add: { icon?: string; onClick: any; }
+            export: { icon?: string; onClick: any; }
+            dev: { icon?: string; onClick: any; }
     };
     folder?:{
             add: { icon?: string; onClick: any; };

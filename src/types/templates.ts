@@ -35,7 +35,14 @@ export interface Sidepanel {
     options: MultiArray<SidepanelOption>;
 }
 
+interface Footer {
+    primaryAction: { value: string; action: string };
+}
+
 export interface BaseTemplate {
+    active?: boolean;
+    title: string;
+    footer?: Footer;
     sidepanel: Sidepanel;
     type: 'PAINT' | 'TEXT' | 'DEV';
     config?: Partial<TemplateConfig>;

@@ -1,8 +1,10 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { SectionHeader } from "@components/section-header";
 import List from '@icons/list-bulleted.svg';
 import Plus from '@icons/add.svg';
 import Grid from '@icons/table.svg';
+import Upload from '@icons/upload.svg';
+import Dev from '@icons/dev.svg';
 import { ButtonPad } from "@components/button-pad";
 import { FolderContainer } from "@components/folder-container";
 import { ButtonPad as IButtonPad } from "src/types/input";
@@ -55,6 +57,14 @@ export const Style = ({
             {
                 icon: options?.header?.add?.icon || Plus,
                 onClick: () => folder?.map(folder => options?.header?.add?.onClick(folder))
+            },
+            {
+                icon:  options?.header?.export?.icon || Upload,
+                onClick: () => folder?.map(folder => options?.header?.export?.onClick(folder))
+            },
+            {
+                icon:  options?.header?.dev?.icon || Dev,
+                onClick: () => folder?.map(folder => options?.header?.dev?.onClick(folder))
             },
             {
                 icon: displayMode === 'grid' ? List : Grid,

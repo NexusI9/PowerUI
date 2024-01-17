@@ -17,18 +17,11 @@ export type ColorSetMethod =
     | 'TAILWIND';
 
 export type TextSetMethod =
-    'SCALE' 
+    'SCALE'
     | 'MATERIAL'
-    |'FLUTTER'
+    | 'FLUTTER'
     | 'APPLE'
     | 'CARBON';
-
-
-
-
-interface Footer {
-    primaryAction: { value: string; action: string };
-}
 
 interface BaseConfig {
     action?: ColorSetMethod | TextSetMethod;
@@ -69,11 +62,8 @@ export interface TextConfig extends BaseConfig {
     typeface?: string | undefined;
 }
 
-export interface Workbench extends BaseTemplate{
-    active?: boolean;
+export interface Workbench extends BaseTemplate {
     folder: StyleFolder | null;
-    title: string;
-    footer?: Footer;
     set?: Set;
 }
 

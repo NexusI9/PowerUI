@@ -4,7 +4,7 @@ import './index.scss';
 
 export const OptionsRow = ({ options, className }:{options:Array<Option>, className?:string}) => (
     <div className={`options-row flex f-row gap-s ${className && className || ''}`}>{
-        options.map( option =>  
+        options.map( option => 
             <ButtonIcon 
                 key={option.icon}
                 icon={option.icon} 

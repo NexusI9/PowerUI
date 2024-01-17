@@ -3,8 +3,9 @@ import Close from '@icons/x.svg';
 import { ButtonIcon } from "@components/button-icon";
 import { Button } from "@components/button";
 import { send } from '@lib/ipc';
+import { BaseTemplate } from '@ctypes/templates';
 
-export const FloatingWindow = ({ children, onDestroy, onConfirm, template }: any) => {
+export const FloatingWindow = ({ children, onDestroy, template }: {children:any, onDestroy?():any, template:BaseTemplate & any}) => {
 
     const { active, footer, config, title } = template;
 

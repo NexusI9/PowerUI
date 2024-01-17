@@ -2,6 +2,7 @@ import { Export } from "@ctypes/export";
 import { DEFAULT_TYPEFACE } from "@lib/constants";
 
 export const DEV_EXPORT_TEMPLATE: Export = {
+    title:'Generate code',
     reducer:'export',
     type: 'DEV',
     sidepanel: {
