@@ -6,7 +6,6 @@ import { Content } from "@components/workbench-content";
 import { Sidepanel } from "@components/sidepanel";
 import { useDispatch } from "react-redux";
 import { destroy } from "@lib/slices/workbench.template";
-import { send } from "@lib/ipc";
 import './index.scss';
 import { FloatingWindow } from "@components/floating-window";
 
@@ -18,11 +17,11 @@ export const WorkBench = () => {
 
     return (
         <FloatingWindow
-        onDestroy={() => dispatch(destroy())}
-        template={workbenchPayload}
+            onDestroy={() => dispatch(destroy())}
+            template={workbenchPayload}
         >
             <Sidepanel {...workbenchPayload} />
-            <Content  />
+            <Content />
         </FloatingWindow>
     );
 
