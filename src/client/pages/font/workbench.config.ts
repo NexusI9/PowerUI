@@ -268,6 +268,7 @@ const adjustSidepanelContent: Array<TemplateInput> = [
 
 
 export const CREATE_FONT_SET_CONFIG: Workbench = {
+    reducer:'workbench',
     folder: null,
     title: 'Generate a new font set',
     type: 'TEXT',
@@ -290,6 +291,7 @@ export const CREATE_FONT_SET_CONFIG: Workbench = {
 }
 
 export const EDIT_SWATCH_CONFIG: Workbench = {
+    reducer:'workbench',
     folder: null,
     title: 'Edit current font set',
     type: 'TEXT',

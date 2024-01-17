@@ -2,6 +2,7 @@ import { Workbench } from "@ctypes/workbench";
 import { Export } from '@ctypes/export';
 import { createSlice } from "@reduxjs/toolkit";
 import { initConfig } from "@lib/utils/template";
+import { updateLayout } from "./export.actions";
 
 
 const exportSlice = createSlice({
@@ -21,6 +22,9 @@ const exportSlice = createSlice({
 
             return ({ ...state, ...payload, config })
         }
+    },
+    extraReducers: (builder) => {
+        builder.addCase(updateLayout.fulfilled, (state, { payload }) => ({ ...state, ...payload }))
     }
 });
 

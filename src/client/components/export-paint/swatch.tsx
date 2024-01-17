@@ -28,7 +28,7 @@ export const Swatch = (props: ExportPaintConfig & any) => {
                 <ul>
                     {
                         formatMap.map(({ key, label, value }, i) => props[key] &&
-                            <li key={key + label + i} className="flex f-row f-between full-width">
+                            <li key={key + label + i} className="flex f-row f-between full-width gap-xl">
                                 <p>{label}</p>
                                 <p>{value}</p>
                             </li>)

@@ -2,7 +2,7 @@ import { Export } from "@ctypes/export";
 import { DEFAULT_TYPEFACE } from "@lib/constants";
 
 export const COLOR_EXPORT_TEMPLATE: Export = {
-    active: false,
+    reducer:'export',
     type: 'PAINT',
     sidepanel: {
         options: [
@@ -59,7 +59,7 @@ export const COLOR_EXPORT_TEMPLATE: Export = {
                             type: 'INPUT',
                             attributes: {
                                 type: 'AMOUNT',
-                                value: 2,
+                                value: 10,
                                 placeholder: 'Swatch border radius',
                                 range: [0, 1000],
                                 appearance: { label: true }

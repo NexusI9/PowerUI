@@ -4,28 +4,27 @@ import { BaseTemplate, SidepanelOption, TemplateText } from "@ctypes/templates";
 import { BaseSyntheticEvent, Fragment, createElement, useEffect, useState } from "react";
 import { clone, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
-import { useDispatch } from "react-redux";
-import { updateSet } from "@lib/slices/workbench.actions";
 import { ContextMenuCommand } from "src/types/contextmenu";
 import { Slider } from "@components/slider";
 import { InputArray } from "@components/input-array";
 import { Checkbox } from "@components/checkbox";
 import { TemplateInput } from '@ctypes/templates';
-import { updateAction } from "@lib/slices/workbench.template";
 import { SidepanelHeading } from '@components/sidepanel-heading';
 import { Button } from '@components/button';
 import { TextArea } from '@components/text-area';
+import { useAppDispatch } from '@lib/hook';
+import { updateSet } from '@lib/slices/workbench.actions';
+import { updateLayout } from '@lib/slices/export.actions';
 
 export const Sidepanel = (template: BaseTemplate) => {
 
     const [activeOption, setActiveOption] = useState<SidepanelOption>();
     const { sidepanel: { options }, config } = template;
-    const dispatch = useDispatch<any>();
-
+    const dispatch = useAppDispatch();
 
     const updateOption = (option: SidepanelOption) => {
         setActiveOption(option);
-        dispatch(updateAction({ key: 'action', value: option.action })); //store initial config
+        dispatch({ type: `${template.reducer}/updateAction`, payload: { key: 'action', value: option.action } }); //store initial config
     }
 
     const inheritConfig = (input: TemplateInput): TemplateInput => {
@@ -63,11 +62,24 @@ export const Sidepanel = (template: BaseTemplate) => {
             'TEXT_AREA': TextArea
         }[input.type as string] || 'span';
 
+        const dispatchUpdateSet = (payload: any) => {
+            /*TO DO find better dynamic way to route like: 
+           *dispatch({ type: `${template.reducer}/updateSet`, payload });
+           */
+            const updateMethod = {
+                'workbench': updateSet,
+                'export': updateLayout
+            }[template.reducer];
+
+            if (updateMethod) dispatch(updateMethod(payload));
+
+        };
+
         //Map callback to update config on input value changed
-        const defaultCallback = (e: BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.value }));
+        const defaultCallback = (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.value });
         const customCallback = {
-            'CHECKBOX': (e: BaseSyntheticEvent) => dispatch(updateSet({ key: input.configKey, value: e.target.checked })),
-            'DROPDOWN': (e: ContextMenuCommand) => dispatch(updateSet({ key: input.configKey, value: e.value })),
+            'CHECKBOX': (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.checked }),
+            'DROPDOWN': (e: ContextMenuCommand) => dispatchUpdateSet({ key: input.configKey, value: e.value }),
         }[input.type as string];
 
         return (

@@ -31,7 +31,6 @@ export interface SidepanelOption extends ContextMenuCommand {
 };
 
 export interface Sidepanel {
-    slice?:string;
     active?: string;
     options: MultiArray<SidepanelOption>;
 }
@@ -40,6 +39,7 @@ export interface BaseTemplate {
     sidepanel: Sidepanel;
     type: 'PAINT' | 'TEXT' | 'DEV';
     config?: Partial<TemplateConfig>;
+    reducer:string;
 }
 
 export interface TemplateSlice {

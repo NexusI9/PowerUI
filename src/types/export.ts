@@ -1,5 +1,5 @@
 import { MultiArray } from "./global";
-import { Sidepanel, TemplateInput, TemplateText } from "./templates";
+import { BaseTemplate, Sidepanel, TemplateInput, TemplateText } from "./templates";
 
 export interface BaseConfig {
     typeface: string;
@@ -30,8 +30,7 @@ export interface ExportDevConfig extends BaseConfig {
 }
 
 
-export interface Export {
-    active: boolean;
+export interface Export extends BaseTemplate {
     sidepanel: Sidepanel;
     type: 'TEXT' | 'PAINT' | 'DEV';
     config?: ExportPaintConfig | ExportTextConfig;

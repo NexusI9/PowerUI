@@ -6,7 +6,7 @@ import { initConfig } from "@lib/utils/template";
 
 
 const workbenchSlice = createSlice({
-    name: 'template',
+    name: 'workbench',
     initialState: {
         type: 'PAINT',
         config: {}
@@ -24,7 +24,6 @@ const workbenchSlice = createSlice({
             return ({ ...state, ...payload, config, active: true })
         },
         updateAction: (state, { payload }: { payload: any }) => {
-            console.log('update actions');
             return ({
                 ...state,
                 config: { ...state.config, action: payload.value }
@@ -33,7 +32,9 @@ const workbenchSlice = createSlice({
         destroy: (state) => ({ ...state, active: false, set: [] }),
     },
     extraReducers: (builder) => {
-        builder.addCase(updateSet.fulfilled, (state, { payload }) => ({ ...state, ...payload }));
+        builder.addCase(updateSet.fulfilled, (state, { payload }) => {
+            return ({ ...state, ...payload })
+        });
     }
 });
 

@@ -51,15 +51,23 @@
         display: flex;
         gap: var(--space-m);
 
-        &:nth-child(2){ opacity: 75%; }
-        &:nth-child(3){ opacity: 50%; }
-        &:nth-child(4){ opacity: 25%; }
+        &:nth-child(2) {
+            opacity: 75%;
+        }
+
+        &:nth-child(3) {
+            opacity: 50%;
+        }
+
+        &:nth-child(4) {
+            opacity: 25%;
+        }
     }
 
-    &-color{
+    &-color {
         min-width: 150px;
         background-color: #0c8ce9;
-        padding: var(--space-m) var(--space-s);
+        padding: var(--space-s) var(--space-s);
     }
 
     ul {
