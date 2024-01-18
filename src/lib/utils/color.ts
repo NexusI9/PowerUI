@@ -2,12 +2,20 @@ import { ColorOutput, ColorHSL } from 'src/types/color';
 import { replaceStyle } from './style';
 import { DEFAULT_STYLE_PAINT } from '@lib/constants';
 
-function to255(color: RGB): RGB {
-    return {
+function to255(color: RGB | RGBA): RGB | RGBA {
+    const alpha = (color as RGBA).a;
+
+    let converted: RGB | RGBA = {
         r: Math.floor(color.r * 255) || 0,
         g: Math.floor(color.g * 255) || 0,
         b: Math.floor(color.b * 255) || 0,
     };
+
+    if (alpha && alpha < 1) {
+        converted = { ...converted, a: alpha }
+    }
+
+    return converted;
 }
 
 function componentToHex(c: number) {
@@ -15,45 +23,64 @@ function componentToHex(c: number) {
     return hex.length == 1 ? "0" + hex : hex;
 }
 
-export function rgb(color: RGB, output: ColorOutput = 'STRING'): string | RGB {
+export function rgb(color: RGB | RGBA, output: ColorOutput = 'STRING'): string | RGB | RGBA {
     const newColor = to255(color);
+    const alpha = (newColor as RGBA).a;
+
     switch (output) {
         case 'OBJECT':
-            return { r: newColor.r, g: newColor.g, b: newColor.b };
+            return newColor;
         case 'STRING':
-            return `rgb(${newColor.r}, ${newColor.g}, ${newColor.b})`;
+            return (alpha && alpha < 1) ? `rgb(${newColor.r}, ${newColor.g}, ${newColor.b}, ${alpha})` : `rgb(${newColor.r}, ${newColor.g}, ${newColor.b})`;
     }
 
 }
 
 
-export function rgbToHex(color: RGB): string {
+export function rgbToHex(color: RGB | RGBA): string {
     const newColor = to255(color);
-    return "#" + componentToHex(newColor.r) + componentToHex(newColor.g) + componentToHex(newColor.b);
+    const alpha = (color as RGBA).a;
+
+    return "#"
+        + componentToHex(newColor.r)
+        + componentToHex(newColor.g)
+        + componentToHex(newColor.b)
+        + ((alpha && alpha < 1) ? componentToHex(alpha) : '');
 }
 
 
-export function hexToRgb(hex: string, normalize: boolean = false, output: ColorOutput = 'OBJECT'): RGB | string {
-    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+export function hexToRgb(hex: string, normalize: boolean = false, output: ColorOutput = 'OBJECT'): RGB | RGBA | string {
+    var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})?$/i.exec(hex);
 
-    let rgb = result ? {
-        r: parseInt(result[1], 16) / (normalize ? 255 : 1),
-        g: parseInt(result[2], 16) / (normalize ? 255 : 1),
-        b: parseInt(result[3], 16) / (normalize ? 255 : 1)
-    } : { r: 0, g: 0, b: 0 };
+    let rgb: RGB | RGBA = { r: 0, g: 0, b: 0 };
 
+    console.log(result);
+    if (result) {
+        rgb = {
+            r: parseInt(result[1], 16) / (normalize ? 255 : 1),
+            g: parseInt(result[2], 16) / (normalize ? 255 : 1),
+            b: parseInt(result[3], 16) / (normalize ? 255 : 1)
+        }
+
+        if (result[4] && result[4].toLowerCase() !== "ff") { //alpha match
+            rgb = {
+                ...rgb,
+                a: parseInt(result[4], 16) / (normalize ? 255 : 1)
+            }
+        }
+
+    }
     switch (output) {
         case 'OBJECT':
             return rgb;
         case 'STRING':
-            return `rgb(${rgb.r},${rgb.g},${rgb.b})`;
+            return (rgb as RGBA).a ? `rgb(${rgb.r},${rgb.g},${rgb.b},${(rgb as RGBA).a})` : `rgb(${rgb.r},${rgb.g},${rgb.b})`;
     }
-
 
 }
 
 
-export function rgbToHsl({ r, g, b }: { r: number, g: number, b: number }, output: ColorOutput = 'STRING', round: boolean = false): string | ColorHSL {
+export function rgbToHsl({ r, g, b, a }: { r: number, g: number, b: number, a?: number }, output: ColorOutput = 'STRING', round: boolean = false): string | ColorHSL {
 
 
     const vmax = Math.max(r, g, b), vmin = Math.min(r, g, b);
@@ -82,16 +109,17 @@ export function rgbToHsl({ r, g, b }: { r: number, g: number, b: number }, outpu
     switch (output) {
 
         case 'STRING':
-            return `hsl(${h},  ${s}%, ${l}%)`;
+            return (a && a < 1) ? `hsla(${h},  ${s}%, ${l}%, ${a})` : `hsl(${h},  ${s}%, ${l}%)`;;
+
         case 'OBJECT':
-            return { h, s, l };
+            return (a && a < 1) ? { h, s, l, a } : { h, s, l };
     }
 
 };
 
 
 
-export function hslToRgb(hsl: ColorHSL, normalize: boolean = false, ouput: 'STRING' | 'OBJECT' = 'OBJECT'): RGB | string {
+export function hslToRgb(hsl: ColorHSL, normalize: boolean = false, ouput: 'STRING' | 'OBJECT' = 'OBJECT'): RGB | RGBA | string {
 
     function hueToRgb(p: number, q: number, t: number) {
         if (t < 0) t += 1;
@@ -117,10 +145,10 @@ export function hslToRgb(hsl: ColorHSL, normalize: boolean = false, ouput: 'STRI
 
     switch (ouput) {
         case 'OBJECT':
-            return { r, g, b };
+            return (hsl.a && hsl.a < 1) ? { r, g, b, a: hsl.a } : { r, g, b };
 
         case 'STRING':
-            return `rgb(${r},${g},${b})`;
+            return (hsl.a && hsl.a < 1) ? `rgb(${r},${g},${b},${hsl.a})` : `rgb(${r},${g},${b})`;
     }
 
 
@@ -160,6 +188,6 @@ export function sort_by_hsl(styles: Array<PaintStyle>, proprety: 'HUE' | 'BRIGHT
 }
 
 
-export function colorToPaint(color:RGB):Array<SolidPaint>{
-    return [{ ...DEFAULT_STYLE_PAINT, color:color }];
+export function colorToPaint(color: RGB): Array<SolidPaint> {
+    return [{ ...DEFAULT_STYLE_PAINT, color: color }];
 }

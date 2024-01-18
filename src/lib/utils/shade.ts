@@ -1,5 +1,5 @@
 import { ColorHSL } from "src/types/color";
-import { ColorAdjustConfig, ColorConfig, ColorSetMethod, Set } from "@ctypes/workbench.template";
+import { ColorAdjustConfig, ColorConfig, ColorAction, Set } from "@ctypes/workbench.template";
 import { PaintSet } from "src/types/shade";
 import { folderNameFromPath } from "./style";
 import { MATERIAL_DEFAULT_KEYS } from "@lib/constants";
@@ -14,7 +14,7 @@ import { generateColors } from "@lib/vendor/mantine-swatch";
 /*
 ** CLASSIC INTERPOLATIONS 
 */
-export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: ColorSetMethod, mode: string, name: string }): Set {
+export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, name }: { colorStart: string, colorEnd: string, steps: number, action: ColorAction, mode: string, name: string }): Set {
 
     const colorArray: Set = [];
 

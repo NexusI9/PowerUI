@@ -1,14 +1,13 @@
 import { BaseTemplate, Sidepanel } from "./template";
 
+export type DevAction = 'CSS' | 'TAILWIND';
 
 export interface DevPaintConfig {
-    language: 'CSS' | 'Tailwind';
     colorFormat: 'RGB' | 'HEX' | 'HSL';
+    prefix: string;
 }
 
 export interface Dev extends BaseTemplate {
     sidepanel: Sidepanel;
-    type: 'PAINT' | 'TEXT';
-    config?: DevPaintConfig;
-    code?:string;
+    code?: string;
 }

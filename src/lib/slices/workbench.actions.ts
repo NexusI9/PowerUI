@@ -4,7 +4,7 @@ import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tail
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 
-//{ [key in ColorSetMethod]: any; }
+//{ [key in ColorAction]: any; }
 const actionMap: { [key in Workbench["type"]as string]: any } = {
     'PAINT': {
         SHADE: interpolate,

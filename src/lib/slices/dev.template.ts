@@ -21,9 +21,15 @@ const devSlice = createSlice({
                 ...initConfig(payload.sidepanel)
             };
 
-            return ({ ...state, ...payload, config, active:true })
+            return ({ ...state, ...payload, config, active: true })
         },
-        destroy: (state) => ({...state, active:false})
+        updateAction: (state, { payload }: { payload: any }) => {
+            return ({
+                ...state,
+                config: { ...state.config, action: payload.value }
+            })
+        },
+        destroy: (state) => ({ ...state, active: false })
     },
     extraReducers: (builder) => {
         builder.addCase(updateCode.fulfilled, (state, { payload }) => ({ ...state, ...payload }))

@@ -1,5 +1,6 @@
 import { TextArrayItem, TextDico, TextSet } from "src/types/text";
-import { replaceStyle } from "./style";
+import { folderNameFromPath, get_styles_of_folder, replaceStyle } from "./style";
+import { rgb, rgbToHex, rgbToHsl } from "./color";
 
 export function loadLocalFont(msg: any, systemFonts: TextDico) {
 
@@ -90,11 +91,38 @@ export function sortByFont(styles: Array<TextStyle>) {
 }
 
 
-export function paintStylesToCSS({format}:{format:'HEX'|'RGB'|'HSL'}):string{
-    console.log(format);
-    figma.getLocalPaintStyles().forEach( style => {
+export function paintStylesToCSS({ payload }: any): string {
 
+    const folderStyles = get_styles_of_folder(payload.folder) as Array<PaintStyle>;
+    const { config } = payload;
+
+    const variables = folderStyles.map(({ paints, name }: PaintStyle) => {
+        name = '--' + (config.prefix || '') + folderNameFromPath(name).name.replace(' ', '-').toLocaleLowerCase();
+        const { color } = paints[0] as SolidPaint;
+        let convertedColor: string = '';
+
+        if (color) {
+            convertedColor = {
+                'Hex': rgbToHex(color),
+                'Rgb': rgb(color, 'STRING'),
+                'Hsl': rgbToHsl(color, 'STRING', true)
+            }[config.colorFormat as string] as string;
+        }
+        return `\t${name}: ${convertedColor}`;
     });
 
-    return '';
+    switch (config.action) {
+
+        case 'TAILWIND':
+            return '';
+            break;
+
+        case 'CSS':
+        default:
+            return `
+:root{
+${variables.join('\n')}
+}`;
+
+    }
 }

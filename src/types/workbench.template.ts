@@ -1,9 +1,8 @@
-import { StyleFolder } from "@ctypes/style";
 import { PaintSet } from "./shade";
 import { TextSet } from "./text";
-import { BaseTemplate, Sidepanel } from "@ctypes/template";
+import { BaseTemplate, BaseConfig } from "@ctypes/template";
 
-export type ColorSetMethod =
+export type ColorAction =
     'SHADE'
     | 'TINT'
     | 'INTERPOLATION'
@@ -16,16 +15,13 @@ export type ColorSetMethod =
     | 'COLORADJUST'
     | 'TAILWIND';
 
-export type TextSetMethod =
+export type TextAction =
     'SCALE'
     | 'MATERIAL'
     | 'FLUTTER'
     | 'APPLE'
     | 'CARBON';
 
-interface BaseConfig {
-    action?: ColorSetMethod | TextSetMethod;
-}
 
 export interface ColorConfig extends BaseConfig {
     name?: string;

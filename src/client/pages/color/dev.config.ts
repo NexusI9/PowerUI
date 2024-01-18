@@ -10,10 +10,17 @@ const basicConfig: SidepanelOption['content'] = [
                 { value: 'Rgb', receiver: 'STORE' },
                 { value: 'Hsl', receiver: 'STORE' },
             ],
-            appearance: { label: true }
+            appearance: { label: true },
+            value: 'Hex'
         },
         configKey: 'colorFormat'
+    },
+    {
+        type: 'INPUT',
+        attributes: { placeholder: 'Variables prefix' },
+        configKey:'prefix'
     }
+
 ]
 
 export const DEV_PAINT_CONFIG: Dev = {
@@ -22,11 +29,11 @@ export const DEV_PAINT_CONFIG: Dev = {
     type: 'PAINT',
     sidepanel: {
         options: [
-            { value: 'CSS', content: [basicConfig], action: 'LANGUAGE', receiver: 'STORE', heading: 'Language' },
-            { value: 'Tailwind', content: [basicConfig], action: 'LANGUAGE', receiver: 'STORE', heading: 'Language' },
+            { value: 'CSS', content: [basicConfig], action: 'CSS', receiver: 'STORE', heading: 'Language' },
+            { value: 'Tailwind', content: [basicConfig], action: 'TAILWIND', receiver: 'STORE', heading: 'Language' },
         ]
     },
     footer: {
-        primaryAction: { value: 'Add', action: 'CREATE_SET' }
+        primaryAction: { value: 'Add', action: 'CREATE_SET', role: 'DISABLED' }
     }
 }

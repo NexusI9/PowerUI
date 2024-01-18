@@ -2,6 +2,7 @@ export interface ColorHSL{
     h:number;
     s:number;
     l:number;
+    a?:number;
 }
 
 

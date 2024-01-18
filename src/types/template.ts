@@ -1,18 +1,23 @@
 import { Dropdown, Input, InputArray, Slider, Checkbox, TextArea, Button } from "src/types/input";
-import { ColorAdjustConfig, ColorConfig, TextConfig } from "./workbench.template";
+import { ColorAdjustConfig, ColorConfig, ColorAction, TextConfig, TextAction } from "./workbench.template";
 import { ExportPaintConfig, ExportTextConfig } from "./export.template";
 import { ContextMenuCommand } from "./contextmenu";
 import { MultiArray } from "./global";
 import { StyleFolder } from "./style";
-import { DevPaintConfig } from "./dev.template";
+import { DevAction, DevPaintConfig } from "./dev.template";
 
-export type TemplateConfig = ColorConfig
+export type TemplateConfig = BaseConfig
+    & ColorConfig
     & TextConfig
     & ColorAdjustConfig
     & ExportPaintConfig
     & ExportTextConfig
     & DevPaintConfig;
 
+
+export interface BaseConfig {
+    action?: ColorAction | TextAction | DevAction;
+}
 
 export type TemplateInput =
     { type: 'INPUT'; attributes: Input; configKey?: keyof TemplateConfig; }
