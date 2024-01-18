@@ -1,7 +1,7 @@
 import { Export } from "@ctypes/export.template";
 import { DEFAULT_TYPEFACE } from "@lib/constants";
 
-export const FONT_EXPORT_TEMPLATE: Export = {
+export const EXPORT_FONT_CONFIG: Export = {
     title:'Generate font set',
     reducer:'export',
     type: 'TEXT',
@@ -25,7 +25,17 @@ export const FONT_EXPORT_TEMPLATE: Export = {
                                 value: DEFAULT_TYPEFACE
                             },
                             configKey: 'typeface'
-                        }
+                        },
+                        {
+                            type: 'INPUT',
+                            attributes: {
+                                type: 'AMOUNT',
+                                value: 16,
+                                placeholder: 'Base size',
+                                appearance: { label: true }
+                            },
+                            configKey: 'basesize'
+                        },
                     ],
                     [
                         {
@@ -41,11 +51,6 @@ export const FONT_EXPORT_TEMPLATE: Export = {
                             type: 'CHECKBOX',
                             attributes: { label: 'Font weight', value: true },
                             configKey: 'fontWeight'
-                        },
-                        {
-                            type: 'CHECKBOX',
-                            attributes: { label: 'Font size', value: true },
-                            configKey: 'fontSize'
                         }
                     ]
                 ]

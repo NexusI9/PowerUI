@@ -13,6 +13,7 @@ const exportSlice = createSlice({
 
     reducers: {
         init: (state, { payload }: { payload: Export }) => {
+
             //setup initial config from sidepanel
             const config: { [key: string]: any } = {
                 ...payload.config,

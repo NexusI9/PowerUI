@@ -13,14 +13,14 @@ export interface ExportPaintConfig extends BaseConfig {
     pantone: boolean;
     hsl: boolean;
     contrastRatio: boolean;
-    colorSynthax:string;
+    colorSynthax: string;
 }
 
 
 export interface ExportTextConfig extends BaseConfig {
     fontFamily: boolean;
     fontWeight: boolean;
-    fontSize: boolean;
+    basesize: string;
 }
 
 

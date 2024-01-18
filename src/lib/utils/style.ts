@@ -1,9 +1,9 @@
 import { StyleFolder, Styles, } from "@ctypes/style";
 import { hexToRgb, rgb, rgbToHex, rgbToHsl } from "./color";
-import { DEFAULT_STYLE_PAINT, DEFAULT_STYLE_TEXT } from "@lib/constants";
+import { DEFAULT_STYLE_PAINT } from "@lib/constants";
 import { clone, lastIndexOfArray, mapKeys, shallowClone } from '@lib/utils/utils';
 import { WritablePart } from "@ctypes/global";
-import { Workbench, ColorConfig, TextConfig } from "@ctypes/workbench.template";
+import { Workbench } from "@ctypes/workbench.template";
 import { PaintSet } from '@ctypes/shade';
 import { TextSet } from "@ctypes/text";
 import { ContextMenuCommand } from '@ctypes/contextmenu';
@@ -368,7 +368,7 @@ export function groupStyles(folder: StyleFolder): { [key: string]: Array<PaintSt
 }
 
 
-function styleToCSS(style: PaintStyle, config: TemplateConfig): { name: string; value: string; } {
+function paintToCSS(style: PaintStyle, config: TemplateConfig): { name: string; value: string; } {
 
     const { name, paints } = style;
     //define variable names
@@ -399,7 +399,7 @@ export function paintStylesToCSS({ payload }: any): string {
     //convert styles to css (--var-1: #000000)
     Object.keys(groupedStyles).forEach((key) => {
         //as keyof typeof groupedStyles
-        groupedStyles[key] = (groupedStyles[key] as Array<PaintStyle>).map((style) => styleToCSS(style, config));
+        groupedStyles[key] = (groupedStyles[key] as Array<PaintStyle>).map((style) => paintToCSS(style, config));
     });
 
 

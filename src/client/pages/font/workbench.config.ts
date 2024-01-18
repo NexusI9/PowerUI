@@ -24,83 +24,99 @@ const SCALES_COMMAND: Array<ContextMenuCommand> = [
 ]
 
 const scaleSidepanelContent: SidepanelOption['content'] = [
-    {
-        type: 'HEADING',
-        attributes: { value: 'Settings' }
-    },
-    {
-        type: 'DROPDOWN',
-        attributes: {
-            placeholder: 'Typeface',
-            list: [
-                { value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }
-            ],
-            appearance: { label: true },
-            value: DEFAULT_TYPEFACE
+    [
+        {
+            type: 'HEADING',
+            attributes: { value: 'Settings' }
         },
-        configKey: 'typeface'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'AMOUNT',
-            value: 16,
-            placeholder: 'Base size',
-            range: [1, 1000],
-            appearance: { label: true }
+        {
+            type: 'DROPDOWN',
+            attributes: {
+                placeholder: 'Typeface',
+                list: [
+                    { value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }
+                ],
+                appearance: { label: true },
+                value: DEFAULT_TYPEFACE
+            },
+            configKey: 'typeface'
         },
-        configKey: 'baseSize'
-    },
-    {
-        type: 'DROPDOWN',
-        attributes: {
-            placeholder: '↑ Ascendant scale',
-            list: SCALES_COMMAND,
-            appearance: { label: true },
-            value: DEFAULT_TYPEFACE
+        {
+            type: 'INPUT',
+            attributes: {
+                type: 'AMOUNT',
+                value: 16,
+                placeholder: 'Base size',
+                range: [1, 1000],
+                appearance: { label: true }
+            },
+            configKey: 'baseSize'
+        }
+    ],
+    [
+        {
+            type: 'HEADING',
+            attributes: { value: 'Ascendant' }
         },
-        configKey: 'ascendantScale'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'AMOUNT',
-            value: 8,
-            placeholder: '↑ Ascendant steps',
-            range: [0, 100],
-            appearance: { label: true }
+        {
+            type: 'DROPDOWN',
+            attributes: {
+                placeholder: '↑ Ascendant scale',
+                list: SCALES_COMMAND,
+                appearance: { label: true },
+                value: DEFAULT_TYPEFACE
+            },
+            configKey: 'ascendantScale'
         },
-        configKey: 'ascendantSteps'
-    },
-    {
-        type: 'DROPDOWN',
-        attributes: {
-            placeholder: '↓ Descendant scale',
-            list: SCALES_COMMAND,
-            appearance: { label: true },
-            value: DEFAULT_TYPEFACE
+        {
+            type: 'INPUT',
+            attributes: {
+                type: 'AMOUNT',
+                value: 8,
+                placeholder: '↑ Ascendant steps',
+                range: [0, 100],
+                appearance: { label: true }
+            },
+            configKey: 'ascendantSteps'
+        }
+    ],
+    [
+        {
+            type: 'HEADING',
+            attributes: { value: 'Descendant' }
         },
-        configKey: 'descendantScale'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'AMOUNT',
-            value: 3,
-            placeholder: '↓ Descendant steps',
-            range: [0, 100],
-            appearance: { label: true }
+        {
+            type: 'DROPDOWN',
+            attributes: {
+                placeholder: '↓ Descendant scale',
+                list: SCALES_COMMAND,
+                appearance: { label: true },
+                value: DEFAULT_TYPEFACE
+            },
+            configKey: 'descendantScale'
         },
-        configKey: 'descendantSteps'
-    },
-    {
-        type: 'CHECKBOX',
-        attributes: {
-            label: 'Round values',
-            value: true,
+        {
+            type: 'INPUT',
+            attributes: {
+                type: 'AMOUNT',
+                value: 3,
+                placeholder: '↓ Descendant steps',
+                range: [0, 100],
+                appearance: { label: true }
+            },
+            configKey: 'descendantSteps'
         },
-        configKey: 'roundValue'
-    }
+    ],
+    [
+        {
+            type: 'CHECKBOX',
+            attributes: {
+                label: 'Round values',
+                value: true,
+            },
+            configKey: 'roundValue'
+        }
+    ]
 
 ];
 
@@ -268,13 +284,13 @@ const adjustSidepanelContent: Array<TemplateInput> = [
 
 
 export const CREATE_FONT_SET_CONFIG: Workbench = {
-    reducer:'workbench',
+    reducer: 'workbench',
     title: 'Generate a new font set',
     type: 'TEXT',
     sidepanel: {
         options: [
             [
-                { value: 'Scale', content: [scaleSidepanelContent], action: 'SCALE', icon: "line-height", receiver: 'STORE', heading: 'Template type' }
+                { value: 'Scale', content: scaleSidepanelContent, action: 'SCALE', icon: "line-height", receiver: 'STORE', heading: 'Template type' }
             ],
             [
                 { value: 'Material Design', content: [materialSidepanelContent], action: 'MATERIAL', icon: "material design", receiver: 'STORE', heading: 'Template type' },
@@ -290,7 +306,7 @@ export const CREATE_FONT_SET_CONFIG: Workbench = {
 }
 
 export const EDIT_SWATCH_CONFIG: Workbench = {
-    reducer:'workbench',
+    reducer: 'workbench',
     title: 'Edit current font set',
     type: 'TEXT',
     sidepanel: {

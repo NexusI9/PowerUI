@@ -5,15 +5,17 @@ import SwatchIcon from '@icons/swatch.svg';
 import { ButtonPad } from "src/types/input";
 import { send } from "@lib/ipc";
 import { useDispatch } from "react-redux";
-import { init as initWorkbench } from "@lib/slices/workbench.template";
-import { init as initExport } from '@lib/slices/export.template';
-import { init as initDev } from "@lib/slices/dev.template";
 import { CREATE_SWATCH_CONFIG, EDIT_SWATCH_CONFIG } from "./workbench.config";
 import { StyleFolder } from "src/types/style";
 import { GET_PAINT_STYLES_COMMAND } from "@lib/constants";
 import { FolderOptions } from "src/types/folder";
 import { EXPORT_PAINT_CONFIG } from "./export.config";
 import { DEV_PAINT_CONFIG } from "./dev.config";
+
+//Reducer dispatch
+import { init as initWorkbench } from "@lib/slices/workbench.template";
+import { init as initExport } from '@lib/slices/export.template';
+import { init as initDev } from "@lib/slices/dev.template";
 
 
 export default () => {

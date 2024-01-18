@@ -1,3 +1,28 @@
-.export-text{
-    
+.export-text {
+
+
+    &-group {
+
+        margin-bottom: var(--space-l);
+
+        h3 {
+            border-bottom: solid 1px var(--export-color-border);
+        }
+    }
+
+    &-item {
+        display: grid;
+        grid-template-columns: 200px auto;
+        align-items: center;
+    }
+
+    &-detail {
+        color: var(--export-color-text-secondary);
+        font-size: 12px;
+        svg {
+            width: 12px;
+            fill: var(--export-color-text-secondary);
+        }
+    }
+
 }
