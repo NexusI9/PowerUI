@@ -8,12 +8,13 @@ import { Dev } from '@ctypes/dev.template';
 const devSlice = createSlice({
     name: 'dev',
     initialState: {
-        type: 'DEV',
+        type: 'PAINT',
         config: {}
     },
 
     reducers: {
         init: (state, { payload }: { payload: Dev }) => {
+
             //setup initial config from sidepanel
             const config: { [key: string]: any } = {
                 ...payload.config,

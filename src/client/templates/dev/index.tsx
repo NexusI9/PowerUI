@@ -1,17 +1,14 @@
 import { useSelector } from "react-redux";
 import { Sidepanel } from "@components/sidepanel";
 import { useDispatch } from "react-redux";
-import { destroy } from "@lib/slices/export.template";
+import { destroy } from "@lib/slices/dev.template";
 import { FloatingWindow } from "@components/floating-window";
-import { ExportContent } from "@components/export-content";
-
-import './index.scss';
-
+import { DevContent } from "@components/dev-content";
 
 export const Dev = () => {
 
     const dispatch = useDispatch();
-    const template = useSelector((state: any) => state.export);
+    const template = useSelector((state: any) => state.dev);
 
     return (
         <FloatingWindow
@@ -19,7 +16,7 @@ export const Dev = () => {
             template={template}
         >
             <Sidepanel {...template} />
-            <ExportContent {...template} />
+            <DevContent {...template} />
         </FloatingWindow>
     );
 

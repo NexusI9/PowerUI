@@ -10,4 +10,5 @@ export interface Dev extends BaseTemplate {
     sidepanel: Sidepanel;
     type: 'PAINT' | 'TEXT';
     config?: DevPaintConfig;
+    code?:string;
 }

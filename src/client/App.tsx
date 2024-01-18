@@ -26,6 +26,7 @@ import { GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constant
 import { setPage } from "@lib/slices/page";
 import { Resizer } from "@components/resizer";
 import { Export } from "@templates/export";
+import { Dev } from "@templates/dev";
 
 
 const router = {
@@ -64,6 +65,7 @@ export default () => {
 
             <WorkBench />
             <Export />
+            <Dev />
             <Resizer />
         </>
     );

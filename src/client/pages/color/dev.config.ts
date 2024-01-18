@@ -4,7 +4,14 @@ import { SidepanelOption } from "@ctypes/template";
 const basicConfig: SidepanelOption['content'] = [
     {
         type: 'DROPDOWN',
-        attributes: { list: [] },
+        attributes: {
+            list: [
+                { value: 'Hex', receiver: 'STORE' },
+                { value: 'Rgb', receiver: 'STORE' },
+                { value: 'Hsl', receiver: 'STORE' },
+            ],
+            appearance: { label: true }
+        },
         configKey: 'colorFormat'
     }
 ]
@@ -15,10 +22,8 @@ export const DEV_PAINT_CONFIG: Dev = {
     type: 'PAINT',
     sidepanel: {
         options: [
-            [
-                { value: 'CSS', content: [basicConfig], action: 'LANGUAGE', receiver: 'STORE', heading: 'Language' },
-                { value: 'Tailwind', content: [basicConfig], action: 'LANGUAGE', receiver: 'STORE', heading: 'Language' },
-            ]
+            { value: 'CSS', content: [basicConfig], action: 'LANGUAGE', receiver: 'STORE', heading: 'Language' },
+            { value: 'Tailwind', content: [basicConfig], action: 'LANGUAGE', receiver: 'STORE', heading: 'Language' },
         ]
     },
     footer: {

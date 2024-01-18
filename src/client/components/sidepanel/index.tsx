@@ -1,4 +1,7 @@
+//Styles
 import './index.scss';
+
+//Imports
 import { Dropdown } from "@components/dropdown";
 import { BaseTemplate, SidepanelOption, TemplateText } from "@ctypes/template";
 import { BaseSyntheticEvent, Fragment, createElement, useEffect, useState } from "react";
@@ -13,8 +16,11 @@ import { SidepanelHeading } from '@components/sidepanel-heading';
 import { Button } from '@components/button';
 import { TextArea } from '@components/text-area';
 import { useAppDispatch } from '@lib/hook';
+
+//Reducer thunk actions (hard imported)
 import { updateSet } from '@lib/slices/workbench.actions';
 import { updateLayout } from '@lib/slices/export.actions';
+import { updateCode } from '@lib/slices/dev.actions';
 
 export const Sidepanel = (template: BaseTemplate) => {
 
@@ -68,7 +74,8 @@ export const Sidepanel = (template: BaseTemplate) => {
            */
             const updateMethod = {
                 'workbench': updateSet,
-                'export': updateLayout
+                'export': updateLayout,
+                'dev': updateCode
             }[template.reducer];
 
             if (updateMethod) dispatch(updateMethod(payload));

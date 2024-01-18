@@ -5,9 +5,6 @@ import { destroy } from "@lib/slices/export.template";
 import { FloatingWindow } from "@components/floating-window";
 import { ExportContent } from "@components/export-content";
 
-import './index.scss';
-
-
 export const Export = () => {
 
     const dispatch = useDispatch();

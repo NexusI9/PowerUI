@@ -5,8 +5,6 @@ import { useDispatch } from "react-redux";
 import { destroy } from "@lib/slices/workbench.template";
 import { FloatingWindow } from "@components/floating-window";
 
-import './index.scss';
-
 export const WorkBench = () => {
 
     const dispatch = useDispatch();
