@@ -1,4 +1,10 @@
-.dev-content{
+.dev-content {
     padding: var(--space-m) var(--space-l);
     overflow: auto;
+    resize: none;
+    font-family: monospace;
+
+    &:focus{
+        outline: none;
+    }
 }
