@@ -12,7 +12,7 @@ function to255(color: RGB | RGBA): RGB | RGBA {
     };
 
     if (alpha && alpha < 1) {
-        converted = { ...converted, a: alpha }
+        converted = { ...converted, a: Math.floor(alpha * 255) || 0 }
     }
 
     return converted;
@@ -31,7 +31,7 @@ export function rgb(color: RGB | RGBA, output: ColorOutput = 'STRING'): string |
         case 'OBJECT':
             return newColor;
         case 'STRING':
-            return (alpha && alpha < 1) ? `rgb(${newColor.r}, ${newColor.g}, ${newColor.b}, ${alpha})` : `rgb(${newColor.r}, ${newColor.g}, ${newColor.b})`;
+            return (alpha && alpha < 1) ? `rgba(${newColor.r}, ${newColor.g}, ${newColor.b}, ${alpha})` : `rgb(${newColor.r}, ${newColor.g}, ${newColor.b})`;
     }
 
 }
@@ -39,13 +39,13 @@ export function rgb(color: RGB | RGBA, output: ColorOutput = 'STRING'): string |
 
 export function rgbToHex(color: RGB | RGBA): string {
     const newColor = to255(color);
-    const alpha = (color as RGBA).a;
+    const alpha = (newColor as RGBA).a;
 
     return "#"
         + componentToHex(newColor.r)
         + componentToHex(newColor.g)
         + componentToHex(newColor.b)
-        + ((alpha && alpha < 1) ? componentToHex(alpha) : '');
+        + ((alpha && alpha < 255) ? componentToHex(alpha) : '');
 }
 
 
@@ -54,7 +54,6 @@ export function hexToRgb(hex: string, normalize: boolean = false, output: ColorO
 
     let rgb: RGB | RGBA = { r: 0, g: 0, b: 0 };
 
-    console.log(result);
     if (result) {
         rgb = {
             r: parseInt(result[1], 16) / (normalize ? 255 : 1),

@@ -11,10 +11,11 @@ import {
   sort_by_name,
   duplicateFolder,
   updateText,
-  createSet
+  createSet,
+  paintStylesToCSS
 } from "@lib/utils/style";
 
-import { loadLocalFont, paintStylesToCSS, sortByFont, sortByScale, storeFonts } from "@lib/utils/font.back";
+import { loadLocalFont, sortByFont, sortByScale, storeFonts } from "@lib/utils/font.back";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 import { TextDico } from "@ctypes/text";
 
@@ -138,8 +139,7 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'CSS_STYLES':
-      paintStylesToCSS(msg);
-      figma.ui.postMessage(msg);
+      figma.ui.postMessage({ ...msg, payload: paintStylesToCSS(msg) });
       break;
   }
 

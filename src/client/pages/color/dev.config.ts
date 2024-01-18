@@ -1,7 +1,11 @@
 import { Dev } from "@ctypes/dev.template";
 import { SidepanelOption } from "@ctypes/template";
 
-const basicConfig: SidepanelOption['content'] = [
+const cssConfig: SidepanelOption['content'] = [
+    {
+        type: 'HEADING',
+        attributes: { value: 'Settings' }
+    },
     {
         type: 'DROPDOWN',
         attributes: {
@@ -11,14 +15,50 @@ const basicConfig: SidepanelOption['content'] = [
                 { value: 'Hsl', receiver: 'STORE' },
             ],
             appearance: { label: true },
+            placeholder: 'Color format',
             value: 'Hex'
         },
         configKey: 'colorFormat'
     },
     {
         type: 'INPUT',
-        attributes: { placeholder: 'Variables prefix' },
-        configKey:'prefix'
+        attributes: {
+            placeholder: 'Variables prefix',
+            appearance: { label: true }
+        },
+        configKey: 'prefix'
+    }
+
+]
+
+
+const tlConfig: SidepanelOption['content'] = [
+    {
+        type: 'HEADING',
+        attributes: { value: 'Settings' }
+    },
+    {
+        type: 'DROPDOWN',
+        attributes: {
+            list: [
+                { value: 'Hex', receiver: 'STORE' },
+                { value: 'Rgb', receiver: 'STORE' },
+                { value: 'Hsl', receiver: 'STORE' },
+                { value: 'Css', receiver: 'STORE' },
+            ],
+            appearance: { label: true },
+            placeholder: 'Color format',
+            value: 'Hex'
+        },
+        configKey: 'colorFormat'
+    },
+    {
+        type: 'INPUT',
+        attributes: {
+            placeholder: 'Variables prefix',
+            appearance: { label: true }
+        },
+        configKey: 'prefix'
     }
 
 ]
@@ -29,8 +69,8 @@ export const DEV_PAINT_CONFIG: Dev = {
     type: 'PAINT',
     sidepanel: {
         options: [
-            { value: 'CSS', content: [basicConfig], action: 'CSS', receiver: 'STORE', heading: 'Language' },
-            { value: 'Tailwind', content: [basicConfig], action: 'TAILWIND', receiver: 'STORE', heading: 'Language' },
+            { value: 'CSS', content: [cssConfig], action: 'CSS', receiver: 'STORE', heading: 'Language' },
+            { value: 'Tailwind', content: [tlConfig], action: 'TAILWIND', receiver: 'STORE', heading: 'Language' },
         ]
     },
     footer: {

@@ -1,12 +1,13 @@
 import { StyleFolder, Styles, } from "@ctypes/style";
-import { hexToRgb } from "./color";
+import { hexToRgb, rgb, rgbToHex, rgbToHsl } from "./color";
 import { DEFAULT_STYLE_PAINT, DEFAULT_STYLE_TEXT } from "@lib/constants";
-import { clone, mapKeys, shallowClone } from '@lib/utils/utils';
+import { clone, lastIndexOfArray, mapKeys, shallowClone } from '@lib/utils/utils';
 import { WritablePart } from "@ctypes/global";
 import { Workbench, ColorConfig, TextConfig } from "@ctypes/workbench.template";
 import { PaintSet } from '@ctypes/shade';
 import { TextSet } from "@ctypes/text";
 import { ContextMenuCommand } from '@ctypes/contextmenu';
+import { TemplateConfig } from "@ctypes/template";
 
 export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
@@ -341,4 +342,101 @@ export const styleContextMenu = ({ style, editCommand }: { style: TextSet | Pain
         { value: 'Duplicate', action: 'ADD_STYLE', payload: { style: style, name: style.name }, receiver: 'API' },
         { value: 'Delete', action: 'DELETE_STYLE', payload: { style: style }, receiver: 'API' },
     ];
+}
+
+
+export function groupStyles(folder: StyleFolder): { [key: string]: Array<PaintStyle | TextStyle> } {
+
+    const groupedStyles: { [key: string]: Array<PaintStyle | TextStyle> } = {};
+
+    const group = (folder: StyleFolder) => {
+        //get folder name
+        const baseName = lastIndexOfArray(folder.name.split('/'), '');
+
+        //groupe them in groupedStyles object
+        if (groupedStyles[baseName]) {
+            groupedStyles[baseName].push(...folder.styles);
+        } else {
+            groupedStyles[baseName] = folder.styles;
+        }
+        folder.folders.forEach(fd => group(fd));
+    }
+
+    group(folder);
+
+    return groupedStyles;
+}
+
+
+function styleToCSS(style: PaintStyle, config: TemplateConfig): { name: string; value: string; } {
+
+    const { name, paints } = style;
+    //define variable names
+    const newName = '--' + (config.prefix || '') + folderNameFromPath(name).name.replace(' ', '-').toLocaleLowerCase();
+
+    //convert color format
+    const { color, opacity } = paints[0] as SolidPaint;
+    let convertedColor: string = '';
+    if (color) {
+
+        let rgba = { ...color, a: opacity };
+        convertedColor = {
+            'Hex': rgbToHex(rgba),
+            'Rgb': rgb(rgba, 'STRING'),
+            'Hsl': rgbToHsl(rgba, 'STRING', true),
+            'Css': `rgb(var(${newName}) / <alpha-value>)`
+        }[config.colorFormat as string] as string;
+    }
+
+    return { name: newName, value: convertedColor };
+}
+
+export function paintStylesToCSS({ payload }: any): string {
+
+    const { config } = payload;
+    const groupedStyles: { [key: string]: any } = groupStyles(payload.folder);
+
+    //convert styles to css (--var-1: #000000)
+    Object.keys(groupedStyles).forEach((key) => {
+        //as keyof typeof groupedStyles
+        groupedStyles[key] = (groupedStyles[key] as Array<PaintStyle>).map((style) => styleToCSS(style, config));
+    });
+
+
+    switch (config.action) {
+        /*TAILWIND Variables */
+        case 'TAILWIND':
+            let tlVariables = '';
+            Object.keys(groupedStyles).forEach((key) => {
+                const styles = groupedStyles[key];
+
+                tlVariables += `\t\t${config.prefix || ''}${key.length && key.toLowerCase().replace(' ','') || 'base'}: {
+${styles.map(({ name, value }: { name: string; value: string }) => `\t\t\t${ lastIndexOfArray(name.split('-'), '') }: "${value}"`).join(',\n')}
+\t\t}\n`;
+
+            });
+            return `module.exports = {
+    theme: {
+        extend: {
+            colors: {
+${tlVariables}
+            }
+        }
+    }
+}`;
+
+        /*CSS Variables*/
+        case 'CSS':
+        default:
+            //concat parts
+            let cssVariables = '';
+            Object.keys(groupedStyles).forEach((key) => {
+                if (key.length) { cssVariables += `\n\n\t/* ${key} */` }
+                cssVariables += `\n${groupedStyles[key].map(({ name, value }: { name: string; value: string; }) => `\t${name}: ${value};`).join('\n')}`;
+            });
+            return `:root{
+${cssVariables}
+}`;
+
+    }
 }

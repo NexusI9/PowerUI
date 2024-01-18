@@ -1,6 +1,7 @@
 .template-sidepanel {
     border-right: solid 1px var(--figma-color-border);
-    width: 300px;
+    max-width: 300px;
+    min-width: 200px;
     height: 100%;
     flex-grow: 1;
     padding: var(--space-m) var(--space-m);

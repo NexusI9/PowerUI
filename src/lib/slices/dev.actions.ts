@@ -22,6 +22,6 @@ export const updateCode = createAsyncThunk('dev/updateCode', async ({ key, value
 
     return {
         config: newConfig,
-        code
+        code: code.payload
     };
 });
