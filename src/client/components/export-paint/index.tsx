@@ -1,4 +1,4 @@
-import { ExportPaintConfig } from "@ctypes/export"
+import { ExportPaintConfig } from "@ctypes/export.template"
 import './index.scss';
 import { Swatch } from "./swatch";
 

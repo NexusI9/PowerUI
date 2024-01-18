@@ -1,18 +1,19 @@
 import { Export } from '@ctypes/export.template';
 import { createSlice } from "@reduxjs/toolkit";
 import { initConfig } from "@lib/utils/template";
-import { updateLayout } from "./export.actions";
+import { updateCode } from './dev.actions';
+import { Dev } from '@ctypes/dev.template';
 
 
-const exportSlice = createSlice({
-    name: 'export',
+const devSlice = createSlice({
+    name: 'dev',
     initialState: {
-        type: 'PAINT',
+        type: 'DEV',
         config: {}
     },
 
     reducers: {
-        init: (state, { payload }: { payload: Export }) => {
+        init: (state, { payload }: { payload: Dev }) => {
             //setup initial config from sidepanel
             const config: { [key: string]: any } = {
                 ...payload.config,
@@ -24,10 +25,10 @@ const exportSlice = createSlice({
         destroy: (state) => ({...state, active:false})
     },
     extraReducers: (builder) => {
-        builder.addCase(updateLayout.fulfilled, (state, { payload }) => ({ ...state, ...payload }))
+        builder.addCase(updateCode.fulfilled, (state, { payload }) => ({ ...state, ...payload }))
     }
 });
 
-export const { init, destroy } = exportSlice.actions;
-export default exportSlice.reducer;
+export const { init, destroy } = devSlice.actions;
+export default devSlice.reducer;
 

@@ -1,5 +1,5 @@
-import { Workbench } from "@ctypes/workbench";
-import { Export } from '@ctypes/export';
+import { Workbench } from "@ctypes/workbench.template";
+import { Export } from '@ctypes/export.template';
 import { createSlice } from "@reduxjs/toolkit";
 import { updateSet } from "./workbench.actions";
 import { initConfig } from "@lib/utils/template";
@@ -13,7 +13,7 @@ const workbenchSlice = createSlice({
     },
 
     reducers: {
-        init: (state, { payload }: { payload: Workbench | Export }) => {
+        init: (state, { payload }: { payload: Workbench }) => {
 
             //setup initial config from sidepanel
             const config: { [key: string]: any } = {

@@ -1,7 +1,7 @@
 import { DEFAULT_TYPEFACE } from "@lib/constants";
 import { ContextMenuCommand } from "src/types/contextmenu";
-import { Workbench } from "src/types/workbench";
-import { SidepanelOption, TemplateInput } from '@ctypes/templates';
+import { Workbench } from "@ctypes/workbench.template";
+import { SidepanelOption, TemplateInput } from '@ctypes/template';
 
 const SCALES_COMMAND: Array<ContextMenuCommand> = [
     { value: 'minor second (15:16)', action: 'UPDATE_SCALE', receiver: 'STORE' },
@@ -269,7 +269,6 @@ const adjustSidepanelContent: Array<TemplateInput> = [
 
 export const CREATE_FONT_SET_CONFIG: Workbench = {
     reducer:'workbench',
-    folder: null,
     title: 'Generate a new font set',
     type: 'TEXT',
     sidepanel: {
@@ -292,7 +291,6 @@ export const CREATE_FONT_SET_CONFIG: Workbench = {
 
 export const EDIT_SWATCH_CONFIG: Workbench = {
     reducer:'workbench',
-    folder: null,
     title: 'Edit current font set',
     type: 'TEXT',
     sidepanel: {

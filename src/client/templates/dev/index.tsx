@@ -8,7 +8,7 @@ import { ExportContent } from "@components/export-content";
 import './index.scss';
 
 
-export const Export = () => {
+export const Dev = () => {
 
     const dispatch = useDispatch();
     const template = useSelector((state: any) => state.export);

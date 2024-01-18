@@ -1,4 +1,4 @@
-import { Sidepanel, SidepanelOption, TemplateConfig, TemplateInput } from "@ctypes/templates";
+import { Sidepanel, SidepanelOption, TemplateConfig, TemplateInput } from "@ctypes/template";
 import { traverseCallback } from "./utils";
 
 export function initConfig(sidepanel: Sidepanel): TemplateConfig {

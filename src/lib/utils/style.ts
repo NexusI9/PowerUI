@@ -3,7 +3,7 @@ import { hexToRgb } from "./color";
 import { DEFAULT_STYLE_PAINT, DEFAULT_STYLE_TEXT } from "@lib/constants";
 import { clone, mapKeys, shallowClone } from '@lib/utils/utils';
 import { WritablePart } from "@ctypes/global";
-import { Workbench, ColorConfig, TextConfig } from "@ctypes/workbench";
+import { Workbench, ColorConfig, TextConfig } from "@ctypes/workbench.template";
 import { PaintSet } from '@ctypes/shade';
 import { TextSet } from "@ctypes/text";
 import { ContextMenuCommand } from '@ctypes/contextmenu';

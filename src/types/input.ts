@@ -53,7 +53,7 @@ export interface Slider {
 export interface Button {
     value: string;
     onClick: any;
-    role: 'PRIMARY' | 'SECONDARY' | 'TERTIARY';
+    role: 'PRIMARY' | 'SECONDARY' | 'TERTIARY' | 'DISABLED';
 }
 
 export interface ButtonPad {

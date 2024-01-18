@@ -1,6 +1,4 @@
-import { MultiArray } from "./global";
-import { StyleFolder } from "./style";
-import { BaseTemplate, Sidepanel, TemplateInput, TemplateText } from "./templates";
+import { BaseTemplate, Sidepanel } from "./template";
 
 export interface BaseConfig {
     typeface: string;
@@ -25,16 +23,10 @@ export interface ExportTextConfig extends BaseConfig {
     fontSize: boolean;
 }
 
-export interface ExportDevConfig extends BaseConfig {
-    language: string;
-    format: 'RGB' | 'HEX' | 'HSL';
-}
-
 
 export interface Export extends BaseTemplate {
-    folder?: StyleFolder; 
     sidepanel: Sidepanel;
-    type: 'TEXT' | 'PAINT' | 'DEV';
+    type: 'TEXT' | 'PAINT';
     config?: ExportPaintConfig | ExportTextConfig;
 
 }

@@ -2,7 +2,7 @@ import './index.scss';
 import { ExportPaint } from "@components/export-paint";
 import { ExportText } from "@components/export-text";
 import { createElement } from "react";
-import { BaseTemplate } from "@ctypes/templates";
+import { BaseTemplate } from "@ctypes/template";
 
 const TAB_MAP: Record<string, any> = {
     'PAINT': ExportPaint,

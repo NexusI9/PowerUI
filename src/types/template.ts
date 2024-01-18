@@ -1,15 +1,17 @@
 import { Dropdown, Input, InputArray, Slider, Checkbox, TextArea, Button } from "src/types/input";
-import { ColorAdjustConfig, ColorConfig, TextConfig } from "./workbench";
-import { ExportDevConfig, ExportPaintConfig, ExportTextConfig } from "./export";
+import { ColorAdjustConfig, ColorConfig, TextConfig } from "./workbench.template";
+import { ExportPaintConfig, ExportTextConfig } from "./export.template";
 import { ContextMenuCommand } from "./contextmenu";
 import { MultiArray } from "./global";
+import { StyleFolder } from "./style";
+import { DevPaintConfig } from "./dev.template";
 
 export type TemplateConfig = ColorConfig
     & TextConfig
     & ColorAdjustConfig
     & ExportPaintConfig
     & ExportTextConfig
-    & ExportDevConfig;
+    & DevPaintConfig;
 
 
 export type TemplateInput =
@@ -36,22 +38,23 @@ export interface Sidepanel {
 }
 
 interface Footer {
-    primaryAction: { value?: string; action?: string };
+    primaryAction: { value?: string; action?: string; role?: Button['role'] };
 }
 
 export interface BaseTemplate {
     active?: boolean;
     title: string;
+    folder?: StyleFolder;
     footer?: Footer;
     sidepanel: Sidepanel;
-    type: 'PAINT' | 'TEXT' | 'DEV';
+    type: 'PAINT' | 'TEXT';
     config?: Partial<TemplateConfig>;
-    reducer:string;
+    reducer: string;
 }
 
 export interface TemplateSlice {
-    dispatch:{
+    dispatch: {
         onUpdate(): any;
-        onUpdateAction?():any;
+        onUpdateAction?(): any;
     }
 }

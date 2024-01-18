@@ -1,6 +1,6 @@
 import './index.scss';
 import { Dropdown } from "@components/dropdown";
-import { BaseTemplate, SidepanelOption, TemplateText } from "@ctypes/templates";
+import { BaseTemplate, SidepanelOption, TemplateText } from "@ctypes/template";
 import { BaseSyntheticEvent, Fragment, createElement, useEffect, useState } from "react";
 import { clone, traverseCallback } from "@lib/utils/utils";
 import { Input } from "@components/input";
@@ -8,7 +8,7 @@ import { ContextMenuCommand } from "src/types/contextmenu";
 import { Slider } from "@components/slider";
 import { InputArray } from "@components/input-array";
 import { Checkbox } from "@components/checkbox";
-import { TemplateInput } from '@ctypes/templates';
+import { TemplateInput } from '@ctypes/template';
 import { SidepanelHeading } from '@components/sidepanel-heading';
 import { Button } from '@components/button';
 import { TextArea } from '@components/text-area';

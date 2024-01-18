@@ -1,7 +1,7 @@
-import { Export } from "@ctypes/export";
+import { Export } from "@ctypes/export.template";
 import { DEFAULT_TYPEFACE } from "@lib/constants";
 
-export const COLOR_EXPORT_TEMPLATE: Export = {
+export const EXPORT_PAINT_CONFIG: Export = {
     title: 'Generate color palettes',
     reducer: 'export',
     type: 'PAINT',

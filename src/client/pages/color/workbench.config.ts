@@ -1,5 +1,5 @@
-import { Workbench } from "src/types/workbench";
-import { SidepanelOption, TemplateInput, TemplateText } from '@ctypes/templates';
+import { Workbench } from "@ctypes/workbench.template";
+import { SidepanelOption, TemplateInput, TemplateText } from '@ctypes/template';
 import { MATERIAL_DEFAULT_KEYS } from "@lib/constants";
 
 const basicSidepanelContent: SidepanelOption['content'] = [
@@ -360,7 +360,6 @@ const adjustSidepanelContent: SidepanelOption['content'] = [
 
 export const CREATE_SWATCH_CONFIG: Workbench = {
     reducer:'workbench',
-    folder: null,
     title: 'Generate a new palette',
     type: 'PAINT',
     sidepanel: {
@@ -386,7 +385,6 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
 
 export const EDIT_SWATCH_CONFIG: Workbench = {
     reducer:'workbench',
-    folder: null,
     title: 'Edit current palette',
     type: 'PAINT',
     sidepanel: {

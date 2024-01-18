@@ -1,5 +1,5 @@
 import { ColorHSL } from "src/types/color";
-import { ColorAdjustConfig, ColorConfig, ColorSetMethod, Set } from "src/types/workbench";
+import { ColorAdjustConfig, ColorConfig, ColorSetMethod, Set } from "@ctypes/workbench.template";
 import { PaintSet } from "src/types/shade";
 import { folderNameFromPath } from "./style";
 import { MATERIAL_DEFAULT_KEYS } from "@lib/constants";

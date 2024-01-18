@@ -3,7 +3,7 @@ import Close from '@icons/x.svg';
 import { ButtonIcon } from "@components/button-icon";
 import { Button } from "@components/button";
 import { send } from '@lib/ipc';
-import { BaseTemplate } from '@ctypes/templates';
+import { BaseTemplate } from '@ctypes/template';
 
 export const FloatingWindow = ({ children, onDestroy, template }: { children: any, onDestroy?(): any, template: BaseTemplate & any }) => {
 

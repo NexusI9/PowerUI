@@ -1,4 +1,4 @@
-import { ExportTextConfig } from "@ctypes/export"
+import { ExportTextConfig } from "@ctypes/export.template"
 import './index.scss';
 
 export const ExportText = (props:ExportTextConfig) => {

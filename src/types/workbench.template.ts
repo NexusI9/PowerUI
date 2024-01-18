@@ -1,7 +1,7 @@
 import { StyleFolder } from "@ctypes/style";
 import { PaintSet } from "./shade";
 import { TextSet } from "./text";
-import { BaseTemplate, Sidepanel } from "@ctypes/templates";
+import { BaseTemplate, Sidepanel } from "@ctypes/template";
 
 export type ColorSetMethod =
     'SHADE'
@@ -63,7 +63,6 @@ export interface TextConfig extends BaseConfig {
 }
 
 export interface Workbench extends BaseTemplate {
-    folder: StyleFolder | null;
     set?: Set;
 }
 

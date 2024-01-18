@@ -1,7 +1,7 @@
 import { TextSet } from "@components/font-set";
 import { Fragment, createElement } from "react";
 import { PaintSet } from "@components/shade-set";
-import { Workbench } from "@ctypes/workbench";
+import { Workbench } from "@ctypes/workbench.template";
 import './index.scss';
 
 const mapComponent: any = {

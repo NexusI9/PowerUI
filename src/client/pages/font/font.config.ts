@@ -1,4 +1,4 @@
-import { Export } from "@ctypes/export";
+import { Export } from "@ctypes/export.template";
 import { DEFAULT_TYPEFACE } from "@lib/constants";
 
 export const FONT_EXPORT_TEMPLATE: Export = {

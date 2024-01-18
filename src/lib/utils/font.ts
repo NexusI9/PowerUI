@@ -1,8 +1,8 @@
 import { TextSet } from "@ctypes/text";
-import { TextConfig } from "src/types/workbench";
+import { TextConfig } from "@ctypes/workbench.template";
 import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
 import { get } from "@lib/ipc";
-import { Set } from "src/types/workbench";
+import { Set } from "@ctypes/workbench.template";
 import WebFont from "webfontloader";
 import { roundObjectFloat } from "./utils";
 
