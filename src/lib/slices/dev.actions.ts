@@ -5,8 +5,8 @@ import { createAsyncThunk } from "@reduxjs/toolkit";
 
 
 const LANGUAGE_COMMAND = {
-    'CSS': 'CSS_STYLES',
-    'TAILWIND': 'TAILWIND_STYLES'
+    'PAINT': 'PAINT_CSS_STYLES',
+    'TEXT': 'TEXT_CSS_STYLES'
 };
 
 export const updateCode = createAsyncThunk('dev/updateCode', async ({ key, value }: any, { getState }) => {
@@ -18,7 +18,10 @@ export const updateCode = createAsyncThunk('dev/updateCode', async ({ key, value
         [key]: value
     };
 
-    const code = await get({ action: LANGUAGE_COMMAND['CSS'], payload: { ...state.dev, config: newConfig } });
+    
+    const code = await get({ action: LANGUAGE_COMMAND[state.dev.type as keyof typeof LANGUAGE_COMMAND], payload: { ...state.dev, config: newConfig } });
+
+
 
     return {
         config: newConfig,

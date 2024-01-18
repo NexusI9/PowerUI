@@ -18,7 +18,7 @@ const cssConfig: SidepanelOption['content'] = [
             placeholder: 'Color format',
             value: 'Hex'
         },
-        configKey: 'colorFormat'
+        configKey: 'colorformat'
     },
     {
         type: 'INPUT',
@@ -50,7 +50,7 @@ const tlConfig: SidepanelOption['content'] = [
             placeholder: 'Color format',
             value: 'Hex'
         },
-        configKey: 'colorFormat'
+        configKey: 'colorformat'
     },
     {
         type: 'INPUT',
@@ -70,6 +70,10 @@ export const DEV_PAINT_CONFIG: Dev = {
     sidepanel: {
         options: [
             { value: 'CSS', content: [cssConfig], action: 'CSS', receiver: 'STORE', heading: 'Language' },
+            { value: 'SCSS', content: [cssConfig], action: 'SCSS', receiver: 'STORE', heading: 'Language' },
+            { value: 'SASS', content: [cssConfig], action: 'SASS', receiver: 'STORE', heading: 'Language' },
+            { value: 'LESS', content: [cssConfig], action: 'LESS', receiver: 'STORE', heading: 'Language' },
+            { value: 'Stylus', content: [cssConfig], action: 'STYLUS', receiver: 'STORE', heading: 'Language' },
             { value: 'Tailwind', content: [tlConfig], action: 'TAILWIND', receiver: 'STORE', heading: 'Language' },
         ]
     },

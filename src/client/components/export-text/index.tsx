@@ -45,21 +45,21 @@ export const ExportText = (props: ExportTextConfig) => {
             fonts: [
                 {
                     detail: {
-                        topRow: '52px (3.25rem)',
+                        topRow: '52px (3.25em)',
                         bottomRow: <small className="flex f-row gap-s f-center-h"><Icon icon={ArrowVertical} />1.2 &nbsp; <Icon icon={ArrowHorizontal} />0%</small>
                     },
                     body: { content: 'Header 1', style: { fontSize: '52px' } }
                 },
                 {
                     detail: {
-                        topRow: '32px (2rem)',
+                        topRow: '32px (2em)',
                         bottomRow: <small className="flex f-row gap-s f-center-h"><Icon icon={ArrowVertical} />1.2 &nbsp; <Icon icon={ArrowHorizontal} />0%</small>
                     },
                     body: { content: 'Header 2', style: { fontSize: '32px' } }
                 },
                 {
                     detail: {
-                        topRow: '32px (2.1rem)',
+                        topRow: '24px (1.5em)',
                         bottomRow: <small className="flex f-row gap-s f-center-h"><Icon icon={ArrowVertical} />1.2 &nbsp; <Icon icon={ArrowHorizontal} />0%</small>
                     },
                     body: { content: 'Header 3', style: { fontSize: '24px' } }

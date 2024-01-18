@@ -8,6 +8,7 @@ import { PaintSet } from '@ctypes/shade';
 import { TextSet } from "@ctypes/text";
 import { ContextMenuCommand } from '@ctypes/contextmenu';
 import { TemplateConfig } from "@ctypes/template";
+import { Dev, DevPaintConfig } from "@ctypes/dev.template";
 
 export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
@@ -344,7 +345,9 @@ export const styleContextMenu = ({ style, editCommand }: { style: TextSet | Pain
     ];
 }
 
-
+/**
+ * Group styles in an object where each key corresponds to the styles folder ([algae]: [Array<Styles>])
+ */
 export function groupStyles(folder: StyleFolder): { [key: string]: Array<PaintStyle | TextStyle> } {
 
     const groupedStyles: { [key: string]: Array<PaintStyle | TextStyle> } = {};
@@ -367,76 +370,167 @@ export function groupStyles(folder: StyleFolder): { [key: string]: Array<PaintSt
     return groupedStyles;
 }
 
-
+/**
+ * Convert Paint styles of specific folder to CSS/SASS... string characters and output the whole code result
+ */
 function paintToCSS(style: PaintStyle, config: TemplateConfig): { name: string; value: string; } {
 
     const { name, paints } = style;
+    //setprefix
+    //Stylus: color-gray-1-black = rgba(30,30,30,1)
+    //SCSS: $color-gray-1-black: rgba(30,30,30);
+    //SASS: $color-gray-1-black: rgba(30,30,30)
+    //LESS: @color-gray-1-black: rgba(30,30,30);
+    const prefix = {
+        'CSS': '--',
+        'STYLUS': '',
+        'SASS': '$',
+        'SCSS': '$',
+        'LESS': '@'
+    }[config.action as string] || '';
+
     //define variable names
-    const newName = '--' + (config.prefix || '') + folderNameFromPath(name).name.replace(' ', '-').toLocaleLowerCase();
+    const newName = prefix + (config.prefix || '') + folderNameFromPath(name).name.replace(' ', '-').toLocaleLowerCase();
 
     //convert color format
     const { color, opacity } = paints[0] as SolidPaint;
     let convertedColor: string = '';
     if (color) {
-
         let rgba = { ...color, a: opacity };
         convertedColor = {
             'Hex': rgbToHex(rgba),
             'Rgb': rgb(rgba, 'STRING'),
             'Hsl': rgbToHsl(rgba, 'STRING', true),
             'Css': `rgb(var(${newName}) / <alpha-value>)`
-        }[config.colorFormat as string] as string;
+        }[config.colorformat as string] as string;
     }
 
     return { name: newName, value: convertedColor };
 }
 
-export function paintStylesToCSS({ payload }: any): string {
+/**
+ * Convert Text Styles to CSS/SASS... string character and output the whole code result
+ */
+export function paintStylesToCSS({ payload }: { payload: Dev }): string {
 
-    const { config } = payload;
-    const groupedStyles: { [key: string]: any } = groupStyles(payload.folder);
+    const { config, folder } = payload;
+    if (!folder || !config) { return ''; }
+
+    const groupedStyles: { [key: string]: any } = groupStyles(folder);
 
     //convert styles to css (--var-1: #000000)
     Object.keys(groupedStyles).forEach((key) => {
         //as keyof typeof groupedStyles
-        groupedStyles[key] = (groupedStyles[key] as Array<PaintStyle>).map((style) => paintToCSS(style, config));
+        groupedStyles[key] = (groupedStyles[key] as Array<PaintStyle>).map((style) => paintToCSS(style, config as any));
+    });
+
+    //concat parts
+    let stringVariables = '';
+    const colon = (config.action === 'STYLUS') ? ' = ' : ': ';
+    const semicolon = (config.action === 'STYLUS' || config.action === 'SASS') ? '' : ';';
+    const tab = (config.action === 'CSS') ? '\t' : '';
+
+    Object.keys(groupedStyles).forEach((key) => {
+        if (key.length) { stringVariables += `\n\n${tab}/* ${key} */\n` }
+        stringVariables += `${groupedStyles[key].map(({ name, value }: { name: string; value: string; }) => `${tab}${name}${colon}${value}${semicolon}`).join('\n')}`;
     });
 
 
     switch (config.action) {
         /*TAILWIND Variables */
         case 'TAILWIND':
-            let tlVariables = '';
+            stringVariables = '';
             Object.keys(groupedStyles).forEach((key) => {
                 const styles = groupedStyles[key];
-
-                tlVariables += `\t\t${config.prefix || ''}${key.length && key.toLowerCase().replace(' ','') || 'base'}: {
-${styles.map(({ name, value }: { name: string; value: string }) => `\t\t\t${ lastIndexOfArray(name.split('-'), '') }: "${value}"`).join(',\n')}
+                const concatStyles = styles.map(({ name, value }: { name: string; value: string }) => `\t\t\t${lastIndexOfArray(name.split('-'), '')}: "${value}"`).join(',\n');
+                stringVariables += `\t\t${config.prefix || ''}${key.length && key.toLowerCase().replace(' ', '') || 'base'}: {
+${concatStyles}
 \t\t}\n`;
-
             });
             return `module.exports = {
     theme: {
         extend: {
             colors: {
-${tlVariables}
+${stringVariables}
             }
         }
     }
 }`;
-
-        /*CSS Variables*/
+        /*CSS VARIABLES*/
         case 'CSS':
-        default:
-            //concat parts
-            let cssVariables = '';
-            Object.keys(groupedStyles).forEach((key) => {
-                if (key.length) { cssVariables += `\n\n\t/* ${key} */` }
-                cssVariables += `\n${groupedStyles[key].map(({ name, value }: { name: string; value: string; }) => `\t${name}: ${value};`).join('\n')}`;
-            });
             return `:root{
-${cssVariables}
+${stringVariables}
 }`;
+        /*DEFAULT VARIABLES */
+        default:
+            return stringVariables;
 
     }
+}
+
+export function textStylesToCss({ payload }: { payload: Dev }): string {
+
+
+    /*
+    SCSS:
+    @mixin text-style-body-regular() {
+        font-size: 16px;
+        font-family: "SF Pro Text";
+        font-weight: 400;
+        font-style: normal;
+        line-height: 150%;
+        text-decoration: none;
+        text-transform: none;
+    }
+
+    LESS:
+    .text-style-body-regular() {
+        font-size: 16px;
+        font-family: "SF Pro Text";
+        font-weight: 400;
+        font-style: normal;
+        line-height: 150%;
+        text-decoration: none;
+        text-transform: none;
+    }
+
+    CSS:
+    .text-style-body-regular {
+        font-size: 16px;
+        font-family: "SF Pro Text";
+        font-weight: 400;
+        font-style: normal;
+        line-height: 150%;
+        text-decoration: none;
+        text-transform: none;
+    }
+
+    SASS:
+    @mixin text-style-body-regular() 
+        font-size: 16px
+        font-family: "SF Pro Text"
+        font-weight: 400
+        font-style: normal
+        line-height: 150%
+        text-decoration: none
+        text-transform: none
+
+    Sylus:
+    text-style-heading-heading-4() 
+        font-size: 24px
+        font-family: "SF Pro Display"
+        font-weight: 700
+        font-style: normal
+        line-height: 135%
+        text-decoration: none
+        text-transform: none
+
+     */
+
+    //1. set style name (body-bold) => Header
+    //2. transform TextStyle values to string character => Body
+    //3. Concat with prefix/ suffix etc..
+
+
+    return '';
 }

@@ -12,7 +12,8 @@ import {
   duplicateFolder,
   updateText,
   createSet,
-  paintStylesToCSS
+  paintStylesToCSS,
+  textStylesToCss
 } from "@lib/utils/style";
 
 import { loadLocalFont, sortByFont, sortByScale, storeFonts } from "@lib/utils/font.back";
@@ -138,9 +139,14 @@ figma.ui.onmessage = msg => {
         .catch(e => console.warn(e));
       break;
 
-    case 'CSS_STYLES':
+    case 'PAINT_CSS_STYLES':
       figma.ui.postMessage({ ...msg, payload: paintStylesToCSS(msg) });
       break;
+
+    case 'TEXT_CSS_STYLES':
+      figma.ui.postMessage({ ...msg, payload: textStylesToCss(msg) });
+      break;
+
   }
 
 };

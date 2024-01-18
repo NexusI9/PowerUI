@@ -18,7 +18,7 @@ const cssConfig: SidepanelOption['content'] = [
             placeholder: 'Color format',
             value: 'Hex'
         },
-        configKey: 'colorFormat'
+        configKey: 'colorformat'
     },
     {
         type: 'INPUT',
@@ -50,7 +50,7 @@ const tlConfig: SidepanelOption['content'] = [
             placeholder: 'Color format',
             value: 'Hex'
         },
-        configKey: 'colorFormat'
+        configKey: 'colorformat'
     },
     {
         type: 'INPUT',
@@ -66,7 +66,7 @@ const tlConfig: SidepanelOption['content'] = [
 export const DEV_PAINT_CONFIG: Dev = {
     reducer: 'dev',
     title: 'Generate code',
-    type: 'PAINT',
+    type: 'TEXT',
     sidepanel: {
         options: [
             { value: 'CSS', content: [cssConfig], action: 'CSS', receiver: 'STORE', heading: 'Language' },

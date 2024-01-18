@@ -4,7 +4,7 @@ import { ExportPaintConfig, ExportTextConfig } from "./export.template";
 import { ContextMenuCommand } from "./contextmenu";
 import { MultiArray } from "./global";
 import { StyleFolder } from "./style";
-import { DevAction, DevPaintConfig } from "./dev.template";
+import { DevAction, DevPaintConfig, DevTextConfig } from "./dev.template";
 
 export type TemplateConfig = BaseConfig
     & ColorConfig
@@ -12,7 +12,8 @@ export type TemplateConfig = BaseConfig
     & ColorAdjustConfig
     & ExportPaintConfig
     & ExportTextConfig
-    & DevPaintConfig;
+    & DevPaintConfig
+    & DevTextConfig;
 
 
 export interface BaseConfig {
