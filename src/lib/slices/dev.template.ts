@@ -29,7 +29,7 @@ const devSlice = createSlice({
                 config: { ...state.config, action: payload.value }
             })
         },
-        destroy: (state) => ({ ...state, active: false })
+        destroy: (state) => ({ ...state, active: false, code:'' })
     },
     extraReducers: (builder) => {
         builder.addCase(updateCode.fulfilled, (state, { payload }) => ({ ...state, ...payload }))

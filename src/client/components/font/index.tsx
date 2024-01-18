@@ -5,7 +5,8 @@ import { Input } from '@components/input';
 import { BaseSyntheticEvent } from 'react';
 import { send } from '@lib/ipc';
 import { FontOptions } from '@components/font-options';
-import { cssTextStyle, loadFont } from '@lib/utils/font';
+import { loadFont } from '@lib/utils/font.action';
+import { cssTextStyle } from '@lib/utils/font';
 import { TextSet } from '@ctypes/text';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
 

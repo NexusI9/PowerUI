@@ -8,7 +8,7 @@ import { PaintSet } from '@ctypes/shade';
 import { TextSet } from "@ctypes/text";
 import { ContextMenuCommand } from '@ctypes/contextmenu';
 import { TemplateConfig } from "@ctypes/template";
-import { Dev, DevPaintConfig } from "@ctypes/dev.template";
+import { Dev } from "@ctypes/dev.template";
 
 export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
@@ -469,6 +469,11 @@ ${stringVariables}
 }
 
 export function textStylesToCss({ payload }: { payload: Dev }): string {
+
+    const { config, folder } = payload;
+    if (!folder || !config) { return ''; }
+
+    const groupedStyles: { [key: string]: any } = groupStyles(folder);
 
 
     /*

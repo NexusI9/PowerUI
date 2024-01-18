@@ -1,4 +1,4 @@
-import { loadFont } from "@lib/utils/font";
+import { loadFont } from "@lib/utils/font.action";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 

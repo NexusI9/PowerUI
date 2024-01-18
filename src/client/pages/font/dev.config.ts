@@ -21,6 +21,19 @@ const cssConfig: SidepanelOption['content'] = [
         configKey: 'colorformat'
     },
     {
+        type: 'DROPDOWN',
+        attributes: {
+            list: [
+                { value: 'px', receiver: 'STORE' },
+                { value: 'em', receiver: 'STORE' },
+            ],
+            appearance: { label: true },
+            placeholder: 'Unit',
+            value: 'px'
+        },
+        configKey: 'unit'
+    },
+    {
         type: 'INPUT',
         attributes: {
             placeholder: 'Variables prefix',
@@ -63,13 +76,17 @@ const tlConfig: SidepanelOption['content'] = [
 
 ]
 
-export const DEV_PAINT_CONFIG: Dev = {
+export const DEV_FONT_CONFIG: Dev = {
     reducer: 'dev',
     title: 'Generate code',
     type: 'TEXT',
     sidepanel: {
         options: [
             { value: 'CSS', content: [cssConfig], action: 'CSS', receiver: 'STORE', heading: 'Language' },
+            { value: 'SCSS', content: [cssConfig], action: 'SCSS', receiver: 'STORE', heading: 'Language' },
+            { value: 'SASS', content: [cssConfig], action: 'SASS', receiver: 'STORE', heading: 'Language' },
+            { value: 'LESS', content: [cssConfig], action: 'LESS', receiver: 'STORE', heading: 'Language' },
+            { value: 'Stylus', content: [cssConfig], action: 'STYLUS', receiver: 'STORE', heading: 'Language' },
             { value: 'Tailwind', content: [tlConfig], action: 'TAILWIND', receiver: 'STORE', heading: 'Language' },
         ]
     },

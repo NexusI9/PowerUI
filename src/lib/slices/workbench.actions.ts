@@ -1,5 +1,5 @@
 import { Workbench, ColorConfig, TextConfig, Set } from "@ctypes/workbench.template";
-import { apple, carbon, flutter, scale, material as textMaterial } from "@lib/utils/font";
+import { apple, carbon, flutter, scale, material as textMaterial } from "@lib/utils/font.action";
 import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 

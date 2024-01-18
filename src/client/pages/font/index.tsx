@@ -12,6 +12,7 @@ import { send } from "@lib/ipc";
 //configs
 import { CREATE_FONT_SET_CONFIG, EDIT_SWATCH_CONFIG } from "./workbench.config";
 import { EXPORT_FONT_CONFIG } from "./export.config";
+import { DEV_FONT_CONFIG } from "./dev.config";
 
 //Reducer dispatch
 import { init as initWorkbench } from "@lib/slices/workbench.template";
@@ -27,7 +28,7 @@ export default () => {
         dispatch(switchDisplay('list'));
     }
     const onExportFont = (folder: StyleFolder) => dispatch(initExport({ ...EXPORT_FONT_CONFIG, folder }));
-    const onDevFont = (folder: StyleFolder) => dispatch(initDev({ ...EXPORT_FONT_CONFIG, folder }));
+    const onDevFont = (folder: StyleFolder) => dispatch(initDev({ ...DEV_FONT_CONFIG, folder }));
 
     const padConfig = {
         icon: FontPlus,
