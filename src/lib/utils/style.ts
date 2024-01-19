@@ -504,7 +504,7 @@ function textToCSS(style: TextStyle, config: TemplateConfig): string {
     //define colon
     const colon = (action === 'SASS' || action === 'STYLUS') ? '' : ';';
     //convert text style to css string
-    const cssTextString = cssTextStyle(style, 'STRING').join(`${colon}\n\t`);
+    const cssTextString = cssTextStyle(style, 'STRING', config).join(`${colon}\n\t`);
     //add prefix
     let newName = (prefix || '') + style.name;
     //remove existing Spaces
@@ -598,12 +598,7 @@ export function textStylesToCss({ payload }: { payload: Dev }): string {
         line-height: 135%
         text-decoration: none
         text-transform: none
-
      */
-
-    //1. set style name (body-bold) => Header
-    //2. transform TextStyle values to string character => Body
-    //3. Concat with prefix/ suffix etc..
 
     return stringVariables;
 

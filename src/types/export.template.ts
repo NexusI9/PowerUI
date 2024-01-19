@@ -20,7 +20,7 @@ export interface ExportPaintConfig extends BaseConfig {
 export interface ExportTextConfig extends BaseConfig {
     fontFamily: boolean;
     fontWeight: boolean;
-    basesize: string;
+    basesize: number;
 }
 
 

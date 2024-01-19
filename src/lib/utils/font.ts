@@ -1,5 +1,6 @@
 import { TextSet } from "@ctypes/text";
 import { roundObjectFloat } from "./utils";
+import { DevTextConfig } from "@ctypes/dev.template";
 
 export function convertUnit(unit: string): string {
     return {
@@ -7,7 +8,8 @@ export function convertUnit(unit: string): string {
         'PERCENT': '%',
         'POINTS': 'pt',
         'PICAS': 'pc',
-        'AUTO': 'auto'
+        'AUTO': 'auto',
+        'EM': 'em'
     }[unit] || unit;
 }
 
@@ -24,10 +26,16 @@ export function convertFontWeight(font: string): string {
     }[font] || font
 }
 
-export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJECT'): Array<String> | Record<string, any> {
+function pxToEm(value: number, baseSize: number = 1): string {
+    const emValue = value / baseSize;
+    return (emValue % 1 == 0) ? String(emValue) : Number(emValue).toFixed(2);
+}
+
+export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJECT', config?: DevTextConfig): Array<String> | Record<string, any> {
 
     const lineHeight = roundObjectFloat((style.lineHeight as any)).value;
     const letterSpacing = roundObjectFloat((style.letterSpacing as any)).value;
+
     const attributes = [
         {
             'OBJECT': 'fontWeight',
@@ -37,7 +45,7 @@ export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJE
         {
             'OBJECT': 'fontSize',
             'STRING': 'font-size',
-            'VALUE': style.fontSize + 'px'
+            'VALUE': (config?.unit == 'em') ? `${pxToEm(style.fontSize || 0, config?.basesize || 16)}em` : `${style.fontSize}px`
         },
         {
             'OBJECT': 'letterSpacing',
@@ -56,11 +64,11 @@ export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJE
         }
     ];
 
-    
+
     const result = {
         'OBJECT': attributes.map(item => ({ [item[output]]: item['VALUE'] })).reduce((prec, curr) => ({ ...prec, ...curr })),
         'STRING': attributes.map(item => `${item[output]}: ${item['VALUE']}`)
-    } 
+    }
 
     return result[output]
 }

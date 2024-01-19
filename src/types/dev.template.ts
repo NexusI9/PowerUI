@@ -12,7 +12,7 @@ export interface DevPaintConfig extends DevBaseConfig {
 }
 
 export interface DevTextConfig extends DevBaseConfig {
-    basesize: string;
+    basesize: number;
     unit:'px'|'em';
 }
 
