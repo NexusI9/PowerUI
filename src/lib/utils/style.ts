@@ -458,9 +458,10 @@ export function paintStylesToCSS({ payload }: { payload: Dev }): string {
 
     Object.keys(groupedStyles).forEach((key) => {
         //set group as comments
-        if (key.length) { stringVariables += `\n\n${tab}/* ${key} */\n` }
+        if (key.length) { stringVariables += `${tab}/* ${key} */\n` }
         //add converted styles to css
         stringVariables += `${groupedStyles[key].map(({ name, value }: { name: string; value: string; }) => `${tab}${name}${colon}${value}${semicolon}`).join('\n')}`;
+        stringVariables += '\n\n';
     });
 
 
