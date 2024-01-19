@@ -2,7 +2,7 @@ import { ColorOutput, ColorHSL } from 'src/types/color';
 import { replaceStyle } from './style';
 import { DEFAULT_STYLE_PAINT } from '@lib/constants';
 
-function to255(color: RGB | RGBA): RGB | RGBA {
+export function to255(color: RGB | RGBA): RGB | RGBA {
     const alpha = (color as RGBA).a;
 
     let converted: RGB | RGBA = {
