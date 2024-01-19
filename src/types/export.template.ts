@@ -6,14 +6,14 @@ export interface BaseConfig {
 
 export interface ExportPaintConfig extends BaseConfig {
     swatchBorderRadius: string;
-    layout: 'COLUMN' | 'ROW';
+    layout: 'Column' | 'Row';
     rgb: boolean;
     hex: boolean;
     cmyk: boolean;
     pantone: boolean;
     hsl: boolean;
     contrastRatio: boolean;
-    colorSynthax: string;
+    colorSeparator: string;
 }
 
 

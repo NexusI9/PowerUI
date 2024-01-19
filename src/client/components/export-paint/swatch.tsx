@@ -1,15 +1,15 @@
 import { ExportPaintConfig } from "@ctypes/export.template"
 import './index.scss';
 import { Contrast } from "./contrast";
-import { colorSynthax } from "./swatch.helper";
+import { colorSeparator } from "@lib/utils/color";
 
 export const Swatch = (props: ExportPaintConfig & any) => {
 
     const formatMap = [
         { key: 'hex', label: 'HEX', value: '#0c8ce9' },
-        { key: 'rgb', label: 'RGB', value: colorSynthax(['12', '140', '233'], props.colorSynthax, 'rgb') },
-        { key: 'hsl', label: 'HSL', value: colorSynthax(['205', '90%', '48%'], props.colorSynthax, 'hsl') },
-        { key: 'cmyk', label: 'CMYK', value: colorSynthax(['87%', '36%', '0%', '9%'], props.colorSynthax, undefined) },
+        { key: 'rgb', label: 'RGB', value: colorSeparator(['12', '140', '233'], props.colorSeparator, 'rgb') },
+        { key: 'hsl', label: 'HSL', value: colorSeparator(['205', '90%', '48%'], props.colorSeparator, 'hsl') },
+        { key: 'cmyk', label: 'CMYK', value: colorSeparator(['87%', '36%', '0%', '9%'], props.colorSeparator, undefined) },
         { key: 'pantone', label: 'Pantone', value: '2925 C' },
     ];
 

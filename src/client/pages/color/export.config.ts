@@ -60,7 +60,7 @@ export const EXPORT_PAINT_CONFIG: Export = {
                                 appearance: { label: true },
                                 value: 'Separator •'
                             },
-                            configKey: 'colorSynthax'
+                            configKey: 'colorSeparator'
                         },
                         {
                             type: 'INPUT',
@@ -120,5 +120,5 @@ export const EXPORT_PAINT_CONFIG: Export = {
             }
         ]
     },
-    footer: { primaryAction: { value: 'Generate' } }
+    footer: { primaryAction: { value: 'Generate', action: 'EXPORT_PAINT_SET' } }
 }

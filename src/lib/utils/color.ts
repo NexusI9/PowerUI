@@ -190,3 +190,17 @@ export function sort_by_hsl(styles: Array<PaintStyle>, proprety: 'HUE' | 'BRIGHT
 export function colorToPaint(color: RGB): Array<SolidPaint> {
     return [{ ...DEFAULT_STYLE_PAINT, color: color }];
 }
+
+
+export function colorSeparator(color: Array<string>, synthax: string, prefix?: string): string {
+    if (typeof color === 'string') { return color; }
+
+    return {
+        'Separator •': color.join(' • '),
+        'Separator -': color.join(' - '),
+        'Separator |': color.join(' | '),
+        'Separator /': color.join(' / '),
+        'White space': color.join(' '),
+        'Development': prefix ? `${prefix}(${color.join(', ')})` : color.join(', ')
+    }[synthax] || color.join(' ');
+}

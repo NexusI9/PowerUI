@@ -42,6 +42,7 @@
     "react-dom": "^18.2.0",
     "react-redux": "^9.0.4",
     "sass": "^1.69.5",
+    "simple-color-converter": "^2.1.13",
     "wcag-color": "^1.1.1",
     "webfontloader": "^1.6.28"
   }
