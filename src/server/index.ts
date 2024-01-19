@@ -114,7 +114,7 @@ figma.ui.onmessage = msg => {
 
     case 'EDIT_SWATCH':
       payload.config?.styles?.forEach((style: PaintStyle, i: number) => {
-        try { updateColor({ style, color: payload.set[i].color as RGB }); }
+        try { updateColor({ style, color: payload.set[i].paints[0].color as RGB }); }
         catch (_) { }
       });
       break;
