@@ -85,10 +85,10 @@ export const Folder = ({
         <div className={`folder flex f-col ${!display && 'hide' || ''} ${root && 'root' || ''}`}>
             {!hideHeader && <div className='folder-header flex f-row'>
                 <div className="folder-header-left flex f-row">
-                    <OptionsRow options={folderIconMap} className='folder-grab' />
+                    <OptionsRow options={[folderIconMap]} className='folder-grab' />
                     <Input value={title} appearance={{ minified: true }} onBlur={handleOnBlur} onEnter={handleOnBlur} />
                 </div>
-                <OptionsRow options={editIconMap} />
+                <OptionsRow options={[editIconMap]} />
             </div>
             }
             <div className={`folder-body flex f-col gap-m`}>
