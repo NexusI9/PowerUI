@@ -379,6 +379,22 @@ export function groupStyles(folder: StyleFolder): { [key: string]: Array<PaintSt
     return groupedStyles;
 }
 
+
+function convertCaseName(name: string, method: string): string {
+    //Map dropdown label to case-name library methods
+    const mapCase = {
+        'kebab-case': changeCase.kebabCase,
+        'Train-Case': changeCase.trainCase,
+        'camelCase': changeCase.camelCase,
+        'PascalCase': changeCase.pascalCase,
+        'snake_case': changeCase.snakeCase,
+        'Pascal_Snake_Case': changeCase.pascalSnakeCase,
+    };
+
+    return mapCase[method as keyof typeof mapCase] && mapCase[method as keyof typeof mapCase](name) || name;
+}
+
+
 /**
  * Convert Paint styles of specific folder to CSS/SASS... string characters and output the whole code result
  */
@@ -398,8 +414,9 @@ function paintToCSS(style: PaintStyle, config: TemplateConfig): { name: string; 
         'LESS': '@'
     }[config.action as string] || '';
 
+    const styleName = folderNameFromPath(name).name;
     //define variable names
-    const newName = prefix + (config.prefix || '') + folderNameFromPath(name).name.replace(' ', '-').toLocaleLowerCase();
+    const newName = prefix + (config.prefix || '') + convertCaseName(styleName, config.nameformat);
 
     //convert color format
     const { color, opacity } = paints[0] as SolidPaint;
@@ -479,19 +496,6 @@ ${stringVariables}
     }
 }
 
-function convertCaseName(name: string, method: string): string {
-    //Map dropdown label to case-name library methods
-    const mapCase = {
-        'kebab-case': changeCase.kebabCase,
-        'Train-Case': changeCase.trainCase,
-        'camelCase': changeCase.camelCase,
-        'PascalCase': changeCase.pascalCase,
-        'snake_case': changeCase.snakeCase,
-        'Pascal_Snake_Case': changeCase.pascalSnakeCase,
-    };
-
-    return mapCase[method as keyof typeof mapCase](name) || name;
-}
 
 
 function textToCSS(style: TextStyle, config: TemplateConfig): string {
