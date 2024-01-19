@@ -54,22 +54,25 @@ export const Style = ({
 
         //set header option;
         const optionMap = [
-            {
-                icon: options?.header?.add?.icon || Plus,
-                onClick: () => folder?.map(folder => options?.header?.add?.onClick(folder))
-            },
-            {
-                icon:  options?.header?.export?.icon || Upload,
-                onClick: () => folder?.map(folder => options?.header?.export?.onClick(folder))
-            },
-            {
-                icon:  options?.header?.dev?.icon || Dev,
-                onClick: () => folder?.map(folder => options?.header?.dev?.onClick(folder))
-            },
-            {
-                icon: displayMode === 'grid' ? List : Grid,
-                onClick: () => dispatch(switchDisplay(null))
-            }
+            [
+                {
+                    icon: options?.header?.add?.icon || Plus,
+                    onClick: () => folder?.map(folder => options?.header?.add?.onClick(folder))
+                },
+                {
+                    icon: options?.header?.export?.icon || Upload,
+                    onClick: () => folder?.map(folder => options?.header?.export?.onClick(folder))
+                },
+                {
+                    icon: options?.header?.dev?.icon || Dev,
+                    onClick: () => folder?.map(folder => options?.header?.dev?.onClick(folder))
+                },
+            ], [
+                {
+                    icon: displayMode === 'grid' ? List : Grid,
+                    onClick: () => dispatch(switchDisplay(null))
+                }
+            ]
         ];
 
         setHeaderOptions(optionMap);
