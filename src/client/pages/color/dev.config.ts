@@ -27,6 +27,24 @@ const cssConfig: SidepanelOption['content'] = [
             appearance: { label: true }
         },
         configKey: 'prefix'
+    },
+    {
+        type: 'DROPDOWN',
+        attributes: {
+            list: [
+                { value: 'kebab-case', receiver: 'STORE' },
+                { value: 'Train-Case', receiver: 'STORE' },
+                { value: 'camelCase', receiver: 'STORE' },
+                { value: 'PascalCase', receiver: 'STORE' },
+                { value: 'Pascal_Snake_Case', receiver: 'STORE' },
+                { value: 'snake_case', receiver: 'STORE' },
+            ],
+            style: { textTransform: 'none' },
+            appearance: { label: true },
+            placeholder: 'Name format',
+            value: 'kebab-case'
+        },
+        configKey: 'nameformat'
     }
 
 ]

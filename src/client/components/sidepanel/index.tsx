@@ -109,7 +109,7 @@ export const Sidepanel = (template: BaseTemplate) => {
     return (<div className="template-sidepanel flex f-col gap-l">
         {
             (options && options?.length > 1) &&
-            <div className='flex f-col gap-s'>
+            <div className='flex f-col gap-m'>
                 {activeOption?.heading && <SidepanelHeading value={activeOption.heading} />}
                 <Dropdown list={options} onChange={updateOption} placeholder="Swatch type" />
             </div>

@@ -9,6 +9,8 @@ import { TextSet } from "@ctypes/text";
 import { ContextMenuCommand } from '@ctypes/contextmenu';
 import { TemplateConfig } from "@ctypes/template";
 import { Dev } from "@ctypes/dev.template";
+import { cssTextStyle } from "./font";
+import * as changeCase from 'change-case';
 
 export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
@@ -367,6 +369,13 @@ export function groupStyles(folder: StyleFolder): { [key: string]: Array<PaintSt
 
     group(folder);
 
+    //remove empty folders:
+    for (let key in groupedStyles) {
+        if (!groupedStyles[key].length) {
+            delete groupedStyles[key];
+        }
+    }
+
     return groupedStyles;
 }
 
@@ -431,7 +440,9 @@ export function paintStylesToCSS({ payload }: { payload: Dev }): string {
     const tab = (config.action === 'CSS') ? '\t' : '';
 
     Object.keys(groupedStyles).forEach((key) => {
+        //set group as comments
         if (key.length) { stringVariables += `\n\n${tab}/* ${key} */\n` }
+        //add converted styles to css
         stringVariables += `${groupedStyles[key].map(({ name, value }: { name: string; value: string; }) => `${tab}${name}${colon}${value}${semicolon}`).join('\n')}`;
     });
 
@@ -468,13 +479,67 @@ ${stringVariables}
     }
 }
 
+function convertCaseName(name: string, method: string): string {
+    //Map dropdown label to case-name library methods
+    const mapCase = {
+        'kebab-case': changeCase.kebabCase,
+        'Train-Case': changeCase.trainCase,
+        'camelCase': changeCase.camelCase,
+        'PascalCase': changeCase.pascalCase,
+        'snake_case': changeCase.snakeCase,
+        'Pascal_Snake_Case': changeCase.pascalSnakeCase,
+    };
+
+    return mapCase[method as keyof typeof mapCase](name) || name;
+}
+
+
+function textToCSS(style: TextStyle, config: TemplateConfig): string {
+    const { action, prefix } = config;
+
+    //define colon
+    const colon = (action === 'SASS' || action === 'STYLUS') ? '' : ';';
+    //convert text style to css string
+    const cssTextString = cssTextStyle(style, 'STRING').join(`${colon}\n\t`);
+    //add prefix
+    let newName = (prefix || '') + style.name;
+    //remove existing Spaces
+    newName = newName.replace(/\s/gm, '');
+    //replace "/" by " " in name
+    newName = newName.replace('/', ' ');
+    newName = convertCaseName(newName, config.nameformat);
+
+    //define prefix suffix and end depending on config action
+    const presuffix = {
+        'CSS': { prefix: '.', suffix: '{', end: '}' },
+        'LESS': { prefix: '.', suffix: '() {', end: '}' },
+        'STYLUS': { prefix: '', suffix: '()', end: '' },
+        'SCSS': { prefix: '@mixin ', suffix: '() {', end: '}' },
+        'SASS': { prefix: '@mixin ', suffix: '()', end: '' },
+    }[action as string] || { prefix: '', suffix: '', end: '' }
+
+    return `${presuffix.prefix}${newName}${presuffix.suffix}
+\t${cssTextString}
+${presuffix.end}`;
+}
+
 export function textStylesToCss({ payload }: { payload: Dev }): string {
 
     const { config, folder } = payload;
     if (!folder || !config) { return ''; }
 
     const groupedStyles: { [key: string]: any } = groupStyles(folder);
+    let stringVariables = '';
+    Object.keys(groupedStyles).forEach(key => {
+        //set initial tab
 
+        //display group as comment
+        if (key.length) { stringVariables += `/* ${key} */\n` }
+
+        const stylesString = groupedStyles[key].map((style: TextStyle) => textToCSS(style, config as any)).join('\n\n');
+        stringVariables += stylesString;
+        stringVariables += '\n\n';
+    });
 
     /*
     SCSS:
@@ -520,7 +585,7 @@ export function textStylesToCss({ payload }: { payload: Dev }): string {
         text-decoration: none
         text-transform: none
 
-    Sylus:
+    Stylus:
     text-style-heading-heading-4() 
         font-size: 24px
         font-family: "SF Pro Display"
@@ -536,6 +601,6 @@ export function textStylesToCss({ payload }: { payload: Dev }): string {
     //2. transform TextStyle values to string character => Body
     //3. Concat with prefix/ suffix etc..
 
+    return stringVariables;
 
-    return '';
 }

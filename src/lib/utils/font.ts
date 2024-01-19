@@ -24,7 +24,7 @@ export function convertFontWeight(font: string): string {
     }[font] || font
 }
 
-export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJECT') {
+export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJECT'): Array<String> | Record<string, any> {
 
     const lineHeight = roundObjectFloat((style.lineHeight as any)).value;
     const letterSpacing = roundObjectFloat((style.letterSpacing as any)).value;
@@ -56,8 +56,13 @@ export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJE
         }
     ];
 
+    
+    const result = {
+        'OBJECT': attributes.map(item => ({ [item[output]]: item['VALUE'] })).reduce((prec, curr) => ({ ...prec, ...curr })),
+        'STRING': attributes.map(item => `${item[output]}: ${item['VALUE']}`)
+    } 
 
-    return attributes.map(item => ({ [item[output]]: item['VALUE'] })).reduce((curr, prec) => ({ ...prec, ...curr }));
+    return result[output]
 }
 
 export function valueUnitFrom(value: string): { value: number; unit: string; } {

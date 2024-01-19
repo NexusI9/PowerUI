@@ -16,7 +16,7 @@ interface FontOptions {
 
 export const FontOptions = ({ style, config }: FontOptions) => {
 
-    const cssStyle = cssTextStyle(style);
+    const cssStyle = cssTextStyle(style, 'OBJECT') as Record<string, any>;
     const inputStyle = {
         minified: true,
         stroke: false,
@@ -31,7 +31,7 @@ export const FontOptions = ({ style, config }: FontOptions) => {
             appearance: inputStyle,
             onBlur: (e: BaseSyntheticEvent) => updateAttribute(style, 'fontSize', Math.max(1, valueUnitFrom(e.target.value).value)),
             onEnter: (e: BaseSyntheticEvent) => updateAttribute(style, 'fontSize', Math.max(1, valueUnitFrom(e.target.value).value))
-        },  
+        },
         letterSpacing: {
             type: 'AMOUNT',
             value: cssStyle.letterSpacing,
