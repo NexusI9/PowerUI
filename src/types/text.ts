@@ -1,7 +1,7 @@
 export interface TextArrayItem {
     family: string;
     loaded: boolean;
-    style: Array<String>;
+    style: Array<string>;
 }
 
 export interface TextSet extends Partial<TextStyle> {

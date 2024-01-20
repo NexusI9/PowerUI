@@ -4,6 +4,8 @@ import { colorSeparator, rgb, rgbToHex, rgbToHsl, to255 } from "./color";
 import simpleColorConverter from 'simple-color-converter';
 import { objectToArray, roundObjectFloat } from "./utils";
 import { checkContrast } from "./shade.helper";
+import { groupFont } from "./font.back";
+import { TextArrayItem } from "@ctypes/text";
 
 const TEXT_STYLES: Record<string, { fontName: FontName, fontSize: number }> = {
     header: {
@@ -28,25 +30,32 @@ const TEXT_STYLES: Record<string, { fontName: FontName, fontSize: number }> = {
     }
 };
 
+const COLOR_STYLES: Record<string, Paint[]> = {
+    transparent: [{ type: 'SOLID', color: { r: 0, g: 0, b: 0 }, opacity: 0 }],
+    black: [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }],
+    grey: [{ type: 'SOLID', color: { r: 0.4, g: 0.4, b: 0.4 } }]
+};
+
 export async function exportPaintSet({ payload }: { payload: Dev }) {
 
     const { folder, config } = payload;
-
     if (!folder) { return; }
 
     const groupedStyles = groupStyles(folder);
 
     //preload needed fonts;
     const fontsLoad: Array<Promise<void>> = [];
-    Object.keys(TEXT_STYLES).forEach((key: string) => fontsLoad.push(figma.loadFontAsync(TEXT_STYLES[key].fontName)))
+    Object.keys(TEXT_STYLES).forEach((key: string) => fontsLoad.push(figma.loadFontAsync(TEXT_STYLES[key].fontName)));
     await Promise.all(fontsLoad);
 
 
     //Generate swatch
     const masterFrame = figma.createFrame();
     masterFrame.name = 'Palettes'
-    
+
     Object.keys(groupedStyles).forEach(async (key: string) => {
+
+        console.log(`Generating ${key} swatch...`);
 
         //create parent frame
         const parentFrame = figma.createFrame();
@@ -104,6 +113,7 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
                 contrastFrame.layoutMode = 'HORIZONTAL';
                 contrastFrame.layoutSizingHorizontal = 'HUG';
                 contrastFrame.layoutSizingVertical = 'HUG';
+                contrastFrame.counterAxisAlignItems = 'CENTER';
                 contrastFrame.itemSpacing = 3;
                 contrastFrame.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 }, opacity: 0.8 }];
                 contrastFrame.bottomLeftRadius = 30;
@@ -201,14 +211,14 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
                     colorName.fontName = TEXT_STYLES.footnote_1.fontName;
                     colorName.fontSize = TEXT_STYLES.footnote_1.fontSize;
                     colorName.characters = (format === 'pantone') ? 'Pantone' : format.toUpperCase();
-                    colorName.fills = [{ type: 'SOLID', color: { r: 0.6, g: 0.6, b: 0.6 } }];
+                    colorName.fills = COLOR_STYLES.grey;
 
                     //color value
                     const colorCode = figma.createText();
                     colorCode.fontName = TEXT_STYLES.footnote_1.fontName;
                     colorCode.fontSize = TEXT_STYLES.footnote_1.fontSize;
                     colorCode.characters = arrayColor;
-                    colorCode.fills = [{ type: 'SOLID', color: { r: 0.6, g: 0.6, b: 0.6 } }];
+                    colorCode.fills = COLOR_STYLES.grey;
 
                     //Render color format frame
                     colorFormatFrame.appendChild(colorName);
@@ -276,6 +286,168 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
     masterFrame.layoutSizingHorizontal = 'HUG';
     masterFrame.layoutSizingVertical = 'HUG';
 
-    //figma.closePlugin();
+    figma.closePlugin();
+
+}
+
+
+
+export async function exportTextSet({ payload }: { payload: Dev }) {
+
+    const { folder, config } = payload;
+    if (!folder) { return; }
+
+    const groupedStyles = groupStyles(folder);
+
+    //Get unique fonts families and unique weight
+    let uniqueFonts: { [key: string]: TextArrayItem } = {};
+    Object.keys(groupedStyles).forEach(key => {
+        const fontNames = groupedStyles[key as keyof typeof groupedStyles].map((item) => ({ fontName: (item as TextStyle).fontName }));
+        uniqueFonts = { ...uniqueFonts, ...groupFont(fontNames) };
+    });
+
+    //preload fonts
+    const fontsLoad: Array<Promise<void>> = [];
+    //load default layout fonts
+    Object.keys(TEXT_STYLES).forEach((key: string) => fontsLoad.push(figma.loadFontAsync(TEXT_STYLES[key].fontName)));
+    //load styles custom fonts
+    Object.keys(uniqueFonts).forEach((key: string) => {
+        const currentFont = uniqueFonts[key as keyof typeof uniqueFonts];
+        //load styles one by one
+        currentFont.style.forEach(style => fontsLoad.push(figma.loadFontAsync({ family: currentFont.family, style })));
+    });
+    await Promise.all(fontsLoad);
+
+    const DETAILS_WIDTH = 135;
+    const masterFrame = figma.createFrame();
+    masterFrame.name = 'Font sets'
+    masterFrame.layoutMode = 'HORIZONTAL';
+    masterFrame.layoutSizingHorizontal = 'HUG';
+    masterFrame.layoutSizingVertical = 'HUG';
+
+    const fontFamilyHierarchy = ['Primary', 'Secondary', 'Tertiary'];
+    Object.keys(uniqueFonts).forEach((key, i) => {
+
+        const fontGroup = figma.createFrame();
+        fontGroup.layoutMode = 'VERTICAL';
+        fontGroup.itemSpacing = 24;
+        fontGroup.layoutSizingHorizontal = 'HUG';
+        fontGroup.layoutSizingVertical = 'HUG';
+        fontGroup.itemSpacing = 32;
+        fontGroup.paddingLeft = 24;
+        fontGroup.paddingBottom = 24;
+        fontGroup.paddingTop = 24;
+        fontGroup.paddingRight = 24;
+
+        //----------Set font families
+        if (config?.fontFamily) {
+            const fontFamilyFrame = figma.createFrame();
+            fontFamilyFrame.layoutMode = 'VERTICAL';
+            fontFamilyFrame.itemSpacing = 12;
+            fontFamilyFrame.layoutSizingHorizontal = 'HUG';
+            fontFamilyFrame.layoutSizingVertical = 'HUG';
+
+            const fontFamilyHeader = figma.createText();
+            fontFamilyHeader.fontSize = TEXT_STYLES.header.fontSize;
+            fontFamilyHeader.fontName = TEXT_STYLES.header.fontName;
+            fontFamilyHeader.characters = 'Font Family';
+            fontFamilyFrame.appendChild(fontFamilyHeader);
+
+            const fontFrame = figma.createFrame();
+            fontFrame.layoutMode = 'HORIZONTAL';
+            fontFrame.layoutSizingHorizontal = 'HUG';
+            fontFrame.layoutSizingVertical = 'HUG';
+            fontFrame.counterAxisAlignItems = 'CENTER';
+
+            //Set font label
+            const fontLabel = figma.createText();
+            fontLabel.fontSize = 32;
+            fontLabel.fontName = { family: key, style: 'Regular' };
+            fontLabel.characters = key;
+
+            //Set font detail
+            const fontDetail = figma.createFrame();
+            fontDetail.resize(DETAILS_WIDTH, 30);
+            fontDetail.layoutMode = 'VERTICAL';
+            fontDetail.layoutSizingVertical = 'HUG';
+            fontDetail.itemSpacing = 3;
+
+            const fontDetailTop = figma.createText();
+            const fontDetailBottom = figma.createText();
+
+            fontDetailTop.fontSize = TEXT_STYLES.footnote_1.fontSize;
+            fontDetailTop.fontName = TEXT_STYLES.footnote_1.fontName;
+            fontDetailTop.characters = `Font Family ${(fontFamilyHierarchy[i] || '')}`;
+            fontDetailTop.fills = COLOR_STYLES.grey;
+
+            fontDetailBottom.fontSize = TEXT_STYLES.footnote_1.fontSize;
+            fontDetailBottom.fontName = TEXT_STYLES.footnote_1.fontName;
+            fontDetailBottom.characters = key;
+            fontDetailBottom.fills = COLOR_STYLES.grey;
+
+            fontDetail.appendChild(fontDetailTop);
+            fontDetail.appendChild(fontDetailBottom);
+
+            fontFrame.appendChild(fontDetail);
+            fontFrame.appendChild(fontLabel);
+
+            fontFamilyFrame.appendChild(fontFrame);
+            fontGroup.appendChild(fontFamilyFrame);
+
+        }
+
+        //----------Set font Weight
+        if (config?.fontWeight) {
+            const fontWeightFrame = figma.createFrame();
+            fontWeightFrame.layoutMode = 'VERTICAL';
+            fontWeightFrame.itemSpacing = 12;
+            fontWeightFrame.layoutSizingHorizontal = 'HUG';
+            fontWeightFrame.layoutSizingVertical = 'HUG';
+
+            const fontWeightHeader = figma.createText();
+            fontWeightHeader.fontSize = TEXT_STYLES.header.fontSize;
+            fontWeightHeader.fontName = TEXT_STYLES.header.fontName;
+            fontWeightHeader.characters = 'Font Weight';
+            fontWeightFrame.appendChild(fontWeightHeader);
+
+            uniqueFonts[key].style.forEach(style => { 
+                
+            });
+
+            fontGroup.appendChild(fontWeightFrame);
+        }
+
+
+        //----------Set font size
+        const fontSizeFrame = figma.createFrame();
+        fontSizeFrame.layoutMode = 'VERTICAL';
+        fontSizeFrame.itemSpacing = 12;
+        fontSizeFrame.layoutSizingHorizontal = 'HUG';
+        fontSizeFrame.layoutSizingVertical = 'HUG';
+
+        const fontSizeHeader = figma.createText();
+        fontSizeHeader.fontSize = TEXT_STYLES.header.fontSize;
+        fontSizeHeader.fontName = TEXT_STYLES.header.fontName;
+        fontSizeHeader.characters = 'Font Size';
+        fontSizeFrame.appendChild(fontSizeHeader);
+
+        fontGroup.appendChild(fontSizeFrame);
+
+
+        masterFrame.appendChild(fontGroup);
+    });
+
+
+
+
+
+
+    //Set font sizes
+
+
+
+    //Draw
+
+
 
 }

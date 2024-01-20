@@ -1,4 +1,4 @@
-import { TextArrayItem, TextDico } from "src/types/text";
+import { TextArrayItem, TextDico } from "@ctypes/text";
 import { replaceStyle } from "./style";
 
 
@@ -50,7 +50,9 @@ export function groupFont(fonts: Array<Font>): { [key: string]: TextArrayItem } 
                 style: [style]
             };
         } else {
-            fontDico[family].style.push(style);
+            if (!fontDico[family].style.includes(style)) {
+                fontDico[family].style.push(style);
+            }
         }
     });
 

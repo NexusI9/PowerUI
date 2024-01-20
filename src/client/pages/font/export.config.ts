@@ -57,5 +57,5 @@ export const EXPORT_FONT_CONFIG: Export = {
             }
         ]
     },
-    footer: { primaryAction: { value: 'Generate' } }
+    footer: { primaryAction: { value: 'Generate', action:'EXPORT_TEXT_SET' } }
 }

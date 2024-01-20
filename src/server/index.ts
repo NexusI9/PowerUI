@@ -19,7 +19,7 @@ import {
 import { loadLocalFont, sortByFont, sortByScale, storeFonts } from "@lib/utils/font.back";
 import { DEFAULT_WINDOW_HEIGHT, DEFAULT_WINDOW_WIDTH, GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 import { TextDico } from "@ctypes/text";
-import { exportPaintSet } from "@lib/utils/export";
+import { exportPaintSet, exportTextSet } from "@lib/utils/export";
 
 let systemFonts: TextDico;
 
@@ -135,6 +135,10 @@ figma.ui.onmessage = msg => {
 
     case 'EXPORT_PAINT_SET':
       exportPaintSet(msg);
+      break;
+
+    case 'EXPORT_TEXT_SET':
+      exportTextSet(msg);
       break;
 
   }
