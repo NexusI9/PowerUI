@@ -466,7 +466,7 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
                 const styleLabel = Layout.label({
                     fontSize: 32,
                     fontName: { family: uniqueFont, style: style },
-                    characters:style
+                    characters: style
                 });
 
                 const styleDetailFrame = Layout.frame({
@@ -509,9 +509,7 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
         fontGroup.appendChild(fontSizeFrame);
 
-        console.log(uniqueFont, uniqueFonts[uniqueFont], groupedStyles);
-
-        function generateStyleFrame(style: TextStyle) {
+        function generateSizeSection(style: TextStyle) {
 
             const { fontName, fontSize } = style as TextStyle;
             const letterSpacing = roundObjectFloat((style as TextStyle).letterSpacing);
@@ -524,12 +522,13 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
                 center: true
             });
 
-            const styleLabel = figma.createText();
-            styleLabel.fontSize = fontSize;
-            styleLabel.fontName = fontName;
-            styleLabel.letterSpacing = letterSpacing;
-            styleLabel.lineHeight = lineHeight;
-            styleLabel.characters = folderNameFromPath(style.name).name;
+            const styleLabel = Layout.label({
+                fontSize: fontSize,
+                fontName: fontName,
+                letterSpacing: letterSpacing,
+                lineHeight: lineHeight,
+                characters: folderNameFromPath(style.name).name
+            });
 
             const styleDetailFrame = Layout.frame({
                 name: 'style-detail-frame',
@@ -540,7 +539,6 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
             const styleDetailTop = Layout.footnote1({ text: `${fontSize} px` });
             styleDetailTop.fills = COLOR_STYLES.grey;
-
 
             const styleDetailBottomFrame = Layout.frame({
                 name: 'style-detail-bottom-frame',
@@ -568,21 +566,16 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
         }
 
         Object.keys(groupedStyles).forEach((fam, i) => {
-
-            const groupStyleFrame = Layout.frame({
-                name: `group-font-${fam}-${i}`,
-                layout: 'VERTICAL',
-                itemSpacing: 6
-            });
-
-            groupedStyles[fam].forEach(style => {
-
-
-            });
-
-            //groupStyleFrame.appendChild(styleFrame);
-
-            fontSizeFrame.appendChild(groupStyleFrame);
+            let sections = groupedStyles[fam].map(style => (style as TextStyle).fontName.family === uniqueFont && generateSizeSection(style as TextStyle) || null).filter(e => e !== null);
+            if (sections.length) {
+                const groupStyleFrame = Layout.frame({
+                    name: `group-font-${fam}-${i}`,
+                    layout: 'VERTICAL',
+                    itemSpacing: 6
+                });
+                fontSizeFrame.appendChild(groupStyleFrame);
+                sections.map(sec => sec && groupStyleFrame.appendChild(sec));
+            }
         });
 
 
