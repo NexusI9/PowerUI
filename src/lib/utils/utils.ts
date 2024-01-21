@@ -49,6 +49,7 @@ export function roundObjectFloat(object: any): any {
     /* 
     Round Floats of objects
     */
+
     for (let key in object) {
         if (object[key].constructor.name === 'Object') {
             roundObjectFloat(object[key]);
@@ -62,6 +63,7 @@ export function roundObjectFloat(object: any): any {
         }
     }
 
+    console.log(object);
     return object;
 }
 
