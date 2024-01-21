@@ -2,7 +2,7 @@ import { Dev } from "@ctypes/dev.template";
 import { folderNameFromPath, groupStyles } from "./style";
 import { colorSeparator, to255 } from "./color";
 import simpleColorConverter from 'simple-color-converter';
-import { objectToArray, roundObjectFloat } from "./utils";
+import { mapKeys, objectToArray, roundObjectFloat } from "./utils";
 import { checkContrast } from "./shade.helper";
 import { groupFont } from "./font.back";
 import { TextArrayItem } from "@ctypes/text";
@@ -97,6 +97,14 @@ const Layout = {
             frame.bottomLeftRadius = radius[3];
         }
         return frame;
+    },
+    color: ({ color, opacity = 1 }: { color: RGB, opacity?: number }): Paint[] => {
+        return [{ type: 'SOLID', color, opacity }];
+    },
+    label: (props: Partial<TextSublayerNode>) => {
+        const label = figma.createText();
+        mapKeys(props, label);
+        return label;
     }
 
 }
@@ -186,13 +194,13 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
             const styleColor = ((style as PaintStyle).paints[0] as SolidPaint).color || { r: 0, g: 0, b: 0 };
 
             colorFrame.name = `powerui-color-${styleName}-${i}`
-            colorFrame.fills = [{ type: 'SOLID', color: styleColor }];
-            colorFrame.strokes = [{ type: 'SOLID', color: { r: 0.9, g: 0.9, b: 0.9 }, opacity: 0.5 }];
+            colorFrame.fills = Layout.color({ color: styleColor });
+            colorFrame.strokes = Layout.color({ color: { r: 0.9, g: 0.9, b: 0.9 }, opacity: 0.5 });
 
             colorFrame.appendChild(contrastFrame);
 
             //1.1 set contrast
-            contrastFrame.fills = [{ type: 'SOLID', color: { r: 0, g: 0, b: 0 }, opacity: 0 }];
+            contrastFrame.fills = Layout.color({ color: { r: 0, g: 0, b: 0 }, opacity: 0 });
 
             const contrastBubble = ({ color, ratio, large, regular }: { color: RGB, ratio: number; large: string | undefined; regular: string | undefined; }) => {
                 const contrastFrame = Layout.frame({
@@ -204,13 +212,13 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
                     radius: [30, 30, 30, 30]
                 });
 
-                contrastFrame.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 }, opacity: 0.8 }];
+                contrastFrame.fills = Layout.color({ color: { r: 1, g: 1, b: 1 }, opacity: 0.8 });
 
 
                 const swatch = figma.createEllipse();
                 swatch.resize(10, 10);
-                swatch.fills = [{ type: 'SOLID', color }];
-                swatch.strokes = [{ type: 'SOLID', color: { r: 0.9, g: 0.9, b: 0.9 } }];
+                swatch.fills = Layout.color({ color });
+                swatch.strokes = Layout.color({ color: { r: 0.9, g: 0.9, b: 0.9 } });
 
                 const ratioText = Layout.footnote1({ text: String(ratio) });
 
@@ -291,12 +299,8 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
                     colorFormatFrame.appendChild(colorName);
                     colorFormatFrame.appendChild(colorCode);
 
-
-
-
                 }
             });
-
 
             //3. append and set layout
             swatchFrame.appendChild(colorFrame);
@@ -407,10 +411,12 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
             });
 
             //Set font label
-            const fontLabel = figma.createText();
-            fontLabel.fontSize = 32;
-            fontLabel.fontName = { family: uniqueFont, style: 'Regular' };
-            fontLabel.characters = uniqueFont;
+            const fontLabel = Layout.label({
+                fontSize: 32,
+                fontName: { family: uniqueFont, style: 'Regular' },
+                characters: uniqueFont
+            });
+
 
             //Set font detail
             const fontDetail = Layout.frame({
@@ -421,17 +427,9 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
             fontDetail.resize(DETAILS_WIDTH, 30);
 
-            const fontDetailTop = figma.createText();
-            const fontDetailBottom = figma.createText();
-
-            fontDetailTop.fontSize = TEXT_STYLES.footnote_1.fontSize;
-            fontDetailTop.fontName = TEXT_STYLES.footnote_1.fontName;
-            fontDetailTop.characters = `Font Family ${(fontFamilyHierarchy[i] || '')}`;
+            const fontDetailTop = Layout.footnote1({ text: `Font Family ${(fontFamilyHierarchy[i] || '')}` });
+            const fontDetailBottom = Layout.footnote1({ text: uniqueFont });
             fontDetailTop.fills = COLOR_STYLES.grey;
-
-            fontDetailBottom.fontSize = TEXT_STYLES.footnote_1.fontSize;
-            fontDetailBottom.fontName = TEXT_STYLES.footnote_1.fontName;
-            fontDetailBottom.characters = uniqueFont;
             fontDetailBottom.fills = COLOR_STYLES.grey;
 
             fontDetail.appendChild(fontDetailTop);
@@ -465,10 +463,11 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
                     center: true
                 });
 
-                const styleLabel = figma.createText();
-                styleLabel.fontSize = 32;
-                styleLabel.fontName = { family: uniqueFont, style: style };
-                styleLabel.characters = style;
+                const styleLabel = Layout.label({
+                    fontSize: 32,
+                    fontName: { family: uniqueFont, style: style },
+                    characters:style
+                });
 
                 const styleDetailFrame = Layout.frame({
                     name: 'style-detail-frame',
@@ -519,10 +518,10 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
             const lineHeight = roundObjectFloat((style as TextStyle).lineHeight);
 
             const styleFrame = Layout.frame({
-                name:'style-frame',
-                layout:'HORIZONTAL',
-                itemSpacing:0,
-                center:true
+                name: 'style-frame',
+                layout: 'HORIZONTAL',
+                itemSpacing: 0,
+                center: true
             });
 
             const styleLabel = figma.createText();
@@ -533,10 +532,10 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
             styleLabel.characters = folderNameFromPath(style.name).name;
 
             const styleDetailFrame = Layout.frame({
-                name:'style-detail-frame',
-                layout:'VERTICAL',
-                itemSpacing:3
-            })
+                name: 'style-detail-frame',
+                layout: 'VERTICAL',
+                itemSpacing: 3
+            });
             styleDetailFrame.resize(DETAILS_WIDTH, 30);
 
             const styleDetailTop = Layout.footnote1({ text: `${fontSize} px` });
