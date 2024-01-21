@@ -63,7 +63,6 @@ export function roundObjectFloat(object: any): any {
         }
     }
 
-    console.log(object);
     return object;
 }
 

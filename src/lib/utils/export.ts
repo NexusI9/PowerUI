@@ -37,6 +37,70 @@ const COLOR_STYLES: Record<string, Paint[]> = {
     grey: [{ type: 'SOLID', color: { r: 0.4, g: 0.4, b: 0.4 } }]
 };
 
+
+const Layout = {
+    header: ({ text }: { text: string }) => {
+        const header = figma.createText();
+        header.characters = text;
+        header.fontSize = TEXT_STYLES.header.fontSize;
+        header.fontName = TEXT_STYLES.header.fontName;
+        return header;
+    },
+    body: ({ text }: { text: string }) => {
+        const body = figma.createText();
+        body.characters = text;
+        body.fontSize = TEXT_STYLES.body.fontSize;
+        body.fontName = TEXT_STYLES.body.fontName;
+        return body;
+    },
+    footnote1: ({ text }: { text: string }) => {
+        const ft = figma.createText();
+        ft.characters = text;
+        ft.fontSize = TEXT_STYLES.footnote_1.fontSize;
+        ft.fontName = TEXT_STYLES.footnote_1.fontName;
+        return ft;
+    },
+    footnote2: ({ text }: { text: string }) => {
+        const ft = figma.createText();
+        ft.characters = text;
+        ft.fontSize = TEXT_STYLES.footnote_2.fontSize;
+        ft.fontName = TEXT_STYLES.footnote_2.fontName;
+        return ft;
+    },
+    caption: ({ text }: { text: string }) => {
+        const cp = figma.createText();
+        cp.characters = text;
+        cp.fontSize = TEXT_STYLES.caption.fontSize;
+        cp.fontName = TEXT_STYLES.caption.fontName;
+        return cp;
+    },
+    frame: ({ layout, name, itemSpacing, center, padding, radius }: { layout: 'HORIZONTAL' | 'VERTICAL'; name: string; center?: boolean; itemSpacing: number; padding?: Array<number>, radius?: Array<number> }) => {
+        const frame = figma.createFrame();
+        frame.layoutMode = layout;
+        frame.layoutSizingHorizontal = 'HUG';
+        frame.layoutSizingVertical = 'HUG';
+        frame.name = name;
+        frame.itemSpacing = itemSpacing;
+        if (center) {
+            frame.counterAxisAlignItems = 'CENTER';
+        }
+        if (padding) {
+            frame.paddingTop = padding[0];
+            frame.paddingRight = padding[1];
+            frame.paddingBottom = padding[2];
+            frame.paddingLeft = padding[3];
+        }
+        if (radius) {
+            frame.topLeftRadius = radius[0];
+            frame.topRightRadius = radius[1];
+            frame.bottomRightRadius = radius[2];
+            frame.bottomLeftRadius = radius[3];
+        }
+        return frame;
+    }
+
+}
+
 export async function exportPaintSet({ payload }: { payload: Dev }) {
 
     const { folder, config } = payload;
@@ -51,32 +115,62 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
 
 
     //Generate swatch
-    const masterFrame = figma.createFrame();
-    masterFrame.name = 'Palettes'
+    const masterFrame = Layout.frame({
+        name: 'Palettes',
+        layout: (config?.layout === 'Column') && 'HORIZONTAL' || 'VERTICAL',
+        itemSpacing: 0
+    });
+
 
     Object.keys(groupedStyles).forEach(async (key: string) => {
 
         console.log(`Generating ${key} swatch...`);
 
         //create parent frame
-        const parentFrame = figma.createFrame();
+        const parentFrame = Layout.frame({
+            name: key,
+            itemSpacing: 24,
+            layout: 'VERTICAL',
+            padding: [24, 24, 24, 24]
+        });
 
         //create header
-        const header = figma.createText();
-        header.characters = key;
-        header.fontSize = TEXT_STYLES.header.fontSize;
-        header.fontName = TEXT_STYLES.header.fontName
+        const header = Layout.header({ text: key });
 
         //generate swatches
-        const swatchGroupFrame = figma.createFrame();
+        const swatchGroupFrame = Layout.frame({
+            name: 'swatch-group-frame',
+            layout: (config?.layout === 'Column') && 'VERTICAL' || 'HORIZONTAL',
+            itemSpacing: 16
+        });
+
         groupedStyles[key].forEach((style, i) => {
 
             const styleName = folderNameFromPath(style.name).name || style.name;
 
-            const swatchFrame = figma.createFrame(); //parent
-            const colorFrame = figma.createFrame(); //child 1
-            const detailFrame = figma.createFrame(); //child 2
-            const contrastFrame = figma.createFrame();
+            //parent
+            const swatchFrame = Layout.frame({
+                name: `powerui-${styleName.replace(' ', '-')}-palette`,
+                layout: (config?.layout === 'Column') && 'HORIZONTAL' || 'VERTICAL',
+                itemSpacing: 16,
+            })
+
+            //child 1
+            const colorFrame = figma.createFrame();
+
+            //child 2
+            const detailFrame = Layout.frame({
+                name: `powerui-detail-${styleName}-${i}`,
+                layout: 'VERTICAL',
+                itemSpacing: 6
+            });
+
+            const contrastFrame = Layout.frame({
+                name: `powerui-contrast-${styleName}-${i}`,
+                layout: 'VERTICAL',
+                itemSpacing: 3,
+                padding: [6, 6, 6, 6]
+            });
 
             //1. set Color Frame
             //apply border radius to color
@@ -93,69 +187,45 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
 
             colorFrame.name = `powerui-color-${styleName}-${i}`
             colorFrame.fills = [{ type: 'SOLID', color: styleColor }];
-            colorFrame.strokes = [{ type: 'SOLID', color: { r: 0.9, g: 0.9, b: 0.9 }, opacity: 0.5 }]
+            colorFrame.strokes = [{ type: 'SOLID', color: { r: 0.9, g: 0.9, b: 0.9 }, opacity: 0.5 }];
 
             colorFrame.appendChild(contrastFrame);
 
             //1.1 set contrast
-            contrastFrame.name = `powerui-contrast-${styleName}-${i}`;
-            contrastFrame.layoutMode = 'VERTICAL';
             contrastFrame.fills = [{ type: 'SOLID', color: { r: 0, g: 0, b: 0 }, opacity: 0 }];
-            contrastFrame.layoutSizingHorizontal = 'HUG';
-            contrastFrame.layoutSizingVertical = 'HUG';
-            contrastFrame.itemSpacing = 3;
-            contrastFrame.paddingBottom = 6;
-            contrastFrame.paddingLeft = 6;
-            contrastFrame.paddingRight = 6;
-            contrastFrame.paddingTop = 6;
 
             const contrastBubble = ({ color, ratio, large, regular }: { color: RGB, ratio: number; large: string | undefined; regular: string | undefined; }) => {
-                const contrastFrame = figma.createFrame();
-                contrastFrame.layoutMode = 'HORIZONTAL';
-                contrastFrame.layoutSizingHorizontal = 'HUG';
-                contrastFrame.layoutSizingVertical = 'HUG';
-                contrastFrame.counterAxisAlignItems = 'CENTER';
-                contrastFrame.itemSpacing = 3;
+                const contrastFrame = Layout.frame({
+                    name: 'contrast-frame',
+                    layout: 'HORIZONTAL',
+                    center: true,
+                    itemSpacing: 3,
+                    padding: [2, 4, 2, 4],
+                    radius: [30, 30, 30, 30]
+                });
+
                 contrastFrame.fills = [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 }, opacity: 0.8 }];
-                contrastFrame.bottomLeftRadius = 30;
-                contrastFrame.bottomRightRadius = 30;
-                contrastFrame.topLeftRadius = 30;
-                contrastFrame.topRightRadius = 30;
-                contrastFrame.paddingLeft = 4;
-                contrastFrame.paddingRight = 4;
-                contrastFrame.paddingTop = 2;
-                contrastFrame.paddingBottom = 2;
+
 
                 const swatch = figma.createEllipse();
                 swatch.resize(10, 10);
                 swatch.fills = [{ type: 'SOLID', color }];
                 swatch.strokes = [{ type: 'SOLID', color: { r: 0.9, g: 0.9, b: 0.9 } }];
 
-                const ratioText = figma.createText();
-                ratioText.fontSize = TEXT_STYLES.footnote_1.fontSize;
-                ratioText.fontName = TEXT_STYLES.footnote_1.fontName;
-                ratioText.characters = String(ratio);
+                const ratioText = Layout.footnote1({ text: String(ratio) });
 
                 contrastFrame.appendChild(swatch);
                 contrastFrame.appendChild(ratioText);
 
                 if (large) {
-                    const AAA = figma.createText();
-                    AAA.fontSize = TEXT_STYLES.footnote_1.fontSize;
-                    AAA.fontName = TEXT_STYLES.footnote_1.fontName;
-                    AAA.characters = 'AAA';
+                    const AAA = Layout.footnote1({ text: 'AAA' });
                     contrastFrame.appendChild(AAA);
                 }
 
                 if (regular) {
-                    const AA = figma.createText();
-                    AA.fontSize = TEXT_STYLES.footnote_2.fontSize;
-                    AA.fontName = TEXT_STYLES.footnote_2.fontName;
-                    AA.characters = 'AA';
+                    const AA = Layout.footnote1({ text: 'AA' });
                     contrastFrame.appendChild(AA);
                 }
-
-
 
 
                 return contrastFrame;
@@ -168,17 +238,9 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
             contrastFrame.appendChild(contrastBubble({ color: { r: 1, g: 1, b: 1 }, ...white }));
 
             //2. set details
-            const colorName = figma.createText();
-            colorName.characters = styleName;
-            colorName.fontSize = TEXT_STYLES.body.fontSize;
-            colorName.fontName = TEXT_STYLES.body.fontName;
-            detailFrame.name = `powerui-detail-${styleName}-${i}`;
+            const colorName = Layout.body({ text: styleName });
 
             detailFrame.appendChild(colorName);
-            detailFrame.layoutMode = 'VERTICAL';
-            detailFrame.itemSpacing = 6;
-            detailFrame.layoutSizingHorizontal = 'HUG';
-            detailFrame.layoutSizingVertical = 'HUG';
 
             //set color values detail
             const colorFormat = {
@@ -190,15 +252,25 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
             };
 
             //2.1 set color details
-            const colorDetailGroup = figma.createFrame();
-            colorDetailGroup.layoutMode = 'VERTICAL';
-            colorDetailGroup.itemSpacing = 3;
+            const colorDetailGroup = Layout.frame({
+                name: 'color-detail-frame',
+                layout: 'VERTICAL',
+                itemSpacing: 3
+            });
+
+            detailFrame.appendChild(colorDetailGroup);
+            colorDetailGroup.layoutSizingHorizontal = 'FILL';
 
             Object.keys(colorFormat).forEach(format => {
                 if (config && !!config[format as keyof typeof config]) {
 
                     const colorFormatFrame = figma.createFrame();
+                    //Add detail to detail
+                    colorDetailGroup.appendChild(colorFormatFrame);
                     colorFormatFrame.layoutMode = 'HORIZONTAL';
+                    colorFormatFrame.layoutSizingVertical = 'HUG';
+                    colorFormatFrame.primaryAxisAlignItems = 'SPACE_BETWEEN';
+                    colorFormatFrame.layoutSizingHorizontal = 'FILL';
 
                     const { color } = new simpleColorConverter({ rgb: to255(styleColor), to: format });
 
@@ -208,41 +280,28 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
                     arrayColor = colorSeparator(arrayColor, (config.colorSeparator || 'White space'), format);
 
                     //color name (hex/rgb...)
-                    const colorName = figma.createText();
-                    colorName.fontName = TEXT_STYLES.footnote_1.fontName;
-                    colorName.fontSize = TEXT_STYLES.footnote_1.fontSize;
-                    colorName.characters = (format === 'pantone') ? 'Pantone' : format.toUpperCase();
+                    const colorName = Layout.footnote1({ text: (format === 'pantone') ? 'Pantone' : format.toUpperCase() });
                     colorName.fills = COLOR_STYLES.grey;
 
                     //color value
-                    const colorCode = figma.createText();
-                    colorCode.fontName = TEXT_STYLES.footnote_1.fontName;
-                    colorCode.fontSize = TEXT_STYLES.footnote_1.fontSize;
-                    colorCode.characters = arrayColor;
+                    const colorCode = Layout.footnote1({ text: arrayColor });
                     colorCode.fills = COLOR_STYLES.grey;
 
                     //Render color format frame
                     colorFormatFrame.appendChild(colorName);
                     colorFormatFrame.appendChild(colorCode);
 
-                    //Add detail to detail
-                    colorDetailGroup.appendChild(colorFormatFrame);
-                    colorFormatFrame.layoutSizingHorizontal = 'FILL';
-                    colorFormatFrame.layoutSizingVertical = 'HUG';
-                    colorFormatFrame.primaryAxisAlignItems = 'SPACE_BETWEEN'
+
+
 
                 }
             });
 
-            detailFrame.appendChild(colorDetailGroup);
 
             //3. append and set layout
             swatchFrame.appendChild(colorFrame);
             swatchFrame.appendChild(detailFrame);
-            swatchFrame.layoutMode = (config?.layout === 'Column') && 'HORIZONTAL' || 'VERTICAL';
-            swatchFrame.itemSpacing = 16;
-            swatchFrame.layoutSizingHorizontal = 'HUG';
-            swatchFrame.layoutSizingVertical = 'HUG';
+
 
             //adjust colo frame size depending on direction
             switch (config?.layout) {
@@ -258,34 +317,14 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
 
 
             //add up to group
-            swatchFrame.name = `powerui-${styleName.replace(' ', '-')}-palette`;
             swatchGroupFrame.appendChild(swatchFrame);
         });
 
-        swatchGroupFrame.layoutMode = (config?.layout === 'Column') && 'VERTICAL' || 'HORIZONTAL';
-        swatchGroupFrame.itemSpacing = 16;
-        swatchGroupFrame.layoutSizingHorizontal = 'HUG';
-        swatchGroupFrame.layoutSizingVertical = 'HUG';
-
-        parentFrame.name = key;
         parentFrame.appendChild(header);
         parentFrame.appendChild(swatchGroupFrame);
-        parentFrame.paddingLeft = 24;
-        parentFrame.paddingBottom = 24;
-        parentFrame.paddingTop = 24;
-        parentFrame.paddingRight = 24;
-
-        parentFrame.layoutMode = 'VERTICAL';
-        parentFrame.itemSpacing = 24;
-        parentFrame.layoutSizingHorizontal = 'HUG';
-
         masterFrame.appendChild(parentFrame);
 
     });
-
-    masterFrame.layoutMode = (config?.layout === 'Column') && 'HORIZONTAL' || 'VERTICAL';
-    masterFrame.layoutSizingHorizontal = 'HUG';
-    masterFrame.layoutSizingVertical = 'HUG';
 
     figma.closePlugin();
 
@@ -311,7 +350,7 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
                 uniqueFonts[g].style = [...new Set([...uniqueFonts[g].style, ...group[g].style])];
             } else {
                 //create new entry
-                uniqueFonts = group;
+                uniqueFonts = { ...uniqueFonts, ...group };
             }
         }
     });
@@ -328,59 +367,59 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
     });
     await Promise.all(fontsLoad);
 
-    const DETAILS_WIDTH = 100;
-    const masterFrame = figma.createFrame();
-    masterFrame.name = 'Font sets'
-    masterFrame.layoutMode = 'HORIZONTAL';
-    masterFrame.layoutSizingHorizontal = 'HUG';
-    masterFrame.layoutSizingVertical = 'HUG';
+
+    /* 
+    * Draw
+    */
+    const DETAILS_WIDTH = 135;
+    const masterFrame = Layout.frame({
+        name: 'Font sets',
+        layout: 'HORIZONTAL',
+        itemSpacing: 0,
+    });
 
     const fontFamilyHierarchy = ['Primary', 'Secondary', 'Tertiary'];
-    Object.keys(uniqueFonts).forEach((key, i) => {
+    Object.keys(uniqueFonts).forEach((uniqueFont, i) => {
 
-        const fontGroup = figma.createFrame();
-        fontGroup.layoutMode = 'VERTICAL';
-        fontGroup.itemSpacing = 24;
-        fontGroup.layoutSizingHorizontal = 'HUG';
-        fontGroup.layoutSizingVertical = 'HUG';
-        fontGroup.itemSpacing = 32;
-        fontGroup.paddingLeft = 24;
-        fontGroup.paddingBottom = 24;
-        fontGroup.paddingTop = 24;
-        fontGroup.paddingRight = 24;
+        const fontGroup = Layout.frame({
+            name: 'font-group-frame',
+            padding: [24, 24, 24, 24],
+            itemSpacing: 32,
+            layout: 'VERTICAL'
+        });
 
         //----------Set font families
         if (config?.fontFamily) {
-            const fontFamilyFrame = figma.createFrame();
-            fontFamilyFrame.layoutMode = 'VERTICAL';
-            fontFamilyFrame.itemSpacing = 12;
-            fontFamilyFrame.layoutSizingHorizontal = 'HUG';
-            fontFamilyFrame.layoutSizingVertical = 'HUG';
+            const fontFamilyFrame = Layout.frame({
+                layout: 'VERTICAL',
+                itemSpacing: 12,
+                name: 'font-family-frame'
+            });
 
-            const fontFamilyHeader = figma.createText();
-            fontFamilyHeader.fontSize = TEXT_STYLES.header.fontSize;
-            fontFamilyHeader.fontName = TEXT_STYLES.header.fontName;
-            fontFamilyHeader.characters = 'Font Family';
+            const fontFamilyHeader = Layout.header({ text: 'Font Family' });
             fontFamilyFrame.appendChild(fontFamilyHeader);
 
-            const fontFrame = figma.createFrame();
-            fontFrame.layoutMode = 'HORIZONTAL';
-            fontFrame.layoutSizingHorizontal = 'HUG';
-            fontFrame.layoutSizingVertical = 'HUG';
-            fontFrame.counterAxisAlignItems = 'CENTER';
+            const fontFrame = Layout.frame({
+                layout: 'HORIZONTAL',
+                itemSpacing: 0,
+                name: 'font-frame',
+                center: true
+            });
 
             //Set font label
             const fontLabel = figma.createText();
             fontLabel.fontSize = 32;
-            fontLabel.fontName = { family: key, style: 'Regular' };
-            fontLabel.characters = key;
+            fontLabel.fontName = { family: uniqueFont, style: 'Regular' };
+            fontLabel.characters = uniqueFont;
 
             //Set font detail
-            const fontDetail = figma.createFrame();
+            const fontDetail = Layout.frame({
+                name: 'font-detail',
+                itemSpacing: 3,
+                layout: 'VERTICAL'
+            });
+
             fontDetail.resize(DETAILS_WIDTH, 30);
-            fontDetail.layoutMode = 'VERTICAL';
-            fontDetail.layoutSizingVertical = 'HUG';
-            fontDetail.itemSpacing = 3;
 
             const fontDetailTop = figma.createText();
             const fontDetailBottom = figma.createText();
@@ -392,7 +431,7 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
             fontDetailBottom.fontSize = TEXT_STYLES.footnote_1.fontSize;
             fontDetailBottom.fontName = TEXT_STYLES.footnote_1.fontName;
-            fontDetailBottom.characters = key;
+            fontDetailBottom.characters = uniqueFont;
             fontDetailBottom.fills = COLOR_STYLES.grey;
 
             fontDetail.appendChild(fontDetailTop);
@@ -408,47 +447,40 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
         //----------Set font Weight
         if (config?.fontWeight) {
-            const fontWeightFrame = figma.createFrame();
-            fontWeightFrame.layoutMode = 'VERTICAL';
-            fontWeightFrame.itemSpacing = 12;
-            fontWeightFrame.layoutSizingHorizontal = 'HUG';
-            fontWeightFrame.layoutSizingVertical = 'HUG';
+            const fontWeightFrame = Layout.frame({
+                name: 'font-weight-frame',
+                itemSpacing: 12,
+                layout: 'VERTICAL'
+            });
 
-            const fontWeightHeader = figma.createText();
-            fontWeightHeader.fontSize = TEXT_STYLES.header.fontSize;
-            fontWeightHeader.fontName = TEXT_STYLES.header.fontName;
-            fontWeightHeader.characters = 'Font Weight';
+            const fontWeightHeader = Layout.header({ text: 'Font Weight' });
             fontWeightFrame.appendChild(fontWeightHeader);
 
-            uniqueFonts[key].style.forEach(style => {
+            uniqueFonts[uniqueFont].style.forEach(style => {
 
-                const styleFrame = figma.createFrame();
-                styleFrame.layoutMode = 'HORIZONTAL';
-                styleFrame.layoutSizingHorizontal = 'HUG';
-                styleFrame.layoutSizingVertical = 'HUG';
-                styleFrame.counterAxisAlignItems = 'CENTER';
+                const styleFrame = Layout.frame({
+                    name: 'style-frame',
+                    itemSpacing: 0,
+                    layout: 'HORIZONTAL',
+                    center: true
+                });
 
                 const styleLabel = figma.createText();
                 styleLabel.fontSize = 32;
-                styleLabel.fontName = { family: key, style: style };
+                styleLabel.fontName = { family: uniqueFont, style: style };
                 styleLabel.characters = style;
 
-                const styleDetailFrame = figma.createFrame();
+                const styleDetailFrame = Layout.frame({
+                    name: 'style-detail-frame',
+                    itemSpacing: 3,
+                    layout: 'VERTICAL'
+                });
                 styleDetailFrame.resize(DETAILS_WIDTH, 30);
-                styleDetailFrame.layoutMode = 'VERTICAL';
-                styleDetailFrame.layoutSizingVertical = 'HUG';
-                styleDetailFrame.itemSpacing = 3;
 
-                const styleDetailTop = figma.createText();
-                styleDetailTop.fontName = TEXT_STYLES.footnote_1.fontName;
-                styleDetailTop.fontSize = TEXT_STYLES.footnote_1.fontSize;
-                styleDetailTop.characters = `Font Weight ${style}`;
+                const styleDetailTop = Layout.footnote1({ text: `Font Weight ${style}` });
                 styleDetailTop.fills = COLOR_STYLES.grey;
 
-                const styleDetailBottom = figma.createText();
-                styleDetailBottom.fontName = TEXT_STYLES.footnote_1.fontName;
-                styleDetailBottom.fontSize = TEXT_STYLES.footnote_1.fontSize;
-                styleDetailBottom.characters = convertFontWeight(style);
+                const styleDetailBottom = Layout.footnote1({ text: convertFontWeight(style) });
                 styleDetailBottom.fills = COLOR_STYLES.grey;
 
                 //add details
@@ -465,86 +497,93 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
         }
 
 
-        //----------Set font size
-        const fontSizeFrame = figma.createFrame();
-        fontSizeFrame.layoutMode = 'VERTICAL';
-        fontSizeFrame.itemSpacing = 12;
-        fontSizeFrame.layoutSizingHorizontal = 'HUG';
-        fontSizeFrame.layoutSizingVertical = 'HUG';
 
-        const fontSizeHeader = figma.createText();
-        fontSizeHeader.fontSize = TEXT_STYLES.header.fontSize;
-        fontSizeHeader.fontName = TEXT_STYLES.header.fontName;
-        fontSizeHeader.characters = 'Font Size';
+        //----------Set font size
+        const fontSizeFrame = Layout.frame({
+            name: 'font-size-frame',
+            itemSpacing: 24,
+            layout: 'VERTICAL'
+        });
+
+        const fontSizeHeader = Layout.header({ text: 'Font Size' });
         fontSizeFrame.appendChild(fontSizeHeader);
 
         fontGroup.appendChild(fontSizeFrame);
 
-        Object.keys(groupedStyles).forEach(key => {
+        console.log(uniqueFont, uniqueFonts[uniqueFont], groupedStyles);
 
-            groupedStyles[key].forEach(style => {
+        function generateStyleFrame(style: TextStyle) {
 
-                const { fontName, fontSize } = style as TextStyle;
-                const letterSpacing = roundObjectFloat((style as TextStyle).letterSpacing);
-                const lineHeight = roundObjectFloat((style as TextStyle).lineHeight);
+            const { fontName, fontSize } = style as TextStyle;
+            const letterSpacing = roundObjectFloat((style as TextStyle).letterSpacing);
+            const lineHeight = roundObjectFloat((style as TextStyle).lineHeight);
 
-                const styleFrame = figma.createFrame();
-                styleFrame.layoutMode = 'HORIZONTAL';
-                styleFrame.layoutSizingHorizontal = 'HUG';
-                styleFrame.layoutSizingVertical = 'HUG';
-                styleFrame.counterAxisAlignItems = 'CENTER';
-
-                const styleLabel = figma.createText();
-                styleLabel.fontSize = fontSize;
-                styleLabel.fontName = fontName;
-                styleLabel.letterSpacing = letterSpacing;
-                styleLabel.lineHeight = lineHeight;
-                styleLabel.characters = folderNameFromPath(style.name).name;
-
-                const styleDetailFrame = figma.createFrame();
-                styleDetailFrame.resize(DETAILS_WIDTH, 30);
-                styleDetailFrame.layoutMode = 'VERTICAL';
-                styleDetailFrame.layoutSizingVertical = 'HUG';
-                styleDetailFrame.itemSpacing = 3;
-
-                const styleDetailTop = figma.createText();
-                styleDetailTop.fontName = TEXT_STYLES.footnote_1.fontName;
-                styleDetailTop.fontSize = TEXT_STYLES.footnote_1.fontSize;
-                styleDetailTop.characters = `${fontSize} px`;
-                styleDetailTop.fills = COLOR_STYLES.grey;
-
-
-                const styleDetailBottomFrame = figma.createFrame();
-                styleDetailBottomFrame.layoutMode = 'HORIZONTAL';
-                styleDetailBottomFrame.layoutSizingHorizontal = 'HUG';
-                styleDetailBottomFrame.layoutSizingVertical = 'HUG';
-                styleDetailBottomFrame.itemSpacing = 12;
-
-                const lineHeightText = figma.createText();
-                lineHeightText.fontName = TEXT_STYLES.footnote_1.fontName;
-                lineHeightText.fontSize = TEXT_STYLES.footnote_1.fontSize;
-                lineHeightText.fills = COLOR_STYLES.grey;
-                lineHeightText.characters = `↕ ${((lineHeight as any).value && (lineHeight as any).value + ' ') || ''}${convertUnit(lineHeight.unit)}`;
-
-                const letterSpacingText = figma.createText();
-                letterSpacingText.fontName = TEXT_STYLES.footnote_1.fontName;
-                letterSpacingText.fontSize = TEXT_STYLES.footnote_1.fontSize;
-                letterSpacingText.fills = COLOR_STYLES.grey;
-                letterSpacingText.characters = `↔ ${letterSpacing.value} ${convertUnit(letterSpacing.unit)}`;
-
-                styleDetailBottomFrame.appendChild(lineHeightText);
-                styleDetailBottomFrame.appendChild(letterSpacingText);
-                //add details
-                styleDetailFrame.appendChild(styleDetailTop);
-                styleDetailFrame.appendChild(styleDetailBottomFrame);
-
-                styleFrame.appendChild(styleDetailFrame);
-                styleFrame.appendChild(styleLabel);
-
-                fontSizeFrame.appendChild(styleFrame);
+            const styleFrame = Layout.frame({
+                name:'style-frame',
+                layout:'HORIZONTAL',
+                itemSpacing:0,
+                center:true
             });
 
+            const styleLabel = figma.createText();
+            styleLabel.fontSize = fontSize;
+            styleLabel.fontName = fontName;
+            styleLabel.letterSpacing = letterSpacing;
+            styleLabel.lineHeight = lineHeight;
+            styleLabel.characters = folderNameFromPath(style.name).name;
 
+            const styleDetailFrame = Layout.frame({
+                name:'style-detail-frame',
+                layout:'VERTICAL',
+                itemSpacing:3
+            })
+            styleDetailFrame.resize(DETAILS_WIDTH, 30);
+
+            const styleDetailTop = Layout.footnote1({ text: `${fontSize} px` });
+            styleDetailTop.fills = COLOR_STYLES.grey;
+
+
+            const styleDetailBottomFrame = Layout.frame({
+                name: 'style-detail-bottom-frame',
+                layout: 'HORIZONTAL',
+                itemSpacing: 12
+            });
+
+            const lineHeightText = Layout.footnote1({ text: `↕ ${((lineHeight as any).value && (lineHeight as any).value + ' ') || ''}${convertUnit(lineHeight.unit)}` });
+            lineHeightText.fills = COLOR_STYLES.grey;
+
+            const letterSpacingText = Layout.footnote1({ text: `↔ ${letterSpacing.value} ${convertUnit(letterSpacing.unit)}` });
+            letterSpacingText.fills = COLOR_STYLES.grey;
+
+            styleDetailBottomFrame.appendChild(lineHeightText);
+            styleDetailBottomFrame.appendChild(letterSpacingText);
+            //add details
+            styleDetailFrame.appendChild(styleDetailTop);
+            styleDetailFrame.appendChild(styleDetailBottomFrame);
+
+            styleFrame.appendChild(styleDetailFrame);
+            styleFrame.appendChild(styleLabel);
+
+            return styleFrame;
+
+        }
+
+        Object.keys(groupedStyles).forEach((fam, i) => {
+
+            const groupStyleFrame = Layout.frame({
+                name: `group-font-${fam}-${i}`,
+                layout: 'VERTICAL',
+                itemSpacing: 6
+            });
+
+            groupedStyles[fam].forEach(style => {
+
+
+            });
+
+            //groupStyleFrame.appendChild(styleFrame);
+
+            fontSizeFrame.appendChild(groupStyleFrame);
         });
 
 
