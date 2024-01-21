@@ -581,7 +581,7 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
             });
             styleDetailFrame.resize(DETAILS_WIDTH, 30);
 
-            const styleDetailTop = Layout.footnote1({ text: `${fontSize} px` });
+            const styleDetailTop = Layout.footnote1({ text: `${fontSize} px (${Number(style.fontSize / (config?.baseSize || 16)).toFixed(2)} em)` });
             styleDetailTop.fills = COLOR_STYLES.grey;
 
             const styleDetailBottomFrame = Layout.frame({
