@@ -34,12 +34,13 @@ const TEXT_STYLES: Record<string, { fontName: FontName, fontSize: number }> = {
 const COLOR_STYLES: Record<string, Paint[]> = {
     transparent: [{ type: 'SOLID', color: { r: 0, g: 0, b: 0 }, opacity: 0 }],
     black: [{ type: 'SOLID', color: { r: 1, g: 1, b: 1 } }],
-    grey: [{ type: 'SOLID', color: { r: 0.4, g: 0.4, b: 0.4 } }]
+    grey: [{ type: 'SOLID', color: { r: 0.4, g: 0.4, b: 0.4 } }],
+    lightGrey: [{ type: 'SOLID', color: { r: 0.7, g: 0.7, b: 0.7 } }]
 };
 
 
 const Layout = {
-    header: ({ text }: { text: string }) => {
+    header: ({ text }: { text: string; }) => {
         const header = figma.createText();
         header.characters = text;
         header.fontSize = TEXT_STYLES.header.fontSize;
@@ -105,9 +106,29 @@ const Layout = {
         const label = figma.createText();
         mapKeys(props, label);
         return label;
+    },
+    underline({ node, layout }: { node: TextNode | FrameNode; layout: 'VERTICAL' | 'HORIZONTAL' }) {
+
+        const box = Layout.frame({
+            name: `${node.name}-box`,
+            layout,
+            itemSpacing: 0,
+            padding: [0, 0, 6, 0],
+            center: true
+        });
+        box.appendChild(node);
+        node.layoutSizingHorizontal = 'FILL';
+        node.layoutSizingVertical = 'FILL';
+
+        box.strokeWeight = 0;
+        box.strokes = COLOR_STYLES.lightGrey;
+        box.strokeBottomWeight = 1;
+
+        return box;
     }
 
 }
+
 
 export async function exportPaintSet({ payload }: { payload: Dev }) {
 
@@ -141,9 +162,14 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
             layout: 'VERTICAL',
             padding: [24, 24, 24, 24]
         });
+        masterFrame.appendChild(parentFrame);
+
 
         //create header
         const header = Layout.header({ text: key });
+        const boxColorName = Layout.underline({ node: header, layout: 'HORIZONTAL' });
+        parentFrame.appendChild(boxColorName);
+        boxColorName.layoutSizingHorizontal = 'FILL';
 
         //generate swatches
         const swatchGroupFrame = Layout.frame({
@@ -152,15 +178,16 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
             itemSpacing: 16
         });
 
+
         groupedStyles[key].forEach((style, i) => {
 
             const styleName = folderNameFromPath(style.name).name || style.name;
 
             //parent
             const swatchFrame = Layout.frame({
-                name: `powerui-${styleName.replace(' ', '-')}-palette`,
+                name: `${styleName.replace(' ', '-')}-palette`,
                 layout: (config?.layout === 'Column') && 'HORIZONTAL' || 'VERTICAL',
-                itemSpacing: 16,
+                itemSpacing: 6,
             })
 
             //child 1
@@ -168,13 +195,13 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
 
             //child 2
             const detailFrame = Layout.frame({
-                name: `powerui-detail-${styleName}-${i}`,
+                name: `color-detail-${styleName}-${i}`,
                 layout: 'VERTICAL',
                 itemSpacing: 6
             });
 
             const contrastFrame = Layout.frame({
-                name: `powerui-contrast-${styleName}-${i}`,
+                name: `color-contrast-${styleName}-${i}`,
                 layout: 'VERTICAL',
                 itemSpacing: 3,
                 padding: [6, 6, 6, 6]
@@ -193,7 +220,7 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
             //apply color background
             const styleColor = ((style as PaintStyle).paints[0] as SolidPaint).color || { r: 0, g: 0, b: 0 };
 
-            colorFrame.name = `powerui-color-${styleName}-${i}`
+            colorFrame.name = `color-${styleName}-detail-frame-${i}`
             colorFrame.fills = Layout.color({ color: styleColor });
             colorFrame.strokes = Layout.color({ color: { r: 0.9, g: 0.9, b: 0.9 }, opacity: 0.5 });
 
@@ -310,26 +337,29 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
             //adjust colo frame size depending on direction
             switch (config?.layout) {
                 case 'Row':
-                    colorFrame.resize(160, 90);
-                    colorFrame.layoutSizingHorizontal = 'FILL';
+                    colorFrame.resize(120, 90);
+                    detailFrame.layoutSizingHorizontal = 'FILL';
                     break;
                 case 'Column':
                 default:
-                    colorFrame.resize(160, 30);
+                    colorFrame.resize(120, 30);
                     colorFrame.layoutSizingVertical = 'FILL';
             }
 
 
             //add up to group
             swatchGroupFrame.appendChild(swatchFrame);
+
         });
 
-        parentFrame.appendChild(header);
+
         parentFrame.appendChild(swatchGroupFrame);
-        masterFrame.appendChild(parentFrame);
+        swatchGroupFrame.layoutSizingHorizontal = 'FIXED';
+        parentFrame.layoutSizingHorizontal = 'HUG';
 
     });
 
+    figma.viewport.scrollAndZoomIntoView([masterFrame]);
     figma.closePlugin();
 
 }
@@ -379,7 +409,7 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
     const masterFrame = Layout.frame({
         name: 'Font sets',
         layout: 'HORIZONTAL',
-        itemSpacing: 0,
+        itemSpacing: 32,
     });
 
     const fontFamilyHierarchy = ['Primary', 'Secondary', 'Tertiary'];
@@ -391,17 +421,22 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
             itemSpacing: 32,
             layout: 'VERTICAL'
         });
+        masterFrame.appendChild(fontGroup);
+
 
         //----------Set font families
         if (config?.fontFamily) {
             const fontFamilyFrame = Layout.frame({
+                name: 'font-family-frame',
                 layout: 'VERTICAL',
-                itemSpacing: 12,
-                name: 'font-family-frame'
+                itemSpacing: 12
             });
 
             const fontFamilyHeader = Layout.header({ text: 'Font Family' });
-            fontFamilyFrame.appendChild(fontFamilyHeader);
+            const boxFontFamily = Layout.underline({ node: fontFamilyHeader, layout: 'HORIZONTAL' });
+            fontFamilyFrame.appendChild(boxFontFamily);
+            boxFontFamily.layoutSizingHorizontal = 'FILL';
+
 
             const fontFrame = Layout.frame({
                 layout: 'HORIZONTAL',
@@ -440,6 +475,7 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
             fontFamilyFrame.appendChild(fontFrame);
             fontGroup.appendChild(fontFamilyFrame);
+            fontFamilyFrame.layoutSizingHorizontal = 'FILL';
 
         }
 
@@ -452,7 +488,10 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
             });
 
             const fontWeightHeader = Layout.header({ text: 'Font Weight' });
-            fontWeightFrame.appendChild(fontWeightHeader);
+            const boxFontWeight = Layout.underline({ node: fontWeightHeader, layout: 'HORIZONTAL' });
+            fontWeightFrame.appendChild(boxFontWeight);
+            boxFontWeight.layoutSizingHorizontal = 'FILL';
+
 
             uniqueFonts[uniqueFont].style.forEach(style => {
 
@@ -493,6 +532,7 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
             });
 
             fontGroup.appendChild(fontWeightFrame);
+            fontWeightFrame.layoutSizingHorizontal = 'FILL';
         }
 
 
@@ -504,10 +544,14 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
             layout: 'VERTICAL'
         });
 
+        //Set header + underline
         const fontSizeHeader = Layout.header({ text: 'Font Size' });
-        fontSizeFrame.appendChild(fontSizeHeader);
+        const boxFontSize = Layout.underline({ node: fontSizeHeader, layout: 'HORIZONTAL' });
+        fontSizeFrame.appendChild(boxFontSize);
+        boxFontSize.layoutSizingHorizontal = 'FILL';
 
         fontGroup.appendChild(fontSizeFrame);
+        fontSizeFrame.layoutSizingHorizontal = 'FILL';
 
         function generateSizeSection(style: TextStyle) {
 
@@ -579,20 +623,9 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
         });
 
 
-        masterFrame.appendChild(fontGroup);
     });
 
-
-
-
-
-
-    //Set font sizes
-
-
-
-    //Draw
-
-
+    figma.viewport.scrollAndZoomIntoView([masterFrame]);
+    figma.closePlugin();
 
 }
