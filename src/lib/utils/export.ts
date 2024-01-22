@@ -136,6 +136,9 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
     const { folder, config } = payload;
     if (!folder) { return; }
 
+    figma.ui.postMessage({ action: 'LOAD_MESSAGE', payload: { message: `Generating swatch...` } });
+    await delay(20);
+
     const groupedStyles = groupStyles(folder);
 
     //preload needed fonts;

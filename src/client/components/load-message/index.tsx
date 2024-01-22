@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import './index.scss';
 import { LoadSpinner } from "@components/load-spinner";
-import { listen, send } from '@lib/ipc';
+import { listen } from '@lib/ipc';
 import { useState } from 'react';
 
 export const LoadMessage = () => {
