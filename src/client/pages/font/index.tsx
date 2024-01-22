@@ -34,7 +34,7 @@ export default () => {
 
     const activeCommand = useSelector((state: any) => state.contextmenu.activeCommand);
     useEffect(() => {
-        if (activeCommand) {
+        if (activeCommand && activeCommand.payload) {
             const { action, payload: { folder } } = activeCommand;
             if (action && folder) {
                 const commandDispatch = {

@@ -28,7 +28,7 @@ export default () => {
 
     useEffect(() => {
 
-        if (activeCommand) {
+        if (activeCommand && activeCommand.payload) {
             const { action, payload: { folder } } = activeCommand;
             if (action && folder) {
                 const commandDispatch = {

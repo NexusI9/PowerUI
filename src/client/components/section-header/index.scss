@@ -1,4 +1,4 @@
-.section-header{
+.section-header {
     position: sticky;
     top: 0;
     left: 0;
@@ -7,4 +7,13 @@
     justify-content: space-between;
     padding: var(--space-s) var(--space-m);
     border-bottom: solid 1px var(--figma-color-border);
+
+    .options-row {
+
+        &>div:last-of-type {
+            .button-icon {
+                border-radius: 10em;
+            }
+        }
+    }
 }
