@@ -6,10 +6,10 @@ const loadSlice = createSlice({
         message: null
     },
     reducers: {
-        display: (state, { payload }) => ({ ...state, message: payload }),
+        display: (state, { payload }) => ({ ...state, ...payload }),
         destroy: (state) => ({ ...state, message: null })
     }
 });
 
-export const { display } = loadSlice.actions;
+export const { display, destroy } = loadSlice.actions;
 export default loadSlice.reducer;

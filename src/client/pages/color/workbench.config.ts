@@ -359,7 +359,7 @@ const adjustSidepanelContent: SidepanelOption['content'] = [
 
 
 export const CREATE_SWATCH_CONFIG: Workbench = {
-    reducer:'workbench',
+    reducer: 'workbench',
     title: 'Generate a new palette',
     type: 'PAINT',
     sidepanel: {
@@ -379,12 +379,12 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
         ]
     },
     footer: {
-        primaryAction: { value: 'Add', action: 'CREATE_SET' }
+        primaryAction: { value: 'Add', action: 'CREATE_SET', destroy: true }
     }
 }
 
 export const EDIT_SWATCH_CONFIG: Workbench = {
-    reducer:'workbench',
+    reducer: 'workbench',
     title: 'Edit current palette',
     type: 'PAINT',
     sidepanel: {
@@ -393,6 +393,6 @@ export const EDIT_SWATCH_CONFIG: Workbench = {
         ]
     },
     footer: {
-        primaryAction: { value: 'Edit', action: 'EDIT_SWATCH', destroy:true }
+        primaryAction: { value: 'Edit', action: 'EDIT_SWATCH', destroy: true }
     }
 }

@@ -5,7 +5,6 @@ import { get } from "@lib/ipc";
 import { Set } from "@ctypes/workbench.template";
 import WebFont from "webfontloader";
 
-
 export async function loadFont(typeface: FontName | undefined): Promise<string> {
 
     return new Promise((resolve, reject) => {

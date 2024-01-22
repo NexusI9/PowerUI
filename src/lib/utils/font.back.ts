@@ -4,6 +4,7 @@ import { replaceStyle } from "./style";
 
 export function loadLocalFont(msg: any, systemFonts: TextDico) {
 
+
     return new Promise((resolve, reject) => {
 
         const { payload } = msg;
