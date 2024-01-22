@@ -4,20 +4,19 @@ import PaintPlus from '@icons/paint-plus.svg';
 import SwatchIcon from '@icons/swatch.svg';
 import { ButtonPad } from "src/types/input";
 import { send } from "@lib/ipc";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { CREATE_SWATCH_CONFIG, EDIT_SWATCH_CONFIG } from "./workbench.config";
 import { StyleFolder } from "src/types/style";
 import { GET_PAINT_STYLES_COMMAND } from "@lib/constants";
 import { FolderOptions } from "src/types/folder";
 import { EXPORT_PAINT_CONFIG } from "./export.config";
 import { DEV_PAINT_CONFIG } from "./dev.config";
-import Upload from '@icons/upload.svg';
-import Dev from '@icons/dev.svg';
 
 //Reducer dispatch
 import { init as initWorkbench } from "@lib/slices/workbench.template";
 import { init as initExport } from '@lib/slices/export.template';
 import { init as initDev } from "@lib/slices/dev.template";
+import { useEffect } from "react";
 
 
 export default () => {
@@ -25,6 +24,22 @@ export default () => {
     const createSwatch = (folder: StyleFolder) => dispatch(initWorkbench({ ...CREATE_SWATCH_CONFIG, folder }));
     const exportSwatch = (folder: StyleFolder) => dispatch(initExport({ ...EXPORT_PAINT_CONFIG, folder }));
     const devSwatch = (folder: StyleFolder) => dispatch(initDev({ ...DEV_PAINT_CONFIG, folder }));
+    const activeCommand = useSelector((state: any) => state.contextmenu.activeCommand);
+
+    useEffect(() => {
+
+        if (activeCommand) {
+            const { action, payload: { folder } } = activeCommand;
+            if (action && folder) {
+                const commandDispatch = {
+                    'INIT_EXPORT': exportSwatch,
+                    'INIT_DEV': devSwatch
+                }
+                try { commandDispatch[action as keyof typeof commandDispatch](folder); } catch (e) { console.log(`Couldn't dispatch, didn't find a key ${action}`); }
+            }
+        }
+
+    }, [activeCommand]);
 
     const buttonPadStyle: ButtonPad = {
         icon: PaintPlus,
@@ -47,8 +62,8 @@ export default () => {
                     { value: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', receiver: 'API' }
                 ],
                 [
-                    { value: 'Export styles', action: 'INIT_WORKBENCH', receiver: 'STORE', icon: Upload },
-                    { value: 'See code', action: 'INIT_DEV', receiver: 'STORE', icon: Dev },
+                    { value: 'Export styles', action: 'INIT_EXPORT', receiver: 'STORE', icon: 'upload' },
+                    { value: 'See code', action: 'INIT_DEV', receiver: 'STORE', icon: 'dev' },
                 ]
             ],
             edit: { onClick: (folder: StyleFolder) => dispatch(initWorkbench({ ...EDIT_SWATCH_CONFIG, folder: folder, config: { styles: [...folder.styles as Array<PaintStyle>] } })) }

@@ -40,15 +40,9 @@ export const Folder = ({
             DEFAULT_COMMANDS,
             ...options?.folder?.kebab || []
         ];
-        
-        //concat eventuals custom options
-        /*if (options?.folder?.kebab) {
-            menu = [menu];
-            options.folder.kebab.forEach(option => menu.push(option))
-        }*/
 
         //map folder to payload
-        return traverseCallback(menu, (item: any) => ({ ...item, payload: { folder: attributes } }));
+        return traverseCallback(menu, (item: any) => ({ ...item, payload: { ...item.payload, folder: attributes } }));
     }, [attributes]);
 
     const folderIconMap: Array<IOption> = [
