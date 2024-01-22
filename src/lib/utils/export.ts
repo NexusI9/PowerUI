@@ -2,7 +2,7 @@ import { Dev } from "@ctypes/dev.template";
 import { folderNameFromPath, groupStyles } from "./style";
 import { colorSeparator, to255 } from "./color";
 import simpleColorConverter from 'simple-color-converter';
-import { mapKeys, objectToArray, roundObjectFloat } from "./utils";
+import { delay, mapKeys, objectToArray, roundObjectFloat } from "./utils";
 import { checkContrast } from "./shade.helper";
 import { groupFont } from "./font.back";
 import { TextArrayItem } from "@ctypes/text";
@@ -116,6 +116,7 @@ const Layout = {
             padding: [0, 0, 6, 0],
             center: true
         });
+        
         box.appendChild(node);
         node.layoutSizingHorizontal = 'FILL';
         node.layoutSizingVertical = 'FILL';
@@ -150,10 +151,10 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
         itemSpacing: 0
     });
 
+    for (let key in groupedStyles) {
 
-    Object.keys(groupedStyles).forEach(async (key: string) => {
-
-        console.log(`Generating ${key} swatch...`);
+        figma.ui.postMessage({ action: 'LOAD_MESSAGE', payload: { message: `Generating ${key} swatch...` } });
+        await delay(40);
 
         //create parent frame
         const parentFrame = Layout.frame({
@@ -352,12 +353,11 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
 
         });
 
-
         parentFrame.appendChild(swatchGroupFrame);
         swatchGroupFrame.layoutSizingHorizontal = 'FIXED';
         parentFrame.layoutSizingHorizontal = 'HUG';
 
-    });
+    }
 
     figma.viewport.scrollAndZoomIntoView([masterFrame]);
     figma.closePlugin();

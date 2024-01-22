@@ -43,11 +43,10 @@ export function listen(callback: any) {
     const handleCallback = ({ data: { pluginMessage } }: ICallback) => callback(pluginMessage);
 
     useEffect(() => {
-
-        window.addEventListener("message", handleCallback)
+        window.addEventListener("message", handleCallback);
 
         return () => {
-            window.removeEventListener("message", handleCallback)
+            window.removeEventListener("message", handleCallback);
         }
     }, [callback]);
 }

@@ -8,6 +8,7 @@ import inputSlice from './slices/input';
 import styleSlice from './slices/style';
 import exportSlice from './slices/export.template';
 import devSlice from './slices/dev.template';
+import loadSlice from './slices/load';
 
 const store = configureStore({
     reducer:{
@@ -20,6 +21,7 @@ const store = configureStore({
         workbench: workbenchSlice,
         export: exportSlice,
         dev: devSlice,
+        load: loadSlice
     }
 });
 

@@ -88,3 +88,7 @@ export const objectToArray = (object: any): Array<any> => {
     for (let key in object) { ar.push(object[key]); }
     return ar;
 }
+
+export function delay(time:number) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }

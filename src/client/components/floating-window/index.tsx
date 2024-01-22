@@ -4,6 +4,7 @@ import { ButtonIcon } from "@components/button-icon";
 import { Button } from "@components/button";
 import { send } from '@lib/ipc';
 import { BaseTemplate } from '@ctypes/template';
+import { LoadMessage } from '@components/load-message';
 
 export const FloatingWindow = ({ children, onDestroy, template }: { children: any, onDestroy?(): any, template: BaseTemplate & any }) => {
 
@@ -19,16 +20,18 @@ export const FloatingWindow = ({ children, onDestroy, template }: { children: an
                 <div className="floating-window-container flex f-row">
                     {config && children}
                 </div>
-                <footer className="floating-window-footer flex f-row f-end gap-s">
-                    <Button value='Cancel' onClick={onDestroy} role='SECONDARY' />
-                    <Button
-                        value={footer?.primaryAction.value || 'ADD'}
-                        onClick={() => {
-                            send({ action: footer?.primaryAction.action || '', payload: { ...template } });
-                            if (onDestroy) onDestroy();
-                        }}
-                        role='PRIMARY'
-                    />
+                <footer className="floating-window-footer flex f-row f-between">
+                    <LoadMessage />
+                    <div className='flex f-row gap-s'>
+                        <Button value='Cancel' onClick={onDestroy} role='SECONDARY' />
+                        <Button
+                            value={footer?.primaryAction.value || 'ADD'}
+                            onClick={() => {
+                                send({ action: footer?.primaryAction.action || '', payload: { ...template } });
+                            }}
+                            role='PRIMARY'
+                        />
+                    </div>
                 </footer>
             </div>
         </div>}
