@@ -5,20 +5,23 @@ import ArrowHorizontal from '@icons/horizontal.svg';
 import { Icon } from "@components/icon";
 import { ExportGroupText } from "@ctypes/text";
 import { TextGroup } from "./textgroup";
+import { DEFAULT_TYPEFACE } from "@lib/constants";
 
 export const ExportText = (props: ExportTextConfig) => {
 
+    const typeface = typeof props.typeface === "string" && props.typeface || DEFAULT_TYPEFACE;
     const groupMap: { [key: string]: { headline: { content: string; style?: any }; fonts: Array<ExportGroupText> } } = {
         fontFamily: {
             headline: {
                 content: 'Font Family',
-                style: { fontFamily: props.fontFamily || 'Inter' }
+                style: { fontFamily: typeface }
             },
             fonts: [
                 {
                     detail: {
                         topRow: 'Font Family Primary',
-                        bottomRow: 'Inter'
+                        bottomRow: 'Inter',
+                        style: { fontFamily: typeface }
                     },
                     body: { content: 'Inter', style: { fontSize: '24px' } }
                 }
@@ -27,20 +30,22 @@ export const ExportText = (props: ExportTextConfig) => {
         fontWeight: {
             headline: {
                 content: 'Font Weight',
-                style: { fontFamily: props.fontFamily || 'Inter' }
+                style: { fontFamily: typeface }
             },
             fonts: [
                 {
                     detail: {
                         topRow: 'Font Weight Bold',
-                        bottomRow: '800'
+                        bottomRow: '800',
+                        style: { fontFamily: typeface }
                     },
                     body: { content: 'Bold', style: { fontSize: '24px', fontWeight: 'bold' } }
                 },
                 {
                     detail: {
                         topRow: 'Font Weight Regular',
-                        bottomRow: '400'
+                        bottomRow: '400',
+                        style: { fontFamily: typeface },
                     },
                     body: { content: 'Regular', style: { fontSize: '24px', fontWeight: 'regular' } }
                 }
@@ -49,27 +54,30 @@ export const ExportText = (props: ExportTextConfig) => {
         fontSize: {
             headline: {
                 content: 'Font Size',
-                style: { fontFamily: props.fontFamily || 'Inter' }
+                style: { fontFamily: typeface }
             },
             fonts: [
                 {
                     detail: {
                         topRow: '52px (3.25em)',
-                        bottomRow: <small className="flex f-row gap-s f-center-h"><Icon icon={ArrowVertical} />1.2 &nbsp; <Icon icon={ArrowHorizontal} />0%</small>
+                        bottomRow: <span className="flex f-row gap-s f-center-h"><Icon icon={ArrowVertical} />1.2 &nbsp; <Icon icon={ArrowHorizontal} />0%</span>,
+                        style: { fontFamily: typeface }
                     },
                     body: { content: 'Header 1', style: { fontSize: '52px' } }
                 },
                 {
                     detail: {
                         topRow: '32px (2em)',
-                        bottomRow: <small className="flex f-row gap-s f-center-h"><Icon icon={ArrowVertical} />1.2 &nbsp; <Icon icon={ArrowHorizontal} />0%</small>
+                        bottomRow: <span className="flex f-row gap-s f-center-h"><Icon icon={ArrowVertical} />1.2 &nbsp; <Icon icon={ArrowHorizontal} />0%</span>,
+                        style: { fontFamily: typeface }
                     },
                     body: { content: 'Header 2', style: { fontSize: '32px' } }
                 },
                 {
                     detail: {
                         topRow: '24px (1.5em)',
-                        bottomRow: <small className="flex f-row gap-s f-center-h"><Icon icon={ArrowVertical} />1.2 &nbsp; <Icon icon={ArrowHorizontal} />0%</small>
+                        bottomRow: <span className="flex f-row gap-s f-center-h"><Icon icon={ArrowVertical} />1.2 &nbsp; <Icon icon={ArrowHorizontal} />0%</span>,
+                        style: { fontFamily: typeface }
                     },
                     body: { content: 'Header 3', style: { fontSize: '24px' } }
                 }

@@ -22,6 +22,7 @@ export interface ExportGroupText {
     detail: {
         topRow: string | JSX.Element;
         bottomRow: string | JSX.Element;
+        style?:any;
     }
     body: {
         content: string | JSX.Element;
