@@ -49,7 +49,7 @@ export default () => {
 
     const options: FolderOptions = {
         header: {
-            add: { icon: SwatchIcon, onClick: createSwatch },
+            button: { iconLeft: SwatchIcon, onClick: createSwatch, value: 'New swatch', role: 'TERTIARY' },
             export: { onClick: exportSwatch },
             dev: { onClick: devSwatch }
         },

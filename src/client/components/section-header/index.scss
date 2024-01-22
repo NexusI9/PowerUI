@@ -5,7 +5,6 @@
     z-index: 2;
     background: var(--figma-color-bg);
     justify-content: space-between;
-    padding: 0px 12px;
+    padding: var(--space-s) var(--space-m);
     border-bottom: solid 1px var(--figma-color-border);
-    height: 46px;
 }

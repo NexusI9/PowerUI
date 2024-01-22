@@ -55,7 +55,7 @@ export default () => {
 
     const options: FolderOptions = {
         header: {
-            add: { icon: SetIcon, onClick: onCreateFont },
+            button: { iconLeft: SetIcon, onClick: onCreateFont, value: 'New Set', role: 'TERTIARY' },
             export: { onClick: onExportFont },
             dev: { onClick: onDevFont }
         },

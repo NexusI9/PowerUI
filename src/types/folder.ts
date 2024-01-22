@@ -1,6 +1,7 @@
 import { StyleFolder } from "src/types/style";
 import { ContextMenuCommand } from "src/types/contextmenu";
 import { MultiArray } from "./global";
+import { Button } from "./input";
 
 
 export interface Option {
@@ -23,7 +24,7 @@ export interface Folder {
 
 export interface FolderOptions {
     header?:{
-            add: { icon?: string; onClick: any; }
+            button:Button;
             export: { icon?: string; onClick: any; }
             dev: { icon?: string; onClick: any; }
     };

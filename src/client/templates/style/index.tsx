@@ -56,10 +56,6 @@ export const Style = ({
         const optionMap = [
             [
                 {
-                    icon: options?.header?.add?.icon || Plus,
-                    onClick: () => folder?.map(folder => options?.header?.add?.onClick(folder))
-                },
-                {
                     icon: options?.header?.export?.icon || Upload,
                     onClick: () => folder?.map(folder => options?.header?.export?.onClick(folder))
                 },
@@ -67,7 +63,8 @@ export const Style = ({
                     icon: options?.header?.dev?.icon || Dev,
                     onClick: () => folder?.map(folder => options?.header?.dev?.onClick(folder))
                 },
-            ], [
+            ],
+            [
                 {
                     icon: displayMode === 'grid' ? List : Grid,
                     onClick: () => dispatch(switchDisplay(null))
@@ -79,7 +76,18 @@ export const Style = ({
     }, [folder, displayMode]);
 
     return (<>
-        {!!headerOptions.length && <SectionHeader title={title} options={headerOptions} />}
+        {!!headerOptions.length &&
+            <SectionHeader
+                title={title}
+                options={headerOptions}
+                button={{
+                    iconLeft: options?.header?.button?.iconLeft || Plus,
+                    onClick: () => folder?.map(folder => options?.header?.button?.onClick(folder)),
+                    value: String(options?.header?.button?.value),
+                    role: options?.header?.button?.role || 'TERTIARY'
+                }}
+
+            />}
         {folder ? (folder[0].styles.length || folder[0].folders.length ?
             //styles view
             <FolderContainer
