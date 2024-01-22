@@ -1,3 +1,11 @@
 .export-content {
-    padding: var(--space-l);
+    padding: var(--space-m);
+    align-items: flex-start;
+
+    .text-color {
+        &-discrete {
+            font-size: 11px;
+            color: var(--export-color-text-secondary);
+        }
+    }
 }

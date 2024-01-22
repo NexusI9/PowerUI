@@ -56,7 +56,7 @@ export default () => {
         <>
             <Sidebar />
             <Container>
-                {page.length && router[page as keyof typeof router || 'home']}
+                {!!page.length ? router[page as keyof typeof router || 'home'] : <></>}
             </Container>
 
             <ContextMenu />

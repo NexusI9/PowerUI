@@ -50,26 +50,29 @@ export const ContextMenu = () => {
 
     }, [id]);
 
-    return (
-        <ul
-            className={`context-menu panel ${!display && 'hide' || ''}`}
-            style={{ top: `${position.y}px`, left: `${clamp(0, position.x, window.innerWidth - 1.1 * MENU_WIDTH) || position.x}px` }}
-        >
-            {commands?.map((command, i) => {
-                if (Array.isArray(command)) {
-                    return <Fragment key={JSON.stringify(command) + i}>
-                        {
-                            command.map(cm => <li key={JSON.stringify(cm) + i} onClick={() => routeDispatch(cm)}><Label iconLeft={cm.icon}>{String(cm.value)}</Label></li>)
-                        }
-                        {
-                            i < commands.length - 1 && <hr />
-                        }
-                    </Fragment>
-                } else {
-                    return (<li key={JSON.stringify(command) + i} onClick={() => routeDispatch(command)}><Label iconLeft={command.icon}>{String(command.value)}</Label></li>)
-                }
-            })}
-        </ul>
-    );
+    return (<>
+        {
+            !!commands.length &&
+            <ul
+                className={`context-menu panel ${!display && 'hide' || ''}`}
+                style={{ top: `${position.y}px`, left: `${clamp(0, position.x, window.innerWidth - 1.1 * MENU_WIDTH) || position.x}px` }}
+            >
+                {commands?.map((command, i) => {
+                    if (Array.isArray(command)) {
+                        return <Fragment key={JSON.stringify(command) + i}>
+                            {
+                                command.map(cm => <li key={JSON.stringify(cm) + i} onClick={() => routeDispatch(cm)}><Label iconLeft={cm.icon}>{String(cm.value)}</Label></li>)
+                            }
+                            {
+                                i < commands.length - 1 && <hr />
+                            }
+                        </Fragment>
+                    } else {
+                        return (<li key={JSON.stringify(command) + i} onClick={() => routeDispatch(command)}><Label iconLeft={command.icon}>{String(command.value)}</Label></li>)
+                    }
+                })}
+            </ul> 
+        }
+    </>);
 
 }

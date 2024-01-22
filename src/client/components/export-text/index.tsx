@@ -68,9 +68,12 @@ export const ExportText = (props: ExportTextConfig) => {
         }
     };
 
-    return (<div className="export-text">
-        {props.fontFamily && <TextGroup {...groupMap.fontFamily} />}
-        {props.fontWeight && <TextGroup {...groupMap.fontWeight} />}
-        <TextGroup {...groupMap.fontSize} />
+    return (<div className="export-text flex f-col gap-m full-height">
+        <p className="text-color-discrete"><small>template</small></p>
+        <div className="export-text-template">
+            {props.fontFamily && <TextGroup {...groupMap.fontFamily} />}
+            {props.fontWeight && <TextGroup {...groupMap.fontWeight} />}
+            <TextGroup {...groupMap.fontSize} />
+        </div>
     </div>);
 }

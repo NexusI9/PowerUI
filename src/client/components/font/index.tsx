@@ -39,7 +39,7 @@ export const Font = (props: TextSet) => {
         <Input
             {...(displayMode === 'list' && { style: cssTextStyle(props) })}
             value={folderNameFromPath(String(props?.name)).name}
-            appearance={{ minified: true, stroke: false }}
+            appearance={{ minified: true }}
             onBlur={updateName}
             onEnter={updateName}
         />

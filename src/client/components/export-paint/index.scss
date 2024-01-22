@@ -1,12 +1,7 @@
 .export-paint {
 
-    &>div {
-        display: flex;
-        gap: var(--space-m);
-    }
-
     &[data-direction='Column'] {
-        &>div {
+        .export-paint-container>div {
             flex-direction: column;
         }
 
@@ -18,7 +13,7 @@
 
     &[data-direction='Row'] {
 
-        &>div {
+        .export-paint-container>div {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
 
@@ -29,6 +24,15 @@
 
     }
 
+    &-container {
+
+        padding: 0 var(--space-xl);
+        &>div {
+            display: flex;
+            gap: var(--space-m);
+        }
+
+    }
 
     &-contrast {
         font-size: 11px;
@@ -76,4 +80,5 @@
         font-size: 11px;
         color: var(--export-color-text-secondary);
     }
+
 }

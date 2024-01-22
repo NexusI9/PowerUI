@@ -19,7 +19,6 @@ export const FontOptions = ({ style, config }: FontOptions) => {
     const cssStyle = cssTextStyle(style, 'OBJECT') as Record<string, any>;
     const inputStyle = {
         minified: true,
-        stroke: false,
         arrow: false
     }
 

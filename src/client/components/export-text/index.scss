@@ -1,27 +1,35 @@
 .export-text {
 
+    width: 100%;
+    align-items: flex-start;
 
-    &-group {
+    &-template {
 
-        margin-bottom: var(--space-l);
+        width: 100%;
+        padding: 0 var(--space-xl);
 
-        h3 {
-            border-bottom: solid 1px var(--export-color-border);
+        &-group {
+            margin-bottom: var(--space-l);
+
+            h3 {
+                border-bottom: solid 1px var(--export-color-border);
+            }
         }
-    }
 
-    &-item {
-        display: grid;
-        grid-template-columns: 140px auto;
-        align-items: center;
-    }
+        &-item {
+            display: grid;
+            grid-template-columns: 140px auto;
+            align-items: center;
+        }
 
-    &-detail {
-        color: var(--export-color-text-secondary);
-        font-size: 12px;
-        svg {
-            width: 12px;
-            fill: var(--export-color-text-secondary);
+        &-detail {
+            color: var(--export-color-text-secondary);
+            font-size: 12px;
+
+            svg {
+                width: 12px;
+                fill: var(--export-color-text-secondary);
+            }
         }
     }
 
