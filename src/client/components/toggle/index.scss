@@ -1,0 +1,23 @@
+.toggle {
+    height: var(--input-height);
+    border-radius: 10em;
+    border: solid 1px var(--figma-color-border);
+    background: transparent;
+    transition: border, background, 0.1s linear;
+    padding: 0 var(--space-m);
+    cursor: pointer;
+
+    input{
+        visibility: hidden;
+        display: none;
+    }
+
+    &:hover{
+        background-color: var(--figma-color-bg-brand-hover);
+    }
+
+    &[data-active='true'] {
+        border-color: var(--figma-color-border-brand);
+        background-color: var(--figma-color-bg-brand);
+    }
+}

@@ -28,6 +28,7 @@ export type TemplateInput =
     | { type: 'SLIDER'; attributes: Slider; configKey?: keyof TemplateConfig; }
     | { type: 'TEXT_AREA'; attributes: TextArea; configKey?: keyof TemplateConfig; }
     | { type: 'BUTTON'; attributes: Button; configKey?: keyof TemplateConfig; }
+    | { type: 'TOGGLE'; attributes: Checkbox; configKey?: keyof TemplateConfig; }
 
 export type TemplateText =
     { type: 'HEADING'; attributes: { value: string; } };

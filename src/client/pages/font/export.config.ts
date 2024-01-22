@@ -43,12 +43,12 @@ export const EXPORT_FONT_CONFIG: Export = {
                             attributes: { value: 'Groups' }
                         },
                         {
-                            type: 'CHECKBOX',
+                            type: 'TOGGLE',
                             attributes: { label: 'Font family', value: true },
                             configKey: 'fontFamily'
                         },
                         {
-                            type: 'CHECKBOX',
+                            type: 'TOGGLE',
                             attributes: { label: 'Font weight', value: true },
                             configKey: 'fontWeight'
                         }

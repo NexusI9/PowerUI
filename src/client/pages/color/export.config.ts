@@ -80,27 +80,27 @@ export const EXPORT_PAINT_CONFIG: Export = {
                             attributes: { value: 'Colors' }
                         },
                         {
-                            type: 'CHECKBOX',
+                            type: 'TOGGLE',
                             attributes: { label: 'Hex', value: true },
                             configKey: 'hex'
                         },
                         {
-                            type: 'CHECKBOX',
+                            type: 'TOGGLE',
                             attributes: { label: 'RGB', value: true },
                             configKey: 'rgb'
                         },
                         {
-                            type: 'CHECKBOX',
+                            type: 'TOGGLE',
                             attributes: { label: 'HSL', value: true },
                             configKey: 'hsl'
                         },
                         {
-                            type: 'CHECKBOX',
+                            type: 'TOGGLE',
                             attributes: { label: 'CMYK', value: true },
                             configKey: 'cmyk'
                         },
                         {
-                            type: 'CHECKBOX',
+                            type: 'TOGGLE',
                             attributes: { label: 'Pantone', value: true },
                             configKey: 'pantone'
                         },
@@ -111,7 +111,7 @@ export const EXPORT_PAINT_CONFIG: Export = {
                             attributes: { value: 'Contrast' }
                         },
                         {
-                            type: 'CHECKBOX',
+                            type: 'TOGGLE',
                             attributes: { label: 'Ratios', value: true },
                             configKey: 'contrastRatio'
                         }

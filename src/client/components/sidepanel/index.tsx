@@ -21,6 +21,7 @@ import { useAppDispatch } from '@lib/hook';
 import { updateSet } from '@lib/slices/workbench.actions';
 import { updateLayout } from '@lib/slices/export.actions';
 import { updateCode } from '@lib/slices/dev.actions';
+import { Toggle } from '@components/toggle';
 
 export const Sidepanel = (template: BaseTemplate) => {
 
@@ -65,7 +66,8 @@ export const Sidepanel = (template: BaseTemplate) => {
             'DROPDOWN': Dropdown,
             'HEADING': SidepanelHeading,
             'BUTTON': Button,
-            'TEXT_AREA': TextArea
+            'TEXT_AREA': TextArea,
+            'TOGGLE': Toggle
         }[input.type as string] || 'span';
 
         const dispatchUpdateSet = (payload: any) => {
@@ -85,6 +87,7 @@ export const Sidepanel = (template: BaseTemplate) => {
         //Map callback to update config on input value changed
         const defaultCallback = (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.value });
         const customCallback = {
+            'TOGGLE': (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.checked }),
             'CHECKBOX': (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.checked }),
             'DROPDOWN': (e: ContextMenuCommand) => dispatchUpdateSet({ key: input.configKey, value: e.value }),
         }[input.type as string];
