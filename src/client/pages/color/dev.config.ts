@@ -129,6 +129,6 @@ export const DEV_PAINT_CONFIG: Dev = {
         ]
     },
     footer: {
-        primaryAction: { value: 'Add', action: 'CREATE_SET', role: 'DISABLED' }
+        primaryAction: { value: 'Add', action: 'CREATE_SET', role: 'DISABLED', destroy:true }
     }
 }

@@ -6,10 +6,12 @@ import { useState } from 'react';
 
 export const LoadMessage = () => {
     const storeMessage = useSelector((state: any) => state.load.message);
-    const [message,setMessage] = useState(storeMessage);
+    const [message, setMessage] = useState(storeMessage);
 
     const handleOnMessage = (e: any) => {
-        setMessage(String(e.payload.message));
+        if (e.payload?.message) {
+            setMessage(String(e.payload?.message));
+        }
     }
 
     listen(handleOnMessage);

@@ -28,6 +28,7 @@ export const FloatingWindow = ({ children, onDestroy, template }: { children: an
                             value={footer?.primaryAction.value || 'ADD'}
                             onClick={() => {
                                 send({ action: footer?.primaryAction.action || '', payload: { ...template } });
+                                if(footer?.primaryAction.destroy){ onDestroy && onDestroy(); }
                             }}
                             role='PRIMARY'
                         />

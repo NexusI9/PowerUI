@@ -44,7 +44,7 @@ export interface Sidepanel {
 }
 
 interface Footer {
-    primaryAction: { value?: string; action?: string; role?: Button['role'] };
+    primaryAction: { value?: string; action?: string; role?: Button['role'], destroy?:boolean; };
 }
 
 export interface BaseTemplate {

@@ -393,6 +393,6 @@ export const EDIT_SWATCH_CONFIG: Workbench = {
         ]
     },
     footer: {
-        primaryAction: { value: 'Edit', action: 'EDIT_SWATCH' }
+        primaryAction: { value: 'Edit', action: 'EDIT_SWATCH', destroy:true }
     }
 }
