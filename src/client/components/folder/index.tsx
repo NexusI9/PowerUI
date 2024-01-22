@@ -36,16 +36,19 @@ export const Folder = ({
 
     const contextMenuItems = useMemo(() => {
         //set default commands
-        let menu: MultiArray<ContextMenuCommand> = DEFAULT_COMMANDS;
-
+        let menu: MultiArray<ContextMenuCommand> = [
+            DEFAULT_COMMANDS,
+            ...options?.folder?.kebab || []
+        ];
+        
         //concat eventuals custom options
-        if (options?.folder?.kebab) {
+        /*if (options?.folder?.kebab) {
             menu = [menu];
-            menu = menu.concat([options.folder.kebab])
-        }
+            options.folder.kebab.forEach(option => menu.push(option))
+        }*/
 
         //map folder to payload
-        return traverseCallback(menu, (item:any) => ({ ...item, payload: { folder: attributes } }));
+        return traverseCallback(menu, (item: any) => ({ ...item, payload: { folder: attributes } }));
     }, [attributes]);
 
     const folderIconMap: Array<IOption> = [
@@ -77,7 +80,7 @@ export const Folder = ({
         const oldName = attributes.name;
 
         if (newName !== oldName) {
-            send({ action: 'UPDATE_STYLE_FOLDER', payload: { level, name:newName, folder: attributes } });
+            send({ action: 'UPDATE_STYLE_FOLDER', payload: { level, name: newName, folder: attributes } });
         }
     }
 

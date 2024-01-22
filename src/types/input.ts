@@ -50,7 +50,7 @@ export interface Slider {
 }
 
 
-export interface Button {
+export interface Button extends Label {
     value: string;
     onClick: any;
     role: 'PRIMARY' | 'SECONDARY' | 'TERTIARY' | 'DISABLED';

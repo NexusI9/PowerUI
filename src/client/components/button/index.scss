@@ -31,5 +31,8 @@
         }
     }
 
-    &[data-role="TERTIARY"] {}
+    &[data-role="TERTIARY"] {
+        background-color: transparent;
+        border: solid 1px var(--figma-color-border);
+    }
 }

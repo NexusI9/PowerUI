@@ -11,6 +11,8 @@ import { GET_PAINT_STYLES_COMMAND } from "@lib/constants";
 import { FolderOptions } from "src/types/folder";
 import { EXPORT_PAINT_CONFIG } from "./export.config";
 import { DEV_PAINT_CONFIG } from "./dev.config";
+import Upload from '@icons/upload.svg';
+import Dev from '@icons/dev.svg';
 
 //Reducer dispatch
 import { init as initWorkbench } from "@lib/slices/workbench.template";
@@ -39,9 +41,15 @@ export default () => {
         folder: {
             add: { icon: SwatchIcon, onClick: createSwatch },
             kebab: [
-                { value: 'Sort by name', action: 'SORT_STYLE_NAME', payload: {}, receiver: 'API' },
-                { value: 'Sort by brightness', action: 'SORT_STYLE_COLOR_BRIGHTNESS', payload: {}, receiver: 'API' },
-                { value: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', payload: {}, receiver: 'API' }
+                [
+                    { value: 'Sort by name', action: 'SORT_STYLE_NAME', receiver: 'API' },
+                    { value: 'Sort by brightness', action: 'SORT_STYLE_COLOR_BRIGHTNESS', receiver: 'API' },
+                    { value: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', receiver: 'API' }
+                ],
+                [
+                    { value: 'Export styles', action: 'INIT_WORKBENCH', receiver: 'STORE', icon: Upload },
+                    { value: 'See code', action: 'INIT_DEV', receiver: 'STORE', icon: Dev },
+                ]
             ],
             edit: { onClick: (folder: StyleFolder) => dispatch(initWorkbench({ ...EDIT_SWATCH_CONFIG, folder: folder, config: { styles: [...folder.styles as Array<PaintStyle>] } })) }
         }

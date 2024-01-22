@@ -1,5 +1,6 @@
 import { StyleFolder } from "src/types/style";
 import { ContextMenuCommand } from "src/types/contextmenu";
+import { MultiArray } from "./global";
 
 
 export interface Option {
@@ -29,6 +30,6 @@ export interface FolderOptions {
     folder?:{
             add: { icon?: string; onClick: any; };
             edit: { icon?: string; onClick: any; };
-            kebab?: Array<ContextMenuCommand>;
+            kebab?: Array<Array<ContextMenuCommand>>;
     }
 }
