@@ -6,17 +6,19 @@ import { Set } from "@ctypes/workbench.template";
 import WebFont from "webfontloader";
 
 export async function loadFont(typeface: FontName | undefined): Promise<string> {
-
+    console.log({typeface});
     return new Promise((resolve, reject) => {
         if (typeface !== undefined) {
             //Google Font Loading
             try {
+                console.log('load web');
                 WebFont.load({
                     google: {
                         families: [typeface.family]
                     },
                     active: () => resolve(typeface.family || DEFAULT_TYPEFACE),
                     inactive: () => {
+                        console.log('load local');
                         //Load Local Font from server
                         get({ action: 'LOAD_FONT', payload: typeface }).then(e => resolve(e));
                     }

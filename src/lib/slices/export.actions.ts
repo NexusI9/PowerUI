@@ -6,11 +6,13 @@ export const updateLayout = createAsyncThunk('export/updateLayout', async ({ key
 
     const state = getState() as any;
     const oldConfig = state.export.config || {};
+    console.log({key,value});
 
     if (key === 'typeface' && typeof value === 'string' && oldConfig.typeface !== value) {
         dispatch(displayLoad({ message: `Loading font ${value}` }));
         await loadFont({ family: value, style: 'Regular' });
         dispatch(destroyLoad());
+        console.log('loaded');
     }
 
     return {

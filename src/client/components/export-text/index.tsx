@@ -8,9 +8,12 @@ import { TextGroup } from "./textgroup";
 
 export const ExportText = (props: ExportTextConfig) => {
 
-    const groupMap: { [key: string]: { headline: string; fonts: Array<ExportGroupText> } } = {
+    const groupMap: { [key: string]: { headline: { content: string; style?: any }; fonts: Array<ExportGroupText> } } = {
         fontFamily: {
-            headline: 'Font Family',
+            headline: {
+                content: 'Font Family',
+                style: { fontFamily: props.fontFamily || 'Inter' }
+            },
             fonts: [
                 {
                     detail: {
@@ -22,7 +25,10 @@ export const ExportText = (props: ExportTextConfig) => {
             ]
         },
         fontWeight: {
-            headline: 'Font Weight',
+            headline: {
+                content: 'Font Weight',
+                style: { fontFamily: props.fontFamily || 'Inter' }
+            },
             fonts: [
                 {
                     detail: {
@@ -41,7 +47,10 @@ export const ExportText = (props: ExportTextConfig) => {
             ]
         },
         fontSize: {
-            headline: 'Font Size',
+            headline: {
+                content: 'Font Size',
+                style: { fontFamily: props.fontFamily || 'Inter' }
+            },
             fonts: [
                 {
                     detail: {

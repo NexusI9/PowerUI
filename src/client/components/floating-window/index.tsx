@@ -11,8 +11,8 @@ export const FloatingWindow = ({ children, onDestroy, template }: { children: an
     const { active, footer, config, title } = template;
 
     return (<>{active &&
-        <div className="floating-window-wrapper flex f-center">
-            <div className="floating-window-window panel flex f-col">
+        <div className="floating-window-wrapper flex f-center fadein">
+            <div className="floating-window-window panel flex f-col fadeup">
                 <header className="floating-window-header flex f-row f-center-h f-between">
                     <p className="frozen"><small><b>{title}</b></small></p>
                     <ButtonIcon icon={Close} onClick={onDestroy} />

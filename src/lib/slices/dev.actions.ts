@@ -18,10 +18,7 @@ export const updateCode = createAsyncThunk('dev/updateCode', async ({ key, value
         [key]: value
     };
 
-    
     const code = await get({ action: LANGUAGE_COMMAND[state.dev.type as keyof typeof LANGUAGE_COMMAND], payload: { ...state.dev, config: newConfig } });
-
-
 
     return {
         config: newConfig,
