@@ -19,7 +19,6 @@ export const Dropdown = (props: IDropdown) => {
 
     const dispatch = useDispatch();
 
-
     const handleOnClick = (e: BaseSyntheticEvent) => {
         const { x, y } = e.target.getBoundingClientRect() || 0;
         const offset = Math.max(0, setYPos(activeItem, 20, props.list));

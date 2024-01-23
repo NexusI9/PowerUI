@@ -34,7 +34,7 @@ export const ContextMenu = () => {
 
         switch (command.receiver) {
             case 'API':
-                return send({ action: command.action || '', payload });
+                return send({ action: command.action || '', ...payload });
             case 'STORE':
                 return dispatch(setActiveCommand(payload));
         }
