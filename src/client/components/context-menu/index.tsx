@@ -1,6 +1,6 @@
 import './index.scss';
 import { ContextMenu as IContextMenu, ContextMenuCommand } from "src/types/contextmenu";
-import { Fragment, useEffect, useRef, useState } from "react";
+import { Fragment, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";
 import { send } from "@lib/ipc";
 import { destroy as destroyTooltip } from '@lib/slices/tooltip';
@@ -8,7 +8,7 @@ import { destroy as destroyContextMenu, setActiveCommand } from '@lib/slices/con
 import { useDispatch } from 'react-redux';
 import { clamp } from '@lib/utils/utils';
 import { Label } from '@components/label';
-import { freezeScroll } from './helper';
+import { freezeScroll, setHeight, setPosition } from './helper';
 
 
 export const ContextMenu = () => {
@@ -17,25 +17,28 @@ export const ContextMenu = () => {
     const FREEZE_COMPONENTS_CLASS = ['.container', '.template-sidepanel']; //component that get frozen scroll when the context menu is enabled
 
     const dispatch = useDispatch();
-    const { commands, position, id } = useSelector((state: { contextmenu: IContextMenu }) => state.contextmenu);
-    const [display, setDisplay] = useState<boolean>(false);
+    const { commands, position, id, activeCommand } = useSelector((state: { contextmenu: IContextMenu }) => state.contextmenu);
     const panel = useRef<any>();
     const lastId = useRef(id);
 
-    const routeDispatch = (command: ContextMenuCommand) => {
+    /*
+    * Dispatch clicked command & add additional information so we can keep track of the active command position in the context menu
+    */
+    const routeDispatch = (command: ContextMenuCommand, element: any) => {
+        const payload: IContextMenu['activeCommand'] = {
+            ...command,
+            offsetTop: element.offsetTop,
+            scroll: panel.current.scrollTop,
+            id: Number(id)
+        };
+
         switch (command.receiver) {
             case 'API':
-                return send({ action: command.action || '', payload: { ...command.payload } });
+                return send({ action: command.action || '', payload });
             case 'STORE':
-                return dispatch(setActiveCommand(command));
+                return dispatch(setActiveCommand(payload));
         }
     }
-
-    useEffect(() => {
-        //update lastId;
-        lastId.current = id;
-    }, [display]);
-
 
     useEffect(() => {
 
@@ -50,26 +53,30 @@ export const ContextMenu = () => {
 
         //set panel height
         if (panel.current) {
-            panel.current.style.height = 'auto';
-            const { height } = panel.current.getBoundingClientRect();
-            const margin = 30;
-            let newHeight = (position.y + height > window.innerHeight) ? `${window.innerHeight - position.y - margin}px` : `auto`;
-            panel.current.style.height = newHeight;
+            setPosition({
+                panel: panel.current,
+                panelY: position.y,
+                scroll: activeCommand?.scroll || 0,
+                offsetTop: activeCommand?.offsetTop || 0,
+                commandid: Number(activeCommand?.id),
+                id: Number(id),
+            });
         }
+
+
 
         //freeze scroll if id (== panel open)
         freezeScroll(FREEZE_COMPONENTS_CLASS, id !== 0);
 
         window.addEventListener('click', onClick);
         dispatch(destroyTooltip());
-        setDisplay(!!commands.length);
 
         return () => {
             lastId.current = id;
             window.removeEventListener('click', onClick);
         }
 
-    }, [id]);
+    }, [id, activeCommand]);
 
     return (<>
         {
@@ -85,15 +92,19 @@ export const ContextMenu = () => {
                 {commands?.map((command, i) => {
                     if (Array.isArray(command)) {
                         return <Fragment key={JSON.stringify(command) + i}>
-                            {
-                                command.map(cm => <li key={JSON.stringify(cm) + i} onClick={() => routeDispatch(cm)}><Label iconLeft={cm.icon}>{String(cm.value)}</Label></li>)
+                            {command.map(cm =>
+                                <li key={JSON.stringify(cm) + i} onClick={(e) => routeDispatch(cm, e.target as Element)}>
+                                    <Label iconLeft={cm.icon}>{String(cm.value)}</Label>
+                                </li>)
                             }
-                            {
-                                i < commands.length - 1 && <hr />
-                            }
+                            {(i < commands.length - 1) && <hr />}
                         </Fragment>
                     } else {
-                        return (<li key={JSON.stringify(command) + i} onClick={() => routeDispatch(command)}><Label iconLeft={command.icon}>{String(command.value)}</Label></li>)
+                        return (
+                            <li key={JSON.stringify(command) + i} onClick={(e) => routeDispatch(command, e.target as Element)}>
+                                <Label iconLeft={command.icon}>{String(command.value)}</Label>
+                            </li>
+                        );
                     }
                 })}
             </ul>

@@ -1,23 +1,15 @@
 import { ContextMenu, ContextMenuCommand } from "src/types/contextmenu";
 import { DEFAULT_CONTEXT_MENU } from "@lib/constants";
-import { get } from "@lib/ipc";
-import { traverseCallback } from "@lib/utils/utils";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 
-export const display = createAsyncThunk(
-    'contextmenu/display',
-    async (action: any) => {
-
-        return action;
-    });
-
+export const display = createAsyncThunk('contextmenu/display', (action: any) => action);
 
 const contextMenuSlice = createSlice({
     name: 'contextmenu',
     initialState: DEFAULT_CONTEXT_MENU,
     reducers: {
-        destroy: (state) => ({ ...state, ...DEFAULT_CONTEXT_MENU }),
+        destroy: (state) => ({ ...state, ...DEFAULT_CONTEXT_MENU, activeCommand: state.activeCommand }),
         setActiveCommand: (state, { payload }) => ({ ...state, activeCommand: payload })
     },
     extraReducers: (builder) => {

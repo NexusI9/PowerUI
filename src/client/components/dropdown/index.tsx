@@ -2,23 +2,21 @@ import './index.scss';
 import { Dropdown as IDropdown } from "src/types/input";
 import Carrot from '@icons/carrot.svg';
 import { BaseSyntheticEvent, useEffect, useState, useRef } from "react";
-import { setYPos } from "./helper";
+import { loadFetch, setYPos } from "./helper";
 import { Label } from '@components/label';
 import { useDispatch, useSelector } from 'react-redux';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
 import { ContextMenuCommand } from 'src/types/contextmenu';
-import { firstItemOfArray, traverseCallback } from '@lib/utils/utils';
-import { get } from '@lib/ipc';
 
 export const Dropdown = (props: IDropdown) => {
 
     const [activeItem, setActiveItem] = useState<ContextMenuCommand | undefined>();
     const [value, setValue] = useState<string>(String(props.value));
-    const [loaded, setLoaded] = useState<boolean>(false);
     const id = useRef<number>(performance.now());
     const commandList = useRef<any>([]);
 
     const lastState = useSelector((state: any) => state.contextmenu);
+
     const dispatch = useDispatch();
 
 
@@ -29,39 +27,11 @@ export const Dropdown = (props: IDropdown) => {
     }
 
     useEffect(() => {
-
-
         //INIT => Convert async values to actual context menu command values and store it in a ref for persistent memory
-        async function loadFetch() {
-            //check if commands have fetch propreties to replace content with fetch results
-            const fetchPromises: Array<any> = props.list.map((command) =>
-                traverseCallback(
-                    command,
-                    (cm: ContextMenuCommand) => {
-                        if (cm.value && typeof cm.value === 'object') { return get(cm.value).then(({ payload }) => payload); }
-                        else { return cm; }
-                    }
-                )
-            );
-            return await Promise.all(fetchPromises);
-        }
-
         if (!commandList.current.length) {
-            loadFetch().then(e => {
-                commandList.current = e;
-                setLoaded(true);
-            });
+            loadFetch(props.list).then(e => commandList.current = e);
         }
-
     }, []);
-
-    /*useEffect(() => {
-        //On loaded => call props.OnChange callback to init external callback (c.f. sidebar component)
-        if (commandList.current && props.onChange) {
-            const firstItem = firstItemOfArray(commandList.current);
-            setActiveItem(firstItem);
-        }
-    }, [loaded]);*/
 
     useEffect(() => {
 
@@ -81,7 +51,10 @@ export const Dropdown = (props: IDropdown) => {
     }, [activeItem, props.value]);
 
     useEffect(() => {
-        if (lastState.activeCommand && lastState.id === id.current) setActiveItem(lastState.activeCommand);
+        //set last active command
+        if (lastState.activeCommand && lastState.id === id.current) {
+            setActiveItem(lastState.activeCommand);
+        }
     }, [lastState.activeCommand]);
 
     return (

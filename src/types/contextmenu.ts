@@ -10,10 +10,15 @@ export interface ContextMenuCommand {
     receiver: 'API' | 'STORE';
 }
 
+interface ContextMenuCommandAdditional{
+    offsetTop?:number;
+    id?:number;
+    scroll?:number;
+}
 
 export interface ContextMenu {
     commands: MultiArray<ContextMenuCommand>;
     position: MousePosition;
     id: number | string;
-    activeCommand: ContextMenuCommand | undefined;
+    activeCommand: ContextMenuCommand & ContextMenuCommandAdditional | undefined;
 }
