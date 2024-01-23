@@ -34,6 +34,20 @@ export const Sidepanel = (template: BaseTemplate) => {
         dispatch({ type: `${template.reducer}/updateAction`, payload: { key: 'action', value: option.action } }); //store initial config
     }
 
+    const dispatchUpdateSet = (payload: any) => {
+        /*TO DO find better dynamic way to route like: 
+       *dispatch({ type: `${template.reducer}/updateSet`, payload });
+       */
+        const updateMethod = {
+            'workbench': updateSet,
+            'export': updateLayout,
+            'dev': updateCode
+        }[template.reducer];
+
+        if (updateMethod) dispatch(updateMethod(payload));
+
+    };
+
     const inheritConfig = (input: TemplateInput): TemplateInput => {
         /**
         ** Map exising config attributes to relative input keys to inherit previous config value 
@@ -70,20 +84,6 @@ export const Sidepanel = (template: BaseTemplate) => {
             'TOGGLE': Toggle
         }[input.type as string] || 'span';
 
-        const dispatchUpdateSet = (payload: any) => {
-            /*TO DO find better dynamic way to route like: 
-           *dispatch({ type: `${template.reducer}/updateSet`, payload });
-           */
-            const updateMethod = {
-                'workbench': updateSet,
-                'export': updateLayout,
-                'dev': updateCode
-            }[template.reducer];
-
-            if (updateMethod) dispatch(updateMethod(payload));
-
-        };
-
         //Map callback to update config on input value changed
         const defaultCallback = (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.value });
         const customCallback = {
@@ -99,6 +99,16 @@ export const Sidepanel = (template: BaseTemplate) => {
         );
 
     }
+
+    useEffect(() => {
+        //init first config update
+        if (activeOption && activeOption.content) {
+            traverseCallback(activeOption.content, (input: TemplateInput | TemplateText) => {
+                const { attributes: { value }, configKey } = input as TemplateInput;
+                if (configKey) { dispatchUpdateSet({ configKey, value }); }
+            });
+        }
+    }, [activeOption]);
 
 
     useEffect(() => {

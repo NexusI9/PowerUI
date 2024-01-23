@@ -97,7 +97,6 @@ export const Input = ({
 
             //update ref value
             input.current.value = String(innerValue);
-
             //call external callback
             onChange({ target: input.current });
         }

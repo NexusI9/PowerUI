@@ -10,7 +10,7 @@ const LANGUAGE_COMMAND = {
 };
 
 export const updateCode = createAsyncThunk('dev/updateCode', async ({ key, value }: any, { getState }) => {
-
+    
     const state = getState() as any;
     const oldConfig = state.dev.config || {};
     const newConfig: TemplateConfig = {

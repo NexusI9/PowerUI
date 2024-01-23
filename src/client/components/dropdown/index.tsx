@@ -7,13 +7,14 @@ import { Label } from '@components/label';
 import { useDispatch, useSelector } from 'react-redux';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
 import { ContextMenuCommand } from 'src/types/contextmenu';
-import { traverseCallback } from '@lib/utils/utils';
+import { firstItemOfArray, traverseCallback } from '@lib/utils/utils';
 import { get } from '@lib/ipc';
 
 export const Dropdown = (props: IDropdown) => {
 
     const [activeItem, setActiveItem] = useState<ContextMenuCommand | undefined>();
     const [value, setValue] = useState<string>(String(props.value));
+    const [loaded, setLoaded] = useState<boolean>(false);
     const id = useRef<number>(performance.now());
     const commandList = useRef<any>([]);
 
@@ -28,6 +29,8 @@ export const Dropdown = (props: IDropdown) => {
     }
 
     useEffect(() => {
+
+
         //INIT => Convert async values to actual context menu command values and store it in a ref for persistent memory
         async function loadFetch() {
             //check if commands have fetch propreties to replace content with fetch results
@@ -35,7 +38,7 @@ export const Dropdown = (props: IDropdown) => {
                 traverseCallback(
                     command,
                     (cm: ContextMenuCommand) => {
-                        if (cm.value && typeof cm.value === 'object') { return get(cm.value).then(e => e.payload); }
+                        if (cm.value && typeof cm.value === 'object') { return get(cm.value).then(({ payload }) => payload); }
                         else { return cm; }
                     }
                 )
@@ -43,8 +46,22 @@ export const Dropdown = (props: IDropdown) => {
             return await Promise.all(fetchPromises);
         }
 
-        loadFetch().then(e => commandList.current = e);
+        if (!commandList.current.length) {
+            loadFetch().then(e => {
+                commandList.current = e;
+                setLoaded(true);
+            });
+        }
+
     }, []);
+
+    /*useEffect(() => {
+        //On loaded => call props.OnChange callback to init external callback (c.f. sidebar component)
+        if (commandList.current && props.onChange) {
+            const firstItem = firstItemOfArray(commandList.current);
+            setActiveItem(firstItem);
+        }
+    }, [loaded]);*/
 
     useEffect(() => {
 

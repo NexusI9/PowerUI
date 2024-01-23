@@ -92,3 +92,11 @@ export const objectToArray = (object: any): Array<any> => {
 export function delay(time:number) {
     return new Promise((resolve) => setTimeout(resolve, time));
   }
+
+export function firstItemOfArray(item:Array<any>){
+    if(Array.isArray(item[0])){
+        return firstItemOfArray(item[0]);
+    }else{
+        return item[0];
+    }
+}
