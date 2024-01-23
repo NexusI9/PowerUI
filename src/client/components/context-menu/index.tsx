@@ -8,17 +8,17 @@ import { destroy as destroyContextMenu, setActiveCommand } from '@lib/slices/con
 import { useDispatch } from 'react-redux';
 import { clamp } from '@lib/utils/utils';
 import { Label } from '@components/label';
+import { freezeScroll } from './helper';
 
 
 export const ContextMenu = () => {
 
     const DEFAULT_WIDTH = 160;
-    const DEFAULT_HEIGHT = 200;
+    const FREEZE_COMPONENTS_CLASS = ['.container', '.template-sidepanel']; //component that get frozen scroll when the context menu is enabled
 
     const dispatch = useDispatch();
     const { commands, position, id } = useSelector((state: { contextmenu: IContextMenu }) => state.contextmenu);
     const [display, setDisplay] = useState<boolean>(false);
-    const [height, setHeight] = useState<string>('auto');
     const panel = useRef<any>();
     const lastId = useRef(id);
 
@@ -34,20 +34,10 @@ export const ContextMenu = () => {
     useEffect(() => {
         //update lastId;
         lastId.current = id;
-        
-        //set panel height
-        if (panel.current) {
-            const { height } = panel.current.getBoundingClientRect();
-            const margin = 30;
-            let newHeight = (position.y + height > window.innerHeight) ? `${window.innerHeight - position.y - margin}px` : `auto`;
-            setHeight(newHeight);
-        }
-
     }, [display]);
 
-    useEffect(() => {
 
-        setHeight('auto');
+    useEffect(() => {
 
         const onClick = () => {
             //if new id has same as before means user clicked outside (since no new id invoked)
@@ -57,6 +47,19 @@ export const ContextMenu = () => {
                 lastId.current = id;
             }
         };
+
+        //set panel height
+        if (panel.current) {
+            panel.current.style.height = 'auto';
+            const { height } = panel.current.getBoundingClientRect();
+            const margin = 30;
+            let newHeight = (position.y + height > window.innerHeight) ? `${window.innerHeight - position.y - margin}px` : `auto`;
+            panel.current.style.height = newHeight;
+        }
+
+        //freeze scroll if id (== panel open)
+        freezeScroll(FREEZE_COMPONENTS_CLASS, id !== 0);
+
         window.addEventListener('click', onClick);
         dispatch(destroyTooltip());
         setDisplay(!!commands.length);
@@ -73,12 +76,10 @@ export const ContextMenu = () => {
             !!commands.length &&
             <ul
                 className={`context-menu panel`}
-                data-display={display}
                 ref={panel}
                 style={{
                     top: `${position.y}px`,
-                    left: `${clamp(0, position.x, window.innerWidth - 1.1 * DEFAULT_WIDTH) || position.x}px`,
-                    height: height
+                    left: `${clamp(0, position.x, window.innerWidth - 1.1 * DEFAULT_WIDTH) || position.x}px`
                 }}
             >
                 {commands?.map((command, i) => {

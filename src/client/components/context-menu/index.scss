@@ -18,7 +18,7 @@
     }
 
     &[data-display='false'] {
-        display: none;
+        visibility: hidden;
     }
 
     li {
@@ -37,4 +37,9 @@
         }
     }
 
+}
+
+div.freeze-scroll{
+    overflow: hidden;
+    height: 100%;
 }
