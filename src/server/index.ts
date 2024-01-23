@@ -134,11 +134,11 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'EXPORT_PAINT_SET':
-      exportPaintSet(msg);
+      exportPaintSet(msg, systemFonts);
       break;
 
     case 'EXPORT_TEXT_SET':
-      exportTextSet(msg);
+      exportTextSet(msg, systemFonts);
       break;
 
   }

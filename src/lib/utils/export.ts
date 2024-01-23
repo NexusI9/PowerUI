@@ -4,32 +4,11 @@ import { colorSeparator, to255 } from "./color";
 import simpleColorConverter from 'simple-color-converter';
 import { delay, mapKeys, objectToArray, roundObjectFloat } from "./utils";
 import { checkContrast } from "./shade.helper";
-import { groupFont } from "./font.back";
-import { TextArrayItem } from "@ctypes/text";
+import { groupFont, loadLocalFont } from "./font.back";
+import { TextArrayItem, TextDico } from "@ctypes/text";
 import { convertFontWeight, convertUnit } from "./font";
+import { DEFAULT_TYPEFACE } from "@lib/constants";
 
-const TEXT_STYLES: Record<string, { fontName: FontName, fontSize: number }> = {
-    header: {
-        fontName: { family: 'Inter', style: 'Medium' },
-        fontSize: 24
-    },
-    body: {
-        fontName: { family: 'Inter', style: 'Regular' },
-        fontSize: 14
-    },
-    caption: {
-        fontName: { family: 'Inter', style: 'Regular' },
-        fontSize: 10
-    },
-    footnote_1: {
-        fontName: { family: 'Inter', style: 'Regular' },
-        fontSize: 8
-    },
-    footnote_2: {
-        fontName: { family: 'Inter', style: 'Regular' },
-        fontSize: 6
-    }
-};
 
 const COLOR_STYLES: Record<string, Paint[]> = {
     transparent: [{ type: 'SOLID', color: { r: 0, g: 0, b: 0 }, opacity: 0 }],
@@ -39,43 +18,91 @@ const COLOR_STYLES: Record<string, Paint[]> = {
 };
 
 
-const Layout = {
-    header: ({ text }: { text: string; }) => {
+class Layout {
+
+    textStyles: any;
+
+    constructor() {}
+
+    async TEXT_STYLES(font: FontName) {
+
+        let mediumFont = { ...font, style: 'Medium' };
+
+        await figma.loadFontAsync(font);
+        try { await figma.loadFontAsync(mediumFont); }
+        catch { mediumFont = font; }
+
+        return ({
+            header: {
+                fontName: mediumFont,
+                fontSize: 24
+            },
+            body: {
+                fontName: font,
+                fontSize: 14
+            },
+            caption: {
+                fontName: font,
+                fontSize: 10
+            },
+            footnote_1: {
+                fontName: font,
+                fontSize: 8
+            },
+            footnote_2: {
+                fontName: font,
+                fontSize: 6
+            }
+        });
+    };
+
+    async loadTextStyles(font: FontName) {
+        this.textStyles = await this.TEXT_STYLES(font);
+        return this.textStyles;
+    }
+
+
+    header({ text }: { text: string; }) {
         const header = figma.createText();
+        header.fontName = this.textStyles.header.fontName;
         header.characters = text;
-        header.fontSize = TEXT_STYLES.header.fontSize;
-        header.fontName = TEXT_STYLES.header.fontName;
+        header.fontSize = this.textStyles.header.fontSize;
         return header;
-    },
-    body: ({ text }: { text: string }) => {
+    }
+
+    body({ text }: { text: string }) {
         const body = figma.createText();
+        body.fontName = this.textStyles.body.fontName;
         body.characters = text;
-        body.fontSize = TEXT_STYLES.body.fontSize;
-        body.fontName = TEXT_STYLES.body.fontName;
+        body.fontSize = this.textStyles.body.fontSize;
         return body;
-    },
-    footnote1: ({ text }: { text: string }) => {
+    }
+
+    footnote1({ text }: { text: string }) {
         const ft = figma.createText();
+        ft.fontName = this.textStyles.footnote_1.fontName;
         ft.characters = text;
-        ft.fontSize = TEXT_STYLES.footnote_1.fontSize;
-        ft.fontName = TEXT_STYLES.footnote_1.fontName;
+        ft.fontSize = this.textStyles.footnote_1.fontSize;
         return ft;
-    },
-    footnote2: ({ text }: { text: string }) => {
+    }
+
+    footnote2({ text }: { text: string }) {
         const ft = figma.createText();
+        ft.fontName = this.textStyles.footnote_2.fontName;
         ft.characters = text;
-        ft.fontSize = TEXT_STYLES.footnote_2.fontSize;
-        ft.fontName = TEXT_STYLES.footnote_2.fontName;
+        ft.fontSize = this.textStyles.footnote_2.fontSize;
         return ft;
-    },
-    caption: ({ text }: { text: string }) => {
+    }
+
+    caption({ text }: { text: string }) {
         const cp = figma.createText();
+        cp.fontName = this.textStyles.caption.fontName;
         cp.characters = text;
-        cp.fontSize = TEXT_STYLES.caption.fontSize;
-        cp.fontName = TEXT_STYLES.caption.fontName;
+        cp.fontSize = this.textStyles.caption.fontSize;
         return cp;
-    },
-    frame: ({ layout, name, itemSpacing, center, padding, radius }: { layout: 'HORIZONTAL' | 'VERTICAL'; name: string; center?: boolean; itemSpacing: number; padding?: Array<number>, radius?: Array<number> }) => {
+    }
+
+    frame({ layout, name, itemSpacing, center, padding, radius }: { layout: 'HORIZONTAL' | 'VERTICAL'; name: string; center?: boolean; itemSpacing: number; padding?: Array<number>, radius?: Array<number> }) {
         const frame = figma.createFrame();
         frame.layoutMode = layout;
         frame.layoutSizingHorizontal = 'HUG';
@@ -98,25 +125,26 @@ const Layout = {
             frame.bottomLeftRadius = radius[3];
         }
         return frame;
-    },
-    color: ({ color, opacity = 1 }: { color: RGB, opacity?: number }): Paint[] => {
+    }
+    color({ color, opacity = 1 }: { color: RGB, opacity?: number }): Paint[] {
         return [{ type: 'SOLID', color, opacity }];
-    },
-    label: (props: Partial<TextSublayerNode>) => {
+    }
+
+    label(props: Partial<TextSublayerNode>) {
         const label = figma.createText();
         mapKeys(props, label);
         return label;
-    },
+    }
     underline({ node, layout }: { node: TextNode | FrameNode; layout: 'VERTICAL' | 'HORIZONTAL' }) {
 
-        const box = Layout.frame({
-            name: `${node.name}-box`,
-            layout,
-            itemSpacing: 0,
-            padding: [0, 0, 6, 0],
-            center: true
-        });
-        
+        const box = figma.createFrame();
+        box.name = `${node.name}-box`;
+        box.layoutMode = layout;
+        box.layoutSizingHorizontal = 'HUG';
+        box.layoutSizingVertical = 'HUG';
+        box.paddingBottom = 6;
+        box.counterAxisAlignItems = 'CENTER';
+
         box.appendChild(node);
         node.layoutSizingHorizontal = 'FILL';
         node.layoutSizingVertical = 'FILL';
@@ -127,11 +155,10 @@ const Layout = {
 
         return box;
     }
+};
 
-}
 
-
-export async function exportPaintSet({ payload }: { payload: Dev }) {
+export async function exportPaintSet({ payload }: { payload: Dev }, systemFonts: TextDico) {
 
     const { folder, config } = payload;
     if (!folder) { return; }
@@ -139,16 +166,15 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
     figma.ui.postMessage({ action: 'LOAD_MESSAGE', payload: { message: `Generating swatch...` } });
     await delay(20);
 
+    const layoutFont: FontName = { family: (config?.typeface || DEFAULT_TYPEFACE), style: 'Regular' };
+
+    const layout = new Layout();
+    await layout.loadTextStyles(layoutFont);
     const groupedStyles = groupStyles(folder);
-
-    //preload needed fonts;
-    const fontsLoad: Array<Promise<void>> = [];
-    Object.keys(TEXT_STYLES).forEach((key: string) => fontsLoad.push(figma.loadFontAsync(TEXT_STYLES[key].fontName)));
-    await Promise.all(fontsLoad);
-
+    console.log(layoutFont);
 
     //Generate swatch
-    const masterFrame = Layout.frame({
+    const masterFrame = layout.frame({
         name: 'Palettes',
         layout: (config?.layout === 'Column') && 'HORIZONTAL' || 'VERTICAL',
         itemSpacing: 0
@@ -160,7 +186,7 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
         await delay(40);
 
         //create parent frame
-        const parentFrame = Layout.frame({
+        const parentFrame = layout.frame({
             name: key,
             itemSpacing: 24,
             layout: 'VERTICAL',
@@ -170,13 +196,13 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
 
 
         //create header
-        const header = Layout.header({ text: key });
-        const boxColorName = Layout.underline({ node: header, layout: 'HORIZONTAL' });
+        const header = layout.header({ text: key });
+        const boxColorName = layout.underline({ node: header, layout: 'HORIZONTAL' });
         parentFrame.appendChild(boxColorName);
         boxColorName.layoutSizingHorizontal = 'FILL';
 
         //generate swatches
-        const swatchGroupFrame = Layout.frame({
+        const swatchGroupFrame = layout.frame({
             name: 'swatch-group-frame',
             layout: (config?.layout === 'Column') && 'VERTICAL' || 'HORIZONTAL',
             itemSpacing: 16
@@ -188,7 +214,7 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
             const styleName = folderNameFromPath(style.name).name || style.name;
 
             //parent
-            const swatchFrame = Layout.frame({
+            const swatchFrame = layout.frame({
                 name: `${styleName.replace(' ', '-')}-palette`,
                 layout: (config?.layout === 'Column') && 'HORIZONTAL' || 'VERTICAL',
                 itemSpacing: 6,
@@ -198,13 +224,13 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
             const colorFrame = figma.createFrame();
 
             //child 2
-            const detailFrame = Layout.frame({
+            const detailFrame = layout.frame({
                 name: `color-detail-${styleName}-${i}`,
                 layout: 'VERTICAL',
                 itemSpacing: 6
             });
 
-            const contrastFrame = Layout.frame({
+            const contrastFrame = layout.frame({
                 name: `color-contrast-${styleName}-${i}`,
                 layout: 'VERTICAL',
                 itemSpacing: 3,
@@ -225,16 +251,16 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
             const styleColor = ((style as PaintStyle).paints[0] as SolidPaint).color || { r: 0, g: 0, b: 0 };
 
             colorFrame.name = `color-${styleName}-detail-frame-${i}`
-            colorFrame.fills = Layout.color({ color: styleColor });
-            colorFrame.strokes = Layout.color({ color: { r: 0.9, g: 0.9, b: 0.9 }, opacity: 0.5 });
+            colorFrame.fills = layout.color({ color: styleColor });
+            colorFrame.strokes = layout.color({ color: { r: 0.9, g: 0.9, b: 0.9 }, opacity: 0.5 });
 
             colorFrame.appendChild(contrastFrame);
 
             //1.1 set contrast
-            contrastFrame.fills = Layout.color({ color: { r: 0, g: 0, b: 0 }, opacity: 0 });
+            contrastFrame.fills = layout.color({ color: { r: 0, g: 0, b: 0 }, opacity: 0 });
 
             const contrastBubble = ({ color, ratio, large, regular }: { color: RGB, ratio: number; large: string | undefined; regular: string | undefined; }) => {
-                const contrastFrame = Layout.frame({
+                const contrastFrame = layout.frame({
                     name: 'contrast-frame',
                     layout: 'HORIZONTAL',
                     center: true,
@@ -243,26 +269,26 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
                     radius: [30, 30, 30, 30]
                 });
 
-                contrastFrame.fills = Layout.color({ color: { r: 1, g: 1, b: 1 }, opacity: 0.8 });
+                contrastFrame.fills = layout.color({ color: { r: 1, g: 1, b: 1 }, opacity: 0.8 });
 
 
                 const swatch = figma.createEllipse();
                 swatch.resize(10, 10);
-                swatch.fills = Layout.color({ color });
-                swatch.strokes = Layout.color({ color: { r: 0.9, g: 0.9, b: 0.9 } });
+                swatch.fills = layout.color({ color });
+                swatch.strokes = layout.color({ color: { r: 0.9, g: 0.9, b: 0.9 } });
 
-                const ratioText = Layout.footnote1({ text: String(ratio) });
+                const ratioText = layout.footnote1({ text: String(ratio) });
 
                 contrastFrame.appendChild(swatch);
                 contrastFrame.appendChild(ratioText);
 
                 if (large) {
-                    const AAA = Layout.footnote1({ text: 'AAA' });
+                    const AAA = layout.footnote1({ text: 'AAA' });
                     contrastFrame.appendChild(AAA);
                 }
 
                 if (regular) {
-                    const AA = Layout.footnote1({ text: 'AA' });
+                    const AA = layout.footnote1({ text: 'AA' });
                     contrastFrame.appendChild(AA);
                 }
 
@@ -277,7 +303,7 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
             contrastFrame.appendChild(contrastBubble({ color: { r: 1, g: 1, b: 1 }, ...white }));
 
             //2. set details
-            const colorName = Layout.body({ text: styleName });
+            const colorName = layout.body({ text: styleName });
 
             detailFrame.appendChild(colorName);
 
@@ -291,7 +317,7 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
             };
 
             //2.1 set color details
-            const colorDetailGroup = Layout.frame({
+            const colorDetailGroup = layout.frame({
                 name: 'color-detail-frame',
                 layout: 'VERTICAL',
                 itemSpacing: 3
@@ -319,11 +345,11 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
                     arrayColor = colorSeparator(arrayColor, (config.colorSeparator || 'White space'), format);
 
                     //color name (hex/rgb...)
-                    const colorName = Layout.footnote1({ text: (format === 'pantone') ? 'Pantone' : format.toUpperCase() });
+                    const colorName = layout.footnote1({ text: (format === 'pantone') ? 'Pantone' : format.toUpperCase() });
                     colorName.fills = COLOR_STYLES.grey;
 
                     //color value
-                    const colorCode = Layout.footnote1({ text: arrayColor });
+                    const colorCode = layout.footnote1({ text: arrayColor });
                     colorCode.fills = COLOR_STYLES.grey;
 
                     //Render color format frame
@@ -369,12 +395,15 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
 
 
 
-export async function exportTextSet({ payload }: { payload: Dev }) {
+export async function exportTextSet({ payload }: { payload: Dev }, systemFonts: TextDico) {
 
     const { folder, config } = payload;
     if (!folder) { return; }
 
     const groupedStyles = groupStyles(folder);
+    const layoutFont: FontName = { family: (config?.typeface || DEFAULT_TYPEFACE), style: 'Regular' };
+    const layout = new Layout();
+    layout.loadTextStyles(layoutFont);
 
     //Get unique fonts families and unique weight
     let uniqueFonts: { [key: string]: TextArrayItem } = {};
@@ -393,15 +422,20 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
     });
 
     //preload fonts
-    const fontsLoad: Array<Promise<void>> = [];
+    const fontsLoad: Array<Promise<any>> = [];
     //load default layout fonts
-    Object.keys(TEXT_STYLES).forEach((key: string) => fontsLoad.push(figma.loadFontAsync(TEXT_STYLES[key].fontName)));
+    //Object.keys(TEXT_STYLES).forEach((key: string) => fontsLoad.push(figma.loadFontAsync(TEXT_STYLES()[key].fontName)));
     //load styles custom fonts
     Object.keys(uniqueFonts).forEach((key: string) => {
         const currentFont = uniqueFonts[key as keyof typeof uniqueFonts];
         //load styles one by one
         currentFont.style.forEach(style => fontsLoad.push(figma.loadFontAsync({ family: currentFont.family, style })));
     });
+    //load custom layout fond
+    //preload config custom font
+    if (layoutFont.family !== DEFAULT_TYPEFACE) {
+        fontsLoad.push(loadLocalFont({ payload: layoutFont }, systemFonts));
+    }
     await Promise.all(fontsLoad);
 
 
@@ -409,7 +443,7 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
     * Draw
     */
     const DETAILS_WIDTH = 135;
-    const masterFrame = Layout.frame({
+    const masterFrame = layout.frame({
         name: 'Font sets',
         layout: 'HORIZONTAL',
         itemSpacing: 32,
@@ -418,7 +452,7 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
     const fontFamilyHierarchy = ['Primary', 'Secondary', 'Tertiary'];
     Object.keys(uniqueFonts).forEach((uniqueFont, i) => {
 
-        const fontGroup = Layout.frame({
+        const fontGroup = layout.frame({
             name: 'font-group-frame',
             padding: [24, 24, 24, 24],
             itemSpacing: 32,
@@ -429,19 +463,19 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
         //----------Set font families
         if (config?.fontFamily) {
-            const fontFamilyFrame = Layout.frame({
+            const fontFamilyFrame = layout.frame({
                 name: 'font-family-frame',
                 layout: 'VERTICAL',
                 itemSpacing: 12
             });
 
-            const fontFamilyHeader = Layout.header({ text: 'Font Family' });
-            const boxFontFamily = Layout.underline({ node: fontFamilyHeader, layout: 'HORIZONTAL' });
+            const fontFamilyHeader = layout.header({ text: 'Font Family' });
+            const boxFontFamily = layout.underline({ node: fontFamilyHeader, layout: 'HORIZONTAL' });
             fontFamilyFrame.appendChild(boxFontFamily);
             boxFontFamily.layoutSizingHorizontal = 'FILL';
 
 
-            const fontFrame = Layout.frame({
+            const fontFrame = layout.frame({
                 layout: 'HORIZONTAL',
                 itemSpacing: 0,
                 name: 'font-frame',
@@ -449,7 +483,7 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
             });
 
             //Set font label
-            const fontLabel = Layout.label({
+            const fontLabel = layout.label({
                 fontSize: 32,
                 fontName: { family: uniqueFont, style: 'Regular' },
                 characters: uniqueFont
@@ -457,7 +491,7 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
 
             //Set font detail
-            const fontDetail = Layout.frame({
+            const fontDetail = layout.frame({
                 name: 'font-detail',
                 itemSpacing: 3,
                 layout: 'VERTICAL'
@@ -465,8 +499,8 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
             fontDetail.resize(DETAILS_WIDTH, 30);
 
-            const fontDetailTop = Layout.footnote1({ text: `Font Family ${(fontFamilyHierarchy[i] || '')}` });
-            const fontDetailBottom = Layout.footnote1({ text: uniqueFont });
+            const fontDetailTop = layout.footnote1({ text: `Font Family ${(fontFamilyHierarchy[i] || '')}` });
+            const fontDetailBottom = layout.footnote1({ text: uniqueFont });
             fontDetailTop.fills = COLOR_STYLES.grey;
             fontDetailBottom.fills = COLOR_STYLES.grey;
 
@@ -484,44 +518,44 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
         //----------Set font Weight
         if (config?.fontWeight) {
-            const fontWeightFrame = Layout.frame({
+            const fontWeightFrame = layout.frame({
                 name: 'font-weight-frame',
                 itemSpacing: 12,
                 layout: 'VERTICAL'
             });
 
-            const fontWeightHeader = Layout.header({ text: 'Font Weight' });
-            const boxFontWeight = Layout.underline({ node: fontWeightHeader, layout: 'HORIZONTAL' });
+            const fontWeightHeader = layout.header({ text: 'Font Weight' });
+            const boxFontWeight = layout.underline({ node: fontWeightHeader, layout: 'HORIZONTAL' });
             fontWeightFrame.appendChild(boxFontWeight);
             boxFontWeight.layoutSizingHorizontal = 'FILL';
 
 
             uniqueFonts[uniqueFont].style.forEach(style => {
 
-                const styleFrame = Layout.frame({
+                const styleFrame = layout.frame({
                     name: 'style-frame',
                     itemSpacing: 0,
                     layout: 'HORIZONTAL',
                     center: true
                 });
 
-                const styleLabel = Layout.label({
+                const styleLabel = layout.label({
                     fontSize: 32,
                     fontName: { family: uniqueFont, style: style },
                     characters: style
                 });
 
-                const styleDetailFrame = Layout.frame({
+                const styleDetailFrame = layout.frame({
                     name: 'style-detail-frame',
                     itemSpacing: 3,
                     layout: 'VERTICAL'
                 });
                 styleDetailFrame.resize(DETAILS_WIDTH, 30);
 
-                const styleDetailTop = Layout.footnote1({ text: `Font Weight ${style}` });
+                const styleDetailTop = layout.footnote1({ text: `Font Weight ${style}` });
                 styleDetailTop.fills = COLOR_STYLES.grey;
 
-                const styleDetailBottom = Layout.footnote1({ text: convertFontWeight(style) });
+                const styleDetailBottom = layout.footnote1({ text: convertFontWeight(style) });
                 styleDetailBottom.fills = COLOR_STYLES.grey;
 
                 //add details
@@ -541,15 +575,15 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
 
         //----------Set font size
-        const fontSizeFrame = Layout.frame({
+        const fontSizeFrame = layout.frame({
             name: 'font-size-frame',
             itemSpacing: 24,
             layout: 'VERTICAL'
         });
 
         //Set header + underline
-        const fontSizeHeader = Layout.header({ text: 'Font Size' });
-        const boxFontSize = Layout.underline({ node: fontSizeHeader, layout: 'HORIZONTAL' });
+        const fontSizeHeader = layout.header({ text: 'Font Size' });
+        const boxFontSize = layout.underline({ node: fontSizeHeader, layout: 'HORIZONTAL' });
         fontSizeFrame.appendChild(boxFontSize);
         boxFontSize.layoutSizingHorizontal = 'FILL';
 
@@ -562,14 +596,14 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
             const letterSpacing = roundObjectFloat((style as TextStyle).letterSpacing);
             const lineHeight = roundObjectFloat((style as TextStyle).lineHeight);
 
-            const styleFrame = Layout.frame({
+            const styleFrame = layout.frame({
                 name: 'style-frame',
                 layout: 'HORIZONTAL',
                 itemSpacing: 0,
                 center: true
             });
 
-            const styleLabel = Layout.label({
+            const styleLabel = layout.label({
                 fontSize: fontSize,
                 fontName: fontName,
                 letterSpacing: letterSpacing,
@@ -577,26 +611,26 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
                 characters: folderNameFromPath(style.name).name
             });
 
-            const styleDetailFrame = Layout.frame({
+            const styleDetailFrame = layout.frame({
                 name: 'style-detail-frame',
                 layout: 'VERTICAL',
                 itemSpacing: 3
             });
             styleDetailFrame.resize(DETAILS_WIDTH, 30);
 
-            const styleDetailTop = Layout.footnote1({ text: `${fontSize} px (${Number(style.fontSize / (config?.baseSize || 16)).toFixed(2)} em)` });
+            const styleDetailTop = layout.footnote1({ text: `${fontSize} px (${Number(style.fontSize / (config?.baseSize || 16)).toFixed(2)} em)` });
             styleDetailTop.fills = COLOR_STYLES.grey;
 
-            const styleDetailBottomFrame = Layout.frame({
+            const styleDetailBottomFrame = layout.frame({
                 name: 'style-detail-bottom-frame',
                 layout: 'HORIZONTAL',
                 itemSpacing: 12
             });
 
-            const lineHeightText = Layout.footnote1({ text: `↕ ${((lineHeight as any).value && (lineHeight as any).value + ' ') || ''}${convertUnit(lineHeight.unit)}` });
+            const lineHeightText = layout.footnote1({ text: `↕ ${((lineHeight as any).value && (lineHeight as any).value + ' ') || ''}${convertUnit(lineHeight.unit)}` });
             lineHeightText.fills = COLOR_STYLES.grey;
 
-            const letterSpacingText = Layout.footnote1({ text: `↔ ${letterSpacing.value} ${convertUnit(letterSpacing.unit)}` });
+            const letterSpacingText = layout.footnote1({ text: `↔ ${letterSpacing.value} ${convertUnit(letterSpacing.unit)}` });
             letterSpacingText.fills = COLOR_STYLES.grey;
 
             styleDetailBottomFrame.appendChild(lineHeightText);
@@ -615,7 +649,7 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
         Object.keys(groupedStyles).forEach((fam, i) => {
             let sections = groupedStyles[fam].map(style => (style as TextStyle).fontName.family === uniqueFont && generateSizeSection(style as TextStyle) || null).filter(e => e !== null);
             if (sections.length) {
-                const groupStyleFrame = Layout.frame({
+                const groupStyleFrame = layout.frame({
                     name: `group-font-${fam}-${i}`,
                     layout: 'VERTICAL',
                     itemSpacing: 6
