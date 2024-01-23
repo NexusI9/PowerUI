@@ -111,7 +111,7 @@ figma.ui.onmessage = msg => {
 
     case 'FONT_LIST':
       storeFonts(msg, systemFonts)
-        .then(({ fonts, action }: { fonts: TextDico, action: string }) => {
+        .then(({ fonts }: { fonts: TextDico }) => {
           //Store fonts in global variable
           if (fonts && !systemFonts) { systemFonts = fonts }
           figma.ui.postMessage({ ...msg, payload: Object.keys(systemFonts).map(item => ({ value: item, receiver: 'STORE', ...msg })) }); //map dico font to be contextMenu compatible
@@ -134,11 +134,11 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'EXPORT_PAINT_SET':
-      exportPaintSet(msg, systemFonts);
+      exportPaintSet(msg);
       break;
 
     case 'EXPORT_TEXT_SET':
-      exportTextSet(msg, systemFonts);
+      exportTextSet(msg);
       break;
 
   }

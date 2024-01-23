@@ -158,7 +158,7 @@ class Layout {
 };
 
 
-export async function exportPaintSet({ payload }: { payload: Dev }, systemFonts: TextDico) {
+export async function exportPaintSet({ payload }: { payload: Dev }) {
 
     const { folder, config } = payload;
     if (!folder) { return; }
@@ -395,7 +395,7 @@ export async function exportPaintSet({ payload }: { payload: Dev }, systemFonts:
 
 
 
-export async function exportTextSet({ payload }: { payload: Dev }, systemFonts: TextDico) {
+export async function exportTextSet({ payload }: { payload: Dev }) {
 
     const { folder, config } = payload;
     if (!folder) { return; }
@@ -403,7 +403,7 @@ export async function exportTextSet({ payload }: { payload: Dev }, systemFonts: 
     const groupedStyles = groupStyles(folder);
     const layoutFont: FontName = { family: (config?.typeface || DEFAULT_TYPEFACE), style: 'Regular' };
     const layout = new Layout();
-    layout.loadTextStyles(layoutFont);
+    await layout.loadTextStyles(layoutFont);
 
     //Get unique fonts families and unique weight
     let uniqueFonts: { [key: string]: TextArrayItem } = {};
@@ -421,23 +421,15 @@ export async function exportTextSet({ payload }: { payload: Dev }, systemFonts: 
         }
     });
 
-    //preload fonts
+    //preload styles fonts
     const fontsLoad: Array<Promise<any>> = [];
-    //load default layout fonts
-    //Object.keys(TEXT_STYLES).forEach((key: string) => fontsLoad.push(figma.loadFontAsync(TEXT_STYLES()[key].fontName)));
     //load styles custom fonts
     Object.keys(uniqueFonts).forEach((key: string) => {
         const currentFont = uniqueFonts[key as keyof typeof uniqueFonts];
         //load styles one by one
         currentFont.style.forEach(style => fontsLoad.push(figma.loadFontAsync({ family: currentFont.family, style })));
     });
-    //load custom layout fond
-    //preload config custom font
-    if (layoutFont.family !== DEFAULT_TYPEFACE) {
-        fontsLoad.push(loadLocalFont({ payload: layoutFont }, systemFonts));
-    }
     await Promise.all(fontsLoad);
-
 
     /* 
     * Draw
