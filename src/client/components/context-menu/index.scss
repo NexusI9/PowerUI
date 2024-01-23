@@ -17,8 +17,7 @@
         width: 90%;
     }
 
-
-    &.hide {
+    &[data-display='false'] {
         display: none;
     }
 

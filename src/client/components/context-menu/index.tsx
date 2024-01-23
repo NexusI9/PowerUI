@@ -12,10 +12,14 @@ import { Label } from '@components/label';
 
 export const ContextMenu = () => {
 
+    const DEFAULT_WIDTH = 160;
+    const DEFAULT_HEIGHT = 200;
+
     const dispatch = useDispatch();
     const { commands, position, id } = useSelector((state: { contextmenu: IContextMenu }) => state.contextmenu);
-    const [display, setDisplay] = useState(false);
-    const MENU_WIDTH = 160;
+    const [display, setDisplay] = useState<boolean>(false);
+    const [height, setHeight] = useState<string>('auto');
+    const panel = useRef<any>();
     const lastId = useRef(id);
 
     const routeDispatch = (command: ContextMenuCommand) => {
@@ -27,9 +31,23 @@ export const ContextMenu = () => {
         }
     }
 
-    useEffect(() => { lastId.current = id; }, [display]);
+    useEffect(() => {
+        //update lastId;
+        lastId.current = id;
+        
+        //set panel height
+        if (panel.current) {
+            const { height } = panel.current.getBoundingClientRect();
+            const margin = 30;
+            let newHeight = (position.y + height > window.innerHeight) ? `${window.innerHeight - position.y - margin}px` : `auto`;
+            setHeight(newHeight);
+        }
+
+    }, [display]);
 
     useEffect(() => {
+
+        setHeight('auto');
 
         const onClick = () => {
             //if new id has same as before means user clicked outside (since no new id invoked)
@@ -54,8 +72,14 @@ export const ContextMenu = () => {
         {
             !!commands.length &&
             <ul
-                className={`context-menu panel ${!display && 'hide' || ''}`}
-                style={{ top: `${position.y}px`, left: `${clamp(0, position.x, window.innerWidth - 1.1 * MENU_WIDTH) || position.x}px` }}
+                className={`context-menu panel`}
+                data-display={display}
+                ref={panel}
+                style={{
+                    top: `${position.y}px`,
+                    left: `${clamp(0, position.x, window.innerWidth - 1.1 * DEFAULT_WIDTH) || position.x}px`,
+                    height: height
+                }}
             >
                 {commands?.map((command, i) => {
                     if (Array.isArray(command)) {
@@ -71,7 +95,7 @@ export const ContextMenu = () => {
                         return (<li key={JSON.stringify(command) + i} onClick={() => routeDispatch(command)}><Label iconLeft={command.icon}>{String(command.value)}</Label></li>)
                     }
                 })}
-            </ul> 
+            </ul>
         }
     </>);
 
