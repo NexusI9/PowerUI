@@ -373,6 +373,8 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
                 default:
                     colorFrame.resize(120, 30);
                     colorFrame.layoutSizingVertical = 'FILL';
+                    detailFrame.resize(120,90);
+                    detailFrame.layoutSizingVertical= 'HUG';
             }
 
 
