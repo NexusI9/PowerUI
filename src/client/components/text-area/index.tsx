@@ -17,6 +17,5 @@ export const TextArea = ({ value, resize=false, readonly=false }: ITextArea) => 
 
     }, [value]);
 
-    console.log(innerValue);
     return (<textarea className='input-text-area' readOnly={readonly} data-resize={resize} defaultValue={String(innerValue)}></textarea>)
 }

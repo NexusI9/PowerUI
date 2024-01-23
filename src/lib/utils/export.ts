@@ -171,7 +171,6 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
     const layout = new Layout();
     await layout.loadTextStyles(layoutFont);
     const groupedStyles = groupStyles(folder);
-    console.log(layoutFont);
 
     //Generate swatch
     const masterFrame = layout.frame({
@@ -402,10 +401,6 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
     const groupedStyles = groupStyles(folder);
     const layoutFont: FontName = { family: (config?.typeface || DEFAULT_TYPEFACE), style: 'Regular' };
-    console.log({
-        config:config?.typeface,
-        layoutFont
-    });
     const layout = new Layout();
     await layout.loadTextStyles(layoutFont);
 
