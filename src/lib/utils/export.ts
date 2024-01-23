@@ -402,6 +402,10 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
     const groupedStyles = groupStyles(folder);
     const layoutFont: FontName = { family: (config?.typeface || DEFAULT_TYPEFACE), style: 'Regular' };
+    console.log({
+        config:config?.typeface,
+        layoutFont
+    });
     const layout = new Layout();
     await layout.loadTextStyles(layoutFont);
 
