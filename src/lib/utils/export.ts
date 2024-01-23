@@ -4,8 +4,8 @@ import { colorSeparator, to255 } from "./color";
 import simpleColorConverter from 'simple-color-converter';
 import { delay, mapKeys, objectToArray, roundObjectFloat } from "./utils";
 import { checkContrast } from "./shade.helper";
-import { groupFont, loadLocalFont } from "./font.back";
-import { TextArrayItem, TextDico } from "@ctypes/text";
+import { groupFont } from "./font.back";
+import { TextArrayItem } from "@ctypes/text";
 import { convertFontWeight, convertUnit } from "./font";
 import { DEFAULT_TYPEFACE } from "@lib/constants";
 
