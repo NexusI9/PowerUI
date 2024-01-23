@@ -3,7 +3,7 @@ import { MultiArray } from "src/types/global";
 import { traverseCallback } from "@lib/utils/utils";
 
 export function setYPos(
-    active: ContextMenuCommand,
+    active: ContextMenuCommand | undefined,
     step: number = 20,
     list: MultiArray<ContextMenuCommand>
 ): number {

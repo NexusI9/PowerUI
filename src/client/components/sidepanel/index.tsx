@@ -109,12 +109,13 @@ export const Sidepanel = (template: BaseTemplate) => {
 
     }, [options]);
 
+
     return (<div className="template-sidepanel flex f-col gap-l">
         {
-            (options && options?.length > 1) &&
+            (options && options?.length > 1 && activeOption) &&
             <div className='flex f-col gap-m'>
                 {activeOption?.heading && <SidepanelHeading value={activeOption.heading} />}
-                <Dropdown list={options} onChange={updateOption} placeholder="Swatch type" />
+                <Dropdown list={options} onChange={updateOption} placeholder="Swatch type" value={String(activeOption?.value)} />
             </div>
         }
         {activeOption?.content.map((input, i) => <div key={JSON.stringify(input) + i} className='flex f-col gap-m'>{traverseCallback(input, generateInput)}</div>)}

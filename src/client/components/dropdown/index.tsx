@@ -7,24 +7,43 @@ import { Label } from '@components/label';
 import { useDispatch, useSelector } from 'react-redux';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
 import { ContextMenuCommand } from 'src/types/contextmenu';
+import { traverseCallback } from '@lib/utils/utils';
+import { get } from '@lib/ipc';
 
 export const Dropdown = (props: IDropdown) => {
 
     const [activeItem, setActiveItem] = useState<ContextMenuCommand | undefined>();
     const [value, setValue] = useState<string>(String(props.value));
     const id = useRef<number>(performance.now());
+    const commandList = useRef<any>([]);
+
     const lastState = useSelector((state: any) => state.contextmenu);
     const dispatch = useDispatch();
 
+
     const handleOnClick = (e: BaseSyntheticEvent) => {
-        if (!activeItem) { return; }
         const { x, y } = e.target.getBoundingClientRect() || 0;
         const offset = Math.max(0, setYPos(activeItem, 20, props.list));
-        dispatch<any>(displayContextMenu({ commands: props.list, position: { x: x, y: y + offset }, id: id.current }));
+        dispatch<any>(displayContextMenu({ commands: commandList.current, position: { x: x, y: y + offset }, id: id.current }));
     }
 
     useEffect(() => {
-        setActiveItem(Array.isArray(props.list[0]) ? props.list[0][0] : props.list[0]);
+        //INIT => Convert async values to actual context menu command values and store it in a ref for persistent memory
+        async function loadFetch() {
+            //check if commands have fetch propreties to replace content with fetch results
+            const fetchPromises: Array<any> = props.list.map((command) =>
+                traverseCallback(
+                    command,
+                    (cm: ContextMenuCommand) => {
+                        if (cm.value && typeof cm.value === 'object') { return get(cm.value).then(e => e.payload); }
+                        else { return cm; }
+                    }
+                )
+            );
+            return await Promise.all(fetchPromises);
+        }
+
+        loadFetch().then(e => commandList.current = e);
     }, []);
 
     useEffect(() => {
@@ -32,7 +51,7 @@ export const Dropdown = (props: IDropdown) => {
         if (props.onChange && activeItem) {
 
             //set value priority (if no props value then...)
-            const activeValue: string = 
+            const activeValue: string =
                 typeof props.value === 'string' && String(props.value)
                 || typeof activeItem.value === 'string' && activeItem.value
                 || typeof activeItem.value === 'object' && activeItem.value.placeholder
@@ -48,8 +67,6 @@ export const Dropdown = (props: IDropdown) => {
         if (lastState.activeCommand && lastState.id === id.current) setActiveItem(lastState.activeCommand);
     }, [lastState.activeCommand]);
 
-
-
     return (
         <div
             className="dropdown flex f-col gap-xs"
@@ -58,8 +75,8 @@ export const Dropdown = (props: IDropdown) => {
             <label
                 className="flex f-row f-center f-between"
                 onClick={handleOnClick}
-            >   
-                {activeItem && <Label iconLeft={activeItem.icon}>{String(value)}</Label> || <p>Undefined</p>}
+            >
+                <Label iconLeft={activeItem?.icon}>{String(value)}</Label>
                 <Carrot />
             </label>
         </div>
