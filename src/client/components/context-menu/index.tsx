@@ -45,6 +45,7 @@ export const ContextMenu = () => {
     useEffect(() => {
 
         const onClick = () => {
+
             //if new id has same as before means user clicked outside (since no new id invoked)
             if (lastId.current === id) {
                 dispatch(destroyContextMenu());
@@ -65,17 +66,17 @@ export const ContextMenu = () => {
             });
         }
 
-
-
         //freeze scroll if id (== panel open)
         freezeScroll(FREEZE_COMPONENTS_CLASS, id !== 0);
 
         window.addEventListener('click', onClick);
+        window.addEventListener('contextmenu', onClick);
         dispatch(destroyTooltip());
 
         return () => {
             lastId.current = id;
             window.removeEventListener('click', onClick);
+            window.removeEventListener('contextmenu', onClick);
         }
 
     }, [id, activeCommand]);
