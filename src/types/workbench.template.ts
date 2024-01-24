@@ -49,7 +49,10 @@ export interface ColorAdjustConfig extends BaseConfig {
 
 export interface TextAdjustConfig extends BaseConfig {
     fontScale?: number;
+    typeface?: string | undefined;
     styles: Array<TextStyle>;
+    key?: string;
+    value?: string | number;
 }
 
 export interface TextConfig extends BaseConfig {
@@ -62,6 +65,8 @@ export interface TextConfig extends BaseConfig {
     roundValue?: boolean;
     device?: 'mobile' | 'desktop';
     typeface?: string | undefined;
+    key?: string;
+    value?: string | number;
 }
 
 export interface Workbench extends BaseTemplate {

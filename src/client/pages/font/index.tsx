@@ -32,7 +32,10 @@ export default () => {
     }
     const onExportFont = (folder: StyleFolder) => dispatch(initExport({ ...EXPORT_FONT_CONFIG, folder }));
     const onDevFont = (folder: StyleFolder) => dispatch(initDev({ ...DEV_FONT_CONFIG, folder }));
-    const onEditFont = (folder: StyleFolder) => dispatch(initWorkbench({ ...EDIT_FONT_CONFIG, folder: folder, config: { styles: folder.styles as any } }))
+    const onEditFont = (folder: StyleFolder) => {
+        dispatch(initWorkbench({ ...EDIT_FONT_CONFIG, folder: folder, config: { styles: folder.styles as any } }));
+        dispatch(switchDisplay('list'));
+    }
    
     //listen to context menu active commmand to dispatch Dev or Export floating window
     const activeCommand = useSelector((state: any) => state.contextmenu.activeCommand);

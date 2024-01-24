@@ -54,12 +54,11 @@ export const updateSet = createAsyncThunk(
 
         if (action && actionMap[type][action]) {
             try {
-                newSet = await actionMap[type][action](newConfig); //call mapped function
+                newSet = await actionMap[type][action]({ ...newConfig, key, value }); //call mapped function
             } catch (_) {
                 console.log(_);
             }
         }
-
 
         return ({
             ...workbench,
