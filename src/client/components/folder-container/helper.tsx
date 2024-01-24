@@ -10,7 +10,7 @@ export function generateFolder(folder: Array<StyleFolder>, styleItem: React.Func
 
         const isRoot = !item.name.length;
         const handleAddItem = () => onAddItem({ name: concatFolderName([item.name, 'new-style']), type:'PAINT' });
-
+     
         return <Folder
             key={item.name + i}
             title={item.name}

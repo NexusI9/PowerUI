@@ -1,4 +1,4 @@
-.button-icon{
+.button-icon {
 
     border: none;
     border-radius: var(--radius-s);
@@ -6,16 +6,25 @@
     height: auto;
     aspect-ratio: 1/1;
 
-    svg{
-        fill:var(--figma-color-icon-secondary);
+    svg {
+        fill: var(--figma-color-icon-secondary);
     }
 
-    &[data-hover='1']{
-        &:hover{
+    &[data-hover='true'] {
+        &:hover {
             background-color: var(--figma-color-bg-hover);
-            svg{
-                fill:var(--figma-color-icon);
+
+            svg {
+                fill: var(--figma-color-icon);
             }
+        }
+    }
+
+    &[data-disabled='true'] {
+        pointer-events: none;
+
+        svg {
+            fill: var(--figma-color-icon-disabled);
         }
     }
 
