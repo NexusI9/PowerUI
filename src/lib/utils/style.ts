@@ -28,15 +28,17 @@ export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
     const createFolder: any = (structure: StyleFolder, path: string, style: Styles) => {
         //separate base folder from rest of path
         const [folder, ...rest] = path.split('/');
+        const splitPath = style.name.split('/');
         const isStyle = !!!rest.length;
 
         if (isStyle) {
             //push style to current structure
-            structure.styles.push(shallowClone(style) as any);
+            structure.styles.push(shallowClone(style) as PaintStyle | TextStyle);
         } else {
             //check if a subfolder already exists
             let foundFolder = structure.folders.find(item => item.name === folder);
 
+            //console.log({ level: Math.max(0, style.name.split('/').length - 2), folder, styleName: style.name });
             //if subfolder doesn't already exists 
             if (!foundFolder) {
                 //create subfolder
@@ -44,7 +46,7 @@ export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
                     type: 'FOLDER',
                     name: folder,
                     fullpath: structure.fullpath.length && [structure.fullpath, folder].join('/') || folder,
-                    level: Math.max(0, style.name.split('/').length - 2),
+                    level: splitPath.indexOf(folder),
                     styles: [],
                     folders: []
                 };
