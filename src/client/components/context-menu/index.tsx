@@ -25,6 +25,7 @@ export const ContextMenu = () => {
     * Dispatch clicked command & add additional information so we can keep track of the active command position in the context menu
     */
     const routeDispatch = (command: ContextMenuCommand, element: any) => {
+
         const payload: IContextMenu['activeCommand'] = {
             ...command,
             offsetTop: element.offsetTop,
@@ -34,7 +35,8 @@ export const ContextMenu = () => {
 
         switch (command.receiver) {
             case 'API':
-                return send({ action: command.action || '', ...payload });
+                send({ action: command.action || '', ...payload });
+                return dispatch(destroyContextMenu());
             case 'STORE':
                 return dispatch(setActiveCommand(payload));
         }

@@ -13,6 +13,9 @@
         &>div:last-of-type {
             .button-icon {
                 border-radius: 10em;
+                svg{
+                    width: 16px;
+                }
             }
         }
     }
