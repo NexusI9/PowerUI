@@ -606,3 +606,11 @@ export function textStylesToCss({ payload }: { payload: Dev }): string {
     return stringVariables;
 
 }
+
+
+export function updateStyle(style: PaintStyle | TextStyle) {
+    //get original figma style from id
+    const figmaStyle = figma.getStyleById(style.id);
+    //override all original attirbutes with new style by mappgin keys (brute method/ do not pick specific attribute to replace)
+    if (figmaStyle) mapKeys(style, figmaStyle);
+} 

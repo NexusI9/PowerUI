@@ -13,7 +13,8 @@ import {
   updateText,
   createSet,
   paintStylesToCSS,
-  textStylesToCss
+  textStylesToCss,
+  updateStyle
 } from "@lib/utils/style";
 
 import { loadLocalFont, sortByFont, sortByScale, storeFonts } from "@lib/utils/font.back";
@@ -51,6 +52,7 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'UPDATE_STYLE_COLOR':
+      console.log(payload);
       updateColor(payload);
       break;
 
@@ -99,9 +101,13 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'EDIT_SWATCH':
-      payload.config?.styles?.forEach((style: PaintStyle, i: number) => {
-        try { updateColor({ style, color: payload.set[i].paints[0].color as RGB }); }
-        catch (_) { }
+      payload.set?.forEach(updateStyle);
+      break;
+
+    case 'EDIT_FONT_SET':
+      payload.set?.forEach(async (style: TextStyle) => {
+        await figma.loadFontAsync(style.fontName);
+        updateStyle(style);
       });
       break;
 

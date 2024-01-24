@@ -51,6 +51,7 @@ export interface TextAdjustConfig extends BaseConfig {
     fontScale?: number;
     typeface?: string | undefined;
     styles: Array<TextStyle>;
+    roundValue?:boolean;
 }
 
 export interface TextConfig extends BaseConfig {

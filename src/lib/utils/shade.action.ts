@@ -171,7 +171,7 @@ export function colorAdjust(props: ColorAdjustConfig): Set {
         //apply correction for basic adjustments
         if (hue) {
             hslColor.h += Math.abs(Number(hue)) * 0.5;
-            hslColor.h = clamp(0, hslColor.h%1, 1);
+            hslColor.h = clamp(0, hslColor.h % 1, 1);
         }
         if (saturation) {
             hslColor.s += Number(saturation);
@@ -227,8 +227,8 @@ export function colorAdjust(props: ColorAdjustConfig): Set {
         }
 
         return {
+            ...style,
             type: 'PAINT',
-            name: folderNameFromPath(style.name).name,
             paints: colorToPaint(rgbColor),
             contrast: checkContrast(rgbToHex(rgbColor))
         };

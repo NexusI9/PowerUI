@@ -18,7 +18,7 @@ export const Swatch = (props: any) => {
 
     const handleContextMenu = (e: any) => {
         dispatch<any>(displayContextMenu({
-            commands: styleContextMenu({style:props, editCommand:'MODALE_EDIT_STYLE_COLOR'}),
+            commands: styleContextMenu({ style: props, editCommand: 'MODALE_EDIT_STYLE_COLOR' }),
             position: { x: e.clientX, y: e.clientY }
         }));
     }
@@ -70,7 +70,7 @@ export const Swatch = (props: any) => {
                             />
                         </label>
                         <div className='style-item-swatch-detail flex f-row gap-l'>
-                            <Input value={folderNameFromPath(props.name).name} onBlur={handleOnBlur} onEnter={handleOnBlur} appearance={{ minified: true }} />
+                            <Input value={folderNameFromPath(props.name).name} onBlur={handleOnBlur} onEnter={handleOnBlur} appearance={{ minified: true, stroke: false }} />
                             <div className='style-item-swatch-codes'>
                                 {
                                     colorValues.map((value, i) => <p key={paint.id + i + value}><small>{value}</small></p>)

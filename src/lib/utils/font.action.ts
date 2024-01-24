@@ -501,10 +501,12 @@ export async function carbon(config: TextConfig): Promise<Set> {
 export async function textAdjust(config: TextAdjustConfig): Promise<Set> {
 
     return config.styles.map(style => {
+        const newSize = Math.max(0, style.fontSize + (Number(config.fontScale || 0)));
+
         return {
             ...style,
             fontName: { family: config.typeface || DEFAULT_TYPEFACE, style: 'Regular' },
-            fontSize: Math.max(0, style.fontSize + (Number(config.fontScale || 0)))
+            fontSize: config.roundValue && Math.floor(newSize) || newSize
         };
     });
 }
