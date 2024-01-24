@@ -2,13 +2,14 @@
 
     margin-left: var(--space-xs);
 
-    &.root{
+    &.root {
         margin: 0;
-        
-        & > .folder-header{
+
+        &>.folder-header {
             display: none;
         }
-        & > .folder-body{
+
+        &>.folder-body {
             margin: 0;
             border-left: none;
             padding: 0;
@@ -40,8 +41,12 @@
     &-header {
         width: 100%;
         position: relative;
+        /*border-top: solid 1px var(--figma-color-bg-secondary);
+        padding: var(--space-xs) var(--space-s);
+        margin-bottom: var(--space-s);
+        border-radius: var(--radius-s);*/
 
-        .input-field{
+        .input-field {
             font-weight: bold;
             max-width: 120px;
         }
@@ -88,7 +93,7 @@
         border-bottom-left-radius: 8px;
     }
 
-    &-style{
+    &-style {
         flex-wrap: wrap;
     }
 

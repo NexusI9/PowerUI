@@ -268,7 +268,7 @@ const adjustSidepanelContent: SidepanelOption['content'] = [
             attributes: {
                 background: 'var(--figma-color-bg-hover)',
                 placeholder: 'Scale adjustement',
-                range: [-10, 10],
+                range: [-100, 100],
                 value: 0
             },
             configKey: 'fontScale'

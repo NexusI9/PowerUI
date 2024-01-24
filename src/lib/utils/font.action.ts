@@ -4,6 +4,7 @@ import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
 import { get } from "@lib/ipc";
 import { Set } from "@ctypes/workbench.template";
 import WebFont from "webfontloader";
+import { delay } from "./utils";
 
 
 export async function loadFont(typeface: FontName | undefined): Promise<string> {
@@ -499,13 +500,11 @@ export async function carbon(config: TextConfig): Promise<Set> {
 */
 export async function textAdjust(config: TextAdjustConfig): Promise<Set> {
 
-    const typeface = { family: config.typeface || DEFAULT_TYPEFACE, style: 'Regular' };
-
     return config.styles.map(style => {
         return {
             ...style,
-            fontName: typeface,
-            fontSize: Math.max(0, style.fontSize + (config.fontScale || 0))
+            fontName: { family: config.typeface || DEFAULT_TYPEFACE, style: 'Regular' },
+            fontSize: Math.max(0, style.fontSize + (Number(config.fontScale || 0)))
         };
     });
 }
