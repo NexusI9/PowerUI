@@ -44,9 +44,12 @@
                 font-weight: bold;
             }
 
+            .input-field{
+                pointer-events: none;
+            }
+
             .input-field-content {
                 padding: 0;
-                pointer-events: none;
             }
         }
     }
