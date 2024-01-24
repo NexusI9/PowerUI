@@ -86,7 +86,7 @@ export const ExportText = (props: ExportTextConfig) => {
     };
 
     return (<div className="export-text flex f-col gap-m full-height">
-        <p className="text-color-discrete"><small>template</small></p>
+        <p className="text-color-discrete"><small>Template preview</small></p>
         <div className="export-text-template">
             {props.fontFamily && <TextGroup {...groupMap.fontFamily} />}
             {props.fontWeight && <TextGroup {...groupMap.fontWeight} />}

@@ -377,7 +377,7 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
                     detailFrame.layoutSizingVertical= 'HUG';
             }
 
-
+ 
             //add up to group
             swatchGroupFrame.appendChild(swatchFrame);
 

@@ -69,7 +69,7 @@ export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
 
 export function updateFolderName({ folder, level, name }: { folder: StyleFolder, level: number, name: string }): void {
-
+    console.log({ folder, level, name });
     const update = (style: Styles) => {
         try {
             //split and replace folder name in styles

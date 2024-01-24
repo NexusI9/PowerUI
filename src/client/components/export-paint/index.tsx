@@ -5,7 +5,7 @@ import { Swatch } from "./swatch";
 export const ExportPaint = (props: ExportPaintConfig) => {
     return (
         <div className="export-paint flex f-col gap-m full-height" data-direction={props.layout}>
-            <p className="text-color-discrete"><small>template</small></p>
+            <p className="text-color-discrete"><small>Template preview</small></p>
             <div className="export-paint-container flex f-col gap-m">
                 <h3 className="heading-4" style={{ fontFamily: props.typeface || 'Inter' }}>Primary</h3>
                 <div>

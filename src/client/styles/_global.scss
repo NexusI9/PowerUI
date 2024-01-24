@@ -14,12 +14,12 @@ button {
     cursor: pointer;
 }
 
-hr{
-    border:none;
-    border-bottom:solid 1px var(--figma-color-border);
+hr {
+    border: none;
+    border-bottom: solid 1px var(--figma-color-border);
 }
 
-code{
+code {
     white-space: pre;
 }
 
@@ -58,23 +58,23 @@ code{
         }
     }
 
-    &.f-wrap{
+    &.f-wrap {
         flex-wrap: wrap;
     }
 
-    &.f-end{
+    &.f-end {
         justify-content: end;
     }
 
-    &.f-start{
+    &.f-start {
         justify-content: start;
     }
-    
-    &.f-between{
+
+    &.f-between {
         justify-content: space-between;
     }
 
-    &.f-around{
+    &.f-around {
         justify-content: space-around;
     }
 
@@ -122,19 +122,31 @@ code{
 }
 
 
-.panel{
+.panel {
     background: var(--powerui-color-bg-brand-tertiary);
     border-radius: var(--radius-s);
     border: solid 1px var(--figma-color-border);
 }
 
-.frozen{
+.frozen {
     pointer-events: none;
-    cursor:default;
+    cursor: default;
 }
 
 
-.paper{
+.paper {
     background-color: rgb(242, 242, 242);
     color: rgb(19, 19, 19);
+}
+
+.color {
+    &-text {
+        &-secondary {
+            color: var(--figma-color-text-secondary);
+        }
+
+        &-tertiary {
+            color: var(--figma-color-text-tertiary);
+        }
+    }
 }

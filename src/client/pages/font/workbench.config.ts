@@ -61,10 +61,10 @@ const scaleSidepanelContent: SidepanelOption['content'] = [
         {
             type: 'DROPDOWN',
             attributes: {
-                placeholder: '↑ Ascendant scale',
+                placeholder: '↑ Scale',
                 list: SCALES_COMMAND,
                 appearance: { label: true },
-                value: DEFAULT_TYPEFACE
+                value: 'Minor second (15:16)'
             },
             configKey: 'ascendantScale'
         },
@@ -73,7 +73,7 @@ const scaleSidepanelContent: SidepanelOption['content'] = [
             attributes: {
                 type: 'AMOUNT',
                 value: 8,
-                placeholder: '↑ Ascendant steps',
+                placeholder: '↑ Steps',
                 range: [0, 100],
                 appearance: { label: true }
             },
@@ -88,10 +88,10 @@ const scaleSidepanelContent: SidepanelOption['content'] = [
         {
             type: 'DROPDOWN',
             attributes: {
-                placeholder: '↓ Descendant scale',
+                placeholder: '↓ Scale',
                 list: SCALES_COMMAND,
                 appearance: { label: true },
-                value: DEFAULT_TYPEFACE
+                value: 'Minor second (15:16)'
             },
             configKey: 'descendantScale'
         },
@@ -100,7 +100,7 @@ const scaleSidepanelContent: SidepanelOption['content'] = [
             attributes: {
                 type: 'AMOUNT',
                 value: 3,
-                placeholder: '↓ Descendant steps',
+                placeholder: '↓ Steps',
                 range: [0, 100],
                 appearance: { label: true }
             },
@@ -117,111 +117,134 @@ const scaleSidepanelContent: SidepanelOption['content'] = [
             configKey: 'roundValue'
         }
     ]
-
 ];
 
 
-const materialSidepanelContent: Array<TemplateInput> = [
-    {
-        type: 'DROPDOWN',
-        attributes: {
-            placeholder: 'Typeface',
-            list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
-            appearance: { label: true },
-            value: DEFAULT_TYPEFACE
+const materialSidepanelContent: SidepanelOption['content'] = [
+    [
+        {
+            type: 'HEADING',
+            attributes: { value: 'Settings' }
         },
-        configKey: 'typeface'
-    }
+        {
+            type: 'DROPDOWN',
+            attributes: {
+                placeholder: 'Typeface',
+                list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+                appearance: { label: true },
+                value: DEFAULT_TYPEFACE
+            },
+            configKey: 'typeface'
+        }
+    ]
 ];
 
-const appleSidepanelContent: Array<TemplateInput> = [
-    {
-        type: 'DROPDOWN',
-        attributes: {
-            placeholder: 'Typeface',
-            list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
-            appearance: { label: true },
-            value: DEFAULT_TYPEFACE
+const appleSidepanelContent: SidepanelOption['content'] = [
+    [
+        {
+            type: 'HEADING',
+            attributes: { value: 'Settings' }
         },
-        configKey: 'typeface'
-    },
-    {
-        type: 'DROPDOWN',
-        attributes: {
-            placeholder: 'Device',
-            list: [
-                { value: 'desktop', receiver: 'STORE' },
-                { value: 'mobile', receiver: 'STORE' },
-            ],
-            appearance: { label: true },
-            value: 'desktop'
+        {
+            type: 'DROPDOWN',
+            attributes: {
+                placeholder: 'Typeface',
+                list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+                appearance: { label: true },
+                value: DEFAULT_TYPEFACE
+            },
+            configKey: 'typeface'
         },
-        configKey: 'device'
-    },
+        {
+            type: 'DROPDOWN',
+            attributes: {
+                placeholder: 'Device',
+                list: [
+                    { value: 'desktop', receiver: 'STORE' },
+                    { value: 'mobile', receiver: 'STORE' },
+                ],
+                appearance: { label: true },
+                value: 'desktop'
+            },
+            configKey: 'device'
+        },
+    ]
 ];
 
 
-const flutterSidepanelContent: Array<TemplateInput> = [
-    {
-        type: 'DROPDOWN',
-        attributes: {
-            placeholder: 'Typeface',
-            list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
-            appearance: { label: true },
-            value: DEFAULT_TYPEFACE
+const flutterSidepanelContent: SidepanelOption['content'] = [
+    [
+        {
+            type: 'HEADING',
+            attributes: { value: 'Settings' }
         },
-        configKey: 'typeface'
-    }
+        {
+            type: 'DROPDOWN',
+            attributes: {
+                placeholder: 'Typeface',
+                list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+                appearance: { label: true },
+                value: DEFAULT_TYPEFACE
+            },
+            configKey: 'typeface'
+        }
+    ]
 ];
 
 
-const carbonSidepanelContent: Array<TemplateInput> = [
-    {
-        type: 'DROPDOWN',
-        attributes: {
-            placeholder: 'Typeface',
-            list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
-            appearance: { label: true },
-            value: DEFAULT_TYPEFACE
+const carbonSidepanelContent: SidepanelOption['content'] = [
+    [
+        {
+            type: 'HEADING',
+            attributes: { value: 'Settings' }
         },
-        configKey: 'typeface'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'AMOUNT',
-            value: 16,
-            placeholder: 'Base size',
-            range: [1, 1000],
-            appearance: { label: true }
+        {
+            type: 'DROPDOWN',
+            attributes: {
+                placeholder: 'Typeface',
+                list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+                appearance: { label: true },
+                value: DEFAULT_TYPEFACE
+            },
+            configKey: 'typeface'
         },
-        configKey: 'baseSize'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'AMOUNT',
-            value: 8,
-            placeholder: '↑ Ascendant steps',
-            range: [0, 100],
-            appearance: { label: true }
+        {
+            type: 'INPUT',
+            attributes: {
+                type: 'AMOUNT',
+                value: 16,
+                placeholder: 'Base size',
+                range: [1, 1000],
+                appearance: { label: true }
+            },
+            configKey: 'baseSize'
         },
-        configKey: 'ascendantSteps'
-    },
-    {
-        type: 'INPUT',
-        attributes: {
-            type: 'AMOUNT',
-            value: 8,
-            placeholder: '↓ Descendant steps',
-            range: [0, 100],
-            appearance: { label: true }
+        {
+            type: 'INPUT',
+            attributes: {
+                type: 'AMOUNT',
+                value: 8,
+                placeholder: '↑ Ascendant steps',
+                range: [0, 100],
+                appearance: { label: true }
+            },
+            configKey: 'ascendantSteps'
         },
-        configKey: 'descendantSteps'
-    }
+        {
+            type: 'INPUT',
+            attributes: {
+                type: 'AMOUNT',
+                value: 8,
+                placeholder: '↓ Descendant steps',
+                range: [0, 100],
+                appearance: { label: true }
+            },
+            configKey: 'descendantSteps'
+        }
+    ]
 ];
 
-const adjustSidepanelContent: Array<TemplateInput> = [
+const adjustSidepanelContent: SidepanelOption['content'] = [
     {
         type: 'SLIDER',
         attributes: {
@@ -293,15 +316,15 @@ export const CREATE_FONT_SET_CONFIG: Workbench = {
                 { value: 'Scale', content: scaleSidepanelContent, action: 'SCALE', icon: "line-height", receiver: 'STORE', heading: 'Template type' }
             ],
             [
-                { value: 'Material Design', content: [materialSidepanelContent], action: 'MATERIAL', icon: "material design", receiver: 'STORE', heading: 'Template type' },
-                { value: 'Apple', content: [appleSidepanelContent], action: 'APPLE', icon: "apple", receiver: 'STORE', heading: 'Template type' },
-                { value: 'Flutter', content: [flutterSidepanelContent], action: 'FLUTTER', icon: "flutter", receiver: 'STORE', heading: 'Template type' },
-                { value: 'Carbon Design', content: [carbonSidepanelContent], action: 'CARBON', icon: "carbon", receiver: 'STORE', heading: 'Template type' }
+                { value: 'Material Design', content: materialSidepanelContent, action: 'MATERIAL', icon: "material design", receiver: 'STORE', heading: 'Template type' },
+                { value: 'Apple', content: appleSidepanelContent, action: 'APPLE', icon: "apple", receiver: 'STORE', heading: 'Template type' },
+                { value: 'Flutter', content: flutterSidepanelContent, action: 'FLUTTER', icon: "flutter", receiver: 'STORE', heading: 'Template type' },
+                { value: 'Carbon Design', content: carbonSidepanelContent, action: 'CARBON', icon: "carbon", receiver: 'STORE', heading: 'Template type' }
             ]
         ]
     },
     footer: {
-        primaryAction: { value: 'Add', action: 'CREATE_SET' }
+        primaryAction: { value: 'Add', action: 'CREATE_SET', destroy: true }
     }
 }
 
@@ -315,6 +338,6 @@ export const EDIT_SWATCH_CONFIG: Workbench = {
         ]
     },
     footer: {
-        primaryAction: { value: 'Edit', action: 'EDIT_FONT_SET' }
+        primaryAction: { value: 'Edit', action: 'EDIT_FONT_SET', destroy: true }
     }
 }
