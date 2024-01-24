@@ -1,5 +1,5 @@
 import { Dropdown, Input, InputArray, Slider, Checkbox, TextArea, Button } from "src/types/input";
-import { ColorAdjustConfig, ColorConfig, ColorAction, TextConfig, TextAction } from "./workbench.template";
+import { ColorAdjustConfig, ColorConfig, ColorAction, TextConfig, TextAction, TextAdjustConfig } from "./workbench.template";
 import { ExportPaintConfig, ExportTextConfig } from "./export.template";
 import { ContextMenuCommand } from "./contextmenu";
 import { MultiArray } from "./global";
@@ -10,6 +10,7 @@ export type TemplateConfig = BaseConfig
     & ColorConfig
     & TextConfig
     & ColorAdjustConfig
+    & TextAdjustConfig
     & ExportPaintConfig
     & ExportTextConfig
     & DevPaintConfig

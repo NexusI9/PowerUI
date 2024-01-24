@@ -10,7 +10,7 @@ import { switchDisplay } from "@lib/slices/style";
 import { send } from "@lib/ipc";
 
 //configs
-import { CREATE_FONT_SET_CONFIG, EDIT_SWATCH_CONFIG } from "./workbench.config";
+import { CREATE_FONT_SET_CONFIG, EDIT_FONT_CONFIG } from "./workbench.config";
 import { EXPORT_FONT_CONFIG } from "./export.config";
 import { DEV_FONT_CONFIG } from "./dev.config";
 
@@ -25,13 +25,16 @@ export default () => {
 
     const dispatch = useDispatch();
 
+    //listen to context menu active commmand to dispatch Dev or Export floating window
     const onCreateFont = (folder: StyleFolder) => {
         dispatch(initWorkbench({ ...CREATE_FONT_SET_CONFIG, folder }));
         dispatch(switchDisplay('list'));
     }
     const onExportFont = (folder: StyleFolder) => dispatch(initExport({ ...EXPORT_FONT_CONFIG, folder }));
     const onDevFont = (folder: StyleFolder) => dispatch(initDev({ ...DEV_FONT_CONFIG, folder }));
-
+    const onEditFont = (folder: StyleFolder) => dispatch(initWorkbench({ ...EDIT_FONT_CONFIG, folder: folder, config: { styles: folder.styles as any } }))
+   
+    //listen to context menu active commmand to dispatch Dev or Export floating window
     const activeCommand = useSelector((state: any) => state.contextmenu.activeCommand);
     useEffect(() => {
         if (activeCommand && activeCommand.payload) {
@@ -72,7 +75,7 @@ export default () => {
                     { value: 'See code', action: 'INIT_DEV', receiver: 'STORE', icon: 'dev' },
                 ]
             ],
-            edit: { onClick: (folder: StyleFolder) => dispatch(initWorkbench({ ...EDIT_SWATCH_CONFIG, folder: folder, config: { styles: [...folder.styles as Array<PaintStyle>] } })) }
+            edit: { onClick: onEditFont }
         }
     };
 

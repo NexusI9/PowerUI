@@ -1,5 +1,5 @@
 import { Workbench, ColorConfig, TextConfig, Set } from "@ctypes/workbench.template";
-import { apple, carbon, flutter, scale, material as textMaterial } from "@lib/utils/font.action";
+import { apple, carbon, flutter, scale, textAdjust, material as textMaterial } from "@lib/utils/font.action";
 import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -14,17 +14,18 @@ const actionMap: { [key in Workbench["type"]as string]: any } = {
         MATERIAL: colorMaterial,
         ANT: ant,
         MANTINE: mantine,
-        COLORADJUST: colorAdjust,
         TAILWIND: tailwind,
         ORBIT: () => [],
-        ATLASSIAN: () => []
+        ATLASSIAN: () => [],
+        COLORADJUST: colorAdjust,
     },
     'TEXT': {
         SCALE: scale,
         MATERIAL: textMaterial,
         FLUTTER: flutter,
         APPLE: apple,
-        CARBON: carbon
+        CARBON: carbon,
+        TEXTADJUST: textAdjust
     }
 }
 

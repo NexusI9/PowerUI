@@ -21,9 +21,13 @@ import { useEffect } from "react";
 
 export default () => {
 
+    //Floating window dispatch
     const createSwatch = (folder: StyleFolder) => dispatch(initWorkbench({ ...CREATE_SWATCH_CONFIG, folder }));
     const exportSwatch = (folder: StyleFolder) => dispatch(initExport({ ...EXPORT_PAINT_CONFIG, folder }));
     const devSwatch = (folder: StyleFolder) => dispatch(initDev({ ...DEV_PAINT_CONFIG, folder }));
+    const editSwatch = (folder: StyleFolder) => dispatch(initWorkbench({ ...EDIT_SWATCH_CONFIG, folder, config: { styles: folder.styles as any } }));
+    
+    //listen to context menu active commmand to dispatch Dev or Export floating window
     const activeCommand = useSelector((state: any) => state.contextmenu.activeCommand);
 
     useEffect(() => {
@@ -66,7 +70,7 @@ export default () => {
                     { value: 'See code', action: 'INIT_DEV', receiver: 'STORE', icon: 'dev' },
                 ]
             ],
-            edit: { onClick: (folder: StyleFolder) => dispatch(initWorkbench({ ...EDIT_SWATCH_CONFIG, folder: folder, config: { styles: [...folder.styles as Array<PaintStyle>] } })) }
+            edit: { onClick: editSwatch }
         }
     };
 

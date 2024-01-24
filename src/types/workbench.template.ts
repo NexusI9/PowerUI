@@ -20,7 +20,8 @@ export type TextAction =
     | 'MATERIAL'
     | 'FLUTTER'
     | 'APPLE'
-    | 'CARBON';
+    | 'CARBON'
+    | 'TEXTADJUST';
 
 
 export interface ColorConfig extends BaseConfig {
@@ -44,6 +45,11 @@ export interface ColorAdjustConfig extends BaseConfig {
     tint?: number;
     folder?: string;
     styles: Array<PaintStyle>;
+}
+
+export interface TextAdjustConfig extends BaseConfig {
+    fontScale?: number;
+    styles: Array<TextStyle>;
 }
 
 export interface TextConfig extends BaseConfig {

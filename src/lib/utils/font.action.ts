@@ -1,5 +1,5 @@
 import { TextSet } from "@ctypes/text";
-import { TextConfig } from "@ctypes/workbench.template";
+import { TextAdjustConfig, TextConfig } from "@ctypes/workbench.template";
 import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
 import { get } from "@lib/ipc";
 import { Set } from "@ctypes/workbench.template";
@@ -497,3 +497,12 @@ export async function carbon(config: TextConfig): Promise<Set> {
 }
 
 
+/**
+ * FONT ADJUSTEMENT
+*/
+export async function textAdjust(config: TextAdjustConfig) {
+    console.log(config);
+    
+
+    return [...config.styles];
+}

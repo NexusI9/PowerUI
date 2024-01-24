@@ -33,9 +33,7 @@ const scaleSidepanelContent: SidepanelOption['content'] = [
             type: 'DROPDOWN',
             attributes: {
                 placeholder: 'Typeface',
-                list: [
-                    { value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }
-                ],
+                list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
                 appearance: { label: true },
                 value: DEFAULT_TYPEFACE
             },
@@ -245,64 +243,45 @@ const carbonSidepanelContent: SidepanelOption['content'] = [
 ];
 
 const adjustSidepanelContent: SidepanelOption['content'] = [
-    {
-        type: 'SLIDER',
-        attributes: {
-            background: 'linear-gradient( 89.7deg, rgba(223,0,0,1) 2.7%, rgba(214,91,0,1) 15.1%, rgba(233,245,0,1) 29.5%, rgba(23,255,17,1) 45.8%, rgba(29,255,255,1) 61.5%, rgba(5,17,255,1) 76.4%, rgba(202,0,253,1) 92.4% )',
-            placeholder: 'Hue',
-            range: [-1, 1],
-            value: 0
+    [
+        {
+            type: 'HEADING',
+            attributes: { value: 'Typeface' }
         },
-        configKey: 'hue'
-    },
-    {
-        type: 'SLIDER',
-        attributes: {
-            background: 'linear-gradient(90deg, #979797 0%, #F00 100%)',
-            placeholder: 'Saturation',
-            range: [-1, 1],
-            value: 0
+        {
+            type: 'DROPDOWN',
+            attributes: {
+                placeholder: 'Replace typeface',
+                list: [{ value: { action: 'FONT_LIST', placeholder: DEFAULT_TYPEFACE }, action: 'UPDATE_STYLE', receiver: 'STORE' }],
+                appearance: { label: true },
+                value: DEFAULT_TYPEFACE
+            },
+            configKey: 'typeface'
         },
-        configKey: 'saturation'
-    },
-    {
-        type: 'SLIDER',
-        attributes: {
-            background: 'linear-gradient(90deg, #BDBDBD 0%, #2F2F2F 100%)',
-            placeholder: 'Contrast',
-            range: [-1, 1],
-            value: 0
+    ], [
+        {
+            type: 'HEADING',
+            attributes: { value: 'Scale' }
         },
-        configKey: 'contrast'
-    },
-    {
-        type: 'SLIDER',
-        attributes: {
-            background: 'linear-gradient(90deg, #000 0%, #FFF 100%)',
-            placeholder: 'Brightness',
-            range: [-1, 1],
-            value: 0
+        {
+            type: 'SLIDER',
+            attributes: {
+                background: 'var(--figma-color-bg-hover)',
+                placeholder: 'Scale adjustement',
+                range: [-1, 1],
+                value: 0
+            },
+            configKey: 'fontScale'
         },
-        configKey: 'brightness'
-    },
-    {
-        type: 'SLIDER',
-        attributes: {
-            background: 'linear-gradient(90deg, #0075FF 0%, #F90 100%)',
-            placeholder: 'Temperature',
-            range: [-1, 1],
-            value: 0
-        },
-        configKey: 'temperature'
-    },
-    /*{
-        type: 'SLIDER',
-        attributes: {
-            background:'linear-gradient(90deg, #3F0 0%, #FF00E5 100%)',
-            placeholder: 'Tint'
-        },
-        configKey:'tint'
-    },*/
+        {
+            type: 'CHECKBOX',
+            attributes: {
+                label: 'Round values',
+                value: true,
+            },
+            configKey: 'roundValue'
+        }
+    ]
 ];
 
 
@@ -328,13 +307,13 @@ export const CREATE_FONT_SET_CONFIG: Workbench = {
     }
 }
 
-export const EDIT_SWATCH_CONFIG: Workbench = {
+export const EDIT_FONT_CONFIG: Workbench = {
     reducer: 'workbench',
     title: 'Edit current font set',
     type: 'TEXT',
     sidepanel: {
         options: [
-            { value: 'Adjustments', content: adjustSidepanelContent, action: 'COLORADJUST', receiver: 'STORE' }
+            { value: 'Adjustments', content: adjustSidepanelContent, action: 'TEXTADJUST', receiver: 'STORE' }
         ]
     },
     footer: {
