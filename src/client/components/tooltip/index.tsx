@@ -65,7 +65,7 @@ export const Tooltip = () => {
                             onBlur={handleAction}
                             onEnter={handleAction}
                             value={content.value}
-                            appearance={{ minified: true }}
+                            appearance={{ minified: true, stroke: true }}
                             placeholder=''
                         />;
                         break;
@@ -79,7 +79,6 @@ export const Tooltip = () => {
 
                 return <Fragment key={JSON.stringify(content) + i}>
                     {dynamicElement}
-                    {i < persistentData.content.length - 1 && <hr />}
                 </Fragment>
             })}
         </div>

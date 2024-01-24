@@ -3,7 +3,6 @@
     &[data-minified='true'] {
 
         .input-field-content {
-            border: none;
             height: fit-content;
 
             &:hover {
@@ -26,14 +25,7 @@
         .input-field-content {
             border: none;
             height: fit-content;
-
-            &:hover {
-                box-shadow: none;
-            }
             
-            &:has(input:focus) {
-                box-shadow: none;
-            }
         }
     }
 

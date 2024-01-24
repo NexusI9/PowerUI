@@ -40,6 +40,8 @@ export const Font = (props: TextSet) => {
         dispatch(displayTooltip({
             content: [
                 { type: 'INPUT', value: styleName, action: 'UPDATE_STYLE_NAME', payload: { style: props, name: null } },
+                { type: 'TEXT', value: String(props.fontName?.family) },
+                { type: 'TEXT', value: String(props.fontName?.style) },
             ],
             boundingBox: { x, y, width, height }
         }));
@@ -59,7 +61,7 @@ export const Font = (props: TextSet) => {
         <Input
             {...(displayMode === 'list' && { style: cssTextStyle(props) })}
             value={styleName}
-            appearance={{ minified: true }}
+            appearance={{ minified: true, stroke: false }}
             onBlur={updateName}
             onEnter={updateName}
         />
