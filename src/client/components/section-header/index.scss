@@ -8,6 +8,10 @@
     padding: var(--space-s) var(--space-m);
     border-bottom: solid 1px var(--figma-color-border);
 
+    &-title{
+        width: 70px;
+    }
+
     .options-row {
 
         &>div:last-of-type {
