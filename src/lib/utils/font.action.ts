@@ -5,6 +5,7 @@ import { get } from "@lib/ipc";
 import { Set } from "@ctypes/workbench.template";
 import WebFont from "webfontloader";
 
+
 export async function loadFont(typeface: FontName | undefined): Promise<string> {
 
     return new Promise((resolve, reject) => {
@@ -94,8 +95,6 @@ function configToBase(config: TextConfig): TextSet {
 ** SCALE METHOD
 **/
 export async function scale(config: TextConfig): Promise<Set> {
-
-    if (config.key === 'typeface') await loadFont({ family: config.typeface || DEFAULT_TYPEFACE, style: 'Regular' });
 
     const ratio = (scaleString: string): number => {
         const REGEX_RATIO = /([\d]+)\:([\d]+)/;
@@ -471,8 +470,6 @@ export async function apple(config: TextConfig): Promise<Set> {
 **/
 export async function carbon(config: TextConfig): Promise<Set> {
 
-    if (config.key === 'typeface') await loadFont({ family: config.typeface || DEFAULT_TYPEFACE, style: 'Regular' });
-
     const baseText = configToBase(config);
 
     const ascendant = genVariants({
@@ -503,12 +500,11 @@ export async function carbon(config: TextConfig): Promise<Set> {
 export async function textAdjust(config: TextAdjustConfig): Promise<Set> {
 
     const typeface = { family: config.typeface || DEFAULT_TYPEFACE, style: 'Regular' };
-    if (config.key === 'typeface') await loadFont(typeface);
 
     return config.styles.map(style => {
         return {
             ...style,
-            ...(config.key === 'typeface' && { fontName: typeface }),
+            fontName: typeface,
             fontSize: Math.max(0, style.fontSize + (config.fontScale || 0))
         };
     });

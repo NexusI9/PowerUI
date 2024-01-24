@@ -1,6 +1,7 @@
 import { Workbench, ColorConfig, TextConfig, Set } from "@ctypes/workbench.template";
 import { apple, carbon, flutter, scale, textAdjust, material as textMaterial } from "@lib/utils/font.action";
-import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade";
+import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade.action";
+import { loadFontDispatch } from "@lib/utils/template";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
 
@@ -34,10 +35,14 @@ export const updateSet = createAsyncThunk(
     /** 
      * Accepts either a specific key and value or a whole config to generate Set
      * **/
-    async ({ key, value, config }: any, { getState }) => {
+    async ({ key, value, config }: any, { getState, dispatch }) => {
 
         //update Config 
         const { workbench }: any = getState();
+
+        //preload typeface if key is typeface
+        const oldConfig = workbench.config || {};
+        await loadFontDispatch({ key, value, oldConfig, dispatcher: dispatch });
 
         //remove undefined values from old config
         const newKey = (key && (value !== undefined)) ? { [key]: value } : {};
@@ -54,7 +59,7 @@ export const updateSet = createAsyncThunk(
 
         if (action && actionMap[type][action]) {
             try {
-                newSet = await actionMap[type][action]({ ...newConfig, key, value }); //call mapped function
+                newSet = await actionMap[type][action](newConfig); //call mapped function
             } catch (_) {
                 console.log(_);
             }

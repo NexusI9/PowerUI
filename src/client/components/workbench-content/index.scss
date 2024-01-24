@@ -3,10 +3,5 @@
     overflow: auto;
     height: inherit;
     width: 100%;
-
-    .font-set {
-        &:nth-child(2n) {
-            background: var(--powerui-color-bg-brand-tertiary);
-        }
-    }
+    background: var(--powerui-color-bg-brand-tertiary);
 }
