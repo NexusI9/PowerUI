@@ -24,7 +24,7 @@ export type TextAction =
     | 'TEXTADJUST';
 
 
-export interface ColorConfig extends BaseConfig {
+export interface CreateColorConfig extends BaseConfig {
     name?: string;
     colorStart?: string | RGB;
     colorEnd?: string | RGB;
@@ -36,7 +36,7 @@ export interface ColorConfig extends BaseConfig {
     preserve?: boolean;
 }
 
-export interface ColorAdjustConfig extends BaseConfig {
+export interface AdjustColorConfig extends BaseConfig {
     hue?: number;
     saturation?: number;
     contrast?: number;
@@ -49,7 +49,7 @@ export interface ColorAdjustConfig extends BaseConfig {
     value?: string | number | boolean;
 }
 
-export interface TextAdjustConfig extends BaseConfig {
+export interface AdjustTextConfig extends BaseConfig {
     fontScale?: number;
     typeface?: string | undefined;
     styles: Array<TextStyle>;
@@ -58,7 +58,7 @@ export interface TextAdjustConfig extends BaseConfig {
     value?: string | number | boolean;
 }
 
-export interface TextConfig extends BaseConfig {
+export interface CreateTextConfig extends BaseConfig {
     name?: string;
     baseSize?: number;
     ascendantScale?: string;

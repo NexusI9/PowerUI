@@ -1,20 +1,27 @@
 import { Dropdown, Input, InputArray, Slider, Checkbox, TextArea, Button } from "src/types/input";
-import { ColorAdjustConfig, ColorConfig, ColorAction, TextConfig, TextAction, TextAdjustConfig } from "./workbench.template";
+import { AdjustColorConfig, CreateColorConfig, ColorAction, CreateTextConfig, TextAction, AdjustTextConfig } from "./workbench.template";
 import { ExportPaintConfig, ExportTextConfig } from "./export.template";
 import { ContextMenuCommand } from "./contextmenu";
 import { MultiArray } from "./global";
 import { StyleFolder } from "./style";
 import { DevAction, DevPaintConfig, DevTextConfig } from "./dev.template";
+import { RenameConfig } from "./rename";
 
 export type TemplateConfig = BaseConfig
-    & ColorConfig
-    & TextConfig
-    & ColorAdjustConfig
-    & TextAdjustConfig
+    //Create
+    & CreateColorConfig
+    & CreateTextConfig
+    //Adjust
+    & AdjustColorConfig
+    & AdjustTextConfig
+    //Export
     & ExportPaintConfig
     & ExportTextConfig
+    //Dev
     & DevPaintConfig
-    & DevTextConfig;
+    & DevTextConfig
+    //Rename
+    & RenameConfig;
 
 
 export interface BaseConfig {
@@ -46,7 +53,7 @@ export interface Sidepanel {
 }
 
 interface Footer {
-    primaryAction: { value?: string; action?: string; role?: Button['role'], destroy?:boolean; };
+    primaryAction: { value?: string; action?: string; role?: Button['role'], destroy?: boolean; };
 }
 
 export interface BaseTemplate {

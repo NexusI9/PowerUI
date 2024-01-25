@@ -21,6 +21,8 @@ interface StyleTemplate {
     getStyleMethod?: string;
     styleItem: any;
     options?: FolderOptions;
+    onExportStyles:any;
+    onDevStyles:any;
 };
 
 
@@ -30,7 +32,9 @@ export const Style = ({
     padStyle,
     getStyleMethod,
     styleItem,
-    options
+    options,
+    onExportStyles,
+    onDevStyles
 }: StyleTemplate) => {
 
     const [reload, setReload] = useState(0);
@@ -38,17 +42,33 @@ export const Style = ({
     const [headerOptions, setHeaderOptions] = useState<any>([]);
     const dispatch = useDispatch();
     const displayMode = useSelector((state: any) => state.style.display);
+
     const handleOnMessage = (e: any) => (e.action === 'RELOAD_PAGE') && setReload(performance.now());
 
     listen(handleOnMessage);
 
     useEffect(() => {
-
         if (getStyleMethod) {
             get({ action: getStyleMethod }).then(({ styles }: { styles: Array<never> }) => setFolder(styles));
         }
-
     }, [reload]);
+
+    //listen to context menu active commmand to dispatch Dev or Export floating window
+    const activeCommand = useSelector((state: any) => state.contextmenu.activeCommand);
+    useEffect(() => {
+        if (activeCommand && activeCommand.payload) {
+            const { action, payload: { folder } } = activeCommand;
+            if (action && folder) {
+                const commandDispatch = {
+                    'INIT_EXPORT': onExportStyles,
+                    'INIT_DEV': onDevStyles,
+                    'INIT_RENAME': dispatch();
+                }
+                try { commandDispatch[action as keyof typeof commandDispatch](folder); } 
+                catch (e) { console.log(`Couldn't dispatch, didn't find a key ${action}`); }
+            }
+        }
+    }, [activeCommand]);
 
     useEffect(() => {
 

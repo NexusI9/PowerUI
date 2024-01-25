@@ -1,4 +1,4 @@
-import { Workbench, ColorConfig, TextConfig, Set } from "@ctypes/workbench.template";
+import { Workbench, CreateColorConfig, CreateTextConfig, Set } from "@ctypes/workbench.template";
 import { apple, carbon, flutter, scale, textAdjust, material as textMaterial } from "@lib/utils/font.action";
 import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade.action";
 import { createAsyncThunk } from "@reduxjs/toolkit";
@@ -48,7 +48,7 @@ export const updateSet = createAsyncThunk(
 
 
         //update Set from action
-        const { action } = newConfig as ColorConfig | TextConfig;
+        const { action } = newConfig as CreateColorConfig | CreateTextConfig;
         const { type } = workbench;
         let newSet: Set = [];
 

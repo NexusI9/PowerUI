@@ -1,5 +1,5 @@
 import { ColorHSL } from "src/types/color";
-import { ColorAdjustConfig, ColorConfig, ColorAction, Set } from "@ctypes/workbench.template";
+import { AdjustColorConfig, CreateColorConfig, ColorAction, Set } from "@ctypes/workbench.template";
 import { PaintSet } from "src/types/shade";
 import { folderNameFromPath } from "./style";
 import { MATERIAL_DEFAULT_KEYS } from "@lib/constants";
@@ -54,7 +54,7 @@ export function interpolate({ colorStart, colorEnd, steps = 10, action, mode, na
 /*
 ** MATERIAL DESIGN 
 */
-export function material({ colorStart, name, palette, keys, preserve }: ColorConfig): Set {
+export function material({ colorStart, name, palette, keys, preserve }: CreateColorConfig): Set {
 
     const colorArray: Set = [];
     const argbColorStart = argbFromHex(colorStart as string);
@@ -101,7 +101,7 @@ export function material({ colorStart, name, palette, keys, preserve }: ColorCon
 /*
 ** MANTINE DESIGN 
 */
-export function mantine({ colorStart, name, theme }: ColorConfig): Set {
+export function mantine({ colorStart, name, theme }: CreateColorConfig): Set {
     return generateColors(colorStart as string).map((color, i) => ({
         type: 'PAINT',
         name: `${name}-${i + 1}`,
@@ -114,7 +114,7 @@ export function mantine({ colorStart, name, theme }: ColorConfig): Set {
 /*
 ** ANT DESIGN 
 */
-export function ant({ colorStart, name, theme }: ColorConfig): Set {
+export function ant({ colorStart, name, theme }: CreateColorConfig): Set {
     const palette = generate(colorStart as string, { theme: theme || 'default' });
     return palette.map((color, i) => ({
         type: 'PAINT',
@@ -129,7 +129,7 @@ export function ant({ colorStart, name, theme }: ColorConfig): Set {
 /*
 ** TAILWIND SWATCH
 */
-export function tailwind({ colorStart, name }: ColorConfig): Set {
+export function tailwind({ colorStart, name }: CreateColorConfig): Set {
 
     const { colors } = TailwindPalette(colorStart as string) as Palette;
 
@@ -158,7 +158,7 @@ export function tailwind({ colorStart, name }: ColorConfig): Set {
 /*
 ** COLOR ADJUSTMENTS 
 */
-export function colorAdjust(props: ColorAdjustConfig): Set {
+export function colorAdjust(props: AdjustColorConfig): Set {
 
 
     return props.styles.map((style: PaintStyle, i: number) => {

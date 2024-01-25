@@ -17,6 +17,5 @@ export interface DevTextConfig extends DevBaseConfig {
 }
 
 export interface Dev extends BaseTemplate {
-    sidepanel: Sidepanel;
     code?: string;
 }

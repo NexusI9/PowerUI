@@ -1,27 +1,29 @@
 import { configureStore } from "@reduxjs/toolkit";
-import pageSlice from "./slices/page";
-import snackbarSlice from "./slices/snackbar";
-import contextMenuSlice from "./slices/contextmenu";
-import tooltipSlice from "./slices/tooltip";
-import workbenchSlice from "./slices/workbench.template";
-import inputSlice from './slices/input';
-import styleSlice from './slices/style';
+import page from "./slices/page";
+import snackbar from "./slices/snackbar";
+import contextmenu from "./slices/contextmenu";
+import tooltip from "./slices/tooltip";
+import workbench from "./slices/workbench.template";
+import input from './slices/input';
+import style from './slices/style';
 import exportSlice from './slices/export.template';
-import devSlice from './slices/dev.template';
-import loadSlice from './slices/load';
+import dev from './slices/dev.template';
+import load from './slices/load';
+import rename from './slices/rename';
 
 const store = configureStore({
-    reducer:{
-        page: pageSlice,
-        snackbar: snackbarSlice,
-        contextmenu: contextMenuSlice,
-        tooltip: tooltipSlice,
-        input: inputSlice,
-        style: styleSlice,
-        workbench: workbenchSlice,
-        export: exportSlice,
-        dev: devSlice,
-        load: loadSlice
+    reducer: {
+        page,
+        snackbar,
+        contextmenu,
+        tooltip,
+        input,
+        style,
+        workbench,
+        dev,
+        load,
+        rename,
+        export: exportSlice
     }
 });
 

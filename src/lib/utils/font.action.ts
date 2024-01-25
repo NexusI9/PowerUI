@@ -1,5 +1,5 @@
 import { TextSet } from "@ctypes/text";
-import { TextAdjustConfig, TextConfig } from "@ctypes/workbench.template";
+import { AdjustTextConfig, CreateTextConfig } from "@ctypes/workbench.template";
 import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
 import { get } from "@lib/ipc";
 import { Set } from "@ctypes/workbench.template";
@@ -35,7 +35,7 @@ export async function loadFont(typeface: FontName | undefined): Promise<string> 
     });
 }
 
-async function convertTemplate(template: Array<TextSet>, config: TextConfig): Promise<Set> {
+async function convertTemplate(template: Array<TextSet>, config: CreateTextConfig): Promise<Set> {
 
     return template.map((style, i) => ({
         ...DEFAULT_STYLE_TEXT,
@@ -77,7 +77,7 @@ const genVariants = ({ amount, base, method, round, indexSuffix = '' }: GenVaria
     return variants;
 }
 
-function configToBase(config: TextConfig): TextSet {
+function configToBase(config: CreateTextConfig): TextSet {
     //Assign config custom values to Default style text, and set default value if no values in config
     return {
         ...DEFAULT_STYLE_TEXT,
@@ -93,7 +93,7 @@ function configToBase(config: TextConfig): TextSet {
 /**
 ** SCALE METHOD
 **/
-export async function scale(config: TextConfig): Promise<Set> {
+export async function scale(config: CreateTextConfig): Promise<Set> {
 
     const ratio = (scaleString: string): number => {
         const REGEX_RATIO = /([\d]+)\:([\d]+)/;
@@ -140,7 +140,7 @@ export async function scale(config: TextConfig): Promise<Set> {
 /**
 ** MATERIAL METHOD
 **/
-export async function material(config: TextConfig): Promise<Set> {
+export async function material(config: CreateTextConfig): Promise<Set> {
 
     const fontTemplate: Array<TextSet> = [
         //Heading
@@ -234,7 +234,7 @@ export async function material(config: TextConfig): Promise<Set> {
 /**
 ** FLUTTER METHOD
 **/
-export async function flutter(config: TextConfig): Promise<Set> {
+export async function flutter(config: CreateTextConfig): Promise<Set> {
 
     const fontTemplate: Array<TextSet> = [
         //Display
@@ -341,7 +341,7 @@ export async function flutter(config: TextConfig): Promise<Set> {
 /**
 ** APPLE METHOD
 **/
-export async function apple(config: TextConfig): Promise<Set> {
+export async function apple(config: CreateTextConfig): Promise<Set> {
 
     const fontTemplate: { [key: string]: Array<TextSet> } = {
         //DESKTOP
@@ -467,7 +467,7 @@ export async function apple(config: TextConfig): Promise<Set> {
 /**
 ** CARBON METHOD
 **/
-export async function carbon(config: TextConfig): Promise<Set> {
+export async function carbon(config: CreateTextConfig): Promise<Set> {
 
     const baseText = configToBase(config);
 
@@ -496,7 +496,7 @@ export async function carbon(config: TextConfig): Promise<Set> {
 /**
  * FONT ADJUSTEMENT
 */
-export async function textAdjust(config: TextAdjustConfig): Promise<Set> {
+export async function textAdjust(config: AdjustTextConfig): Promise<Set> {
     
     return config.styles.map(style => {
         const newSize = Math.max(0, style.fontSize + (Number(config.fontScale || 0)));

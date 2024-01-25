@@ -26,24 +26,6 @@ export default () => {
     const exportSwatch = (folder: StyleFolder) => dispatch(initExport({ ...EXPORT_PAINT_CONFIG, folder }));
     const devSwatch = (folder: StyleFolder) => dispatch(initDev({ ...DEV_PAINT_CONFIG, folder }));
     const editSwatch = (folder: StyleFolder) => dispatch(initWorkbench({ ...EDIT_SWATCH_CONFIG, folder, config: { styles: folder.styles as any } }));
-    
-    //listen to context menu active commmand to dispatch Dev or Export floating window
-    const activeCommand = useSelector((state: any) => state.contextmenu.activeCommand);
-
-    useEffect(() => {
-
-        if (activeCommand && activeCommand.payload) {
-            const { action, payload: { folder } } = activeCommand;
-            if (action && folder) {
-                const commandDispatch = {
-                    'INIT_EXPORT': exportSwatch,
-                    'INIT_DEV': devSwatch
-                }
-                try { commandDispatch[action as keyof typeof commandDispatch](folder); } catch (e) { console.log(`Couldn't dispatch, didn't find a key ${action}`); }
-            }
-        }
-
-    }, [activeCommand]);
 
     const buttonPadStyle: ButtonPad = {
         icon: PaintPlus,
@@ -88,5 +70,7 @@ export default () => {
             getStyleMethod={GET_PAINT_STYLES_COMMAND}
             styleItem={Swatch}
             options={options}
+            onExportStyles={exportSwatch}
+            onDevStyles={devSwatch}
         />);
 }
