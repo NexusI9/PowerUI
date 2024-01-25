@@ -6,7 +6,6 @@ export const updateLayout = createAsyncThunk('export/updateLayout', async ({ key
     const state = getState() as any;
     const oldConfig = state.export.config || {};
 
-    //TODO: Find better way to embed this function (also used in workbench tactions)
     await loadFontDispatch({ key, value, oldConfig, dispatcher: dispatch });
 
     return {

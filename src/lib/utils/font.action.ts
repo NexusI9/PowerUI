@@ -4,8 +4,6 @@ import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
 import { get } from "@lib/ipc";
 import { Set } from "@ctypes/workbench.template";
 import WebFont from "webfontloader";
-import { delay } from "./utils";
-
 
 export async function loadFont(typeface: FontName | undefined): Promise<string> {
 
@@ -20,7 +18,9 @@ export async function loadFont(typeface: FontName | undefined): Promise<string> 
                     active: () => resolve(typeface.family || DEFAULT_TYPEFACE),
                     inactive: () => {
                         //Load Local Font from server
-                        get({ action: 'LOAD_FONT', payload: typeface }).then(e => resolve(e));
+                        get({ action: 'LOAD_FONT', payload: typeface })
+                            .then(e => resolve(e))
+                            .catch(() => loadFont({ ...typeface, style: 'Regular' })); //If can't load Font, load Regular as default
                     }
                 });
             } catch (_) {
@@ -37,13 +37,11 @@ export async function loadFont(typeface: FontName | undefined): Promise<string> 
 
 async function convertTemplate(template: Array<TextSet>, config: TextConfig): Promise<Set> {
 
-    const typeface = await loadFont({ family: config.typeface || DEFAULT_TYPEFACE, style: 'Regular' });
-
     return template.map((style, i) => ({
         ...DEFAULT_STYLE_TEXT,
         ...style,
         fontName: {
-            family: typeface,
+            family: config.typeface || DEFAULT_TYPEFACE,
             style: style.fontName?.style || 'Regular'
         }
     }));
@@ -499,13 +497,13 @@ export async function carbon(config: TextConfig): Promise<Set> {
  * FONT ADJUSTEMENT
 */
 export async function textAdjust(config: TextAdjustConfig): Promise<Set> {
-
+    
     return config.styles.map(style => {
         const newSize = Math.max(0, style.fontSize + (Number(config.fontScale || 0)));
-
+        const fontName: FontName = (config.key === 'typeface') && { ...style.fontName, family: config.typeface || DEFAULT_TYPEFACE } || style.fontName;
         return {
             ...style,
-            fontName: { family: config.typeface || DEFAULT_TYPEFACE, style: 'Regular' },
+            fontName,
             fontSize: config.roundValue && Math.floor(newSize) || newSize
         };
     });

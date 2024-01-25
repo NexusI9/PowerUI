@@ -45,13 +45,17 @@ export interface ColorAdjustConfig extends BaseConfig {
     tint?: number;
     folder?: string;
     styles: Array<PaintStyle>;
+    key?: string;
+    value?: string | number | boolean;
 }
 
 export interface TextAdjustConfig extends BaseConfig {
     fontScale?: number;
     typeface?: string | undefined;
     styles: Array<TextStyle>;
-    roundValue?:boolean;
+    roundValue?: boolean;
+    key?: string;
+    value?: string | number | boolean;
 }
 
 export interface TextConfig extends BaseConfig {

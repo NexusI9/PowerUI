@@ -154,7 +154,6 @@ figma.ui.onmessage = msg => {
 figma.on("documentchange", ({ documentChanges }) => {
 
   documentChanges.map(change => {
-
     switch (change.type) {
 
       case 'STYLE_PROPERTY_CHANGE':
