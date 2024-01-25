@@ -2,9 +2,12 @@ export function clone(val: any) {
     return JSON.parse(JSON.stringify(val))
 }
 
-export function shallowClone(obj: any) {
+export function shallowClone(obj: any, ignore?: Array<string>) {
     let copy: { [key: string]: any } = {};
-    for (let key in obj) { copy[key] = obj[key as keyof typeof obj]; }
+    for (let key in obj) {
+        if (ignore?.includes(key)) { continue; }
+        copy[key] = obj[key as keyof typeof obj];
+    }
     return copy || obj;
 }
 
@@ -72,7 +75,7 @@ export const mapKeys = (reference: any, mutable: any) => {
         try {
             //round potential floats
             mutable[key as keyof typeof reference] = reference[key as keyof typeof mutable];
-        } catch (e){
+        } catch (e) {
             //console.warn(`Couldn't assign attribute for ${key}`);
         }
     });
@@ -89,14 +92,14 @@ export const objectToArray = (object: any): Array<any> => {
     return ar;
 }
 
-export function delay(time:number) {
+export function delay(time: number) {
     return new Promise((resolve) => setTimeout(resolve, time));
-  }
+}
 
-export function firstItemOfArray(item:Array<any>){
-    if(Array.isArray(item[0])){
+export function firstItemOfArray(item: Array<any>) {
+    if (Array.isArray(item[0])) {
         return firstItemOfArray(item[0]);
-    }else{
+    } else {
         return item[0];
     }
 }

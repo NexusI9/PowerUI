@@ -1,7 +1,7 @@
 import { StyleFolder, Styles, } from "@ctypes/style";
 import { hexToRgb, rgb, rgbToHex, rgbToHsl } from "./color";
 import { DEFAULT_STYLE_PAINT } from "@lib/constants";
-import { clone, lastIndexOfArray, mapKeys, shallowClone } from '@lib/utils/utils';
+import { clone, delay, lastIndexOfArray, mapKeys, shallowClone } from '@lib/utils/utils';
 import { WritablePart } from "@ctypes/global";
 import { Workbench } from "@ctypes/workbench.template";
 import { PaintSet } from '@ctypes/shade';
@@ -12,7 +12,7 @@ import { Dev } from "@ctypes/dev.template";
 import { cssTextStyle } from "./font";
 import * as changeCase from 'change-case';
 
-export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
+export async function classifyStyle(style: Array<Styles>): Promise<Array<StyleFolder>> {
 
     //Set initial folder
     let rootFolder: StyleFolder = {
@@ -26,19 +26,21 @@ export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
 
     const createFolder: any = (structure: StyleFolder, path: string, style: Styles) => {
+        console.log(`processing ${path}`)
         //separate base folder from rest of path
         const [folder, ...rest] = path.split('/');
         const splitPath = style.name.split('/');
         const isStyle = !!!rest.length;
 
+        console.log({ folder, rest, splitPath, isStyle });
         if (isStyle) {
+            console.log(`pushing style`);
             //push style to current structure
-            structure.styles.push(shallowClone(style) as PaintStyle | TextStyle);
+            structure.styles.push(shallowClone(style, ['documentationLinks', 'consumers']) as PaintStyle | TextStyle);
         } else {
             //check if a subfolder already exists
-            let foundFolder = structure.folders.find(item => item.name === folder);
+            let foundFolder = structure.folders.find(item => item.name === folder || item.name + ' ' === folder || item.name === folder + ' ');
 
-            //console.log({ level: Math.max(0, style.name.split('/').length - 2), folder, styleName: style.name });
             //if subfolder doesn't already exists 
             if (!foundFolder) {
                 //create subfolder
@@ -51,7 +53,7 @@ export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
                     folders: []
                 };
 
-                //push subfolder to current structure
+                //push subfolder to current structure (parent folder)
                 structure.folders.push(foundFolder);
             }
 
@@ -63,7 +65,14 @@ export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
     };
 
-    style.forEach((item) => createFolder(rootFolder, item.name, item)); //append to root;
+    for (let i = 0; i < style.length; i++) {
+        //append to root
+        createFolder(rootFolder, style[i].name, style[i]);
+        if (i > 0 && i % 10 == 0) {
+        }
+        //await delay(40);
+    }
+
     return [rootFolder];
 
 
@@ -71,7 +80,7 @@ export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
 
 export function updateFolderName({ folder, level, name }: { folder: StyleFolder, level: number, name: string }): void {
-    console.log({ folder, level, name });
+
     const update = (style: Styles) => {
         try {
             //split and replace folder name in styles
