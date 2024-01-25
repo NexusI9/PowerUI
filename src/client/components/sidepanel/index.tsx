@@ -87,16 +87,17 @@ export const Sidepanel = (template: BaseTemplate) => {
         }[input.type as string] || 'span';
 
         //Map callback to update config on input value changed
-        const defaultCallback = (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.value });
+        const defaultCallback = { onChange: (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.value }) };
         const customCallback = {
-            'TOGGLE': (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.checked }),
-            'CHECKBOX': (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.checked }),
-            'DROPDOWN': (e: ContextMenuCommand) => dispatchUpdateSet({ key: input.configKey, value: e.value }),
+            'TOGGLE': { onChange: (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.checked }) },
+            'CHECKBOX': { onChange: (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.checked }) },
+            'DROPDOWN': { onChange: (e: ContextMenuCommand) => dispatchUpdateSet({ key: input.configKey, value: e.value }) },
+            'BUTTON': { onClick: (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.value }) }
         }[input.type as string];
 
         return (
             <Fragment key={JSON.stringify(activeOption) + JSON.stringify(input)}>
-                {createElement(mapInput as any, { ...inheritInput.attributes, onChange: customCallback || defaultCallback })}
+                {createElement(mapInput as any, { ...inheritInput.attributes, ...(customCallback || defaultCallback) })}
             </Fragment>
         );
 

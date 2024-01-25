@@ -29,23 +29,25 @@ const renameSlice = createSlice({
                 ...(key && { [key]: value })
             };
 
+            //$& $nn $NN
+            console.log(newConfig);
+
+            const newSet = (newConfig?.styles || []).map((style: Styles) => {
+                let name = style.name;
+                //replace match
+                if (newConfig.match) { name = name.replaceAll(String(newConfig.match), String(newConfig.replace || '')); }
+                //replace whole word
+                else if (newConfig.replace) {
+                    name = String(newConfig.replace);
+                }
+                return ({ ...style, name })
+            });
+
+
             return ({
                 ...state,
+                set: newSet,
                 config: newConfig,
-                set: (newConfig?.styles || []).map((style: Styles) => {
-                    let name = style.name;
-
-                    //replace match
-                    if (newConfig.match) { name = name.replace(String(newConfig.match), String(newConfig.replace || '')); }
-                    //replace whole word
-                    else if (newConfig.replace) {
-                        name = String(newConfig.replace);
-                    }
-
-                    
-
-                    return ({ ...style, name })
-                })
             });
         },
         destroy: (state) => ({ ...state, active: false })

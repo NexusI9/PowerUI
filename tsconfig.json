@@ -1,7 +1,7 @@
 {
   "compilerOptions": {
     "target": "es2015",
-    "lib": ["DOM"],
+    "lib": ["DOM", "es2021"],
     "strict": true,
     "outDir": "dist",
     "allowJs": true,
