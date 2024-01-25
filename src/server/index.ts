@@ -17,18 +17,18 @@ import {
   updateStyle
 } from "@lib/utils/style";
 
-import { 
-  loadLocalFont, 
-  sortByFont, 
-  sortByScale, 
-  storeFonts 
+import {
+  loadLocalFont,
+  sortByFont,
+  sortByScale,
+  storeFonts
 } from "@lib/utils/font.back";
 
-import { 
-  DEFAULT_WINDOW_HEIGHT, 
-  DEFAULT_WINDOW_WIDTH, 
-  GET_PAINT_STYLES_COMMAND, 
-  GET_TEXT_STYLES_COMMAND 
+import {
+  DEFAULT_WINDOW_HEIGHT,
+  DEFAULT_WINDOW_WIDTH,
+  GET_PAINT_STYLES_COMMAND,
+  GET_TEXT_STYLES_COMMAND
 } from "@lib/constants";
 
 import { TextDico } from "@ctypes/text";
@@ -48,16 +48,11 @@ figma.ui.onmessage = msg => {
 
     //styles references: https://www.figma.com/plugin-docs/api/figma/#styles
     case GET_PAINT_STYLES_COMMAND:
-      console.log(figma.getLocalPaintStyles());
-      classifyStyle(figma.getLocalPaintStyles()).then( data => {
-        console.log(data);
-      });
-      figma.ui.postMessage({ action: action, styles: [] }) ;
+      figma.ui.postMessage({ action: action, styles: classifyStyle(figma.getLocalPaintStyles()) });
       break;
 
     case GET_TEXT_STYLES_COMMAND:
-      //classifyStyle(figma.getLocalTextStyles())
-      figma.ui.postMessage({ action: action, styles: [] });
+      figma.ui.postMessage({ action: action, styles: classifyStyle(figma.getLocalTextStyles()) });
 
       break;
 

@@ -12,7 +12,7 @@ import { Dev } from "@ctypes/dev.template";
 import { cssTextStyle } from "./font";
 import * as changeCase from 'change-case';
 
-export async function classifyStyle(style: Array<Styles>): Promise<Array<StyleFolder>> {
+export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
     //Set initial folder
     let rootFolder: StyleFolder = {
@@ -26,15 +26,13 @@ export async function classifyStyle(style: Array<Styles>): Promise<Array<StyleFo
 
 
     const createFolder: any = (structure: StyleFolder, path: string, style: Styles) => {
-        console.log(`processing ${path}`)
+
         //separate base folder from rest of path
         const [folder, ...rest] = path.split('/');
         const splitPath = style.name.split('/');
         const isStyle = !!!rest.length;
 
-        console.log({ folder, rest, splitPath, isStyle });
         if (isStyle) {
-            console.log(`pushing style`);
             //push style to current structure
             structure.styles.push(shallowClone(style, ['documentationLinks', 'consumers']) as PaintStyle | TextStyle);
         } else {
@@ -65,17 +63,8 @@ export async function classifyStyle(style: Array<Styles>): Promise<Array<StyleFo
 
     };
 
-    for (let i = 0; i < style.length; i++) {
-        //append to root
-        createFolder(rootFolder, style[i].name, style[i]);
-        if (i > 0 && i % 10 == 0) {
-        }
-        //await delay(40);
-    }
-
+    style.forEach(item => createFolder(rootFolder, item.name, item));
     return [rootFolder];
-
-
 }
 
 
