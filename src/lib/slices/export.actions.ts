@@ -13,6 +13,5 @@ export const updateLayout = createAsyncThunk('export/updateLayout', async ({ key
             ...oldConfig,
             [key]: value
         }
-
     };
 });

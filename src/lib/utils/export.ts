@@ -477,8 +477,8 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
 
             //Set font label
             const fontLabel = layout.label({
-                fontSize: 32,
                 fontName: { family: uniqueFont, style: 'Regular' },
+                fontSize: 32,
                 characters: uniqueFont
             });
 
@@ -533,8 +533,8 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
                 });
 
                 const styleLabel = layout.label({
-                    fontSize: 32,
                     fontName: { family: uniqueFont, style: style },
+                    fontSize: 32,
                     characters: style
                 });
 
@@ -596,9 +596,10 @@ export async function exportTextSet({ payload }: { payload: Dev }) {
                 center: true
             });
 
+
             const styleLabel = layout.label({
-                fontSize: fontSize,
                 fontName: fontName,
+                fontSize: fontSize,
                 letterSpacing: letterSpacing,
                 lineHeight: lineHeight,
                 characters: folderNameFromPath(style.name).name
