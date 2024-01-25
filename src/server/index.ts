@@ -105,10 +105,12 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'EDIT_FONT_SET':
-      payload.set?.forEach(async (style: TextStyle) => {
+      const editedFonts = payload.set?.map(async (style: TextStyle) => {
         await figma.loadFontAsync(style.fontName);
-        updateStyle(style);
+        return updateStyle(style);
       });
+      //Manualy reload_page cause async process doesn't trigger document change listener
+      Promise.all(editedFonts).then(() => figma.ui.postMessage({ action: 'RELOAD_PAGE' }));
       break;
 
     case 'RESIZE_WINDOW':
