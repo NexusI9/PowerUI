@@ -35,7 +35,7 @@ export async function loadFont(typeface: FontName | undefined): Promise<string> 
     });
 }
 
-async function convertTemplate(template: Array<TextSet>, config: CreateTextConfig): Promise<Set> {
+function convertTemplate(template: Array<TextSet>, config: CreateTextConfig): Set {
 
     return template.map((style, i) => ({
         ...DEFAULT_STYLE_TEXT,
@@ -93,7 +93,7 @@ function configToBase(config: CreateTextConfig): TextSet {
 /**
 ** SCALE METHOD
 **/
-export async function scale(config: CreateTextConfig): Promise<Set> {
+export function scale(config: CreateTextConfig): Set {
 
     const ratio = (scaleString: string): number => {
         const REGEX_RATIO = /([\d]+)\:([\d]+)/;
@@ -140,7 +140,7 @@ export async function scale(config: CreateTextConfig): Promise<Set> {
 /**
 ** MATERIAL METHOD
 **/
-export async function material(config: CreateTextConfig): Promise<Set> {
+export function material(config: CreateTextConfig): Set {
 
     const fontTemplate: Array<TextSet> = [
         //Heading
@@ -228,13 +228,13 @@ export async function material(config: CreateTextConfig): Promise<Set> {
 
     ]
 
-    return await convertTemplate(fontTemplate, config);
+    return convertTemplate(fontTemplate, config);
 }
 
 /**
 ** FLUTTER METHOD
 **/
-export async function flutter(config: CreateTextConfig): Promise<Set> {
+export function flutter(config: CreateTextConfig): Set {
 
     const fontTemplate: Array<TextSet> = [
         //Display
@@ -333,7 +333,7 @@ export async function flutter(config: CreateTextConfig): Promise<Set> {
         }
     ]
 
-    return await convertTemplate(fontTemplate, config);
+    return convertTemplate(fontTemplate, config);
 
 }
 
@@ -341,7 +341,7 @@ export async function flutter(config: CreateTextConfig): Promise<Set> {
 /**
 ** APPLE METHOD
 **/
-export async function apple(config: CreateTextConfig): Promise<Set> {
+export function apple(config: CreateTextConfig): Set {
 
     const fontTemplate: { [key: string]: Array<TextSet> } = {
         //DESKTOP
@@ -459,7 +459,7 @@ export async function apple(config: CreateTextConfig): Promise<Set> {
 
     }
 
-    return await convertTemplate(fontTemplate[config.device || 'desktop'], config);
+    return convertTemplate(fontTemplate[config.device || 'desktop'], config);
 
 }
 
@@ -467,7 +467,7 @@ export async function apple(config: CreateTextConfig): Promise<Set> {
 /**
 ** CARBON METHOD
 **/
-export async function carbon(config: CreateTextConfig): Promise<Set> {
+export function carbon(config: CreateTextConfig): Set {
 
     const baseText = configToBase(config);
 
@@ -496,7 +496,7 @@ export async function carbon(config: CreateTextConfig): Promise<Set> {
 /**
  * FONT ADJUSTEMENT
 */
-export async function textAdjust(config: AdjustTextConfig): Promise<Set> {
+export function textAdjust(config: AdjustTextConfig): Set {
     
     return config.styles.map(style => {
         const newSize = Math.max(0, style.fontSize + (Number(config.fontScale || 0)));

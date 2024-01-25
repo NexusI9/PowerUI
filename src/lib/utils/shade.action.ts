@@ -160,7 +160,6 @@ export function tailwind({ colorStart, name }: CreateColorConfig): Set {
 */
 export function colorAdjust(props: AdjustColorConfig): Set {
 
-
     return props.styles.map((style: PaintStyle, i: number) => {
 
         const { color } = style.paints[0] as SolidPaint;

@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
 import { Sidepanel } from "@components/sidepanel";
 import { useDispatch } from "react-redux";
-import { destroy } from "@lib/slices/dev.template";
+import { destroy } from "@lib/slices/rename";
 import { FloatingWindow } from "@components/floating-window";
-import { WorkbenchContent } from "@components/workbench-content";
+import { RenameContent } from "@components/rename-content";
 
 export const Rename = () => {
 
@@ -16,7 +16,7 @@ export const Rename = () => {
             template={template}
         >
             <Sidepanel {...template} />
-            <WorkbenchContent {...template} />
+            <RenameContent {...template} />
         </FloatingWindow>
     );
 

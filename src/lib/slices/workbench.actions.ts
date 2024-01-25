@@ -40,12 +40,10 @@ export const updateSet = createAsyncThunk(
         const { workbench }: any = getState();
 
         //remove undefined values from old config
-        const newKey = (key && (value !== undefined)) ? { [key]: value } : {};
         const newConfig = {
             ...(config || workbench.config),
-            ...newKey
+            ...(key && (value !== undefined) && { [key]: value })
         };
-
 
         //update Set from action
         const { action } = newConfig as CreateColorConfig | CreateTextConfig;
@@ -54,7 +52,7 @@ export const updateSet = createAsyncThunk(
 
         if (action && actionMap[type][action]) {
             try {
-                newSet = await actionMap[type][action]({...newConfig, key, value}); //call mapped function
+                newSet = await actionMap[type][action]({ ...newConfig, key, value }); //call mapped function
             } catch (_) {
                 console.log(_);
             }

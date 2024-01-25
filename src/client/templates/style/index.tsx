@@ -61,11 +61,11 @@ export const Style = ({
         if (activeCommand && activeCommand.payload) {
             const { action, payload: { folder } } = activeCommand;
             if (action && folder) {
-
+     
                 const commandDispatch = {
                     'INIT_EXPORT': onExportStyles,
                     'INIT_DEV': onDevStyles,
-                    'INIT_RENAME': (folder:StyleFolder) => dispatch(initRename({ ...RENAME_STYLES_CONFIG, folder }))
+                    'INIT_RENAME': (folder: StyleFolder) => dispatch(initRename({ ...RENAME_STYLES_CONFIG, folder, config: { styles: folder.styles as any } }))
                 }
 
                 try {

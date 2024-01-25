@@ -12,7 +12,7 @@ const mapComponent: any = {
 export const WorkbenchContent = (template: Workbench) => {
 
     const { type, set } = template;
-    
+
     return (<div className="workbench-content flex f-col ">
         {set?.map((item, i) =>
             <Fragment key={JSON.stringify(item) + i}>

@@ -1,4 +1,4 @@
-
+import { BaseTemplate } from "./template";
 export type RenameActions = 'RENAME';
 
 export interface RenameConfig{

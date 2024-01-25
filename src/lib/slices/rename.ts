@@ -1,7 +1,7 @@
-import { Export } from '@ctypes/export.template';
 import { createSlice } from "@reduxjs/toolkit";
 import { initConfig } from "@lib/utils/template";
-import { BaseTemplate } from '@ctypes/template';
+import { Workbench } from "@ctypes/workbench.template";
+import { Styles } from "@ctypes/style";
 
 const renameSlice = createSlice({
     name: 'rename',
@@ -10,7 +10,7 @@ const renameSlice = createSlice({
         config: {}
     },
     reducers: {
-        init: (state, { payload }: { payload: BaseTemplate }) => {
+        init: (state, { payload }: { payload: Workbench }) => {
 
             //setup initial config from sidepanel
             const config: { [key: string]: any } = {
@@ -20,14 +20,38 @@ const renameSlice = createSlice({
 
             return ({ ...state, ...payload, config, active: true })
         },
-        rename: (state, { payload }) => {
-            console.log(payload);
-            return state;
+        updateName: (state, { payload }) => {
+
+            const { key, value } = payload;
+
+            const newConfig = {
+                ...state.config,
+                ...(key && { [key]: value })
+            };
+
+            return ({
+                ...state,
+                config: newConfig,
+                set: (newConfig?.styles || []).map((style: Styles) => {
+                    let name = style.name;
+
+                    //replace match
+                    if (newConfig.match) { name = name.replace(String(newConfig.match), String(newConfig.replace || '')); }
+                    //replace whole word
+                    else if (newConfig.replace) {
+                        name = String(newConfig.replace);
+                    }
+
+                    
+
+                    return ({ ...style, name })
+                })
+            });
         },
         destroy: (state) => ({ ...state, active: false })
     }
 });
 
-export const { init, destroy, rename } = renameSlice.actions;
+export const { init, destroy, updateName } = renameSlice.actions;
 export default renameSlice.reducer;
 

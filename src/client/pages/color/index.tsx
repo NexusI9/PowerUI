@@ -20,6 +20,7 @@ import { init as initDev } from "@lib/slices/dev.template";
 export default () => {
 
     //Floating window dispatch
+    const dispatch = useDispatch();
     const createSwatch = (folder: StyleFolder) => dispatch(initWorkbench({ ...CREATE_SWATCH_CONFIG, folder }));
     const exportSwatch = (folder: StyleFolder) => dispatch(initExport({ ...EXPORT_PAINT_CONFIG, folder }));
     const devSwatch = (folder: StyleFolder) => dispatch(initDev({ ...DEV_PAINT_CONFIG, folder }));
@@ -57,8 +58,6 @@ export default () => {
     const handleAddItem = ({ name }: { name: string }) => {
         send({ action: "ADD_STYLE", payload: { name, type: 'PAINT' } });
     };
-
-    const dispatch = useDispatch();
 
     return (
         <Style

@@ -20,10 +20,12 @@ export const PaintSet = (style: IPaintSet) => {
     return (
         <div className="shade">
             <span className="shade-color flex f-row f-center f-between" style={{ backgroundColor: colorValue.rgb as string }}>
-                <div className="shade-contrast flex f-col">
-                    <ContrastLabel {...contrast.white} />
-                    <ContrastLabel {...contrast.black} />
-                </div>
+                {contrast &&
+                    <div className="shade-contrast flex f-col">
+                        <ContrastLabel {...contrast.white} />
+                        <ContrastLabel {...contrast.black} />
+                    </div>
+                }
                 {primary && <Icon icon={Lock} />}
             </span>
             <div className='flex f-col'>

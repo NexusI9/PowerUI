@@ -22,6 +22,7 @@ import { updateSet } from '@lib/slices/workbench.actions';
 import { updateLayout } from '@lib/slices/export.actions';
 import { updateCode } from '@lib/slices/dev.actions';
 import { Toggle } from '@components/toggle';
+import { updateName } from '@lib/slices/rename';
 
 export const Sidepanel = (template: BaseTemplate) => {
 
@@ -41,7 +42,8 @@ export const Sidepanel = (template: BaseTemplate) => {
         const updateMethod = {
             'workbench': updateSet,
             'export': updateLayout,
-            'dev': updateCode
+            'dev': updateCode,
+            'rename': updateName
         }[template.reducer];
 
         if (updateMethod) dispatch(updateMethod(payload));
@@ -105,7 +107,7 @@ export const Sidepanel = (template: BaseTemplate) => {
         if (activeOption && activeOption.content) {
             traverseCallback(activeOption.content, (input: TemplateInput | TemplateText) => {
                 const { attributes: { value }, configKey } = input as TemplateInput;
-                if (configKey) { dispatchUpdateSet({ configKey, value }); }
+                if (configKey) { dispatchUpdateSet({ key: configKey, value }); }
             });
         }
     }, [activeOption]);
