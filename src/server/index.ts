@@ -53,7 +53,6 @@ figma.ui.onmessage = msg => {
 
     case GET_TEXT_STYLES_COMMAND:
       figma.ui.postMessage({ action: action, styles: classifyStyle(figma.getLocalTextStyles()) });
-
       break;
 
     case 'UPDATE_FOLDER_NAME':
