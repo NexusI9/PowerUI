@@ -47,13 +47,11 @@ export default () => {
 
     useEffect(() => {
 
-        const getStyles = async function () {
+        (async function () {
             const textArray = await get({ action: GET_TEXT_STYLES_COMMAND });
             const colorArray = await get({ action: GET_PAINT_STYLES_COMMAND });
             dispatch(setPage(colorArray.styles.length ? 'color' : textArray.styles.length ? 'font' : 'home'));
-        }
-
-        getStyles();
+        })();
 
     }, []);
 
