@@ -1,15 +1,16 @@
 import { Export } from '@ctypes/export.template';
 import { createSlice } from "@reduxjs/toolkit";
 import { initConfig } from "@lib/utils/template";
+import { BaseTemplate } from '@ctypes/template';
 
 const renameSlice = createSlice({
-    name: 'export',
+    name: 'rename',
     initialState: {
         type: 'PAINT',
         config: {}
     },
     reducers: {
-        init: (state, { payload }: { payload: Export }) => {
+        init: (state, { payload }: { payload: BaseTemplate }) => {
 
             //setup initial config from sidepanel
             const config: { [key: string]: any } = {

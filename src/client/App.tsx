@@ -19,14 +19,17 @@ import Font from './pages/font';
 
 //other
 import { Snackbar } from "@components/snackbar";
-import { WorkBench } from "@templates/workbench";
-import { useEffect } from "react";
+import { Fragment, createElement, useEffect } from "react";
 import { get } from "@lib/ipc";
 import { GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 import { setPage } from "@lib/slices/page";
 import { Resizer } from "@components/resizer";
+
+//templates
+import { WorkBench } from "@templates/workbench";
 import { Export } from "@templates/export";
 import { Dev } from "@templates/dev";
+import { Rename } from "@templates/rename";
 
 
 const router = {
@@ -34,6 +37,8 @@ const router = {
     color: <Color />,
     font: <Font />
 };
+
+const floatingWindows = [WorkBench, Export, Dev, Rename];
 
 export default () => {
 
@@ -63,9 +68,7 @@ export default () => {
             <Tooltip />
             <Snackbar />
 
-            <WorkBench />
-            <Export />
-            <Dev />
+            {floatingWindows.map((item, i) => createElement(item, { key: `floating${i}` }))}
             <Resizer />
         </>
     );

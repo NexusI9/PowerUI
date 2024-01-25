@@ -4,7 +4,7 @@ import PaintPlus from '@icons/paint-plus.svg';
 import SwatchIcon from '@icons/swatch.svg';
 import { ButtonPad } from "src/types/input";
 import { send } from "@lib/ipc";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { CREATE_SWATCH_CONFIG, EDIT_SWATCH_CONFIG } from "./workbench.config";
 import { StyleFolder } from "src/types/style";
 import { GET_PAINT_STYLES_COMMAND } from "@lib/constants";
@@ -16,8 +16,6 @@ import { DEV_PAINT_CONFIG } from "./dev.config";
 import { init as initWorkbench } from "@lib/slices/workbench.template";
 import { init as initExport } from '@lib/slices/export.template';
 import { init as initDev } from "@lib/slices/dev.template";
-import { useEffect } from "react";
-
 
 export default () => {
 

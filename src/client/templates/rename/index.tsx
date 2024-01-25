@@ -3,7 +3,7 @@ import { Sidepanel } from "@components/sidepanel";
 import { useDispatch } from "react-redux";
 import { destroy } from "@lib/slices/dev.template";
 import { FloatingWindow } from "@components/floating-window";
-import { DevContent } from "@components/dev-content";
+import { WorkbenchContent } from "@components/workbench-content";
 
 export const Rename = () => {
 
@@ -16,7 +16,7 @@ export const Rename = () => {
             template={template}
         >
             <Sidepanel {...template} />
-            <DevContent {...template} />
+            <WorkbenchContent {...template} />
         </FloatingWindow>
     );
 

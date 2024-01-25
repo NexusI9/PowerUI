@@ -13,6 +13,8 @@ import { get, listen } from '@lib/ipc';
 import { StyleFolder } from "src/types/style";
 import { useDispatch, useSelector } from "react-redux";
 import { switchDisplay } from "@lib/slices/style";
+import { init as initRename } from '@lib/slices/rename';
+import { RENAME_STYLES_CONFIG } from "./rename.config";
 
 interface StyleTemplate {
     title: string;
@@ -21,8 +23,8 @@ interface StyleTemplate {
     getStyleMethod?: string;
     styleItem: any;
     options?: FolderOptions;
-    onExportStyles:any;
-    onDevStyles:any;
+    onExportStyles: any;
+    onDevStyles: any;
 };
 
 
@@ -53,19 +55,26 @@ export const Style = ({
         }
     }, [reload]);
 
-    //listen to context menu active commmand to dispatch Dev or Export floating window
+    //listen to context menu active commmand to dispatch Dev, Export, or Rename floating window
     const activeCommand = useSelector((state: any) => state.contextmenu.activeCommand);
     useEffect(() => {
         if (activeCommand && activeCommand.payload) {
             const { action, payload: { folder } } = activeCommand;
             if (action && folder) {
+
                 const commandDispatch = {
                     'INIT_EXPORT': onExportStyles,
                     'INIT_DEV': onDevStyles,
-                    'INIT_RENAME': dispatch();
+                    'INIT_RENAME': (folder:StyleFolder) => dispatch(initRename({ ...RENAME_STYLES_CONFIG, folder }))
                 }
-                try { commandDispatch[action as keyof typeof commandDispatch](folder); } 
-                catch (e) { console.log(`Couldn't dispatch, didn't find a key ${action}`); }
+
+                try {
+                    commandDispatch[action as keyof typeof commandDispatch](folder);
+                }
+                catch (e) {
+                    console.log(`Couldn't dispatch, didn't find a key ${action}`);
+                }
+
             }
         }
     }, [activeCommand]);
