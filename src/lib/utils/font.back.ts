@@ -93,3 +93,7 @@ export function sortByFont(styles: Array<TextStyle>) {
     replaceStyle(styles);
 }
 
+export function validUnit(unit:string){
+    return !!String(unit).toUpperCase().match(/AUTO|PIXELS|PERCENT/);
+}
+

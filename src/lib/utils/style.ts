@@ -11,6 +11,7 @@ import { TemplateConfig } from "@ctypes/template";
 import { Dev } from "@ctypes/dev.template";
 import { cssTextStyle } from "./font";
 import * as changeCase from 'change-case';
+import { validUnit } from "./font.back";
 
 export function classifyStyle(style: Array<Styles>): Array<StyleFolder> {
 
@@ -123,10 +124,32 @@ export async function updateText({ style, newStyle }: { style: TextStyle, newSty
                 const { folder } = folderNameFromPath(figmaStyle[key]);
                 newStyle[key] = concatFolderName([folder, newStyle[key]]);
             }
+
+            //validate lineHeight value
+            if (key === 'lineHeight') {
+                const lineHeight = newStyle[key];
+                if (!validUnit(String(lineHeight?.unit)) || !(lineHeight as any)?.value) {
+                    newStyle[key] = {
+                        ...lineHeight,
+                        unit: 'AUTO'
+                    };
+                }
+            }
+
+            if (key === 'letterSpacing') {
+                const letterSpacing = newStyle[key];
+                if (!validUnit(String(letterSpacing?.unit)) || !(letterSpacing as any)?.value) {
+                    newStyle[key] = {
+                        value: letterSpacing?.value || 0,
+                        unit: 'PIXELS'
+                    };
+                }
+            }
+
             //apply relative key
             figmaStyle[key] = newStyle[key];
         } catch (e) {
-            console.warn(e);
+            throw e;
         }
 
     }

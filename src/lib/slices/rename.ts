@@ -37,19 +37,19 @@ const renameSlice = createSlice({
             ].forEach(v => (v.key === key) && (value === true) && void (newConfig.replace = (newConfig.replace || '') + v.input));
 
             const newSet = (newConfig?.styles || []).map((style: Styles, i: number) => {
-                let name = newConfig.replace || style.name;
+                let newName = newConfig.replace || style.name;
 
                 //replace variables in name
                 [
                     { match: '$&', replace: style.name },
                     { match: '$nn', replace: i + 1 },
                     { match: '$NN', replace: newConfig?.styles.length - i }
-                ].forEach(({ match, replace }) => name = name.replaceAll(match, replace));
+                ].forEach(({ match, replace }) => newName = newName.replaceAll(match, replace));
 
                 //replace match pattern
-                name = newConfig.match && newConfig.replace && style.name.replaceAll(newConfig.match, name) || name;
+                newName = newConfig.match && style.name.replaceAll(newConfig.match, newConfig.replace || '') || newName;
 
-                return ({ ...style, name })
+                return ({ ...style, name: newName });
             });
 
             return ({

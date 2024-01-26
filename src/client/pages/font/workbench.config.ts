@@ -309,7 +309,7 @@ export const CREATE_FONT_SET_CONFIG: Workbench = {
 
 export const EDIT_FONT_CONFIG: Workbench = {
     reducer: 'workbench',
-    title: 'Global font set edit',
+    title: 'Global font edit',
     type: 'TEXT',
     sidepanel: {
         options: [
