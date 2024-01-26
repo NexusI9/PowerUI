@@ -92,7 +92,12 @@ export const Sidepanel = (template: BaseTemplate) => {
             'TOGGLE': { onChange: (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.checked }) },
             'CHECKBOX': { onChange: (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.checked }) },
             'DROPDOWN': { onChange: (e: ContextMenuCommand) => dispatchUpdateSet({ key: input.configKey, value: e.value }) },
-            'BUTTON': { onClick: (e: BaseSyntheticEvent) => dispatchUpdateSet({ key: input.configKey, value: e.target.value }) }
+            'BUTTON': {
+                onClick: () => {
+                    dispatchUpdateSet({ key: input.configKey, value: true }); //enable click
+                    dispatchUpdateSet({ key: input.configKey, value: false }); //disable click right after (lazy)
+                }
+            }
         }[input.type as string];
 
         return (

@@ -7,8 +7,9 @@
 
             &:hover {
                 box-shadow: 0px 0px 0px 1px var(--figma-color-border);
-                &:has(input:focus){
-                    box-shadow: 0px 0px 0px 1px var(--figma-color-border-brand);
+
+                &:has(input:focus) {
+                    box-shadow: 0px 0px 0px 2px var(--figma-color-border-brand);
                 }
             }
 
@@ -21,11 +22,11 @@
 
     }
 
-    &[data-stroke='false']{
+    &[data-stroke='false'] {
         .input-field-content {
             border: none;
             height: fit-content;
-            
+
         }
     }
 
@@ -42,8 +43,10 @@
         padding: var(--space-xs) var(--space-s);
         border-radius: var(--radius-xs);
 
-        &:has(input:focus), &:has(input:hover) {
-            box-shadow: 0px 0px 0px 1px var(--figma-color-border-brand);
+        &:has(input:focus),
+        &:has(input:hover) {
+            box-shadow: 0px 0px 0px 2px var(--figma-color-border-brand);
+            border-color: var(--figma-color-border-brand);
         }
 
         input {

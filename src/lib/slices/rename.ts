@@ -29,17 +29,27 @@ const renameSlice = createSlice({
                 ...(key && { [key]: value })
             };
 
-            //$& $nn $NN
-            console.log(newConfig);
 
-            const newSet = (newConfig?.styles || []).map((style: Styles) => {
-                let name = style.name;
-                //replace match
-                if (newConfig.match) { name = name.replaceAll(String(newConfig.match), String(newConfig.replace || '')); }
-                //replace whole word
-                else if (newConfig.replace) {
-                    name = String(newConfig.replace);
-                }
+            //append variables shortcuts to replace input
+            [
+                { key: 'currentname', input: '$&' },
+                { key: 'numberup', input: '$nn' },
+                { key: 'numberdown', input: '$NN' }
+            ].forEach(v => (v.key === key) && (value === true) && void (newConfig.replace = (newConfig.replace || '') + v.input));
+
+            const newSet = (newConfig?.styles || []).map((style: Styles, i: number) => {
+                let name = newConfig.replace || style.name;
+
+                //replace variables in name
+                [
+                    { match: '$&', replace: style.name },
+                    { match: '$nn', replace: i + 1 },
+                    { match: '$NN', replace: newConfig?.styles.length - i }
+                ].forEach(({ match, replace }) => name = name.replaceAll(match, replace));
+
+                //replace match pattern
+                name = newConfig.match && newConfig.replace && style.name.replaceAll(newConfig.match, name) || name;
+
                 return ({ ...style, name })
             });
 
