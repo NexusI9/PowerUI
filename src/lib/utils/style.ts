@@ -129,9 +129,10 @@ export async function updateText({ style, newStyle }: { style: TextStyle, newSty
             //validate lineHeight value
             if (key === 'lineHeight') {
                 const lineHeight = newStyle[key];
-                if (!validUnit(String(lineHeight?.unit)) || !(lineHeight as any)?.value) {
+                if (!validUnit(String(lineHeight?.unit))) {
+                    const heightValue = (lineHeight as any)?.value;
                     newStyle[key] = {
-                        ...lineHeight,
+                        ...(heightValue && { value: heightValue }),
                         unit: 'AUTO'
                     };
                 }

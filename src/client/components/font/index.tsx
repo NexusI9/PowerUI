@@ -16,9 +16,7 @@ export const Font = (props: TextSet) => {
     const dispatch = useDispatch();
     const styleName = folderNameFromPath(String(props.name)).name;
 
-    useEffect(() => {
-        loadFont(props.fontName);
-    }, [props.fontName]);
+    useEffect(() => { loadFont(props.fontName); }, [props.fontName]);
 
     const updateName = (e: BaseSyntheticEvent) => {
         send({
