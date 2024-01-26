@@ -13,16 +13,24 @@ export function setYPos(
 }
 
 
-export async function loadFetch(list:MultiArray<ContextMenuCommand>) {
+export async function loadFetch(list: MultiArray<ContextMenuCommand>) {
     //check if commands have fetch propreties to replace content with fetch results
     const fetchPromises: Array<any> = list.map((command) =>
         traverseCallback(
             command,
             (cm: ContextMenuCommand) => {
-                if (cm.value && typeof cm.value === 'object') { return get(cm.value).then(({ payload }) => payload); }
+
+                if (cm.value && typeof cm.value === 'object') {
+                    return get(cm.value).then(({ payload }) => {
+                        //assign fetched value to value key 
+                        return payload.map((item: any) => ({ ...cm, value: item }));
+                    });
+                }
                 else { return cm; }
+
             }
         )
     );
+
     return await Promise.all(fetchPromises);
 }

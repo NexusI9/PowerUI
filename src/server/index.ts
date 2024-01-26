@@ -43,6 +43,7 @@ figma.ui.resize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 // posted message.
 figma.ui.onmessage = msg => {
 
+
   const { action, payload } = msg;
   switch (action) {
 
@@ -133,7 +134,7 @@ figma.ui.onmessage = msg => {
         .then(({ fonts }: { fonts: TextDico }) => {
           //Store fonts in global variable
           if (fonts && !systemFonts) { systemFonts = fonts }
-          figma.ui.postMessage({ ...msg, payload: Object.keys(systemFonts).map(item => ({ value: item, receiver: 'STORE', ...msg })) }); //map dico font to be contextMenu compatible
+          figma.ui.postMessage({ ...msg, payload: Object.keys(systemFonts) }); //only send font names (== keys of systemFonts)
         })
         .catch(() => figma.ui.postMessage({ ...msg, payload: [] }));
       break;

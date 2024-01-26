@@ -6,9 +6,10 @@ import { Icon } from '@components/icon';
 import { cssTextStyle, valueUnitFrom } from '@lib/utils/font';
 import { TextSet } from '@ctypes/text';
 import { Input } from '@components/input';
-import { BaseSyntheticEvent } from 'react';
+import { BaseSyntheticEvent, useEffect } from 'react';
 import { updateAttribute } from './helper';
 import { Dropdown } from '@components/dropdown';
+import { useSelector } from 'react-redux';
 
 
 export const FontOptions = (style: TextSet) => {
@@ -20,6 +21,13 @@ export const FontOptions = (style: TextSet) => {
         arrow: false,
         stroke: false
     }
+
+    const activeCommand = useSelector((state: any) => state.contextmenu.activeCommand);
+
+    useEffect(() => {
+
+    }, []);
+
 
     const dragInputs: { [key: string]: IInput } = {
         fontSize: {
@@ -50,8 +58,9 @@ export const FontOptions = (style: TextSet) => {
             {(!options || options?.fontFamily) &&
                 <li className='font-options-font-family'>
                     <Dropdown
-                        list={[{ value: { action: 'FONT_LIST', placeholder: String(style.fontName?.family) }, receiver: 'STORE' }]}
+                        list={[{ value: { action: 'FONT_LIST', placeholder: String(style.fontName?.family) }, receiver: 'API', action: 'UPDATE_STYLE_TEXT', payload: style }]}
                         appearance={{ stroke: false, minified: true }}
+                        value={String(style.fontName?.family)}
                     />
                 </li>
             }
