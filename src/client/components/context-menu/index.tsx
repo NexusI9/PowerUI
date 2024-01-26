@@ -32,7 +32,7 @@ export const ContextMenu = () => {
             scroll: panel.current.scrollTop,
             id: Number(id)
         };
-
+        console.log(command);
         switch (command.receiver) {
             case 'API':
                 send({ action: command.action || '', ...payload });
