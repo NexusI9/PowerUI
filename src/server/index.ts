@@ -64,7 +64,6 @@ figma.ui.onmessage = msg => {
       break;
 
     case 'UPDATE_STYLE_COLOR':
-      console.log(payload);
       updateColor(payload);
       break;
 
@@ -160,7 +159,6 @@ figma.ui.onmessage = msg => {
     case 'EXPORT_TEXT_SET':
       exportTextSet(msg);
       break;
-
   }
 
 };

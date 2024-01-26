@@ -61,7 +61,7 @@ const renameOptions: SidepanelOption['content'] = [
 export const RENAME_STYLES_CONFIG: BaseTemplate = {
     title: 'Rename styles',
     reducer: 'rename',
-    footer: { primaryAction: { value: 'Rename', role: 'PRIMARY', destroy: true, action: 'RENAME' } },
+    footer: { primaryAction: { value: 'Rename', role: 'PRIMARY', destroy: true, action: 'EDIT_SWATCH' } },
     sidepanel: {
         options: [{ content: renameOptions, receiver: 'STORE', value: 'Rename', action: 'RENAME' }]
     },

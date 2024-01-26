@@ -29,7 +29,6 @@ const renameSlice = createSlice({
                 ...(key && { [key]: value })
             };
 
-
             //append variables shortcuts to replace input
             [
                 { key: 'currentname', input: '$&' },
@@ -52,7 +51,6 @@ const renameSlice = createSlice({
 
                 return ({ ...style, name })
             });
-
 
             return ({
                 ...state,
