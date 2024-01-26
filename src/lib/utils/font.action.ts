@@ -43,7 +43,8 @@ function convertTemplate(template: Array<TextSet>, config: CreateTextConfig): Se
         fontName: {
             family: config.typeface || DEFAULT_TYPEFACE,
             style: style.fontName?.style || 'Regular'
-        }
+        },
+        options: { fontSize: true }
     }));
 
 }
@@ -86,7 +87,8 @@ function configToBase(config: CreateTextConfig): TextSet {
         fontName: {
             style: DEFAULT_STYLE_TEXT.fontName?.style || 'Regular',
             family: config.typeface || DEFAULT_TYPEFACE
-        }
+        },
+        options: { fontSize: true }
     };
 }
 
@@ -497,14 +499,15 @@ export function carbon(config: CreateTextConfig): Set {
  * FONT ADJUSTEMENT
 */
 export function textAdjust(config: AdjustTextConfig): Set {
-    
+
     return config.styles.map(style => {
         const newSize = Math.max(0, style.fontSize + (Number(config.fontScale || 0)));
         const fontName: FontName = (config.key === 'typeface') && { ...style.fontName, family: config.typeface || DEFAULT_TYPEFACE } || style.fontName;
         return {
             ...style,
             fontName,
-            fontSize: config.roundValue && Math.floor(newSize) || newSize
+            fontSize: config.roundValue && Math.floor(newSize) || newSize,
+            options: { fontSize: true }
         };
     });
 }

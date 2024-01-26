@@ -9,20 +9,16 @@ import { Input } from '@components/input';
 import { BaseSyntheticEvent } from 'react';
 import { updateAttribute } from './helper';
 
-interface FontOptions {
-    style: TextSet;
-    config?: { fontFamily: boolean; style: boolean; }
-}
 
-export const FontOptions = ({ style, config }: FontOptions) => {
+export const FontOptions = (style: TextSet) => {
 
+    const { options } = style;
     const cssStyle = cssTextStyle(style, 'OBJECT') as Record<string, any>;
     const inputStyle = {
         minified: true,
         arrow: false,
         stroke: false
     }
-
 
     const dragInputs: { [key: string]: IInput } = {
         fontSize: {
@@ -50,18 +46,25 @@ export const FontOptions = ({ style, config }: FontOptions) => {
 
     return (
         <ul className="font-options flex f-col gap-s">
-            {config?.fontFamily && <li><small>{String(style.fontName?.family)}</small></li>}
-            <li><Input {...dragInputs.fontSize} /></li>
+            {(!options || options?.fontFamily) && <li className='font-options-font-family'><small>{String(style.fontName?.family)}</small></li>}
+            {(!options || options?.fontSize) && <li className='font-options-font-size'><Input {...dragInputs.fontSize} /></li>}
             <ul className="flex f-row gap-s">
-                <li className='flex f-row gap-xs f-center-h'>
-                    <Icon icon={ArrowHorizontal} />
-                    <Input {...dragInputs.letterSpacing} />
-                </li>
-                <li className='flex f-row gap-xs f-center-h'>
-                    <Icon icon={ArrowVertical} />
-                    <Input {...dragInputs.lineHeight} />
-                </li>
+                {
+                    (!options || options?.letterSpacing) &&
+                    <li className='font-options-letter-spacing flex f-row gap-xs f-center-h'>
+                        <Icon icon={ArrowHorizontal} />
+                        <Input {...dragInputs.letterSpacing} />
+                    </li>
+                }
+                {
+                    (!options || options?.lineHeight) &&
+                    < li className='font-options-line-height flex f-row gap-xs f-center-h'>
+                        <Icon icon={ArrowVertical} />
+                        <Input {...dragInputs.lineHeight} />
+                    </li>
+                }
+
             </ul>
-        </ul>
+        </ul >
     );
 }

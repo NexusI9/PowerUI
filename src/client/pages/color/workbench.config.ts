@@ -385,7 +385,7 @@ export const CREATE_SWATCH_CONFIG: Workbench = {
 
 export const EDIT_SWATCH_CONFIG: Workbench = {
     reducer: 'workbench',
-    title: 'Edit current palette',
+    title: 'Global palette edit',
     type: 'PAINT',
     sidepanel: {
         options: [

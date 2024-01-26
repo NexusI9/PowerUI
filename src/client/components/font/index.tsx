@@ -60,6 +60,6 @@ export const Font = (props: TextSet) => {
             onBlur={updateName}
             onEnter={updateName}
         />
-        <FontOptions style={props} />
+        <FontOptions {...props} />
     </div>);
 }

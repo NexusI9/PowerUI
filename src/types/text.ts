@@ -4,19 +4,20 @@ export interface TextArrayItem {
     style: Array<string>;
 }
 
+interface FontOptions {
+    fontFamily?: boolean;
+    fontSize?: boolean;
+    letterSpacing?: boolean;
+    lineHeight?: boolean;
+    style?: boolean;
+}
+
 export interface TextSet extends Partial<TextStyle> {
     index?: number | string;
+    options?:FontOptions;
 }
 
 export type TextDico = { [key: string]: TextArrayItem };
-
-/*
-detail: {
-    topRow: 'Font Family Primary',
-    bottomRow: 'Inter'
-},
-body: { content: 'Inter', style: { fontSize: '32px' } }
-*/
 
 export interface ExportGroupText {
     detail: {
