@@ -58,6 +58,7 @@ export const Style = ({
     //listen to context menu active commmand to dispatch Dev, Export, or Rename floating window
     const activeCommand = useSelector((state: any) => state.contextmenu.activeCommand);
     useEffect(() => {
+
         if (activeCommand && activeCommand.payload) {
             const { action, payload: { folder } } = activeCommand;
             if (action && folder) {

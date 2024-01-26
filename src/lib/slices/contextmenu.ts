@@ -9,7 +9,7 @@ const contextMenuSlice = createSlice({
     name: 'contextmenu',
     initialState: DEFAULT_CONTEXT_MENU,
     reducers: {
-        destroy: (state) => ({ ...state, ...DEFAULT_CONTEXT_MENU, activeCommand: state.activeCommand }),
+        destroy: (state) => ({ ...state, ...DEFAULT_CONTEXT_MENU }),
         setActiveCommand: (state, { payload }) => ({ ...state, activeCommand: payload })
     },
     extraReducers: (builder) => {
