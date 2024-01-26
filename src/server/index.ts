@@ -33,6 +33,7 @@ import {
 
 import { TextDico } from "@ctypes/text";
 import { exportPaintSet, exportTextSet } from "@lib/utils/export";
+import { delay } from "@lib/utils/utils";
 
 let systemFonts: TextDico;
 

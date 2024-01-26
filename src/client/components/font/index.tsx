@@ -18,7 +18,7 @@ export const Font = (props: TextSet) => {
 
     useEffect(() => {
         loadFont(props.fontName);
-    }, []);
+    }, [props.fontName]);
 
     const updateName = (e: BaseSyntheticEvent) => {
         send({

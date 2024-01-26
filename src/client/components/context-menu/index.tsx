@@ -8,8 +8,7 @@ import { destroy as destroyContextMenu, setActiveCommand } from '@lib/slices/con
 import { useDispatch } from 'react-redux';
 import { clamp } from '@lib/utils/utils';
 import { Label } from '@components/label';
-import { freezeScroll, setHeight, setPosition } from './helper';
-
+import { freezeScroll, setPosition } from './helper';
 
 export const ContextMenu = () => {
 
@@ -32,7 +31,7 @@ export const ContextMenu = () => {
             scroll: panel.current.scrollTop,
             id: Number(id)
         };
-        console.log(command);
+
         switch (command.receiver) {
             case 'API':
                 send({ action: command.action || '', ...payload });
@@ -115,3 +114,6 @@ export const ContextMenu = () => {
     </>);
 
 }
+
+
+export { ContextMenuListener } from './listener';

@@ -115,6 +115,7 @@ export async function updateText({ style, newStyle }: { style: TextStyle, newSty
     if (!figmaStyle) { return; }
 
     await figma.loadFontAsync(style.fontName);
+    if (newStyle.fontName) await figma.loadFontAsync(newStyle.fontName);
 
     let key: keyof typeof newStyle;
     for (key in newStyle) {
@@ -153,6 +154,9 @@ export async function updateText({ style, newStyle }: { style: TextStyle, newSty
         }
 
     }
+
+    //Manualy reload_page cause async process doesn't trigger document change listener
+    figma.ui.postMessage({ action: 'RELOAD_PAGE' });
 }
 
 export function folderAtLevel(folder: string, level: number): string {
