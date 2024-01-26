@@ -64,4 +64,10 @@
         }
     }
 
+    &[data-stroke='false']{
+        & > label{
+            border:none;
+        }
+    }
+
 }

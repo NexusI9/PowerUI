@@ -14,7 +14,6 @@ export const Dropdown = (props: IDropdown) => {
     const [value, setValue] = useState<string>(String(props.value));
     const id = useRef<number>(performance.now());
     const commandList = useRef<any>([]);
-
     const lastState = useSelector((state: any) => state.contextmenu);
 
     const dispatch = useDispatch();
@@ -34,8 +33,7 @@ export const Dropdown = (props: IDropdown) => {
 
     useEffect(() => {
 
-        if (props.onChange && activeItem) {
-
+        if (activeItem) {
             //set value priority (if no props value then...)
             const activeValue: string =
                 typeof props.value === 'string' && String(props.value)
@@ -45,7 +43,7 @@ export const Dropdown = (props: IDropdown) => {
 
             setValue(activeValue);
             //external callback
-            props.onChange(activeItem);
+            if (props.onChange) props.onChange(activeItem);
         }
     }, [activeItem, props.value]);
 
@@ -57,9 +55,7 @@ export const Dropdown = (props: IDropdown) => {
     }, [lastState.activeCommand]);
 
     return (
-        <div
-            className="dropdown flex f-col gap-xs"
-        >
+        <div className="dropdown flex f-col gap-xs" data-stroke={ props.appearance?.stroke === undefined || !!props.appearance.stroke}>
             {props.appearance?.label && <p className="dropdown-label frozen"><small><b>{props.placeholder}</b></small></p>}
             <label
                 className="flex f-row f-center f-between"

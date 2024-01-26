@@ -6,7 +6,8 @@
             height: fit-content;
 
             &:hover {
-                box-shadow: 0px 0px 0px 1px var(--figma-color-border);
+                box-shadow: 0px 0px 0px 1px var(--figma-color-border-brand);
+                border-color: var(--figma-color-border-brand);
 
                 &:has(input:focus) {
                     box-shadow: 0px 0px 0px 2px var(--figma-color-border-brand);

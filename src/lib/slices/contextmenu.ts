@@ -1,7 +1,5 @@
-import { ContextMenu, ContextMenuCommand } from "src/types/contextmenu";
 import { DEFAULT_CONTEXT_MENU } from "@lib/constants";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-
 
 export const display = createAsyncThunk('contextmenu/display', (action: any) => action);
 

@@ -8,6 +8,7 @@ import { TextSet } from '@ctypes/text';
 import { Input } from '@components/input';
 import { BaseSyntheticEvent } from 'react';
 import { updateAttribute } from './helper';
+import { Dropdown } from '@components/dropdown';
 
 
 export const FontOptions = (style: TextSet) => {
@@ -46,7 +47,14 @@ export const FontOptions = (style: TextSet) => {
 
     return (
         <ul className="font-options flex f-col gap-s">
-            {(!options || options?.fontFamily) && <li className='font-options-font-family'><small>{String(style.fontName?.family)}</small></li>}
+            {(!options || options?.fontFamily) &&
+                <li className='font-options-font-family'>
+                    <Dropdown
+                        list={[{ value: { action: 'FONT_LIST', placeholder: String(style.fontName?.family) }, receiver: 'STORE' }]}
+                        appearance={{ stroke: false, minified: true }}
+                    />
+                </li>
+            }
             {(!options || options?.fontSize) && <li className='font-options-font-size'><Input {...dragInputs.fontSize} /></li>}
             <ul className="flex f-row gap-s">
                 {
