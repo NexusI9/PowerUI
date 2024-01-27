@@ -34,80 +34,86 @@ export const Input = ({
     const input = useRef<any>();
     const valueUnit = valueUnitFrom(String(innerValue));
 
-    const handleOnChange = (e: BaseSyntheticEvent) => {
-        //update manualy changed state (prevent portal override)
-        setManualyChanged(true);
+    const handleOnKeyDown = (e: any) => {
 
-        //handle amount clamping
-        switch (type) {
-            case 'AMOUNT':
-           
-                //clamp 
-                if (e.target.value.length && range) {
-                    e.target.value = clamp(range[0], Number(e.target.value), range[1]) || range[0];
-                }
-
-                setInnerValue(String(e.target.value));
-                break;
+        if (e.code === 'Enter' && onEnter) {
+            onEnter(e);
+            e.target.blur();
         }
 
-        //external callback
-        onChange(e);
-
-        //store update (portal)
-        if (portal?.target) { updatePortal({ target: portal.target as string, value: e.target.value }); }
-
-    }
-
-    const convertAmount = (val: number): string => {
-        return (range ? clamp(range[0], val, range[1]) : val) + convertUnit(valueUnit.unit);
-    }
-
-    const handleOnKeyDown = (e: any) => {
-        if (e.code === 'Enter' && onEnter) { onEnter(e); e.target.blur(); }
         if (type === 'AMOUNT') {
             let mStep = e.shiftKey ? 10 : e.altKey ? 0.1 : step;
-            if (e.code === 'ArrowUp') { e.preventDefault(); setInnerValue(convertAmount((valueUnit.value + mStep))); }
-            if (e.code === 'ArrowDown') { e.preventDefault(); setInnerValue(convertAmount((valueUnit.value - mStep))); }
+            if (e.code === 'ArrowUp') {
+                e.preventDefault();
+                setInnerValue(valueUnit.value + mStep + convertUnit(valueUnit.unit));
+            }
+            if (e.code === 'ArrowDown') {
+                e.preventDefault();
+                setInnerValue(valueUnit.value - mStep + convertUnit(valueUnit.unit));
+            }
         }
     }
 
 
+    useEffect(() => { dynamicValue !== undefined && setInnerValue(dynamicValue); }, [dynamicValue]);
+    //useEffect(() => { setInnerValue(value) }, [value]);
+
     useEffect(() => {
-        if (dynamicValue !== undefined) {
-            setInnerValue(dynamicValue);
-            handleOnChange({ target: { value: dynamicValue } } as BaseSyntheticEvent);
+        /*
+        * MAIN VALUE CHANGE HANDLER
+        * [external value] => [inner value] => [validated and filtered] => [actually changed value]
+        */
+
+        //Convert methods
+        const convertAmount = (val: string): string => {
+            /* 
+            ** Clamp amount value and append unit (end string) to incremented value
+            */
+            const { value, unit } = valueUnitFrom(String(val));
+            console.log({ val, value, unit });
+            return (range ? clamp(range[0], value, range[1]) : value) + convertUnit(unit);
         }
-    }, [dynamicValue]);
 
+        const convertColor = (val: string): string => {
+            //update color name from hex value
+            if (portal?.colorformat === 'NAME') {
+                try {
+                    const { ntc } = colorNamer(innerValue, { pick: 'ntc' });
+                    val = ntc[0].name || innerValue;
+                } catch { }
+            }
 
-    useEffect(() => {
+            return val;
+        }
+
 
         if (input.current && innerValue) {
 
-            let storeValue = innerValue || '';
+            let storeValue = String(innerValue);
+            let inputValue = String(innerValue);
 
-            //update color name from hex value
-            if (type === 'COLOR' && portal?.colorformat === 'NAME') {
-                try{
-                    const { ntc } = colorNamer(innerValue, { pick: 'ntc' });
-                    storeValue = ntc[0].name || innerValue;
-                }catch{}
+            switch (type) {
+                case 'COLOR':
+                    storeValue = convertColor(storeValue);
+                    break;
+
+                case 'AMOUNT':
+                    inputValue = convertAmount(inputValue);
+                    break;
             }
 
-            //update store target
-            if (portal?.target) { updatePortal({ target: portal?.target, value: storeValue }); }
 
             //update ref value
-            input.current.value = String(innerValue);
+            input.current.value = String(inputValue);
+
+            //update store target
+            portal?.target && updatePortal({ target: portal?.target, value: storeValue });
+
             //call external callback
-            onChange({ target: input.current });
+            onChange && onChange({ target: input.current });
         }
 
     }, [innerValue]);
-
-
-    useEffect(() => { setInnerValue(value) }, [value])
 
     return (
         <InputPortal
@@ -135,15 +141,15 @@ export const Input = ({
                         defaultValue={value}
                         onBlur={onBlur}
                         onFocus={onFocus}
-                        onChange={handleOnChange}
+                        onChange={(e) => { setManualyChanged(true); setInnerValue(e.target.value); }}
                         onKeyDown={handleOnKeyDown}
                     />
                     {
                         //Display amount arrows
                         type === 'AMOUNT' &&
                         <AmountArrows
-                            onUp={() => setInnerValue(convertAmount(valueUnit.value + step))}
-                            onDown={() => setInnerValue(convertAmount(valueUnit.value - step))}
+                            onUp={() => setInnerValue(valueUnit.value + step)}
+                            onDown={() => setInnerValue(valueUnit.value - step)}
                         />
                     }
                 </div>
