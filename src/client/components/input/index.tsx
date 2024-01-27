@@ -70,7 +70,6 @@ export const Input = ({
             ** Clamp amount value and append unit (end string) to incremented value
             */
             const { value, unit } = valueUnitFrom(String(val));
-            console.log({ val, value, unit });
             return (range ? clamp(range[0], value, range[1]) : value) + convertUnit(unit);
         }
 

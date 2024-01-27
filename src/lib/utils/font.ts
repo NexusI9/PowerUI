@@ -83,7 +83,7 @@ export function valueUnitFrom(value: string): { value: number; unit: string; } {
     const converUnit = {
         '%': 'PERCENT',
         'px': 'PIXELS'
-    }[unit] || '';
+    }[unit] || unit;
 
     return {
         value: Number(val),
