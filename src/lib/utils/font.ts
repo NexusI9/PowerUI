@@ -19,7 +19,7 @@ export function convertFontWeight(font: string): string {
         'Extra Light': '200',
         'Light': '300',
         'Regular': '400',
-        'Medium':'500',
+        'Medium': '500',
         'Semi Bold': '600',
         'Bold': '700',
         'Extra Bold': '800',
@@ -76,7 +76,7 @@ export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJE
 
 export function valueUnitFrom(value: string): { value: number; unit: string; } {
     const split = value.match(/^([\-|\+]?\d+\.?\d*)(\D*|\%)$/);
-
+    
     const val = split && split[1] || 0;
     const unit = split && split[2] || '';
 
