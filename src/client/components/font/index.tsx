@@ -2,7 +2,7 @@ import { folderNameFromPath, styleContextMenu } from '@lib/utils/style';
 import './index.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input } from '@components/input';
-import { BaseSyntheticEvent, useEffect } from 'react';
+import { BaseSyntheticEvent, useEffect, useRef } from 'react';
 import { send } from '@lib/ipc';
 import { FontOptions } from '@components/font-options';
 import { loadFont } from '@lib/utils/font.action';
@@ -15,8 +15,15 @@ export const Font = (props: TextSet) => {
     const displayMode = useSelector((state: any) => state.style.display);
     const dispatch = useDispatch();
     const styleName = folderNameFromPath(String(props.name)).name;
+    const currentFont = useRef<string>();
 
-    useEffect(() => { loadFont(props.fontName); }, [props.fontName]);
+    useEffect(() => {
+        if (currentFont.current !== props.fontName?.family) {
+            loadFont(props.fontName);
+            currentFont.current = String(props.fontName?.family);
+        }
+
+    }, [props.fontName]);
 
     const updateName = (e: BaseSyntheticEvent) => {
         send({

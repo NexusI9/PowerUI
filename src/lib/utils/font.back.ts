@@ -17,7 +17,7 @@ export function loadLocalFont(msg: any, systemFonts: TextDico) {
                     figma.loadFontAsync({ ...payload, style: style })
                         .then(() => resolve(style))
                         .catch(() => {
-                            //systemFonts[payload.family].loaded = false;
+                            systemFonts[payload.family].loaded = false;
                             reject(`Could not load ${payload.family}, ${style}`);
                         })
                 }))
@@ -26,7 +26,7 @@ export function loadLocalFont(msg: any, systemFonts: TextDico) {
                 .catch((e) => reject(e));
 
             //set font as loaded
-            //systemFonts[payload.family].loaded = true;
+            systemFonts[payload.family].loaded = true;
         } else {
             resolve(msg);
         }

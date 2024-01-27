@@ -83,7 +83,7 @@ export const mapKeys = (reference: any, mutable: any) => {
 
 
 export const roundDecimal = (value: number): number => {
-    return (value > -1 && value < 1) ? Number(Number(value).toFixed(2)) : value;
+    return (value % 1 !== 0) ? Number(Number(value).toFixed(2)) : value;
 }
 
 export const objectToArray = (object: any): Array<any> => {

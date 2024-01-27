@@ -161,6 +161,16 @@ figma.ui.onmessage = msg => {
     case 'EXPORT_TEXT_SET':
       exportTextSet(msg);
       break;
+
+    case 'SET_FONT_AS_LOADED':
+      if (systemFonts && systemFonts[String(msg.payload)]) { systemFonts[String(msg.payload)].loaded = true; }
+      figma.ui.postMessage({ ...msg, payload: systemFonts && systemFonts[String(msg.payload)] });
+      break;
+
+    case 'GET_FONT':
+      figma.ui.postMessage({ ...msg, payload: systemFonts && systemFonts[String(msg.payload)] });
+      break;
+
   }
 
 };

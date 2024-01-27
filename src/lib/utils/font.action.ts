@@ -1,32 +1,40 @@
 import { TextSet } from "@ctypes/text";
 import { AdjustTextConfig, CreateTextConfig } from "@ctypes/workbench.template";
 import { DEFAULT_STYLE_TEXT, DEFAULT_TYPEFACE } from "@lib/constants";
-import { get } from "@lib/ipc";
+import { get, send } from "@lib/ipc";
 import { Set } from "@ctypes/workbench.template";
 import WebFont from "webfontloader";
 
 export async function loadFont(typeface: FontName | undefined): Promise<string> {
 
     return new Promise((resolve, reject) => {
+
         if (typeface !== undefined) {
             //Google Font Loading
-            try {
-                WebFont.load({
-                    google: {
-                        families: [typeface.family]
-                    },
-                    active: () => resolve(typeface.family || DEFAULT_TYPEFACE),
-                    inactive: () => {
-                        //Load Local Font from server
-                        get({ action: 'LOAD_FONT', payload: typeface })
-                            .then(e => resolve(e))
-                            .catch(() => loadFont({ ...typeface, style: 'Regular' })); //If can't load Font, load Regular as default
+            get({ action: 'GET_FONT', payload: typeface.family }).then(systemFont => {
+                if (!systemFont?.loaded) {
+                    try {
+                        WebFont.load({
+                            google: { families: [typeface.family] },
+                            active: () => {
+                                //Set font as loaded in backend so won't load again
+                                send({ action: 'SET_FONT_AS_LOADED', payload: typeface.family });
+                                resolve(typeface.family || DEFAULT_TYPEFACE)
+                            },
+                            inactive: () => {
+                                //Load Local Font from server
+                                get({ action: 'LOAD_FONT', payload: typeface })
+                                    .then(e => resolve(e))
+                                    .catch(() => loadFont({ ...typeface, style: 'Regular' })); //If can't load Font, load Regular as default
+                            }
+                        });
+                    } catch (_) {
+                        //console.log(`Coudln\'t load ${typeface.family} (${typeface.style})`);
+                        resolve(typeface.family || DEFAULT_TYPEFACE);
                     }
-                });
-            } catch (_) {
-                //console.log(`Coudln\'t load ${typeface.family} (${typeface.style})`);
-                resolve(typeface.family || DEFAULT_TYPEFACE);
-            }
+                }
+            });
+
 
         } else {
             resolve(DEFAULT_TYPEFACE);
