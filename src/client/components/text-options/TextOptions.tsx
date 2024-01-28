@@ -7,7 +7,7 @@ import { cssTextStyle, valueUnitFrom } from '@lib/utils/font';
 import { TextSet } from '@ctypes/text';
 import { Input } from '@components/input';
 import { BaseSyntheticEvent } from 'react';
-import { updateAttribute } from './helper';
+import { updateAttribute } from './TextOptions.Helper';
 import { Dropdown } from '@components/dropdown';
 import { ContextMenuListener } from '@components/context-menu';
 import { ContextMenuCommand } from '@ctypes/contextmenu';
