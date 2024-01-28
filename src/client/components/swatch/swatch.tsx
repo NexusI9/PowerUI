@@ -8,7 +8,7 @@ import { useDispatch } from 'react-redux';
 import { display as displayTooltip, destroy as destroyTooltip } from '@lib/slices/tooltip';
 import { display as displaySnackBar } from '@lib/slices/snackbar';
 
-export const Swatch = (props: any) => {
+export default (props: any) => {
 
 
     const dispatch = useDispatch();

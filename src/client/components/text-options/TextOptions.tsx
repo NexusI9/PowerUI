@@ -14,7 +14,7 @@ import { ContextMenuCommand } from '@ctypes/contextmenu';
 import { send } from '@lib/ipc';
 
 
-export const FontOptions = (style: TextSet) => {
+export default (style: TextSet) => {
 
     const { options } = style;
     const cssStyle = cssTextStyle(style, 'OBJECT') as Record<string, any>;

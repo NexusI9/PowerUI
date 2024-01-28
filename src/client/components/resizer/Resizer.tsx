@@ -1,0 +1,38 @@
+import { ButtonIcon } from "@components/button-icon";
+import ResizerIcon from '@icons/resizer.svg';
+import './index.scss';
+import { send } from "@lib/ipc";
+import { useEffect, useState } from "react";
+
+export default () => {
+
+    const [active, setActive] = useState(false);
+
+    useEffect(() => {
+
+        const onMouseMove = (e: any) => send({ action: 'RESIZE_WINDOW', payload: { width: e.x, height: e.y } });
+        const setFalse = () => setActive(false);
+
+        if (active) {
+            window.addEventListener('mousemove', onMouseMove)
+            window.addEventListener('mouseup', setFalse);
+        } else {
+            window.removeEventListener('mousemove', onMouseMove)
+            window.removeEventListener('mouseup', setFalse);
+        }
+
+        return () => {
+            window.removeEventListener('mousemove', onMouseMove);
+            window.removeEventListener('mouseup', setFalse);
+        }
+
+    }, [active]);
+
+    return (
+        <ButtonIcon
+            icon={ResizerIcon}
+            onMouseDown={() => setActive(true)}
+            className="resizer"
+            appearance={{ hover: false }}
+        />);
+}

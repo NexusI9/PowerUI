@@ -1,4 +1,4 @@
-import { Swatch } from "@components/swatch/swatch";
+import { Swatch } from "@components/swatch";
 import { Style } from "@templates/style";
 import PaintPlus from '@icons/paint-plus.svg';
 import SwatchIcon from '@icons/swatch.svg';

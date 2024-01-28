@@ -4,13 +4,13 @@ import { useSelector } from "react-redux";
 
 type ContextMenuListener = { children: React.JSX.Element; commands: Array<{ action: string; callback(e: ContextMenuCommand): any }>; };
 
-export const ContextMenuListener = ({ children, commands }: ContextMenuListener) => {
+export default ({ children, commands }: ContextMenuListener) => {
 
     const activeCommand = useSelector((state: any) => state.contextmenu.activeCommand);
 
     useEffect(() => {
 
-        if(!activeCommand){ return; }
+        if (!activeCommand) { return; }
 
         commands.forEach(({ action, callback }) => {
             if (action === activeCommand?.action) {

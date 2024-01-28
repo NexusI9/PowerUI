@@ -4,14 +4,14 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Input } from '@components/input';
 import { BaseSyntheticEvent, useEffect, useRef } from 'react';
 import { send } from '@lib/ipc';
-import { FontOptions } from '@components/font-options';
+import { TextOptions } from '@components/text-options';
 import { loadFont } from '@lib/utils/font.action';
 import { cssTextStyle } from '@lib/utils/font';
 import { TextSet } from '@ctypes/text';
 import { display as displayTooltip, destroy as destroyTooltip } from '@lib/slices/tooltip';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
 
-export const Font = (props: TextSet) => {
+export default (props: TextSet) => {
     const displayMode = useSelector((state: any) => state.style.display);
     const dispatch = useDispatch();
     const styleName = folderNameFromPath(String(props.name)).name;
@@ -65,6 +65,6 @@ export const Font = (props: TextSet) => {
             onBlur={updateName}
             onEnter={updateName}
         />
-        <FontOptions {...props} />
+        <TextOptions {...props} />
     </div>);
 }

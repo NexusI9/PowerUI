@@ -1,12 +1,12 @@
 import { PaintSet as IPaintSet } from "src/types/shade";
 import { rgbToHsl, rgb, rgbToHex } from "@lib/utils/color";
 import './index.scss';
-import { ContrastLabel } from "./contrast";
+import { ContrastLabel } from "./Contrast";
 import Lock from '@icons/lock-locked.svg';
 import { Icon } from "@components/icon";
 
 
-export const PaintSet = (style: IPaintSet) => {
+export default (style: IPaintSet) => {
 
     const { paints, name, contrast, primary } = style;
     const { color } = paints && (paints[0] as SolidPaint) || { color: { r: 0, g: 0, b: 0 } };

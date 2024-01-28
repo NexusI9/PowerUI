@@ -171,7 +171,7 @@ export function concatFolderName(path: Array<string | undefined>): string {
     return chain;
 }
 
-export function updateStyleName({ style, name }: { style: PaintStyle, name: string }) {
+export function updateStyleName({ style, name }: { style: PaintStyle | TextStyle, name: string }) {
 
     try {
         const newStyleName = figma.getStyleById(style.id);
@@ -179,7 +179,6 @@ export function updateStyleName({ style, name }: { style: PaintStyle, name: stri
 
         const folder = folderNameFromPath(style.name).folder;
         if (newStyleName) newStyleName.name = concatFolderName([folder, name]);
-
     } catch (_) {
         console.warn('Could not update style name');
     }

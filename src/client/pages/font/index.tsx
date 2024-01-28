@@ -1,4 +1,4 @@
-import { Font } from "@components/font";
+import { Text } from "@components/text";
 import { Style } from "@templates/style";
 import FontPlus from '@icons/font-plus.svg';
 import { DEFAULT_STYLE_TEXT, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
@@ -74,7 +74,7 @@ export default () => {
             onAddItem={handleAddItem}
             padStyle={padConfig}
             getStyleMethod={GET_TEXT_STYLES_COMMAND}
-            styleItem={Font}
+            styleItem={Text}
             options={options}
             onExportStyles={onExportFont}
             onDevStyles={onDevFont}

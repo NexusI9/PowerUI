@@ -5,8 +5,8 @@ import "@styles/index.scss";
 import { useDispatch, useSelector } from 'react-redux';
 
 //structural
-import Sidebar from '@components/sidebar';
-import Container from '@components/container';
+import { Sidebar } from '@components/sidebar';
+import { Container } from '@components/container';
 
 //modales & menu
 import { ContextMenu } from "@components/context-menu";
@@ -19,7 +19,7 @@ import Font from './pages/font';
 
 //other
 import { Snackbar } from "@components/snackbar";
-import { Fragment, createElement, useEffect } from "react";
+import { createElement, useEffect } from "react";
 import { get } from "@lib/ipc";
 import { GET_PAINT_STYLES_COMMAND, GET_TEXT_STYLES_COMMAND } from "@lib/constants";
 import { setPage } from "@lib/slices/page";

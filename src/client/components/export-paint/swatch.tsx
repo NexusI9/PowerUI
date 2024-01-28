@@ -1,6 +1,6 @@
 import { ExportPaintConfig } from "@ctypes/export.template"
 import './index.scss';
-import { Contrast } from "./contrast";
+import { Contrast } from "./Contrast";
 import { colorSeparator } from "@lib/utils/color";
 
 export const Swatch = (props: ExportPaintConfig & any) => {

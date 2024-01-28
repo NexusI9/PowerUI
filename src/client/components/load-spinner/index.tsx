@@ -1,15 +1,1 @@
-import './index.scss';
-export const LoadSpinner = () => (<div className="lds-spinner">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-</div>);
+export { default as LoadSpinner } from './LoadSpinner';

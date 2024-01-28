@@ -1,5 +1,5 @@
 import { ExportGroupText } from "@ctypes/text";
-import { TextItem } from "./textitem";
+import { TextItem } from "./TextItem";
 
 export const TextGroup = ({ headline, fonts }: { headline: { content: string, style?: any }, fonts: Array<ExportGroupText> }) => {
 

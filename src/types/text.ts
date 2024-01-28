@@ -4,7 +4,7 @@ export interface TextArrayItem {
     style: Array<string>;
 }
 
-interface FontOptions {
+interface TextOptions {
     fontFamily?: boolean;
     fontSize?: boolean;
     letterSpacing?: boolean;
@@ -14,7 +14,7 @@ interface FontOptions {
 
 export interface TextSet extends Partial<TextStyle> {
     index?: number | string;
-    options?:FontOptions;
+    options?:TextOptions;
 }
 
 export type TextDico = { [key: string]: TextArrayItem };

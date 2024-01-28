@@ -1,5 +1,1 @@
-export const Icon = ({icon}:{icon:string;}) => {
-
-    const DynamicIcon = typeof icon === 'function' ? icon : require(`@icons/${icon}.svg`).default;
-    return(<DynamicIcon />);
-}
+export { default as Icon } from './Icon';

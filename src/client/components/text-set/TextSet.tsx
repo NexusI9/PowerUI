@@ -1,12 +1,12 @@
 import { Input } from '@components/input';
 import './index.scss';
-import { Font } from '@components/font';
+import { Text } from '@components/text';
 import { Icon } from '@components/icon';
 import Lock from '@icons/lock-locked.svg'
 import { BaseSyntheticEvent, useState } from 'react';
 import { TextSet as ITextSet } from '@ctypes/text';
 
-export const TextSet = (style: ITextSet) => {
+export default (style: ITextSet) => {
     const [innerStyle, setInnerStyle] = useState<ITextSet>(style);
     const { index } = style;
     const updateStyleName = (e: BaseSyntheticEvent) => {
@@ -26,7 +26,7 @@ export const TextSet = (style: ITextSet) => {
                     value={innerStyle.name}
                     onChange={updateStyleName}
                 />
-                <Font {...{ ...innerStyle }} />
+                <Text {...{ ...innerStyle }} />
             </div>
         </div>
     );
