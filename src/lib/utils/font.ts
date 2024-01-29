@@ -19,6 +19,7 @@ export function convertFontWeight(font: string): string {
         'Extra Light': '200',
         'Light': '300',
         'Regular': '400',
+        'Italic':'400',
         'Medium': '500',
         'Semi Bold': '600',
         'Bold': '700',
@@ -34,8 +35,8 @@ function pxToEm(value: number, baseSize: number = 1): string {
 
 export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJECT', config?: DevTextConfig): Array<String> | Record<string, any> {
 
-    const lineHeight = roundObjectFloat((style.lineHeight as any)).value;
-    const letterSpacing = roundObjectFloat((style.letterSpacing as any)).value;
+    const lineHeight = roundObjectFloat((style.lineHeight as any)).value || 'auto';
+    const letterSpacing = roundObjectFloat((style.letterSpacing as any)).value || 0;
 
     const attributes = [
         {
@@ -56,7 +57,7 @@ export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJE
         {
             'OBJECT': 'lineHeight',
             'STRING': 'line-height',
-            'VALUE': String(style.lineHeight?.unit === 'PERCENT' ? (style.fontSize || 0) * lineHeight / 100 : lineHeight) + 'px' //css doen't take % as LineHeight so need to convert % => px
+            'VALUE': typeof lineHeight === 'number' && (String(style.lineHeight?.unit === 'PERCENT' ? (style.fontSize || 0) * lineHeight / 100 : lineHeight) + 'px') || lineHeight //css doen't take % as LineHeight so need to convert % => px
         },
         {
             'OBJECT': 'fontFamily',

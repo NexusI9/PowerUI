@@ -78,7 +78,16 @@ export default (style: TextSet) => {
                         />
                     </li>
                 }
-                {(!options || options?.fontSize) && <li className='text-options-font-size'><Input {...dragInputs.fontSize} /></li>}
+                <ul className="flex f-row gap-s">
+                    {(!options || options?.fontSize) && <li className='text-options-font-size'><Input {...dragInputs.fontSize} /></li>}
+                    {(!options || options?.fontWeight) && <li className='text-options-font-weight'>
+                        <Dropdown
+                            list={[{ value: { action: 'FONT_WEIGHTS', placeholder: String(style.fontName?.family), payload: style.fontName?.family }, receiver: 'STORE', action: 'UPDATE_TEXT_FONT', payload: style }]}
+                            appearance={{ stroke: false, minified: true }}
+                            value={String(style.fontName?.style)}
+                        />
+                    </li>}
+                </ul>
                 <ul className="flex f-row gap-s">
                     {
                         (!options || options?.letterSpacing) &&

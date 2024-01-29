@@ -65,7 +65,7 @@ export default (props: TextSet) => {
         data-dynamic-options={props.options?.dynamic === undefined || !!props.options?.dynamic}
     >
         <div
-            className='style-item-font-container flex f-center-h'
+            className='style-item-font-container flex f-center-h full-width'
             {...(displayMode === 'list' && { style: { height: `${cssStyle.lineHeight || '0px'}` } })}  // set padding as LineHeight to emulate de height
         >
             <Input {...((displayMode === 'list' || props.options?.displayMode === 'list') && { style: cssStyle })}

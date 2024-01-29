@@ -1,5 +1,6 @@
 import { TextArrayItem, TextDico } from "@ctypes/text";
 import { replaceStyle } from "./style";
+import { convertFontWeight } from "./font";
 
 
 export function loadLocalFont(msg: any, systemFonts: TextDico) {
@@ -93,7 +94,19 @@ export function sortByFont(styles: Array<TextStyle>) {
     replaceStyle(styles);
 }
 
-export function validUnit(unit:string){
+export function validUnit(unit: string) {
     return !!String(unit).toUpperCase().match(/AUTO|PIXELS|PERCENT/);
+}
+
+
+export function fontWeights(fontName: string, fontList: TextDico): Array<string> {
+
+    try {
+        return fontList[fontName].style
+            .sort((a, b) => Number(convertFontWeight(a)) > Number(convertFontWeight(b)) ? 1 : -1) //filter weights by boldness
+            .sort(a => a.match(/italic/i) ? 1 : -1); //put italic styles at the end
+    } catch {
+        return ['Regular'];
+    }
 }
 

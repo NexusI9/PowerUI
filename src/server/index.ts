@@ -18,6 +18,7 @@ import {
 } from "@lib/utils/style";
 
 import {
+  fontWeights,
   loadLocalFont,
   sortByFont,
   sortByScale,
@@ -138,6 +139,10 @@ figma.ui.onmessage = msg => {
           figma.ui.postMessage({ ...msg, payload: Object.keys(systemFonts) }); //only send font names (== keys of systemFonts)
         })
         .catch(() => figma.ui.postMessage({ ...msg, payload: [] }));
+      break;
+
+    case 'FONT_WEIGHTS':
+      figma.ui.postMessage({ ...msg, payload: fontWeights(msg.payload, systemFonts) })
       break;
 
     case 'LOAD_FONT':

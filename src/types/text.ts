@@ -9,6 +9,7 @@ interface TextOptions {
     fontSize?: boolean;
     letterSpacing?: boolean;
     lineHeight?: boolean;
+    fontWeight?:boolean;
     style?: boolean;
     displayMode?: 'list' | 'grid';
     lineHeightBorder?: boolean;
