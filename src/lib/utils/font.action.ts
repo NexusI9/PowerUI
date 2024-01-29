@@ -5,6 +5,15 @@ import { get, send } from "@lib/ipc";
 import { Set } from "@ctypes/workbench.template";
 import WebFont from "webfontloader";
 
+
+const WORKBENCH_TEXT_OPTIONS: TextSet = {
+    options:{
+        fontSize:true,
+        lineHeightBorder:false,
+        displayMode:'list'
+    }
+}
+
 export async function loadFont(typeface: FontName | undefined): Promise<string> {
 
     return new Promise((resolve, reject) => {
@@ -52,7 +61,7 @@ function convertTemplate(template: Array<TextSet>, config: CreateTextConfig): Se
             family: config.typeface || DEFAULT_TYPEFACE,
             style: style.fontName?.style || 'Regular'
         },
-        options: { fontSize: true }
+        ...WORKBENCH_TEXT_OPTIONS
     }));
 
 }
@@ -96,7 +105,7 @@ function configToBase(config: CreateTextConfig): TextSet {
             style: DEFAULT_STYLE_TEXT.fontName?.style || 'Regular',
             family: config.typeface || DEFAULT_TYPEFACE
         },
-        options: { fontSize: true }
+        ...WORKBENCH_TEXT_OPTIONS
     };
 }
 
@@ -515,7 +524,7 @@ export function textAdjust(config: AdjustTextConfig): Set {
             ...style,
             fontName,
             fontSize: config.roundValue && Math.floor(newSize) || newSize,
-            options: { fontSize: true }
+            ...WORKBENCH_TEXT_OPTIONS
         };
     });
 }

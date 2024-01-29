@@ -12,6 +12,7 @@ export default (style: ITextSet) => {
     const updateStyleName = (e: BaseSyntheticEvent) => {
         setInnerStyle({ ...innerStyle, name: e.target.value })
     }
+
     return (
         <div className='font-set flex f-row gap-m f-center-h' data-base={!!(index === 0)}>
             {
@@ -21,7 +22,7 @@ export default (style: ITextSet) => {
             <div className='font-set-content flex f-col'>
                 <Input
                     type='DEFAULT'
-                    appearance={{ stroke: false, minified: false }}
+                    appearance={{ stroke: false, minified: true }}
                     placeholder={'Style name'}
                     value={innerStyle.name}
                     onChange={updateStyleName}

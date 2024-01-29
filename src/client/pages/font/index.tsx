@@ -24,18 +24,11 @@ export default () => {
     const dispatch = useDispatch();
 
     //listen to context menu active commmand to dispatch Dev or Export floating window
-    const onCreateFont = (folder: StyleFolder) => {
-        dispatch(initWorkbench({ ...CREATE_FONT_SET_CONFIG, folder }));
-        dispatch(switchDisplay('list'));
-    }
+    const onCreateFont = (folder: StyleFolder) => dispatch(initWorkbench({ ...CREATE_FONT_SET_CONFIG, folder }));
     const onExportFont = (folder: StyleFolder) => dispatch(initExport({ ...EXPORT_FONT_CONFIG, folder }));
     const onDevFont = (folder: StyleFolder) => dispatch(initDev({ ...DEV_FONT_CONFIG, folder }));
-    const onEditFont = (folder: StyleFolder) => {
-        dispatch(initWorkbench({ ...EDIT_FONT_CONFIG, folder: folder, config: { styles: folder.styles as any } }));
-        dispatch(switchDisplay('list'));
-    }
-   
-
+    const onEditFont = (folder: StyleFolder) => dispatch(initWorkbench({ ...EDIT_FONT_CONFIG, folder: folder, config: { styles: folder.styles as any } }));
+    
     const padConfig = {
         icon: FontPlus,
         value: 'Create Fonts Set',

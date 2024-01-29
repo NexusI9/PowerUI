@@ -8,10 +8,56 @@
 
     .style-item-font-container {
         overflow: hidden;
+
         .input-field {
             .input-field-content {
                 height: fit-content;
             }
+        }
+    }
+
+    &[data-display-mode="grid"] {
+        display: flex;
+        flex-direction: column;
+        gap: var(--space-s);
+        align-items: flex-start;
+        border-radius: var(--radius-s);
+        border: solid 1px var(--figma-color-border);
+        height: auto;
+        width: calc(105px * 4 / 3);
+        margin: 0;
+        padding: var(--space-m);
+
+        input {
+            font-size: initial;
+        }
+
+        .text-options {
+            display: none;
+
+            input {
+                font-size: small;
+            }
+        }
+
+        &:hover {
+            border-color: var(--figma-color-border-strong);
+        }
+
+        ul {
+            align-items: flex-start;
+        }
+
+        &>.input-field {
+            font-weight: bold;
+        }
+
+        .input-field {
+            pointer-events: none;
+        }
+
+        .input-field-content {
+            padding: 0;
         }
     }
 
@@ -23,8 +69,10 @@
 
             .input-field {
                 padding: 0 2px;
+
                 .input-field-content {
                     padding: 0;
+
                     input {
                         border-top: dashed 1px var(--figma-color-border-disabled);
                         border-bottom: dashed 1px var(--figma-color-border-disabled);

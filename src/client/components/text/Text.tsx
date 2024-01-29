@@ -12,8 +12,10 @@ import { display as displayTooltip, destroy as destroyTooltip } from '@lib/slice
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
 
 export default (props: TextSet) => {
-    const displayMode = useSelector((state: any) => state.style.display);
+
     const dispatch = useDispatch();
+
+    const displayMode = useSelector((state: any) => state.style.display);
     const styleName = folderNameFromPath(String(props.name)).name;
     const currentFont = useRef<string>();
     const cssStyle = cssTextStyle(props) as any;
@@ -58,13 +60,14 @@ export default (props: TextSet) => {
         }}
         onMouseEnter={(e) => displayMode === 'grid' && handleToolTip(e.target)}
         onMouseLeave={() => dispatch(destroyTooltip())}
-        data-line-height={!!(displayMode === 'list')}
+        data-line-height={!!(props.options?.lineHeightBorder !== undefined ? props.options?.lineHeightBorder : displayMode === 'list')}
+        data-display-mode={props.options?.displayMode || displayMode}
     >
         <div
             className='style-item-font-container flex f-center-h'
             {...(displayMode === 'list' && { style: { height: `${cssStyle.lineHeight || '0px'}` } })}  // set padding as LineHeight to emulate de height
         >
-            <Input {...(displayMode === 'list' && { style: cssStyle })}
+            <Input {...((displayMode === 'list' || props.options?.displayMode === 'list') && { style: cssStyle })}
                 value={styleName}
                 appearance={{ minified: false, stroke: false }}
                 onBlur={updateName}

@@ -56,7 +56,6 @@ export default ({
 
 
     useEffect(() => { dynamicValue !== undefined && setInnerValue(dynamicValue); }, [dynamicValue]);
-    //useEffect(() => { setInnerValue(value) }, [value]);
 
     useEffect(() => {
         /*
