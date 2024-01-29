@@ -10,7 +10,8 @@ const WORKBENCH_TEXT_OPTIONS: TextSet = {
     options:{
         fontSize:true,
         lineHeightBorder:false,
-        displayMode:'list'
+        displayMode:'list',
+        dynamic:false
     }
 }
 

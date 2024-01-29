@@ -12,6 +12,7 @@ interface TextOptions {
     style?: boolean;
     displayMode?: 'list' | 'grid';
     lineHeightBorder?: boolean;
+    dynamic?:boolean;
 }
 
 export interface TextSet extends Partial<TextStyle> {

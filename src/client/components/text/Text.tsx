@@ -62,6 +62,7 @@ export default (props: TextSet) => {
         onMouseLeave={() => dispatch(destroyTooltip())}
         data-line-height={!!(props.options?.lineHeightBorder !== undefined ? props.options?.lineHeightBorder : displayMode === 'list')}
         data-display-mode={props.options?.displayMode || displayMode}
+        data-dynamic-options={props.options?.dynamic === undefined || !!props.options?.dynamic}
     >
         <div
             className='style-item-font-container flex f-center-h'

@@ -5,7 +5,7 @@
     gap: var(--space-m);
     align-items: center;
     width: 100%;
-    transition: background 0.1s linear;
+    transition: background, border, 0.1s linear;
     background-color: transparent;
     padding-right: var(--space-s);
 
@@ -19,27 +19,30 @@
         }
     }
 
-    &:hover {
-        background-color: var(--figma-color-bg-hover);
-
-        .text-options {
-            opacity: 1;
-            pointer-events: auto;
-        }
-    }
-
     .text-options {
-        opacity: 0;
-        pointer-events: none;
-        transition: opacity 0.1s linear;
+        opacity: 1;
+        pointer-events: auto;
+        transition: none;
     }
 
-    &[data-options='true'] {
-        .text-options {
-            opacity: 1;
-            pointer-events: auto;
-            transition: none;
+
+    &[data-dynamic-options='true'] {
+
+        &:hover {
+            background-color: var(--figma-color-bg-hover);
+
+            .text-options {
+                opacity: 1;
+                pointer-events: auto;
+            }
         }
+
+        .text-options {
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.1s linear;
+        }
+
     }
 
     &[data-display-mode="grid"] {
@@ -53,6 +56,10 @@
         width: calc(105px * 4 / 3);
         margin: 0;
         padding: var(--space-m);
+
+        .style-item-font-container {
+            pointer-events: none;
+        }
 
         input {
             font-size: initial;
@@ -68,6 +75,7 @@
 
         &:hover {
             border-color: var(--figma-color-border-strong);
+            background-color: var(--figma-color-bg-hover);
         }
 
         ul {
@@ -94,8 +102,8 @@
                 .input-field {
                     .input-field-content {
                         input {
-                            border-top: dashed 1px var(--figma-color-border-disabled);
-                            border-bottom: dashed 1px var(--figma-color-border-disabled);
+                            border-top: dashed 1px var(--figma-color-border);
+                            border-bottom: dashed 1px var(--figma-color-border);
                         }
                     }
                 }
