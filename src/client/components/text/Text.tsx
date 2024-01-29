@@ -16,6 +16,7 @@ export default (props: TextSet) => {
     const dispatch = useDispatch();
     const styleName = folderNameFromPath(String(props.name)).name;
     const currentFont = useRef<string>();
+    const cssStyle = cssTextStyle(props) as any;
 
     useEffect(() => {
         if (currentFont.current !== props.fontName?.family) {
@@ -57,14 +58,20 @@ export default (props: TextSet) => {
         }}
         onMouseEnter={(e) => displayMode === 'grid' && handleToolTip(e.target)}
         onMouseLeave={() => dispatch(destroyTooltip())}
+        data-line-height={!!(displayMode === 'list')}
     >
-        <Input
-            {...(displayMode === 'list' && { style: cssTextStyle(props) })}
-            value={styleName}
-            appearance={{ minified: true, stroke: false }}
-            onBlur={updateName}
-            onEnter={updateName}
-        />
+        <div
+            className='style-item-font-container flex f-center-h'
+            {...(displayMode === 'list' && { style: { height: `${cssStyle.lineHeight || '0px'}` } })}  // set padding as LineHeight to emulate de height
+        >
+            <Input {...(displayMode === 'list' && { style: cssStyle })}
+                value={styleName}
+                appearance={{ minified: false, stroke: false }}
+                onBlur={updateName}
+                onEnter={updateName}
+            />
+        </div>
+
         <TextOptions {...props} />
     </div>);
 }

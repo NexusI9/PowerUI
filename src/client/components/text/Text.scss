@@ -5,6 +5,34 @@
     gap: var(--space-m);
     align-items: center;
     width: 100%;
-    margin: var(--space-s) 0;
+
+    .style-item-font-container {
+        overflow: hidden;
+        .input-field {
+            .input-field-content {
+                height: fit-content;
+            }
+        }
+    }
+
+    &[data-line-height='true'] {
+
+        .style-item-font-container {
+            border-top: solid 1px var(--figma-color-border-disabled);
+            border-bottom: solid 1px var(--figma-color-border-disabled);
+
+            .input-field {
+                padding: 0 2px;
+                .input-field-content {
+                    padding: 0;
+                    input {
+                        border-top: dashed 1px var(--figma-color-border-disabled);
+                        border-bottom: dashed 1px var(--figma-color-border-disabled);
+                    }
+                }
+            }
+        }
+
+    }
 
 }
