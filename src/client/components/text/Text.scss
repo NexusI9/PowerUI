@@ -5,14 +5,40 @@
     gap: var(--space-m);
     align-items: center;
     width: 100%;
+    transition: background 0.1s linear;
+    background-color: transparent;
+    padding-right: var(--space-s);
 
-    .style-item-font-container {
+    &-container {
         overflow: hidden;
 
         .input-field {
             .input-field-content {
                 height: fit-content;
             }
+        }
+    }
+
+    &:hover {
+        background-color: var(--figma-color-bg-hover);
+
+        .text-options {
+            opacity: 1;
+            pointer-events: auto;
+        }
+    }
+
+    .text-options {
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.1s linear;
+    }
+
+    &[data-options='true'] {
+        .text-options {
+            opacity: 1;
+            pointer-events: auto;
+            transition: none;
         }
     }
 
@@ -63,20 +89,26 @@
 
     &[data-line-height='true'] {
 
-        .style-item-font-container {
-            border-top: solid 1px var(--figma-color-border-disabled);
-            border-bottom: solid 1px var(--figma-color-border-disabled);
+        &:hover {
+            .style-item-font-container {
+                .input-field {
+                    .input-field-content {
+                        input {
+                            border-top: dashed 1px var(--figma-color-border-disabled);
+                            border-bottom: dashed 1px var(--figma-color-border-disabled);
+                        }
+                    }
+                }
+            }
 
+        }
+
+        .style-item-font-container {
             .input-field {
                 padding: 0 2px;
 
                 .input-field-content {
                     padding: 0;
-
-                    input {
-                        border-top: dashed 1px var(--figma-color-border-disabled);
-                        border-bottom: dashed 1px var(--figma-color-border-disabled);
-                    }
                 }
             }
         }

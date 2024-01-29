@@ -108,10 +108,10 @@
             label:has(input[type='color']) {
                 border: none;
                 width: auto;
-                height: 80%;
+                height: 90%;
                 display: block;
                 aspect-ratio: 1/1;
-                border-radius: var(--radius-s);
+                border-radius: var(--radius-xs);
                 cursor: pointer;
 
                 input[type='color'] {
