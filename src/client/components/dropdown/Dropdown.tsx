@@ -53,12 +53,12 @@ export default (props: IDropdown) => {
             setActiveItem(lastState.activeCommand);
         }
     }, [lastState.activeCommand]);
-
+    console.log({ props, min: !!props?.appearance?.minified });
     return (
         <div
             className="dropdown flex f-col gap-xs"
             data-stroke={props.appearance?.stroke === undefined || !!props.appearance.stroke}
-            data-minified={props.appearance?.minified === undefined || !!props.appearance.minified}
+            data-minified={!!props?.appearance?.minified}
         >
             {props.appearance?.label && <p className="dropdown-label frozen"><small><b>{props.placeholder}</b></small></p>}
             <label
