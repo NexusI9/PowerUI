@@ -8,6 +8,9 @@
 
     &-content {
         width: 100%;
+        & > .input-field:first-child{
+            height: fit-content;
+        }
     }
 
     .style-item-font {

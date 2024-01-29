@@ -55,7 +55,11 @@ export default (props: IDropdown) => {
     }, [lastState.activeCommand]);
 
     return (
-        <div className="dropdown flex f-col gap-xs" data-stroke={ props.appearance?.stroke === undefined || !!props.appearance.stroke}>
+        <div
+            className="dropdown flex f-col gap-xs"
+            data-stroke={props.appearance?.stroke === undefined || !!props.appearance.stroke}
+            data-minified={props.appearance?.minified === undefined || !!props.appearance.minified}
+        >
             {props.appearance?.label && <p className="dropdown-label frozen"><small><b>{props.placeholder}</b></small></p>}
             <label
                 className="flex f-row f-center f-between"

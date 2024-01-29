@@ -21,7 +21,7 @@ export default (style: ITextSet) => {
             <div className='font-set-content flex f-col'>
                 <Input
                     type='DEFAULT'
-                    appearance={{ minified: true, stroke: false }}
+                    appearance={{ stroke: false, minified: false }}
                     placeholder={'Style name'}
                     value={innerStyle.name}
                     onChange={updateStyleName}
