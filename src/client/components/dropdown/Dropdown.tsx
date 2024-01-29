@@ -53,7 +53,7 @@ export default (props: IDropdown) => {
             setActiveItem(lastState.activeCommand);
         }
     }, [lastState.activeCommand]);
-    console.log({ props, min: !!props?.appearance?.minified });
+
     return (
         <div
             className="dropdown flex f-col gap-xs"

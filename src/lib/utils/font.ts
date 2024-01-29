@@ -56,7 +56,7 @@ export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJE
         {
             'OBJECT': 'lineHeight',
             'STRING': 'line-height',
-            'VALUE': String((lineHeight || '') + convertUnit(style.lineHeight?.unit || "PERCENT"))
+            'VALUE': String(style.lineHeight?.unit === 'PERCENT' ? (style.fontSize || 0) * lineHeight / 100 : lineHeight) + 'px' //css doen't take % as LineHeight so need to convert % => px
         },
         {
             'OBJECT': 'fontFamily',
@@ -76,7 +76,7 @@ export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJE
 
 export function valueUnitFrom(value: string): { value: number; unit: string; } {
     const split = value.match(/^([\-|\+]?\d+\.?\d*)(\D*|\%)$/);
-    
+
     const val = split && split[1] || 0;
     const unit = split && split[2] || '';
 
