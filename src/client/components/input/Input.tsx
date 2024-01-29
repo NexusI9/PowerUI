@@ -45,11 +45,11 @@ export default ({
             let mStep = e.shiftKey ? 10 : e.altKey ? 0.1 : step;
             if (e.code === 'ArrowUp') {
                 e.preventDefault();
-                setInnerValue(valueUnit.value + mStep + convertUnit(valueUnit.unit));
+                setInnerValue(roundDecimal(Number(valueUnit.value + mStep)) + convertUnit(valueUnit.unit));
             }
             if (e.code === 'ArrowDown') {
                 e.preventDefault();
-                setInnerValue(valueUnit.value - mStep + convertUnit(valueUnit.unit));
+                setInnerValue(roundDecimal(Number(valueUnit.value - mStep)) + convertUnit(valueUnit.unit));
             }
         }
     }
