@@ -1,6 +1,6 @@
 import { Label } from "@components/label";
 import { Tab as ITab } from "@ctypes/input";
-import './index.scss';
+import './Tab.scss';
 
 export default (props: ITab) => (
     <div

@@ -1,6 +1,6 @@
 import { Checkbox } from "@ctypes/input";
 import { BaseSyntheticEvent, useState } from "react";
-import './index.scss';
+import './Toggle.scss';
 
 export default (props: Checkbox) => {
 

@@ -1,4 +1,4 @@
-import './index.scss';
+import './InputArray.scss';
 import { InputArray as IInputArray } from 'src/types/input';
 import { Input } from '@components/input';
 import { BaseSyntheticEvent, useState } from 'react';

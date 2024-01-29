@@ -1,5 +1,5 @@
 //Styles
-import './index.scss';
+import './Sidepanel.scss';
 
 //Imports
 import { Dropdown } from "@components/dropdown";

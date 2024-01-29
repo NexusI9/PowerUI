@@ -1,7 +1,7 @@
 import { Tab } from "@components/tab";
 import { Tab as ITab } from "@ctypes/input";
 import { useState } from "react";
-import './index.scss';
+import './TabBar.scss';
 
 export default ({ list, onClick }: { list: Array<ITab>, onClick?: any }) => {
 

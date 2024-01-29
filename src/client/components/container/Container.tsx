@@ -1,4 +1,4 @@
-import './index.scss';
+import './Container.scss';
 
 export default ({ children }: { children: 0 | React.JSX.Element }) => {
 

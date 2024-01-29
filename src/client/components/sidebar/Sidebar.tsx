@@ -1,8 +1,7 @@
-import "./index.scss";
+import "./Sidebar.scss";
 import { ButtonSquare } from '@components/button-square';
 import Paint from "@icons/paint.svg";
 import Font from "@icons/font.svg";
-import Upload from "@icons/upload.svg";
 import type { Dispatch } from "@reduxjs/toolkit";
 import { useDispatch, useSelector } from 'react-redux';
 import { setPage } from '@lib/slices/page';

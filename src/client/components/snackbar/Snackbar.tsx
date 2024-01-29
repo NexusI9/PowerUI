@@ -1,5 +1,5 @@
 import { useSelector } from 'react-redux';
-import './index.scss';
+import './Snackbar.scss';
 
 export default () => {
 

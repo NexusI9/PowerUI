@@ -1,6 +1,6 @@
 import { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
 import colorNamer from "color-namer";
-import './index.scss';
+import './Input.scss';
 import { Input as IInput } from 'src/types/input';
 import { clamp, roundDecimal } from '@lib/utils/utils';
 import { useDispatch, useSelector } from 'react-redux';

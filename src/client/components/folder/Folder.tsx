@@ -1,4 +1,4 @@
-import './index.scss';
+import './Folder.scss';
 import { ContextMenuCommand } from 'src/types/contextmenu';
 import { Folder as IFolder, Option as IOption } from 'src/types/folder';
 import { OptionsRow } from '@components/options-row';

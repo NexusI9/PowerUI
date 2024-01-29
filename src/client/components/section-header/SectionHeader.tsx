@@ -1,4 +1,4 @@
-import './index.scss';
+import './SectionHeader.scss';
 import { Option } from "src/types/folder";
 import { OptionsRow } from "@components/options-row";
 import { Button as IButton } from '@ctypes/input';

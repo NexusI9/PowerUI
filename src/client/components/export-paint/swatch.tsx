@@ -1,5 +1,5 @@
 import { ExportPaintConfig } from "@ctypes/export.template"
-import './index.scss';
+import './ExportPaint';
 import { Contrast } from "./Contrast";
 import { colorSeparator } from "@lib/utils/color";
 

@@ -1,8 +1,8 @@
-import './index.scss';
+import './Dropdown.scss';
 import { Dropdown as IDropdown } from "src/types/input";
 import Carrot from '@icons/carrot.svg';
 import { BaseSyntheticEvent, useEffect, useState, useRef } from "react";
-import { loadFetch, setYPos } from "./helper";
+import { loadFetch, setYPos } from "./Dropdown.helper";
 import { Label } from '@components/label';
 import { useDispatch, useSelector } from 'react-redux';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';

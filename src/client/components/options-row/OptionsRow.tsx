@@ -1,6 +1,6 @@
 import { ButtonIcon } from '@components/button-icon';
 import { Option } from "src/types/folder";
-import './index.scss';
+import './OptionsRow.scss';
 import { MultiArray } from '@ctypes/global';
 import { traverseCallback } from '@lib/utils/utils';
 

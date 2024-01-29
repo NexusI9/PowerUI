@@ -1,6 +1,6 @@
 import { PaintSet as IPaintSet } from "src/types/shade";
 import { rgbToHsl, rgb, rgbToHex } from "@lib/utils/color";
-import './index.scss';
+import './PaintSet.scss';
 import { ContrastLabel } from "./Contrast";
 import Lock from '@icons/lock-locked.svg';
 import { Icon } from "@components/icon";

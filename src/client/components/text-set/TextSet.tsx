@@ -1,5 +1,5 @@
 import { Input } from '@components/input';
-import './index.scss';
+import './TextSet.scss';
 import { Text } from '@components/text';
 import { Icon } from '@components/icon';
 import Lock from '@icons/lock-locked.svg'

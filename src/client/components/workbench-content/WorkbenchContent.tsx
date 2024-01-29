@@ -2,7 +2,7 @@ import { TextSet } from "@components/text-set";
 import { Fragment, createElement } from "react";
 import { PaintSet } from "@components/paint-set";
 import { Workbench } from "@ctypes/workbench.template";
-import './index.scss';
+import './WorkbenchContent.scss';
 
 const mapComponent: any = {
     'PAINT': PaintSet,

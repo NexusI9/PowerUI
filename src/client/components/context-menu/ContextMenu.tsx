@@ -1,4 +1,4 @@
-import './index.scss';
+import './ContextMenu.scss';
 import { ContextMenu as IContextMenu, ContextMenuCommand } from "src/types/contextmenu";
 import { Fragment, useEffect, useRef } from "react";
 import { useSelector } from "react-redux";

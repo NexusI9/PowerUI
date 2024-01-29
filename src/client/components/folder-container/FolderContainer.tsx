@@ -1,5 +1,4 @@
-import * as React from "react";
-import './index.scss';
+import './FolderContainer.scss';
 import { FolderOptions } from "src/types/folder";
 import { DisplayMode, StyleFolder } from "src/types/style";
 import { generateFolder } from "./helper";

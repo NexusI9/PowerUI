@@ -1,5 +1,5 @@
 import { Button as IButton } from 'src/types/input';
-import './index.scss';
+import './Button.scss';
 import { Label } from '@components/label';
 
 

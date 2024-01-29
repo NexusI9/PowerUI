@@ -1,5 +1,5 @@
 import { ExportPaintConfig } from "@ctypes/export.template"
-import './index.scss';
+import './ExportPaint.scss';
 import { Swatch } from "./Swatch";
 
 export default (props: ExportPaintConfig) => {

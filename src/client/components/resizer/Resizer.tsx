@@ -1,6 +1,6 @@
 import { ButtonIcon } from "@components/button-icon";
 import ResizerIcon from '@icons/resizer.svg';
-import './index.scss';
+import './Resizer.scss';
 import { send } from "@lib/ipc";
 import { useEffect, useState } from "react";
 

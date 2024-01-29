@@ -1,5 +1,5 @@
 import { folderNameFromPath, styleContextMenu } from '@lib/utils/style';
-import './index.scss';
+import './Text.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input } from '@components/input';
 import { BaseSyntheticEvent, useEffect, useRef } from 'react';

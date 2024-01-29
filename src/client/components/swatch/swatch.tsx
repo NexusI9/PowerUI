@@ -1,6 +1,6 @@
 import { Input } from '@components/input';
 import { rgb, rgbToHex, hexToRgb, rgbToHsl } from '@lib/utils/color';
-import './swatch.scss';
+import './Swatch.scss';
 import { send } from '@lib/ipc';
 import { folderNameFromPath, styleContextMenu } from '@lib/utils/style';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';

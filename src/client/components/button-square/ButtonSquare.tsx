@@ -1,4 +1,4 @@
-import './index.scss';
+import './ButtonSquare.scss';
 import { Icon } from '@components/icon';
 
 export default ({ icon, onClick = () => 0, defaultActive = false }: { icon: string, onClick?: any, defaultActive?: boolean }) => (

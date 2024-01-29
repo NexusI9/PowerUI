@@ -3,7 +3,7 @@
     &[data-minified='true'] {
 
         .input-field-content {
-            height: fit-content;
+            height: var(--input-height-s);
 
             &:hover {
                 box-shadow: 0px 0px 0px 1px var(--figma-color-border-brand);
@@ -26,8 +26,6 @@
     &[data-stroke='false'] {
         .input-field-content {
             border: none;
-            height: fit-content;
-
         }
     }
 
@@ -39,7 +37,7 @@
     &-content {
         font-size: small;
         border: solid 1px var(--figma-color-border);
-        height: var(--input-height);
+        height: var(--input-height-m);
         box-shadow: 0px 0px 0px 0px var(--figma-color-border);
         padding: var(--space-xs) var(--space-s);
         border-radius: var(--radius-xs);

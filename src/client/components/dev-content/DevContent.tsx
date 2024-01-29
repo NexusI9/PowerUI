@@ -1,5 +1,5 @@
 import { Dev } from "@ctypes/dev.template";
-import './index.scss';
+import './DevContent.scss';
 import { BaseSyntheticEvent } from "react";
 
 export default (props: Dev) => {

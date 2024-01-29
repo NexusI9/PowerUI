@@ -1,6 +1,6 @@
 import { Label } from "@components/label";
 import { Checkbox as ICheckbox } from "src/types/input";
-import './index.scss';
+import './Checkbox.scss';
 
 export default ({ value, label, onChange }: ICheckbox) => {
 

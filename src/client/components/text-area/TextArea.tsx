@@ -1,7 +1,7 @@
 import { TextArea as ITextArea } from "@ctypes/input";
 import { get } from "@lib/ipc";
 import { useEffect, useState } from "react";
-import './index.scss';
+import './TextArea.scss';
 
 export default ({ value, resize=false, readonly=false }: ITextArea) => {
 

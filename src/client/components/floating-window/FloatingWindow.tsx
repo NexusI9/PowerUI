@@ -1,4 +1,4 @@
-import './index.scss';
+import './FloatingWindow.scss';
 import Close from '@icons/x.svg';
 import { ButtonIcon } from "@components/button-icon";
 import { Button } from "@components/button";

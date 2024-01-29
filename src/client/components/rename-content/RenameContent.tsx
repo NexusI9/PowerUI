@@ -1,5 +1,5 @@
 import { Workbench } from "@ctypes/workbench.template";
-import './index.scss';
+import './RenameContent.scss';
 
 export default (template: Workbench) => {
 

@@ -1,4 +1,4 @@
-import './index.scss';
+import './Tooltip.scss';
 import { useSelector } from 'react-redux';
 import { ToolTipItem } from 'src/types/tooltip';
 import { convertPayload } from './Tooltip.helper';

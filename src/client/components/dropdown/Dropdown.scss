@@ -5,8 +5,11 @@
     text-transform: capitalize;
     //color: var(--figma-color-text-secondary);
 
+    &[data-minified='true'] {
+        height: var(--input-height-s);
+    }
 
-    svg{
+    svg {
         width: var(--size-icon-s);
         //fill: var(--figma-color-icon-secondary);
     }
@@ -16,7 +19,7 @@
         color: var(--figma-color-text-tertiary);
     }
 
-    .label{
+    .label {
         white-space: nowrap;
         text-overflow: ellipsis;
         flex-grow: 0;
@@ -25,15 +28,15 @@
         width: 100%;
     }
 
-    & > label {
-        border-radius: var(--radius-s);
-        height: var(--input-height);
+    &>label {
+        border-radius: var(--radius-xs);
+        height: var(--input-height-m);
         padding: 0 var(--space-s);
         border: solid 1px var(--figma-color-border);
         cursor: pointer;
-        
 
-        & > *{
+
+        &>* {
             pointer-events: none;
         }
     }
@@ -45,7 +48,7 @@
         top: 0;
         width: 100%;
 
-        hr{
+        hr {
             margin: var(--space-s) auto;
             width: 90%;
         }
@@ -64,9 +67,13 @@
         }
     }
 
-    &[data-stroke='false']{
-        & > label{
-            border:none;
+    &[data-stroke='false'] {
+        &>label {
+            border: none;
+
+            &:hover {
+                box-shadow: 0px 0px 0px 1px var(--figma-color-border);
+            }
         }
     }
 

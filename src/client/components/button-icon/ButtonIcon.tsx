@@ -1,5 +1,5 @@
 import { ButtonIcon as IButtonIcon } from 'src/types/input';
-import './index.scss';
+import './ButtonIcon.scss';
 import { Icon } from '@components/icon';
 
 

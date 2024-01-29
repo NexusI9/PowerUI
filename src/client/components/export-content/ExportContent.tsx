@@ -1,4 +1,4 @@
-import './index.scss';
+import './ExportContent.scss';
 import { ExportPaint } from "@components/export-paint";
 import { ExportText } from "@components/export-text";
 import { createElement } from "react";

@@ -1,5 +1,5 @@
 import { ExportTextConfig } from "@ctypes/export.template"
-import './index.scss';
+import './ExportText.scss';
 import ArrowVertical from '@icons/vertical.svg';
 import ArrowHorizontal from '@icons/horizontal.svg';
 import { Icon } from "@components/icon";

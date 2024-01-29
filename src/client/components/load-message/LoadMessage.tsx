@@ -1,5 +1,4 @@
 import { useSelector } from 'react-redux';
-import './index.scss';
 import { LoadSpinner } from "@components/load-spinner";
 import { listen } from '@lib/ipc';
 import { useEffect, useState } from 'react';

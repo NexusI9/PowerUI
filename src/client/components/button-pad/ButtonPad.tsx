@@ -1,4 +1,4 @@
-import './index.scss';
+import './ButtonPad.scss';
 import {Icon} from '@components/icon';
 
 export default ({icon, text, onClick}:{icon:string, text:string, onClick?:any}) => (
