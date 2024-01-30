@@ -4,13 +4,20 @@ import { Button } from "@components/button";
 import { send } from '@lib/ipc';
 import { BaseTemplate } from '@ctypes/template';
 import { LoadMessage } from '@components/load-message';
+import { KeyboardEventHandler, useEffect } from 'react';
 
 export default ({ children, onDestroy, template }: { children: any, onDestroy?(): any, template: BaseTemplate & any }) => {
 
     const { active, footer, config, title } = template;
 
+    useEffect(() => {
+        const onKeyDown = (e: KeyboardEvent) => e.key === 'Escape' && onDestroy && onDestroy();
+        window.addEventListener('keydown', onKeyDown);
+        return () => window.removeEventListener('keydown', onKeyDown);
+    }, []);
+
     return (<>{active &&
-        <div className="floating-window-wrapper flex f-center fadein">
+        <div className="floating-window-wrapper flex f-center fadein" >
             <div className="floating-window-window panel flex f-col fadeup">
                 <header className="floating-window-header flex f-row f-center-h f-between">
                     <p className="frozen"><small><b>{title}</b></small></p>
