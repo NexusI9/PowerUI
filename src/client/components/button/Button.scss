@@ -13,6 +13,14 @@
         }
     }
 
+    &:hover {
+        .label {
+            svg {
+                fill: var(--figma-color-icon);
+            }
+        }
+    }
+
     /*Button Icon*/
     &:has(.label > svg:only-child) {
         aspect-ratio: 1/1;
