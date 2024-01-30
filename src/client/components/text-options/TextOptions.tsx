@@ -36,8 +36,21 @@ export default (style: TextSet) => {
                     }
                 });
             }
+        },
+        {
+            action: 'UPDATE_TEXT_WEIGHT',
+            callback: (e: ContextMenuCommand) => {
+                send({
+                    action: 'UPDATE_STYLE_TEXT',
+                    payload: {
+                        style: e.payload,
+                        newStyle: { fontName: { ...e.payload.fontName, style: e.value } }
+                    }
+                });
+            }
         }
     ];
+
 
     const dragInputs: { [key: string]: IInput } = {
         fontSize: {
@@ -72,7 +85,7 @@ export default (style: TextSet) => {
                 {(!options || options?.fontFamily) &&
                     <li className='text-options-font-family full-width'>
                         <Dropdown
-                            list={[{ value: { action: 'FONT_LIST', placeholder: String(style.fontName?.family) }, receiver: 'STORE', action: 'UPDATE_TEXT_FONT', payload: style }]}
+                            list={[{ value: { action: 'FONT_LIST', placeholder: String(style.fontName?.family), payload: style.fontName?.family }, receiver: 'STORE', action: 'UPDATE_TEXT_FONT', payload: style }]}
                             appearance={{ stroke: false, minified: true }}
                             value={String(style.fontName?.family)}
                         />
@@ -82,7 +95,8 @@ export default (style: TextSet) => {
                     {(!options || options?.fontSize) && <li className='text-options-font-size'><Input {...dragInputs.fontSize} /></li>}
                     {(!options || options?.fontWeight) && <li className='text-options-font-weight'>
                         <Dropdown
-                            list={[{ value: { action: 'FONT_WEIGHTS', placeholder: String(style.fontName?.family), payload: style.fontName?.family }, receiver: 'STORE', action: 'UPDATE_TEXT_FONT', payload: style }]}
+                            key={`weight${String(style.fontName?.family)}${String(style.id)}`}
+                            list={[{ value: { action: 'FONT_WEIGHTS', placeholder: String(style.fontName?.family), payload: style.fontName?.family }, receiver: 'STORE', action: 'UPDATE_TEXT_WEIGHT', payload: style }]}
                             appearance={{ stroke: false, minified: true }}
                             value={String(style.fontName?.style)}
                         />

@@ -14,18 +14,20 @@ export function convertUnit(unit: string): string {
 }
 
 export function convertFontWeight(font: string): string {
+    //since 'italic' is included in fontName style, need to remove it
+    const rawFont = font.replace(/\s+?italic/i, '');
+
     return {
         'Thin': '100',
         'Extra Light': '200',
         'Light': '300',
         'Regular': '400',
-        'Italic':'400',
         'Medium': '500',
         'Semi Bold': '600',
         'Bold': '700',
         'Extra Bold': '800',
         'Black': '900'
-    }[font] || font
+    }[!!rawFont && rawFont || 'Regular'] || font
 }
 
 function pxToEm(value: number, baseSize: number = 1): string {
@@ -63,6 +65,11 @@ export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJE
             'OBJECT': 'fontFamily',
             'STRING': 'font-family',
             'VALUE': style.fontName?.family || { family: 'Inter', style: 'Regular' }
+        },
+        {
+            'OBJECT': 'fontStyle',
+            'STRING': 'font-style',
+            'VALUE': String(style.fontName?.style).match(/italic/i) ? 'italic' : 'normal'
         }
     ];
 
