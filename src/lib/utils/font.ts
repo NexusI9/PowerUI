@@ -15,7 +15,7 @@ export function convertUnit(unit: string): string {
 
 export function convertFontWeight(font: string): string {
     //since 'italic' is included in fontName style, need to remove it
-    const rawFont = font.replace(/\s+?italic/i, '');
+    const rawFont = font.replace(/(\s+)?(italic|oblique)/i, '');
 
     return {
         'Thin': '100',
@@ -69,7 +69,7 @@ export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJE
         {
             'OBJECT': 'fontStyle',
             'STRING': 'font-style',
-            'VALUE': String(style.fontName?.style).match(/italic/i) ? 'italic' : 'normal'
+            'VALUE': String(style.fontName?.style).match(/italic/i) ? 'italic' : String(style.fontName?.style).match(/oblique/i) ? 'oblique' : 'normal'
         }
     ];
 
