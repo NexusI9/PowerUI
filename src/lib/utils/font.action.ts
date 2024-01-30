@@ -16,7 +16,6 @@ const WORKBENCH_TEXT_OPTIONS: TextSet = {
 }
 
 const loadedFont: Array<string> = [];
-
 export async function loadFont(typeface: FontName | undefined): Promise<string> {
 
     return new Promise((resolve, reject) => {
@@ -24,7 +23,7 @@ export async function loadFont(typeface: FontName | undefined): Promise<string> 
         if (typeface !== undefined && !loadedFont.includes(typeface.family)) {
             //Google Font Loading
             loadedFont.push(typeface.family);
-            console.log(`loading ${typeface.family}`);
+
             try {
                 WebFont.load({
                     google: { families: [typeface.family] },
