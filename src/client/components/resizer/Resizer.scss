@@ -1,4 +1,4 @@
-.resizer{
+button.resizer{
     position: absolute;
     bottom: 0;
     right: 0;
@@ -10,5 +10,6 @@
 
     svg{
         fill: #80808080;
+        align-self: flex-end;
     }
 }

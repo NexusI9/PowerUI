@@ -8,18 +8,17 @@
     padding: var(--space-s) var(--space-m);
     border-bottom: solid 1px var(--figma-color-border);
 
-    &-title{
+    &-title {
         width: 70px;
     }
 
     .options-row {
 
-        &>div:last-of-type {
-            .button-icon {
-                border-radius: 10em;
-                svg{
-                    width: 16px;
-                }
+        .button:last-of-type {
+            border-radius: 10em;
+
+            svg {
+                width: 16px;
             }
         }
     }

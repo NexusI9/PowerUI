@@ -32,7 +32,7 @@ const renameOptions: SidepanelOption['content'] = [
             type: 'BUTTON',
             attributes: {
                 value: 'Current name',
-                role: 'TERTIARY',
+                role: 'OUTLINE',
                 onClick: ''
             },
             configKey: 'currentname'
@@ -41,7 +41,7 @@ const renameOptions: SidepanelOption['content'] = [
             type: 'BUTTON',
             attributes: {
                 value: 'Number ↑',
-                role: 'TERTIARY',
+                role: 'OUTLINE',
                 onClick: ''
             },
             configKey: 'numberup'
@@ -50,7 +50,7 @@ const renameOptions: SidepanelOption['content'] = [
             type: 'BUTTON',
             attributes: {
                 value: 'Number ↓',
-                role: 'TERTIARY',
+                role: 'OUTLINE',
                 onClick: ''
             },
             configKey: 'numberdown'

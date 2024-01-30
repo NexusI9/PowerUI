@@ -14,6 +14,7 @@ import { useDispatch } from 'react-redux';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
 import { MultiArray } from 'src/types/global';
 import { traverseCallback } from '@lib/utils/utils';
+import { Button as IButton } from '@ctypes/input';
 
 export default ({
     title,
@@ -46,25 +47,27 @@ export default ({
         return traverseCallback(menu, (item: any) => ({ ...item, payload: { ...item.payload, folder: attributes } }));
     }, [attributes]);
 
-    const folderIconMap: Array<IOption> = [
-        { icon: Move, onClick: () => 0 },
-        { icon: Carrot, onClick: () => setDisplay(!display) }
+    const folderIconMap: Array<IButton> = [
+        { iconLeft: Move, onClick: () => 0, role: 'GHOST' },
+        { iconLeft: Carrot, onClick: () => setDisplay(!display), role: 'GHOST' }
     ];
 
 
-    const editIconMap: Array<IOption> = [
+    const editIconMap: Array<IButton> = [
         {
-            icon: Filter,
+            iconLeft: Filter,
             onClick: () => options?.folder?.edit?.onClick(attributes) || void 0,
-            disabled: !allowEdit
+            role: allowEdit ? 'GHOST' : 'DISABLED'
         },
         {
-            icon: options?.folder?.add?.icon || Add,
-            onClick: () => options?.folder?.add?.onClick(attributes) || void 0
+            iconLeft: options?.folder?.add?.icon || Add,
+            onClick: () => options?.folder?.add?.onClick(attributes) || void 0,
+            role: 'GHOST'
         },
         {
-            icon: Kebab,
-            onClick: (e: any) => dispatch<any>(displayContextMenu({ commands: contextMenuItems, position: { x: e.clientX, y: e.clientY } }))
+            iconLeft: Kebab,
+            onClick: (e: any) => dispatch<any>(displayContextMenu({ commands: contextMenuItems, position: { x: e.clientX, y: e.clientY } })),
+            role: 'GHOST'
         }
     ];
 

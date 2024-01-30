@@ -11,10 +11,11 @@ import { display as displaySnackBar } from '@lib/slices/snackbar';
 export default (props: any) => {
 
     const dispatch = useDispatch();
-    
+
     const displayMode = useSelector((state: any) => state.style.display);
     const handleOnChange = (e: any) => send({ action: 'UPDATE_STYLE_COLOR', payload: { style: props, color: hexToRgb(e.target.value, true) } });
     const handleOnBlur = (e: any) => send({ action: "UPDATE_STYLE_NAME", payload: { style: props, name: e.target.value } });
+    
 
     const handleContextMenu = (e: any) => {
         dispatch<any>(displayContextMenu({
@@ -56,10 +57,10 @@ export default (props: any) => {
                         key={props.id}
                         className="style-item-swatch flex f-center-h"
                         data-display-mode={displayMode}
+                        onContextMenu={handleContextMenu}
                     >
                         <label
                             style={{ backgroundColor: rgbValue }}
-                            onContextMenu={handleContextMenu}
                             onMouseEnter={(e) => handleToolTip(e.target, hexValue)}
                             onMouseLeave={() => dispatch(destroyTooltip())}
                         >

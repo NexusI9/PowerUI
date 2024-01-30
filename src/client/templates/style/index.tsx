@@ -7,7 +7,7 @@ import Upload from '@icons/upload.svg';
 import Dev from '@icons/dev.svg';
 import { ButtonPad } from "@components/button-pad";
 import { FolderContainer } from "@components/folder-container";
-import { ButtonPad as IButtonPad } from "src/types/input";
+import { Button, ButtonPad as IButtonPad } from "src/types/input";
 import { FolderOptions } from 'src/types/folder';
 import { get, listen } from '@lib/ipc';
 import { StyleFolder } from "src/types/style";
@@ -15,6 +15,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { switchDisplay } from "@lib/slices/style";
 import { init as initRename } from '@lib/slices/rename';
 import { RENAME_STYLES_CONFIG } from "./rename.config";
+import { MultiArray } from "@ctypes/global";
 
 interface StyleTemplate {
     title: string;
@@ -62,7 +63,7 @@ export const Style = ({
         if (activeCommand && activeCommand.payload) {
             const { action, payload: { folder } } = activeCommand;
             if (action && folder) {
-     
+
                 const commandDispatch = {
                     'INIT_EXPORT': onExportStyles,
                     'INIT_DEV': onDevStyles,
@@ -83,21 +84,24 @@ export const Style = ({
     useEffect(() => {
 
         //set header option;
-        const optionMap = [
+        const optionMap: MultiArray<Button> = [
             [
                 {
-                    icon: options?.header?.export?.icon || Upload,
-                    onClick: () => folder?.map(folder => options?.header?.export?.onClick(folder))
+                    iconLeft: options?.header?.export?.icon || Upload,
+                    onClick: () => folder?.map(folder => options?.header?.export?.onClick(folder)),
+                    value: 'Generate set',
+                    role: 'GHOST'
                 },
                 {
-                    icon: options?.header?.dev?.icon || Dev,
-                    onClick: () => folder?.map(folder => options?.header?.dev?.onClick(folder))
+                    iconLeft: options?.header?.dev?.icon || Dev,
+                    onClick: () => folder?.map(folder => options?.header?.dev?.onClick(folder)),
+                    value: 'Display code',
+                    role: 'GHOST'
                 },
-            ],
-            [
                 {
-                    icon: displayMode === 'grid' ? List : Grid,
-                    onClick: () => dispatch(switchDisplay(null))
+                    iconLeft: displayMode === 'grid' ? List : Grid,
+                    onClick: () => dispatch(switchDisplay(null)),
+                    role: 'GHOST'
                 }
             ]
         ];
@@ -114,7 +118,7 @@ export const Style = ({
                     iconLeft: options?.header?.button?.iconLeft || Plus,
                     onClick: () => folder?.map(folder => options?.header?.button?.onClick(folder)),
                     value: String(options?.header?.button?.value),
-                    role: options?.header?.button?.role || 'TERTIARY'
+                    role: options?.header?.button?.role || 'OUTLINE'
                 }}
 
             />}

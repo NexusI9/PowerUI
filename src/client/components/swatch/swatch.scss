@@ -9,18 +9,27 @@
     }
 
     &[data-display-mode="list"] {
-        .style-item-swatch {
-            width: 100%;
-            padding-left: var(--space-s);
-            display: flex;
-            flex-direction: row;
-            gap: var(--space-s);
 
-            &-detail {
-                width: 100%;
-                justify-content: space-between;
-            }
+        width: 100%;
+        padding-left: var(--space-s);
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        gap: var(--space-s);
+        transition: background 0.1s linear;
+        background: transparent;
+        padding: var(--space-xs) ;
+
+        &:hover {
+            background: var(--figma-color-bg-hover);
         }
+
+        .style-item-swatch-detail {
+            width: 100%;
+            justify-content: space-between;
+            align-items: center;
+        }
+
     }
 
 

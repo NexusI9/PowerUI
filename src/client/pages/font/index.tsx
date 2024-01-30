@@ -38,7 +38,7 @@ export default () => {
 
     const options: FolderOptions = {
         header: {
-            button: { iconLeft: SetIcon, onClick: onCreateFont, value: 'New Set', role: 'TERTIARY' },
+            button: { iconLeft: SetIcon, onClick: onCreateFont, value: 'New Set', role: 'OUTLINE' },
             export: { onClick: onExportFont },
             dev: { onClick: onDevFont }
         },

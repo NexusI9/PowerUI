@@ -1,8 +1,8 @@
-import { ButtonIcon } from "@components/button-icon";
 import ResizerIcon from '@icons/resizer.svg';
 import './Resizer.scss';
 import { send } from "@lib/ipc";
 import { useEffect, useState } from "react";
+import { Button } from "@components/button";
 
 export default () => {
 
@@ -29,10 +29,10 @@ export default () => {
     }, [active]);
 
     return (
-        <ButtonIcon
-            icon={ResizerIcon}
+        <Button
+            iconLeft={ResizerIcon}
             onMouseDown={() => setActive(true)}
             className="resizer"
-            appearance={{ hover: false }}
+            role='DISABLED'
         />);
 }

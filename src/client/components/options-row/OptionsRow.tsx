@@ -1,19 +1,13 @@
-import { ButtonIcon } from '@components/button-icon';
-import { Option } from "src/types/folder";
 import './OptionsRow.scss';
 import { MultiArray } from '@ctypes/global';
 import { traverseCallback } from '@lib/utils/utils';
+import { Button } from '@components/button';
+import { Button as IButton } from '@ctypes/input';
 
-export default ({ options, className }: { options: MultiArray<Option>, className?: string }) => (
+export default ({ options, className }: { options: MultiArray<IButton>, className?: string }) => (
     <div className={`options-row flex f-row gap-m ${className && className || ''}`}>{
         options.map((option, i) => <div key={JSON.stringify(option) + i} className='flex f-row gap-xs'>
-            {traverseCallback(option, (option: Option) => <ButtonIcon
-                key={option.icon}
-                icon={option.icon}
-                onClick={option.onClick}
-                disabled={!!option.disabled}
-            />)
-            }
+            {traverseCallback(option, (option: IButton) => <Button {...option} />)}
         </div>)
     }</div>
 );

@@ -51,25 +51,17 @@ export interface Slider {
 
 
 export interface Button extends Label {
-    value: string;
-    onClick: any;
-    role: 'PRIMARY' | 'SECONDARY' | 'TERTIARY' | 'DISABLED';
+    value?: string;
+    onClick?: any;
+    className?: string;
+    onMouseDown?: any;
+    role: 'PRIMARY' | 'SECONDARY' | 'OUTLINE' | 'GHOST' | 'DISABLED';
 }
 
 export interface ButtonPad {
     icon: string;
     value: string;
     onClick: any;
-}
-
-export interface ButtonIcon {
-    icon: string;
-    onClick?: any;
-    onMouseDown?: any;
-    onMouseUp?: any;
-    disabled?: boolean;
-    appearance?: { hover?: boolean };
-    className?: string;
 }
 
 export interface InputArray {

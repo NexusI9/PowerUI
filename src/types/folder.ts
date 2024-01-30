@@ -5,6 +5,7 @@ import { Button } from "./input";
 
 
 export interface Option {
+    value?:string;
     icon: string;
     onClick?: any;
     toolTip?: string;

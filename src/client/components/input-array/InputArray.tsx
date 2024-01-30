@@ -2,7 +2,7 @@ import './InputArray.scss';
 import { InputArray as IInputArray } from 'src/types/input';
 import { Input } from '@components/input';
 import { BaseSyntheticEvent, useState } from 'react';
-import { ButtonIcon } from '@components/button-icon';
+import { Button } from '@components/button';
 import Cross from '@icons/x.svg'
 
 export default ({ value = [], min, max, float = false, placeholder = 'Enter a value', type = 'NUMBER', onChange = () => 0, appearance }: IInputArray) => {
@@ -21,7 +21,7 @@ export default ({ value = [], min, max, float = false, placeholder = 'Enter a va
         value = type === 'NUMBER' ? Number(value) : String(value);
 
         //filter non valid values
-        if(isNaN(value as number) && !(value as string).length){ return; }
+        if (isNaN(value as number) && !(value as string).length) { return; }
 
         //clamp
         if (max && (value as number) > max) { value = max };
@@ -50,7 +50,7 @@ export default ({ value = [], min, max, float = false, placeholder = 'Enter a va
                 {[...innerValues].map((val, i) =>
                     <span key={String(val) + String(i)} className='input-array-value flex f-row gap-xs f-center'>
                         <small>{val}</small>
-                        <ButtonIcon icon={Cross} onClick={() => onRemove({ value: val, index: i })} appearance={{ hover: false }} />
+                        <Button iconLeft={Cross} onClick={() => onRemove({ value: val, index: i })} role='DISABLED' />
                     </span>
                 )}
             </div>

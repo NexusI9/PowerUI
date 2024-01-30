@@ -25,7 +25,6 @@ export default (props: TextSet) => {
             loadFont(props.fontName);
             currentFont.current = String(props.fontName?.family);
         }
-
     }, [props.fontName]);
 
     const updateName = (e: BaseSyntheticEvent) => {
@@ -53,7 +52,8 @@ export default (props: TextSet) => {
     return (<div
         className="style-item-font flex"
         onContextMenu={(e: any) => {
-            displayMode === 'grid' && dispatch<any>(displayContextMenu({
+            e.preventDefault();
+            dispatch<any>(displayContextMenu({
                 commands: styleContextMenu({ style: props, editCommand: 'MODALE_EDIT_STYLE_COLOR' }),
                 position: { x: e.clientX, y: e.clientY }
             }))

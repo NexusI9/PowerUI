@@ -1,6 +1,5 @@
 import './FloatingWindow.scss';
 import Close from '@icons/x.svg';
-import { ButtonIcon } from "@components/button-icon";
 import { Button } from "@components/button";
 import { send } from '@lib/ipc';
 import { BaseTemplate } from '@ctypes/template';
@@ -15,7 +14,7 @@ export default ({ children, onDestroy, template }: { children: any, onDestroy?()
             <div className="floating-window-window panel flex f-col fadeup">
                 <header className="floating-window-header flex f-row f-center-h f-between">
                     <p className="frozen"><small><b>{title}</b></small></p>
-                    <ButtonIcon icon={Close} onClick={onDestroy} />
+                    <Button iconLeft={Close} onClick={onDestroy} role='GHOST' />
                 </header>
                 <div className="floating-window-container flex f-row">
                     {config && children}
