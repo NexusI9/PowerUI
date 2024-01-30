@@ -7,43 +7,45 @@ import WebFont from "webfontloader";
 
 
 const WORKBENCH_TEXT_OPTIONS: TextSet = {
-    options:{
-        fontSize:true,
-        lineHeightBorder:false,
-        displayMode:'list',
-        dynamic:false
+    options: {
+        fontSize: true,
+        lineHeightBorder: false,
+        displayMode: 'list',
+        dynamic: false
     }
 }
+
+const loadedFont: Array<string> = [];
 
 export async function loadFont(typeface: FontName | undefined): Promise<string> {
 
     return new Promise((resolve, reject) => {
 
-        if (typeface !== undefined) {
+        if (typeface !== undefined && !loadedFont.includes(typeface.family)) {
             //Google Font Loading
-            get({ action: 'GET_FONT', payload: typeface.family }).then(systemFont => {
-                if (!systemFont?.loaded) {
-                    try {
-                        WebFont.load({
-                            google: { families: [typeface.family] },
-                            active: () => {
-                                //Set font as loaded in backend so won't load again
-                                send({ action: 'SET_FONT_AS_LOADED', payload: typeface.family });
-                                resolve(typeface.family || DEFAULT_TYPEFACE)
-                            },
-                            inactive: () => {
-                                //Load Local Font from server
-                                get({ action: 'LOAD_FONT', payload: typeface })
-                                    .then(e => resolve(e))
-                                    .catch(() => loadFont({ ...typeface, style: 'Regular' })); //If can't load Font, load Regular as default
-                            }
-                        });
-                    } catch (_) {
-                        //console.log(`Coudln\'t load ${typeface.family} (${typeface.style})`);
-                        resolve(typeface.family || DEFAULT_TYPEFACE);
+            loadedFont.push(typeface.family);
+            console.log(`loading ${typeface.family}`);
+            try {
+                WebFont.load({
+                    google: { families: [typeface.family] },
+                    active: () => {
+                        //Set font as loaded in backend so won't load again
+                        send({ action: 'SET_FONT_AS_LOADED', payload: typeface.family });
+                        resolve(typeface.family || DEFAULT_TYPEFACE)
+                    },
+                    inactive: () => {
+                        //Load Local Font from server
+                        get({ action: 'LOAD_FONT', payload: typeface })
+                            .then(e => resolve(e))
+                            .catch(() => loadFont({ ...typeface, style: 'Regular' })); //If can't load Font, load Regular as default
                     }
-                }
-            });
+                });
+            } catch (_) {
+                //console.log(`Coudln\'t load ${typeface.family} (${typeface.style})`);
+                resolve(typeface.family || DEFAULT_TYPEFACE);
+            }
+
+
 
 
         } else {
