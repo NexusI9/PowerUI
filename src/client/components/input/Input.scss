@@ -132,8 +132,10 @@
         height: 100%;
         border-left: solid 1px var(--figma-color-border);
 
-        .button-icon {
-            width: 20px;
+        .button {
+            margin:0 var(--space-xs);
+            width: 12px;
+            min-height: 0;
             padding: 0 var(--space-s);
             aspect-ratio: initial;
             height: 50%;
