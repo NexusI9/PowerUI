@@ -6,7 +6,7 @@ import { Icon } from '@components/icon';
 import { cssTextStyle, valueUnitFrom } from '@lib/utils/font';
 import { TextSet } from '@ctypes/text';
 import { Input } from '@components/input';
-import { BaseSyntheticEvent } from 'react';
+import { BaseSyntheticEvent, useState } from 'react';
 import { updateAttribute } from './TextOptions.helper';
 import { Dropdown } from '@components/dropdown';
 import { ContextMenuListener } from '@components/context-menu';
@@ -18,6 +18,8 @@ export default (style: TextSet) => {
 
     const { options } = style;
     const cssStyle = cssTextStyle(style, 'OBJECT') as Record<string, any>;
+    const [active, setActive] = useState(false);
+
     const inputStyle = {
         minified: true,
         arrow: false,
@@ -81,13 +83,18 @@ export default (style: TextSet) => {
 
     return (
         <ContextMenuListener commands={contextMenuCommands}>
-            <ul className="text-options flex f-col gap-s">
+            <ul
+                className="text-options flex f-col gap-s"
+                data-active={active}
+            >
                 {(!options || options?.fontFamily) &&
                     <li className='text-options-font-family full-width'>
                         <Dropdown
                             list={[{ value: { action: 'FONT_LIST', placeholder: String(style.fontName?.family), payload: style.fontName?.family }, receiver: 'STORE', action: 'UPDATE_TEXT_FONT', payload: style }]}
                             appearance={{ stroke: false, minified: true }}
                             value={String(style.fontName?.family)}
+                            onFocus={() => setActive(true)}
+                            onBlur={() => setActive(false)}
                         />
                     </li>
                 }
@@ -99,6 +106,8 @@ export default (style: TextSet) => {
                             list={[{ value: { action: 'FONT_WEIGHTS', placeholder: String(style.fontName?.family), payload: style.fontName?.family }, receiver: 'STORE', action: 'UPDATE_TEXT_WEIGHT', payload: style }]}
                             appearance={{ stroke: false, minified: true }}
                             value={String(style.fontName?.style)}
+                            onFocus={() => setActive(true)}
+                            onBlur={() => setActive(false)}
                         />
                     </li>}
                 </ul>

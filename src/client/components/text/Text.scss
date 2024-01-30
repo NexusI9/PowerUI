@@ -40,7 +40,9 @@
 
     &[data-dynamic-options='true'] {
 
-        &:hover {
+        &:hover,
+        &:has(input:focus),
+        &:has(.text-options[data-active='true']) {
             background-color: var(--figma-color-bg-hover);
 
             .text-options {
@@ -109,7 +111,9 @@
 
     &[data-line-height='true'] {
 
-        &:hover {
+        &:hover,
+        &:has(input:focus),
+        &:has(.text-options[data-active='true']) {
             .style-item-font-container {
                 .input-field {
                     .input-field-content {

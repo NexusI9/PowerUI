@@ -22,6 +22,7 @@ export default (props: IDropdown) => {
         const { x, y } = e.target.getBoundingClientRect() || 0;
         const offset = Math.max(0, setYPos(activeItem, 20, props.list));
         dispatch<any>(displayContextMenu({ commands: commandList.current, position: { x: x, y: y + offset }, id: id.current }));
+        props.onFocus && props.onFocus(props);
     }
 
     useEffect(() => {
@@ -53,6 +54,10 @@ export default (props: IDropdown) => {
             setActiveItem(lastState.activeCommand);
         }
     }, [lastState.activeCommand]);
+
+    useEffect(() => {
+        if (lastState.id === 0 && props.onBlur) { props.onBlur(props); }
+    }, [lastState.id]);
 
     return (
         <div
