@@ -28,7 +28,8 @@
         padding: 0 var(--space-m);
         text-transform: capitalize;
 
-        &:hover {
+        &:hover,
+        &.selected {
             background-color: var(--figma-color-bg-brand);
         }
 
@@ -39,7 +40,7 @@
 
 }
 
-div.freeze-scroll{
+div.freeze-scroll {
     overflow: hidden;
     height: 100%;
 }

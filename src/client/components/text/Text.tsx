@@ -2,7 +2,7 @@ import { folderNameFromPath, styleContextMenu } from '@lib/utils/style';
 import './Text.scss';
 import { useDispatch, useSelector } from 'react-redux';
 import { Input } from '@components/input';
-import { BaseSyntheticEvent, useEffect, useRef } from 'react';
+import { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
 import { send } from '@lib/ipc';
 import { TextOptions } from '@components/text-options';
 import { loadFont } from '@lib/utils/font.action';
