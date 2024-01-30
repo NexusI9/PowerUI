@@ -12,12 +12,23 @@
 
     &-container {
         overflow: hidden;
+
         .input-field {
             width: 100%;
+
             .input-field-content {
                 height: fit-content;
             }
         }
+    }
+
+    .input-field-content {
+
+        &:hover,
+        &:has(input:focus) {
+            box-shadow: none;
+        }
+
     }
 
     .text-options {
