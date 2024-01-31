@@ -30,6 +30,7 @@ export interface Input {
 
 
 export interface Dropdown extends Input {
+    icon?: string;
     list: MultiArray<ContextMenuCommand>;
 }
 

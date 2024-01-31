@@ -133,7 +133,7 @@ export default (template: BaseTemplate) => {
             (options && options?.length > 1 && activeOption) &&
             <div className='flex f-col gap-s'>
                 {activeOption?.heading && <SidepanelHeading value={activeOption.heading} />}
-                <Dropdown list={options} onChange={updateOption} placeholder="Swatch type" value={String(activeOption?.value)} />
+                <Dropdown list={options} onChange={updateOption} placeholder="Swatch type" icon={activeOption?.icon} value={String(activeOption?.value)} />
             </div>
         }
         {activeOption?.content.map((input, i) => <div key={JSON.stringify(input) + i} className='flex f-col gap-s'>{traverseCallback(input, generateInput)}</div>)}

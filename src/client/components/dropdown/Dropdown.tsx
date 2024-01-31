@@ -33,7 +33,7 @@ export default (props: IDropdown) => {
     }, []);
 
     useEffect(() => {
-
+    
         if (activeItem) {
             //set value priority (if no props value then...)
             const activeValue: string =
@@ -59,6 +59,7 @@ export default (props: IDropdown) => {
         if (lastState.id === 0 && props.onBlur) { props.onBlur(props); }
     }, [lastState.id]);
 
+
     return (
         <div
             className="dropdown flex f-col gap-xs"
@@ -70,7 +71,7 @@ export default (props: IDropdown) => {
                 className="flex f-row f-center f-between"
                 onClick={handleOnClick}
             >
-                <Label iconLeft={activeItem?.icon}>{String(value)}</Label>
+                <Label iconLeft={props.icon || activeItem?.icon}>{String(value)}</Label>
                 <Carrot />
             </label>
         </div>
