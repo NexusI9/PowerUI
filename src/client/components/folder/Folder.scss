@@ -87,7 +87,7 @@
     }
 
     &-body {
-        padding: 0.5rem;
+        padding: var(--space-xs) var(--space-m);
         margin-left: 1.3rem;
         padding-right: 0;
         margin-right: 0;
