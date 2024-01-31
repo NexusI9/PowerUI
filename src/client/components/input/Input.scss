@@ -5,13 +5,8 @@
         .input-field-content {
             height: var(--input-height-s);
 
-            &:hover {
+            &:not(:has(input:focus)):hover {
                 border-color: var(--figma-color-border);
-
-                &:has(input:focus) {
-                    border-color: var(--figma-color-border-brand);
-                    box-shadow: 0px 0px 0px 2px var(--figma-color-border-brand);
-                }
             }
 
         }
@@ -25,7 +20,7 @@
 
     &[data-stroke='false'] {
         .input-field-content {
-            border: none;
+            border-color: transparent;
         }
     }
 
@@ -49,6 +44,7 @@
         &:has(input:focus) {
             box-shadow: 0px 0px 0px 2px var(--figma-color-border-brand);
             border-color: var(--figma-color-border-brand);
+
         }
 
         input {
