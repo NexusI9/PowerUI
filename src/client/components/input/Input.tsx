@@ -85,10 +85,10 @@ export default ({
         }
 
 
-        if (input.current && innerValue) {
+        if (input.current) {
 
-            let storeValue = String(innerValue);
-            let inputValue = String(innerValue);
+            let storeValue = String(innerValue || '');
+            let inputValue = String(innerValue || '');
 
             switch (type) {
                 case 'COLOR':

@@ -18,7 +18,7 @@
         gap: var(--space-s);
         transition: background 0.1s linear;
         background: transparent;
-        padding: var(--space-xs) ;
+        padding: var(--space-s);
 
         &:hover {
             background: var(--figma-color-bg-hover);

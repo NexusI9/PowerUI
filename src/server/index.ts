@@ -116,7 +116,6 @@ figma.ui.onmessage = msg => {
 
     case 'EDIT_SWATCH':
       payload.set?.forEach(updateStyle);
-      figma.ui.postMessage({ action: 'RELOAD_PAGE' });
       break;
 
     case 'EDIT_FONT_SET':
