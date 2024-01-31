@@ -245,7 +245,7 @@ const interpolationSidepanelContent: SidepanelOption['content'] = [
         attributes: {
             type: 'COLOR',
             value: '#0c8ce9',
-            placeholder: 'Start value',
+            placeholder: 'Start color',
             appearance: { label: true },
             portal: {
                 target: 'colorname',
@@ -259,7 +259,7 @@ const interpolationSidepanelContent: SidepanelOption['content'] = [
         attributes: {
             type: 'COLOR',
             value: '#FFFFFF',
-            placeholder: 'End value',
+            placeholder: 'End color',
             appearance: { label: true }
         },
         configKey: 'colorEnd'

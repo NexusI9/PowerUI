@@ -8,7 +8,7 @@ export default (props: IButton) => {
 
     return (
         <button
-            className={`button flex f-row f-center ${className && ` ${className}` || ''}`}
+            className={`${className && `${className} ` || ''}button flex f-row f-center`}
             data-role={role}
             data-size={size}
             onClick={onClick && onClick || undefined}

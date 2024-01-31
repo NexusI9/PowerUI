@@ -1,4 +1,4 @@
-button.resizer{
+button.resizer.button:has(.label > svg:only-child) {
     position: absolute;
     bottom: 0;
     right: 0;
@@ -9,7 +9,7 @@ button.resizer{
     cursor: nwse-resize;
     min-height: unset;
 
-    svg{
+    svg {
         fill: #80808080;
         align-self: flex-end;
     }
