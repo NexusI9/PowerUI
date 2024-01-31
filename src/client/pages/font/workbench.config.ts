@@ -298,7 +298,9 @@ export const CREATE_FONT_SET_CONFIG: Workbench = {
                 { value: 'Material Design', content: materialSidepanelContent, action: 'MATERIAL', icon: "material design", receiver: 'STORE', heading: 'Template type' },
                 { value: 'Apple', content: appleSidepanelContent, action: 'APPLE', icon: "apple", receiver: 'STORE', heading: 'Template type' },
                 { value: 'Flutter', content: flutterSidepanelContent, action: 'FLUTTER', icon: "flutter", receiver: 'STORE', heading: 'Template type' },
-                { value: 'Carbon Design', content: carbonSidepanelContent, action: 'CARBON', icon: "carbon", receiver: 'STORE', heading: 'Template type' }
+                { value: 'Carbon Design', content: carbonSidepanelContent, action: 'CARBON', icon: "carbon", receiver: 'STORE', heading: 'Template type' },
+                { value: 'Primer Design', content: materialSidepanelContent, action: 'PRIMER', icon: "github", receiver: 'STORE', heading: 'Template type' },
+                { value: 'Clarity Design', content: materialSidepanelContent, action: 'CLARITY', icon: "clarity", receiver: 'STORE', heading: 'Template type' },
             ]
         ]
     },

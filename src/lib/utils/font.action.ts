@@ -486,6 +486,173 @@ export function apple(config: CreateTextConfig): Set {
 
 
 /**
+** PRIMER METHOD
+**/
+export function primer(config: CreateTextConfig): Set {
+    //Source: https://primer.style/foundations/typography
+
+    const fontTemplate: Array<TextSet> = [
+        //Heading
+        {
+            name: 'Headings/Display',
+            fontName: { family: '', style: 'Medium' },
+            fontSize: 45,
+            lineHeight: { value: 1.4, unit: 'PERCENT' }
+        },
+        {
+            name: 'Headings/Title large',
+            fontName: { family: '', style: 'SemiBold' },
+            fontSize: 32,
+            lineHeight: { value: 1.5, unit: 'PERCENT' }
+        },
+        {
+            name: 'Headings/Title medium',
+            fontName: { family: '', style: 'SemiBold' },
+            fontSize: 20,
+            lineHeight: { value: 1.6, unit: 'PERCENT' }
+        },
+        {
+            name: 'Headings/Title small',
+            fontName: { family: '', style: 'SemiBold' },
+            fontSize: 16,
+            lineHeight: { value: 1.5, unit: 'PERCENT' }
+        },
+        {
+            name: 'Headings/Subtitle',
+            fontName: { family: '', style: 'Regular' },
+            fontSize: 20,
+            lineHeight: { value: 1.6, unit: 'PERCENT' }
+        },
+        //Body
+        {
+            name: 'Body/Body large',
+            fontName: { family: '', style: 'Regular' },
+            fontSize: 16,
+            lineHeight: { value: 1.5, unit: 'PERCENT' }
+        },
+        {
+            name: 'Body/Body medium',
+            fontName: { family: '', style: 'Regular' },
+            fontSize: 14,
+            lineHeight: { value: 1.4285, unit: 'PERCENT' }
+        },
+        {
+            name: 'Body/Body small',
+            fontName: { family: '', style: 'Regular' },
+            fontSize: 12,
+            lineHeight: { value: 1.6666, unit: 'PERCENT' }
+        },
+        {
+            name: 'Body/Caption',
+            fontName: { family: '', style: 'Medium' },
+            fontSize: 12,
+            lineHeight: { value: 1.3333, unit: 'PERCENT' }
+        },
+        /*Code*/
+        {
+            name: 'Code/Code block',
+            fontName: { family: '', style: 'Medium' },
+            fontSize: 13,
+            lineHeight: { value: 1.5385, unit: 'PERCENT' }
+        },
+        {
+            name: 'Code/Inline code block',
+            fontName: { family: '', style: 'Medium' },
+            fontSize: 14.856
+        }
+
+    ]
+
+    return convertTemplate(fontTemplate, config);
+}
+
+
+/**
+** CLARITY METHOD
+**/
+export function clarity(config: CreateTextConfig): Set {
+    //Source: https://clarity.design/documentation/typography
+
+    const fontTemplate: Array<TextSet> = [
+        //Heading
+        {
+            name: 'Heading/Display',
+            fontName: { family: '', style: 'Medium' },
+            fontSize: 40,
+        },
+        {
+            name: 'Heading/Headline',
+            fontName: { family: '', style: 'Medium' },
+            fontSize: 32,
+        },
+        {
+            name: 'Heading/Title',
+            fontName: { family: '', style: 'Medium' },
+            fontSize: 24,
+        },
+        {
+            name: 'Heading/Section',
+            fontName: { family: '', style: 'Medium' },
+            fontSize: 20,
+        },
+        {
+            name: 'Heading/Subsection',
+            fontName: { family: '', style: 'Medium' },
+            fontSize: 16,
+        },
+        {
+            name: 'Heading/Message',
+            fontName: { family: '', style: 'Regular' },
+            fontSize: 16,
+        },
+        //Body
+        {
+            name: 'Body/Body-rg',
+            fontName: { family: '', style: 'Regular' },
+            fontSize: 14,
+        },
+        {
+            name: 'Body/Body-me',
+            fontName: { family: '', style: 'Medium' },
+            fontSize: 14,
+        },
+        {
+            name: 'Body/Body-sb',
+            fontName: { family: '', style: 'SemiBold' },
+            fontSize: 14,
+        },
+        {
+            name: 'Body/Secondary-rg',
+            fontName: { family: '', style: 'Regular' },
+            fontSize: 13
+        },
+        {
+            name: 'Body/Secondary-me',
+            fontName: { family: '', style: 'Medium' },
+            fontSize: 13
+        },
+        {
+            name: 'Body/Secondary-sb',
+            fontName: { family: '', style: 'SemiBold' },
+            fontSize: 13
+        },
+        {
+            name: 'Body/Caption-LG-11',
+            fontName: { family: '', style: 'Regular' },
+            fontSize: 11
+        },
+        {
+            name: 'Body/Caption-SM-10',
+            fontName: { family: '', style: 'Medium' },
+            fontSize: 10
+        }
+    ]
+
+    return convertTemplate(fontTemplate, config);
+}
+
+
+/**
 ** CARBON METHOD
 **/
 export function carbon(config: CreateTextConfig): Set {

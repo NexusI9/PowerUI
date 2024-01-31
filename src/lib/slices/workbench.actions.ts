@@ -1,5 +1,5 @@
 import { Workbench, CreateColorConfig, CreateTextConfig, Set } from "@ctypes/workbench.template";
-import { apple, carbon, flutter, scale, textAdjust, material as textMaterial } from "@lib/utils/font.action";
+import { apple, carbon, clarity, flutter, primer, scale, textAdjust, material as textMaterial } from "@lib/utils/font.action";
 import { ant, colorAdjust, interpolate, mantine, material as colorMaterial, tailwind } from "@lib/utils/shade.action";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -25,6 +25,8 @@ const actionMap: { [key in Workbench["type"]as string]: any } = {
         FLUTTER: flutter,
         APPLE: apple,
         CARBON: carbon,
+        CLARITY: clarity,
+        PRIMER: primer,
         TEXTADJUST: textAdjust
     }
 }
