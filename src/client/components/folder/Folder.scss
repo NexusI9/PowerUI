@@ -64,8 +64,9 @@
             .options-row {
                 gap: 0;
 
-                button {
+                button:has(.label > svg:only-child) {
                     padding: 0;
+                    height: 16px;
                     min-height: unset;
 
                     svg {
@@ -88,7 +89,7 @@
 
     &-body {
         padding: var(--space-xs) var(--space-m);
-        margin-left: 1.3rem;
+        margin-left: 1.4rem;
         padding-right: 0;
         margin-right: 0;
         border-left: solid 1px var(--figma-color-border);
