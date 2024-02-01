@@ -9,7 +9,7 @@ export function generateFolder(folder: Array<StyleFolder>, styleItem: React.Func
     return folder.map((item: StyleFolder, i: number) => {
 
         const isRoot = !item.name.length;
-        const handleAddItem = () => onAddItem({ name: concatFolderName([item.name, 'new-style']), type: 'PAINT' });
+        const handleAddItem = () => onAddItem({ name: concatFolderName([item.fullpath, 'new-style']), type: 'PAINT' });
 
         return <Folder
             key={item.name + i}

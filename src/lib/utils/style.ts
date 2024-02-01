@@ -176,7 +176,6 @@ export function updateStyleName({ style, name }: { style: PaintStyle | TextStyle
     try {
         const newStyleName = figma.getStyleById(style.id);
         //get style folder name and add msg.name 
-
         const folder = folderNameFromPath(style.name).folder;
         if (newStyleName) newStyleName.name = concatFolderName([folder, name]);
     } catch (_) {
