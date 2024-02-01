@@ -4,6 +4,7 @@ import './PaintSet.scss';
 import { ContrastLabel } from "./Contrast";
 import Lock from '@icons/lock-locked.svg';
 import { Icon } from "@components/icon";
+import { folderNameFromPath } from "@lib/utils/style";
 
 
 export default (style: IPaintSet) => {
@@ -29,7 +30,7 @@ export default (style: IPaintSet) => {
                 {primary && <Icon icon={Lock} />}
             </span>
             <div className='flex f-col'>
-                <p>{name}</p>
+                <p>{folderNameFromPath(String(name)).name}</p>
                 <ul className="flex f-row gap-m">
                     {Object.keys(colorValue).map((key, i) => key === 'hsl' && <li key={key + i}><small>{String(colorValue[key as keyof typeof colorValue])}</small></li>)}
                 </ul>
