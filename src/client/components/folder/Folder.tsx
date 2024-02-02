@@ -48,7 +48,7 @@ export default ({
     }, [attributes]);
 
     const folderIconMap: Array<IButton> = [
-        { iconLeft: Move, onClick: () => 0, role: 'GHOST' },
+        //{ iconLeft: Move, onClick: () => 0, role: 'GHOST' }, //Temporary Remove move feature
         { iconLeft: Carrot, onClick: () => setDisplay(!display), role: 'GHOST' }
     ];
 

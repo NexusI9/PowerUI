@@ -70,17 +70,17 @@
                     min-height: unset;
 
                     svg {
-                        fill: var(--figma-color-icon-tertiary);
+                        fill: var(--figma-color-icon-secondary);
                     }
 
-                    &:first-of-type {
+                    /*&:first-of-type {
                         width: 12px;
                         cursor: grab;
 
                         svg {
                             fill: var(--figma-color-border);
                         }
-                    }
+                    }*/
                 }
             }
 

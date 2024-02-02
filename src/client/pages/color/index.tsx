@@ -47,8 +47,8 @@ export default () => {
                     { value: 'Sort by saturation', action: 'SORT_STYLE_COLOR_SATURATION', receiver: 'API' }
                 ],
                 [
-                    { value: 'Export styles', action: 'INIT_EXPORT', receiver: 'STORE', icon: 'upload' },
-                    { value: 'See code', action: 'INIT_DEV', receiver: 'STORE', icon: 'dev' },
+                    { value: 'Generate set', action: 'INIT_EXPORT', receiver: 'STORE', icon: 'upload' },
+                    { value: 'Export code', action: 'INIT_DEV', receiver: 'STORE', icon: 'dev' },
                 ]
             ],
             edit: { onClick: editSwatch }

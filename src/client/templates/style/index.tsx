@@ -95,7 +95,7 @@ export const Style = ({
                 {
                     iconLeft: options?.header?.dev?.icon || Dev,
                     onClick: () => folder?.map(folder => options?.header?.dev?.onClick(folder)),
-                    value: 'Display code',
+                    value: 'Export code',
                     role: 'GHOST'
                 },
                 {
