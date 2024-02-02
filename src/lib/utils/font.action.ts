@@ -497,63 +497,63 @@ export function primer(config: CreateTextConfig): Set {
             name: 'Headings/Display',
             fontName: { family: '', style: 'Medium' },
             fontSize: 45,
-            lineHeight: { value: 1.4, unit: 'PERCENT' }
+            lineHeight: { value: 140, unit: 'PERCENT' }
         },
         {
             name: 'Headings/Title large',
             fontName: { family: '', style: 'SemiBold' },
             fontSize: 32,
-            lineHeight: { value: 1.5, unit: 'PERCENT' }
+            lineHeight: { value: 150, unit: 'PERCENT' }
         },
         {
             name: 'Headings/Title medium',
             fontName: { family: '', style: 'SemiBold' },
             fontSize: 20,
-            lineHeight: { value: 1.6, unit: 'PERCENT' }
+            lineHeight: { value: 160, unit: 'PERCENT' }
         },
         {
             name: 'Headings/Title small',
             fontName: { family: '', style: 'SemiBold' },
             fontSize: 16,
-            lineHeight: { value: 1.5, unit: 'PERCENT' }
+            lineHeight: { value: 150, unit: 'PERCENT' }
         },
         {
             name: 'Headings/Subtitle',
             fontName: { family: '', style: 'Regular' },
             fontSize: 20,
-            lineHeight: { value: 1.6, unit: 'PERCENT' }
+            lineHeight: { value: 160, unit: 'PERCENT' }
         },
         //Body
         {
             name: 'Body/Body large',
             fontName: { family: '', style: 'Regular' },
             fontSize: 16,
-            lineHeight: { value: 1.5, unit: 'PERCENT' }
+            lineHeight: { value: 150, unit: 'PERCENT' }
         },
         {
             name: 'Body/Body medium',
             fontName: { family: '', style: 'Regular' },
             fontSize: 14,
-            lineHeight: { value: 1.4285, unit: 'PERCENT' }
+            lineHeight: { value: 142.85, unit: 'PERCENT' }
         },
         {
             name: 'Body/Body small',
             fontName: { family: '', style: 'Regular' },
             fontSize: 12,
-            lineHeight: { value: 1.6666, unit: 'PERCENT' }
+            lineHeight: { value: 166.66, unit: 'PERCENT' }
         },
         {
             name: 'Body/Caption',
             fontName: { family: '', style: 'Medium' },
             fontSize: 12,
-            lineHeight: { value: 1.3333, unit: 'PERCENT' }
+            lineHeight: { value: 133.33, unit: 'PERCENT' }
         },
         /*Code*/
         {
             name: 'Code/Code block',
             fontName: { family: '', style: 'Medium' },
             fontSize: 13,
-            lineHeight: { value: 1.5385, unit: 'PERCENT' }
+            lineHeight: { value: 153.85, unit: 'PERCENT' }
         },
         {
             name: 'Code/Inline code block',

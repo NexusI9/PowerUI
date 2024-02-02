@@ -8,10 +8,17 @@
 
     &-content {
         width: 100%;
-        & > .input-field:first-child{
+
+        &>.input-field:first-child {
             height: fit-content;
+
+            input {
+                color: var(--figma-color-text-secondary);
+            }
+
         }
     }
+
 
     .style-item-font {
         .input-field:first-child {
