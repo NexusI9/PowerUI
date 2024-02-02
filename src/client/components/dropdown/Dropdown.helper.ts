@@ -21,7 +21,6 @@ export async function loadFetch(list: MultiArray<ContextMenuCommand>) {
         if (cm.value && typeof cm.value === 'object') {
             let result = await get(cm.value).then(({ payload }) => {
                 //assign fetched value to value key 
-                console.log(payload, cm.value)
                 return payload.map((item: any) => ({ ...cm, value: item }));
             });
             return result;
