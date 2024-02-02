@@ -45,7 +45,7 @@ export async function loadFont(typeface: FontName | undefined): Promise<string> 
             }
 
 
-
+            
 
         } else {
             resolve(DEFAULT_TYPEFACE);

@@ -44,7 +44,6 @@ export function groupFont(fonts: Array<Font>): { [key: string]: TextArrayItem } 
     //1. Gather all fonts in dictionary along with their font (bold/reg/light...)
     fonts.forEach(font => {
         const { fontName: { family, style } } = font;
-
         if (!fontDico[family]) {
             fontDico[family] = {
                 family,

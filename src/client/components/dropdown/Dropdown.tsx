@@ -33,7 +33,7 @@ export default (props: IDropdown) => {
     }, []);
 
     useEffect(() => {
-    
+
         if (activeItem) {
             //set value priority (if no props value then...)
             const activeValue: string =

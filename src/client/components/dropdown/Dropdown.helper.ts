@@ -19,7 +19,6 @@ export async function loadFetch(list: MultiArray<ContextMenuCommand>) {
         traverseCallback(
             command,
             (cm: ContextMenuCommand) => {
-
                 if (cm.value && typeof cm.value === 'object') {
                     return get(cm.value).then(({ payload }) => {
                         //assign fetched value to value key 
