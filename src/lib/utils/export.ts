@@ -22,7 +22,7 @@ class Layout {
 
     textStyles: any;
 
-    constructor() {}
+    constructor() { }
 
     async TEXT_STYLES(font: FontName) {
 
@@ -226,7 +226,8 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
             const detailFrame = layout.frame({
                 name: `color-detail-${styleName}-${i}`,
                 layout: 'VERTICAL',
-                itemSpacing: 6
+                itemSpacing: 6,
+                padding: [3, 0, 3, 0]
             });
 
             const contrastFrame = layout.frame({
@@ -373,11 +374,11 @@ export async function exportPaintSet({ payload }: { payload: Dev }) {
                 default:
                     colorFrame.resize(120, 30);
                     colorFrame.layoutSizingVertical = 'FILL';
-                    detailFrame.resize(120,90);
-                    detailFrame.layoutSizingVertical= 'HUG';
+                    detailFrame.resize(120, 90);
+                    detailFrame.layoutSizingVertical = 'HUG';
             }
 
- 
+
             //add up to group
             swatchGroupFrame.appendChild(swatchFrame);
 
