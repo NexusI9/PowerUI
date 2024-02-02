@@ -45,17 +45,16 @@ figma.ui.resize(DEFAULT_WINDOW_WIDTH, DEFAULT_WINDOW_HEIGHT);
 // posted message.
 figma.ui.onmessage = msg => {
 
-
   const { action, payload } = msg;
   switch (action) {
 
     //styles references: https://www.figma.com/plugin-docs/api/figma/#styles
     case GET_PAINT_STYLES_COMMAND:
-      figma.ui.postMessage({ action: action, styles: classifyStyle(figma.getLocalPaintStyles()) });
+      figma.ui.postMessage({ ...msg, styles: classifyStyle(figma.getLocalPaintStyles()) });
       break;
 
     case GET_TEXT_STYLES_COMMAND:
-      figma.ui.postMessage({ action: action, styles: classifyStyle(figma.getLocalTextStyles()) });
+      figma.ui.postMessage({ ...msg, styles: classifyStyle(figma.getLocalTextStyles()) });
       break;
 
     case 'UPDATE_FOLDER_NAME':

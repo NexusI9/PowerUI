@@ -1,6 +1,10 @@
 import { useEffect } from "react";
 
-type Request = { action: string; payload?: any; };
+type Request = {
+    action: string;
+    payload?: any;
+    transactionId?: number;
+};
 
 export function send(request: Request) {
     parent.postMessage({ pluginMessage: request }, "*");
@@ -9,14 +13,16 @@ export function send(request: Request) {
 export function get(request: Request) {
 
     return new Promise<any>((resolve, reject) => {
-        send(request);
+
+        const transactionId = performance.now();
+        send({ ...request, transactionId });
 
         const callback = ({ data: { pluginMessage } }: { data: { action: string, pluginMessage: any } }): any => {
             if (!pluginMessage.action) {
                 return reject('No action has been set in API, make sure to return an action that is equal to the emitted message');
             }
 
-            if (pluginMessage.action === request.action) {
+            if (pluginMessage.action === request.action && pluginMessage.transactionId === transactionId) {
                 resolve(pluginMessage);
                 return window.removeEventListener("message", callback);
             }
