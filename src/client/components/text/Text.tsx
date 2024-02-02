@@ -22,8 +22,8 @@ export default (props: TextSet) => {
     //Set Dynamic Height
     const MIN_HEIGHT = 96;
     const lineHeightValue = valueUnitFrom(cssStyle.lineHeight).value || MIN_HEIGHT;
-    const expandedHeight = Math.max(lineHeightValue, MIN_HEIGHT) + 'px';
-    const initHeight = cssStyle.lineHeight !== 'auto' ? cssStyle.lineHeight : `${MIN_HEIGHT}px`;
+    const expandedHeight = cssStyle.lineHeight !== 'auto' ? Math.max(lineHeightValue, MIN_HEIGHT) + 'px' : `${cssStyle.fontSize}px`;
+    const initHeight = cssStyle.lineHeight !== 'auto' ? cssStyle.lineHeight : `${cssStyle.fontSize}px`;
     const [active, setActive] = useState(false);
 
     const dynamicOptions: boolean = props.options?.dynamic === undefined || !!props.options?.dynamic;
