@@ -5,7 +5,8 @@
     gap: var(--space-m);
     align-items: center;
     width: 100%;
-    transition: background 0.1s linear, border 0.1s linear;
+    transition: background 0.1s linear, border 0.1s linear, height 0.2s ease-out;
+    transition-delay: height 0.1s;
     background-color: transparent;
     padding: var(--space-s) var(--space-s);
     border: solid 0px transparent;
@@ -18,15 +19,12 @@
 
             .input-field-content {
                 height: fit-content;
+
+                &:hover,
+                &:has(input:focus) {
+                    box-shadow: none;
+                }
             }
-        }
-    }
-
-    .input-field-content {
-
-        &:hover,
-        &:has(input:focus) {
-            box-shadow: none;
         }
 
     }
@@ -39,6 +37,8 @@
 
 
     &[data-dynamic-options='true'] {
+        padding-top: var(--space-l);
+        padding-bottom: var(--space-l);
 
         &:hover,
         &:has(input:focus),
@@ -76,7 +76,7 @@
         }
 
         input {
-            font-size: initial;
+            font-size: small;
         }
 
         .text-options {

@@ -6,7 +6,7 @@ import { BaseSyntheticEvent, useEffect, useRef, useState } from 'react';
 import { send } from '@lib/ipc';
 import { TextOptions } from '@components/text-options';
 import { loadFont } from '@lib/utils/font.action';
-import { cssTextStyle } from '@lib/utils/font';
+import { cssTextStyle, valueUnitFrom } from '@lib/utils/font';
 import { TextSet } from '@ctypes/text';
 import { display as displayTooltip, destroy as destroyTooltip } from '@lib/slices/tooltip';
 import { display as displayContextMenu } from '@lib/slices/contextmenu';
@@ -17,8 +17,16 @@ export default (props: TextSet) => {
 
     const displayMode = useSelector((state: any) => state.style.display);
     const styleName = folderNameFromPath(String(props.name)).name;
-    const currentFont = useRef<string>();
     const cssStyle = cssTextStyle(props) as any;
+
+    //Set Dynamic Height
+    const MIN_HEIGHT = 96;
+    const expandedHeight = Math.max(valueUnitFrom(cssStyle.lineHeight).value, MIN_HEIGHT) + 'px' || '0px';
+    const initHeight = cssStyle.fontSize;
+    const [active, setActive] = useState(false);
+
+    const containerRef = useRef<any>();
+    const currentFont = useRef<string>();
 
     useEffect(() => {
         if (currentFont.current !== props.fontName?.family) {
@@ -26,6 +34,32 @@ export default (props: TextSet) => {
             currentFont.current = String(props.fontName?.family);
         }
     }, [props.fontName]);
+
+    useEffect(() => {
+
+        const handleOnMouseLeave = (e: BaseSyntheticEvent) => {
+            displayMode === 'grid' && dispatch(destroyTooltip());
+            const hasActiveChildren = e.target.querySelector('input:focus') || e.target.querySelector('.text-options[data-active=\'true\']');
+            displayMode === 'list' && !hasActiveChildren && setActive(false);
+        };
+
+        const handleOnMouseEnter = (e: BaseSyntheticEvent) => {
+            displayMode === 'grid' && handleToolTip(e.target);
+            displayMode === 'list' && setActive(true);
+        };
+
+        if (containerRef.current) {
+            containerRef.current.addEventListener('mouseenter', handleOnMouseEnter);
+            containerRef.current.addEventListener('mouseleave', handleOnMouseLeave);
+        }
+
+        return () => {
+            containerRef.current.removeEventListener('mouseenter', handleOnMouseEnter);
+            containerRef.current.removeEventListener('mouseleave', handleOnMouseLeave);
+        }
+
+
+    }, [displayMode]);
 
     const updateName = (e: BaseSyntheticEvent) => {
         send({
@@ -35,7 +69,8 @@ export default (props: TextSet) => {
                 newStyle: { name: e.target.value }
             }
         });
-    }
+    };
+
 
     const handleToolTip = (ref: any) => {
         const { x, y, width, height } = ref.getBoundingClientRect();
@@ -58,17 +93,14 @@ export default (props: TextSet) => {
                 position: { x: e.clientX, y: e.clientY }
             }))
         }}
-        onMouseEnter={(e) => displayMode === 'grid' && handleToolTip(e.target)}
-        onMouseLeave={() => dispatch(destroyTooltip())}
+        ref={containerRef}
         data-line-height={!!(props.options?.lineHeightBorder !== undefined ? props.options?.lineHeightBorder : displayMode === 'list')}
         data-display-mode={props.options?.displayMode || displayMode}
         data-dynamic-options={props.options?.dynamic === undefined || !!props.options?.dynamic}
+        {...(displayMode === 'list' && { style: { height: `${active ? expandedHeight : initHeight}` } })}  // set padding as LineHeight to emulate de height
     >
-        <div
-            className='style-item-font-container flex f-center-h full-width'
-            {...(displayMode === 'list' && { style: { height: `${cssStyle.lineHeight || '0px'}` } })}  // set padding as LineHeight to emulate de height
-        >
-            <Input {...((displayMode === 'list' || props.options?.displayMode === 'list') && { style: cssStyle })}
+        <div className='style-item-font-container flex f-center-h full-width' >
+            <Input {...((displayMode === 'list' || props.options?.displayMode === 'list') && { style: { ...cssStyle, height: cssStyle.lineHeight } })}
                 value={styleName}
                 appearance={{ minified: false, stroke: false }}
                 onBlur={updateName}
