@@ -23,7 +23,6 @@ export async function loadFont(typeface: FontName | undefined): Promise<string> 
         if (typeface !== undefined && !loadedFont.includes(typeface.family)) {
             //Google Font Loading
             loadedFont.push(typeface.family);
-
             try {
                 WebFont.load({
                     google: { families: [typeface.family] },
@@ -33,10 +32,13 @@ export async function loadFont(typeface: FontName | undefined): Promise<string> 
                         resolve(typeface.family || DEFAULT_TYPEFACE)
                     },
                     inactive: () => {
+
                         //Load Local Font from server
                         get({ action: 'LOAD_FONT', payload: typeface })
                             .then(e => resolve(e))
-                            .catch(() => loadFont({ ...typeface, style: 'Regular' })); //If can't load Font, load Regular as default
+                            .catch(() => {
+                                resolve(loadFont({ ...typeface, style: 'Regular' }))
+                            }); //If can't load Font, load Regular as default
                     }
                 });
             } catch (_) {
@@ -45,7 +47,7 @@ export async function loadFont(typeface: FontName | undefined): Promise<string> 
             }
 
 
-            
+
 
         } else {
             resolve(DEFAULT_TYPEFACE);

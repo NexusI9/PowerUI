@@ -36,7 +36,7 @@ export default (props: TextSet) => {
             loadFont(props.fontName);
             currentFont.current = String(props.fontName?.family);
         }
-    }, [props.fontName?.family]);
+    }, [props.fontName?.family, props.fontName?.style]);
 
     useEffect(() => {
 

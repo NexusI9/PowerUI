@@ -4,8 +4,7 @@ import { convertFontWeight } from "./font";
 
 
 export function loadLocalFont(msg: any, systemFonts: TextDico) {
-
-
+    console.log('load Local');
     return new Promise((resolve, reject) => {
 
         const { payload } = msg;
@@ -15,6 +14,7 @@ export function loadLocalFont(msg: any, systemFonts: TextDico) {
             Promise.all(
                 dicoFont.style.map(style => new Promise((resolve, reject) => {
                     //Local Font Loading
+                    console.log(payload, style);
                     figma.loadFontAsync({ ...payload, style: style })
                         .then(() => resolve(style))
                         .catch(() => {
