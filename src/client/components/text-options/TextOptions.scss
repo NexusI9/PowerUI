@@ -12,6 +12,11 @@
 
     li {
         color: var(--figma-color-text-tertiary);
+        flex-grow: 1;
+
+        &>* {
+            width: 100%;
+        }
 
         .input-field {
             input {

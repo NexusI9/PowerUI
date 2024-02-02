@@ -21,9 +21,12 @@ export default (props: TextSet) => {
 
     //Set Dynamic Height
     const MIN_HEIGHT = 96;
-    const expandedHeight = Math.max(valueUnitFrom(cssStyle.lineHeight).value, MIN_HEIGHT) + 'px' || '0px';
-    const initHeight = cssStyle.fontSize;
+    const lineHeightValue = valueUnitFrom(cssStyle.lineHeight).value || MIN_HEIGHT;
+    const expandedHeight = Math.max(lineHeightValue, MIN_HEIGHT) + 'px';
+    const initHeight = cssStyle.lineHeight !== 'auto' ? cssStyle.lineHeight : `${MIN_HEIGHT}px`;
     const [active, setActive] = useState(false);
+
+    const dynamicOptions: boolean = props.options?.dynamic === undefined || !!props.options?.dynamic;
 
     const containerRef = useRef<any>();
     const currentFont = useRef<string>();
@@ -33,7 +36,7 @@ export default (props: TextSet) => {
             loadFont(props.fontName);
             currentFont.current = String(props.fontName?.family);
         }
-    }, [props.fontName]);
+    }, [props.fontName?.family]);
 
     useEffect(() => {
 
@@ -45,7 +48,7 @@ export default (props: TextSet) => {
 
         const handleOnMouseEnter = (e: BaseSyntheticEvent) => {
             displayMode === 'grid' && handleToolTip(e.target);
-            displayMode === 'list' && setActive(true);
+            displayMode === 'list' && dynamicOptions && setActive(true);
         };
 
         if (containerRef.current) {
@@ -54,8 +57,8 @@ export default (props: TextSet) => {
         }
 
         return () => {
-            containerRef.current.removeEventListener('mouseenter', handleOnMouseEnter);
-            containerRef.current.removeEventListener('mouseleave', handleOnMouseLeave);
+            containerRef.current?.removeEventListener('mouseenter', handleOnMouseEnter);
+            containerRef.current?.removeEventListener('mouseleave', handleOnMouseLeave);
         }
 
 
@@ -96,11 +99,11 @@ export default (props: TextSet) => {
         ref={containerRef}
         data-line-height={!!(props.options?.lineHeightBorder !== undefined ? props.options?.lineHeightBorder : displayMode === 'list')}
         data-display-mode={props.options?.displayMode || displayMode}
-        data-dynamic-options={props.options?.dynamic === undefined || !!props.options?.dynamic}
+        data-dynamic-options={dynamicOptions}
         {...(displayMode === 'list' && { style: { height: `${active ? expandedHeight : initHeight}` } })}  // set padding as LineHeight to emulate de height
     >
         <div className='style-item-font-container flex f-center-h full-width' >
-            <Input {...((displayMode === 'list' || props.options?.displayMode === 'list') && { style: { ...cssStyle, height: cssStyle.lineHeight } })}
+            <Input {...((displayMode === 'list' || props.options?.displayMode === 'list') && { style: { ...cssStyle, ...(dynamicOptions && { height: cssStyle.lineHeight }) } })}
                 value={styleName}
                 appearance={{ minified: false, stroke: false }}
                 onBlur={updateName}

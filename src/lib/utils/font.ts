@@ -39,6 +39,9 @@ export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJE
 
     const lineHeight = roundObjectFloat((style.lineHeight as any)).value || 'auto';
     const letterSpacing = roundObjectFloat((style.letterSpacing as any)).value || 0;
+    const percentToPixels = (value: number | string | undefined, unit: string | undefined) => {
+        return typeof value === 'number' && (String(unit === 'PERCENT' ? (style.fontSize || 0) * value / 100 : value) + 'px') || value;
+    }
 
     const attributes = [
         {
@@ -54,12 +57,12 @@ export function cssTextStyle(style: TextSet, output: 'OBJECT' | 'STRING' = 'OBJE
         {
             'OBJECT': 'letterSpacing',
             'STRING': 'letter-spacing',
-            'VALUE': String((letterSpacing || 0) + convertUnit(style.letterSpacing?.unit || "PERCENT"))
+            'VALUE': percentToPixels(letterSpacing, style.letterSpacing?.unit)
         },
         {
             'OBJECT': 'lineHeight',
             'STRING': 'line-height',
-            'VALUE': typeof lineHeight === 'number' && (String(style.lineHeight?.unit === 'PERCENT' ? (style.fontSize || 0) * lineHeight / 100 : lineHeight) + 'px') || lineHeight //css doen't take % as LineHeight so need to convert % => px
+            'VALUE': percentToPixels(lineHeight, style.lineHeight?.unit) //css doen't take % as LineHeight so need to convert % => px
         },
         {
             'OBJECT': 'fontFamily',

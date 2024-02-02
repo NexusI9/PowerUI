@@ -50,6 +50,16 @@
         .input-field {
             font-weight: bold;
             max-width: 120px;
+
+            input {
+                color: var(--figma-color-text-secondary);
+
+                &:focus {
+                    color: var(--figma-color-text);
+                }
+            }
+
+
         }
 
 

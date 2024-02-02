@@ -98,7 +98,7 @@ export default (style: TextSet) => {
                         />
                     </li>
                 }
-                <ul className="flex f-row gap-s">
+                <ul className="flex f-row gap-s full-width">
                     {(!options || options?.fontSize) && <li className='text-options-font-size'><Input {...dragInputs.fontSize} /></li>}
                     {(!options || options?.fontWeight) && <li className='text-options-font-weight'>
                         <Dropdown
@@ -111,7 +111,7 @@ export default (style: TextSet) => {
                         />
                     </li>}
                 </ul>
-                <ul className="flex f-row gap-s">
+                <ul className="flex f-row gap-s full-width">
                     {
                         (!options || options?.letterSpacing) &&
                         <li className='text-options-letter-spacing flex f-row gap-xs f-center-h'>
