@@ -17,7 +17,7 @@ export default () => {
     return (<section className="page home flex f-col gap-xl">
 
         <header>
-            <h1>Welcome to PowerUI</h1>
+            <h1>Welcome to stylee</h1>
             <h3>Start building your styles below</h3>
         </header>
         <div className="flex f-row gap-m">

@@ -19,7 +19,7 @@ code {
     white-space: pre;
 }
 
-#powerui-app {
+#stylee-app {
     display: grid;
     grid-template-columns: 50px auto;
     height: 100%;
@@ -119,7 +119,7 @@ code {
 
 
 .panel {
-    background: var(--powerui-color-bg-brand-tertiary);
+    background: var(--stylee-color-bg-brand-tertiary);
     border-radius: var(--radius-s);
     border: solid 1px var(--figma-color-border);
 }

@@ -5,7 +5,7 @@ import { Provider } from 'react-redux';
 import store from '@lib/store';
 
 document.addEventListener('DOMContentLoaded', function () {
-  const container = document.getElementById('powerui-app');
+  const container = document.getElementById('stylee-app');
   const root = container && createRoot(container);
   root?.render(
     <Provider store={store}>
