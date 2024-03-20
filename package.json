@@ -4,9 +4,8 @@
   "description": "Your Figma Plugin",
   "main": "index.js",
   "scripts": {
-    "watch": "npm run build -- --watch",
     "build": "webpack --mode=production",
-    "build:watch": "webpack --mode=development --watch --progress"
+    "watch": "webpack --mode=development --watch --progress"
   },
   "author": "",
   "license": "",

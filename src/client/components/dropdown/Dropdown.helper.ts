@@ -30,7 +30,8 @@ export async function loadFetch(list: MultiArray<ContextMenuCommand>) {
         }
     }
 
-    traverseCallback(list, (cm: ContextMenuCommand) => fetchPromises.push(processCommand(cm)));
+    const asyncList = list.map(cmd => Array.isArray(cmd) ? cmd.map(cmd => processCommand(cmd)) : processCommand(cmd));
 
-    return await Promise.all(fetchPromises);
+    return await Promise.all(asyncList.map(cmd => Array.isArray(cmd) ? Promise.all(cmd) : cmd));
+
 }

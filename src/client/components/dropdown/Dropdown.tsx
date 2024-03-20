@@ -59,7 +59,7 @@ export default (props: IDropdown) => {
         if (lastState.id === 0 && props.onBlur) { props.onBlur(props); }
     }, [lastState.id]);
 
-
+    
     return (
         <div
             className="dropdown flex f-col gap-xs"
