@@ -13,6 +13,9 @@
 
     &.active{
         background-color: var(--figma-color-bg-brand);
+        svg{
+            fill: white;
+        }
     }
 }
 
