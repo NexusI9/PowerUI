@@ -110,8 +110,5 @@ export const DEV_FONT_CONFIG: Dev = {
             { value: 'LESS', content: cssConfig, action: 'LESS', receiver: 'STORE', heading: 'Language' },
             { value: 'Stylus', content: cssConfig, action: 'STYLUS', receiver: 'STORE', heading: 'Language' },
         ]
-    },
-    footer: {
-        primaryAction: { value: 'Add', action: 'CREATE_SET', role: 'DISABLED' }
     }
 }

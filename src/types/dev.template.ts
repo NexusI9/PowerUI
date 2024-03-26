@@ -1,6 +1,6 @@
 import { BaseTemplate, Sidepanel } from "./template";
 
-export type DevAction = 'CSS' | 'TAILWIND' | 'LESS' | 'SASS' | 'SCSS' | 'STYLUS';
+export type DevAction = 'CSS' | 'TAILWIND' | 'LESS' | 'SASS' | 'SCSS' | 'STYLUS' | 'JSON';
 
 interface DevBaseConfig{
     nameformat:string;

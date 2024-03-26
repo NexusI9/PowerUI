@@ -3,6 +3,7 @@
     overflow: auto;
     resize: none;
     font-family: monospace;
+    white-space: pre;
 
     &:focus{
         outline: none;

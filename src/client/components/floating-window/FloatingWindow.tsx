@@ -4,7 +4,7 @@ import { Button } from "@components/button";
 import { send } from '@lib/ipc';
 import { BaseTemplate } from '@ctypes/template';
 import { LoadMessage } from '@components/load-message';
-import { KeyboardEventHandler, useEffect } from 'react';
+import { useEffect } from 'react';
 
 export default ({ children, onDestroy, template }: { children: any, onDestroy?(): any, template: BaseTemplate & any }) => {
 
@@ -29,15 +29,17 @@ export default ({ children, onDestroy, template }: { children: any, onDestroy?()
                 <footer className="floating-window-footer flex f-row f-between">
                     <LoadMessage />
                     <div className='flex f-row gap-s'>
-                        <Button value='Cancel' onClick={onDestroy} role='SECONDARY' />
-                        <Button
-                            value={footer?.primaryAction.value || 'ADD'}
-                            onClick={() => {
-                                send({ action: footer?.primaryAction.action || '', payload: { ...template } });
-                                if (footer?.primaryAction.destroy) { onDestroy && onDestroy(); }
-                            }}
-                            role='PRIMARY'
-                        />
+                        {footer?.primaryAction && <>
+                            <Button value='Cancel' onClick={onDestroy} role='SECONDARY' />
+                            <Button
+                                value={footer?.primaryAction.value || 'ADD'}
+                                onClick={() => {
+                                    send({ action: footer?.primaryAction.action || '', payload: { ...template } });
+                                    if (footer?.primaryAction.destroy) { onDestroy && onDestroy(); }
+                                }}
+                                role='PRIMARY'
+                            />
+                        </>}
                     </div>
                 </footer>
             </div>

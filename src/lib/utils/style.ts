@@ -511,6 +511,20 @@ ${stringVariables}
         }
     }
 }`;
+        /*JSON VARIABLES*/
+        case 'JSON':
+            console.log(groupedStyles);
+            return `{
+${Object.keys(groupedStyles).map((key, i) => {
+                return `\t"${key}": {
+${groupedStyles[key].map(({ name, value }: { name: String, value: String }) => { 
+    return`\t\t"${name}": "${value}"`
+}).join(',\n')}
+\t}`;
+            }).join(',\n')
+                }            
+}`;
+
         /*CSS VARIABLES*/
         case 'CSS':
             return `:root{
